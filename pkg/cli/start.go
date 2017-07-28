@@ -1,9 +1,20 @@
 package cli
 
 import (
-	"github.com/taku-k/ipdrawer/pkg/server"
+	"bytes"
+	"context"
+	"errors"
+	"fmt"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
+	"text/tabwriter"
+	"time"
 
 	"github.com/spf13/cobra"
+
+	"github.com/taku-k/ipdrawer/pkg/server"
 )
 
 var startCmd = &cobra.Command{
@@ -13,6 +24,61 @@ var startCmd = &cobra.Command{
 }
 
 func startServer(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 {
+		return usageAndError(cmd)
+	}
+
+	// Signal
+	signalCh := make(chan os.Signal, 1)
+	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+
 	s := server.NewAPIServer("8080")
-	return s.Start()
+
+	errCh := make(chan error, 1)
+	go func() {
+		if err := func() error {
+			var buf bytes.Buffer
+			tw := tabwriter.NewWriter(&buf, 2, 1, 2, ' ', 0)
+			fmt.Fprintf(tw, "ipdrawer server starting at %s\n", time.Now())
+			fmt.Fprintf(tw, "port:\t%s\n", "8080")
+			if err := tw.Flush(); err != nil {
+				return err
+			}
+			msg := buf.String()
+			fmt.Fprint(os.Stderr, msg)
+
+			// Start server
+			if err := s.Start(); err != nil {
+				return err
+			}
+
+			return nil
+		}(); err != nil {
+			errCh <- err
+		}
+	}()
+
+	select {
+	case err := <-errCh:
+		log.Printf("ipdrawer server is failed: %v\n", err)
+		os.Exit(1)
+	case sig := <-signalCh:
+		log.Printf("received signal '%s'\n", sig)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	stopped := make(chan struct{}, 1)
+	go s.Shutdown(ctx, stopped)
+	select {
+	case <-ctx.Done():
+		fmt.Fprintln(os.Stdout, "time limit reached, initiating hard shutdown")
+		return errors.New("Server is failed")
+	case <-stopped:
+		log.Println("server shutdown completed")
+		fmt.Fprintln(os.Stdout, "server shutdown completed")
+		break
+	}
+	return nil
 }

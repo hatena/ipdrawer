@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 )
 
@@ -19,4 +20,11 @@ func Run() {
 		fmt.Fprintf(os.Stderr, "Failed running %q\n", os.Args[1])
 		os.Exit(1)
 	}
+}
+
+func usageAndError(cmd *cobra.Command) error {
+	if err := cmd.Usage(); err != nil {
+		return err
+	}
+	return errors.New("invalid arguments")
 }

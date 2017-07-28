@@ -1,6 +1,7 @@
 package server
 
 import (
+	ocontext "context"
 	"log"
 	"net"
 	"net/http"
@@ -25,6 +26,8 @@ import (
 type APIServer struct {
 	addr    string
 	manager *ipam.IPManager
+	grpcS   *grpc.Server
+	httpS   *http.Server
 }
 
 func NewAPIServer(port string) *APIServer {
@@ -33,22 +36,6 @@ func NewAPIServer(port string) *APIServer {
 		addr:    ":" + port,
 		manager: mngr,
 	}
-}
-
-func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
-	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, api.addr, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	n := negroni.New()
-	n.Use(negroni.NewRecovery())
-	n.Use(negronilogrus.NewMiddleware())
-	n.UseHandler(mux)
-
-	return n, nil
 }
 
 func (api *APIServer) Start() error {
@@ -68,7 +55,7 @@ func (api *APIServer) Start() error {
 	logrusEntry := logrus.NewEntry(logrus.New())
 	grpc_logrus.ReplaceGrpcLogger(logrusEntry)
 
-	grpcS := grpc.NewServer(
+	api.grpcS = grpc.NewServer(
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
 			grpc_ctxtags.StreamServerInterceptor(),
 			grpc_opentracing.StreamServerInterceptor(),
@@ -82,27 +69,36 @@ func (api *APIServer) Start() error {
 			grpc_logrus.UnaryServerInterceptor(logrusEntry),
 		)),
 	)
-	serverpb.RegisterPrefixServiceServer(grpcS, api)
+	serverpb.RegisterPrefixServiceServer(api.grpcS, api)
 	gw, err := api.newGateway(ctx)
 	if err != nil {
 		return err
 	}
-	httpS := &http.Server{
+	api.httpS = &http.Server{
 		Handler: gw,
 	}
 
 	go func() {
-		if err := grpcS.Serve(grpcL); err != nil {
+		if err := api.grpcS.Serve(grpcL); err != nil {
 			panic(err)
 		}
 	}()
 	go func() {
-		if err := httpS.Serve(httpL); err != nil {
+		if err := api.httpS.Serve(httpL); err != nil {
 			panic(err)
 		}
 	}()
 
 	return cm.Serve()
+}
+
+func (api *APIServer) Shutdown(
+	ctx ocontext.Context,
+	stopped chan struct{},
+) {
+	api.grpcS.GracefulStop()
+	api.httpS.Shutdown(ctx)
+	stopped <- struct{}{} 
 }
 
 func (api *APIServer) DrawIP(
@@ -126,6 +122,22 @@ func (api *APIServer) ActivateIP(
 	req *serverpb.ActivateIPRequest,
 ) (*serverpb.ActivateIPResponse, error) {
 	return &serverpb.ActivateIPResponse{}, nil
+}
+
+func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
+	mux := runtime.NewServeMux()
+	opts := []grpc.DialOption{grpc.WithInsecure()}
+	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, api.addr, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	n := negroni.New()
+	n.Use(negroni.NewRecovery())
+	n.Use(negronilogrus.NewMiddleware())
+	n.UseHandler(mux)
+
+	return n, nil
 }
 
 func parseIPAndMask(ip, mask string) (net.IP, error) {
