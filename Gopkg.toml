@@ -1,0 +1,19 @@
+[[constraint]]
+  name = "github.com/pkg/errors"
+  version = "0.8.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/spf13/cobra"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/fortytw2/leaktest"
+
+[[constraint]]
+  name = "github.com/go-redis/redix"
+  version = "6.5.4"
+
+[[constraint]]
+  name = "github.com/gorilla/mux"
+  version = "v1.4.0"

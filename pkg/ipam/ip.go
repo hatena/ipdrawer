@@ -1,0 +1,80 @@
+package ipam
+
+import (
+	"encoding/binary"
+	"fmt"
+	"net"
+
+	"github.com/taku-k/ipdrawer/pkg/storage"
+
+	"github.com/go-redis/redis"
+	"github.com/pkg/errors"
+)
+
+type IPManager struct {
+	redis *storage.Redis
+}
+
+type ipAddr struct {
+	ip     net.IP
+	status ipStatus
+}
+
+type ipStatus int
+
+const (
+	IP_ACTIVE ipStatus = iota
+	IP_TEMPORARY_RESERVED
+	IP_RESERVED
+)
+
+func NewIPManager() *IPManager {
+	return &IPManager{
+		redis: storage.NewRedis(),
+	}
+}
+
+func (m *IPManager) DrawIP(pools []*IPPool, reserve bool) (net.IP, error) {
+	return nil, nil
+}
+
+func (m *IPManager) Active(p *IPPool, ip net.IP) error {
+	pipe := m.redis.Client.TxPipeline()
+	// Remove temporary reserved key in any way
+	pipe.Del(makeIPTempReserved(ip))
+	// Change IP status to ACTIVE
+	pipe.HSet(makeIPDetailsKey(ip), "status", IP_ACTIVE)
+	// Add IP to used IP zset
+	score := float64(binary.BigEndian.Uint32(ip))
+	z := redis.Z{score, ip.String()}
+	pipe.ZAdd(makePoolUsedIPZset(p.start, p.end), z)
+	if _, err := pipe.Exec(); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *IPManager) Reserve(p *Prefix, ip net.IP) error {
+	return nil
+}
+
+func (m *IPManager) Release(p *Prefix, ip net.IP) error {
+	return nil
+}
+
+func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
+	ps, err := m.redis.Client.SMembers(makePrefixListKey()).Result()
+	if err != nil {
+		return nil, err
+	}
+	for _, p := range ps {
+		_, ipnet, err := net.ParseCIDR(p)
+		if err != nil {
+			continue
+		}
+		if ipnet.Contains(ip) {
+			return getPrefix(m.redis, ipnet)
+		}
+	}
+	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
+}

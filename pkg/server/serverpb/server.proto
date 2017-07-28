@@ -1,0 +1,27 @@
+syntax = "proto3";
+package serverpb;
+
+import "google/api/annotations.proto";
+
+message DrawIPRequest {
+  string ip = 1;
+  string mask = 2;
+  repeated Tag tags = 3;
+}
+
+message DrawIPResponse {
+}
+
+message Tag {
+  string key = 1;
+  string value = 2;
+}
+
+service PrefixService {
+  rpc DrawIP(DrawIPRequest) returns (DrawIPResponse) {
+    option (google.api.http) = {
+      post: "/api/prefix/{ip}/{mask}/drawip"
+      body: "*"
+    };
+  };
+}
