@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	ipDetails       = "ip:%s:details"
+	ipDetails      = "ip:%s:details"
 	ipTempReserved = "ip:%s:temporary_deserved"
 	prefixList     = "Prefix:list"
 	prefixDetails  = "Prefix:%s:details"

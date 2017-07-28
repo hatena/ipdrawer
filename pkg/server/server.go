@@ -5,11 +5,19 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/meatballhat/negroni-logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
+	"github.com/urfave/negroni"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
+	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 )
@@ -22,19 +30,25 @@ type APIServer struct {
 func NewAPIServer(port string) *APIServer {
 	mngr := ipam.NewIPManager()
 	return &APIServer{
-		addr:    net.JoinHostPort("0.0.0.0", port),
+		addr:    ":" + port,
 		manager: mngr,
 	}
 }
 
-func newGateway(ctx context.Context) (http.Handler, error) {
+func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, ":23456", opts)
+	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, api.addr, opts)
 	if err != nil {
 		return nil, err
 	}
-	return mux, nil
+
+	n := negroni.New()
+	n.Use(negroni.NewRecovery())
+	n.Use(negronilogrus.NewMiddleware())
+	n.UseHandler(mux)
+
+	return n, nil
 }
 
 func (api *APIServer) Start() error {
@@ -42,7 +56,7 @@ func (api *APIServer) Start() error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	l, err := net.Listen("tcp", ":23456")
+	l, err := net.Listen("tcp", api.addr)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -51,10 +65,25 @@ func (api *APIServer) Start() error {
 	grpcL := cm.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
 	httpL := cm.Match(cmux.HTTP1Fast())
 
-	grpcS := grpc.NewServer()
-	serverpb.RegisterPrefixServiceServer(grpcS, api)
+	logrusEntry := logrus.NewEntry(logrus.New())
+	grpc_logrus.ReplaceGrpcLogger(logrusEntry)
 
-	gw, err := newGateway(ctx)
+	grpcS := grpc.NewServer(
+		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
+			grpc_ctxtags.StreamServerInterceptor(),
+			grpc_opentracing.StreamServerInterceptor(),
+			grpc_recovery.StreamServerInterceptor(),
+			grpc_logrus.StreamServerInterceptor(logrusEntry),
+		)),
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpc_ctxtags.UnaryServerInterceptor(),
+			grpc_opentracing.UnaryServerInterceptor(),
+			grpc_recovery.UnaryServerInterceptor(),
+			grpc_logrus.UnaryServerInterceptor(logrusEntry),
+		)),
+	)
+	serverpb.RegisterPrefixServiceServer(grpcS, api)
+	gw, err := api.newGateway(ctx)
 	if err != nil {
 		return err
 	}
