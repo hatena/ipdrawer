@@ -10,6 +10,7 @@ message DrawIPRequest {
 }
 
 message DrawIPResponse {
+  string msg = 1;
 }
 
 message Tag {
@@ -20,8 +21,7 @@ message Tag {
 service PrefixService {
   rpc DrawIP(DrawIPRequest) returns (DrawIPResponse) {
     option (google.api.http) = {
-      post: "/api/prefix/{ip}/{mask}/drawip"
-      body: "*"
+      get: "/api/prefix/{ip}/{mask}/drawip"
     };
   };
 }

@@ -14,10 +14,10 @@
   revision = "748d386b5c1ea99658fd69fe9f03991ce86a90c1"
 
 [[projects]]
+  branch = "master"
   name = "github.com/grpc-ecosystem/grpc-gateway"
   packages = ["runtime","runtime/internal","utilities"]
-  revision = "589b126116b5fc961939b3e156c29e4d9d58222f"
-  version = "v1.2.2"
+  revision = "f2862b476edcef83412c7af8687c9cd8e4097c0f"
 
 [[projects]]
   branch = "master"
@@ -76,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9b92a3e28102e06fca27932d412460914d7424974acd8299309d5117aeaa55b0"
+  inputs-digest = "df5e838b5084896749b469692a03c0daf9f446ca16c1b00334f7ad1d296b53f9"
   solver-name = "gps-cdcl"
   solver-version = 1
