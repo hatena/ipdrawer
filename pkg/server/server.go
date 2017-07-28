@@ -102,20 +102,30 @@ func (api *APIServer) Start() error {
 		}
 	}()
 
-	//r.HandleFunc("/api/prefix/{ip}/{mask}/drawip", func(w http.ResponseWriter, r *http.Request) {
-	//	vars := mux.Vars(r)
-	//
-	//})
-	//r.HandleFunc("/api/ip/{ip}/prefix", func(w http.ResponseWriter, r *http.Request) {})
-	//r.HandleFunc("/api/ip/{ip}/activate", func(w http.ResponseWriter, r *http.Request) {})
-
 	return cm.Serve()
 }
 
-func (api *APIServer) DrawIP(ctx context.Context, req *serverpb.DrawIPRequest) (*serverpb.DrawIPResponse, error) {
+func (api *APIServer) DrawIP(
+	ctx context.Context,
+	req *serverpb.DrawIPRequest,
+) (*serverpb.DrawIPResponse, error) {
 	return &serverpb.DrawIPResponse{
 		Msg: "test",
 	}, nil
+}
+
+func (api *APIServer) GetPrefixIncludingIP(
+	ctx context.Context,
+	req *serverpb.GetPrefixIncludingIPRequest,
+) (*serverpb.GetPrefixIncludingIPResponse, error) {
+	return &serverpb.GetPrefixIncludingIPResponse{}, nil
+}
+
+func (api *APIServer) ActivateIP(
+	ctx context.Context,
+	req *serverpb.ActivateIPRequest,
+) (*serverpb.ActivateIPResponse, error) {
+	return &serverpb.ActivateIPResponse{}, nil
 }
 
 func parseIPAndMask(ip, mask string) (net.IP, error) {

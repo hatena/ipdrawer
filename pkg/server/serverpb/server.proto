@@ -13,6 +13,18 @@ message DrawIPResponse {
   string msg = 1;
 }
 
+message GetPrefixIncludingIPRequest {
+  string ip = 1;
+}
+
+message GetPrefixIncludingIPResponse {}
+
+message ActivateIPRequest {
+  string ip = 1;
+}
+
+message ActivateIPResponse {}
+
 message Tag {
   string key = 1;
   string value = 2;
@@ -22,6 +34,18 @@ service PrefixService {
   rpc DrawIP(DrawIPRequest) returns (DrawIPResponse) {
     option (google.api.http) = {
       get: "/api/prefix/{ip}/{mask}/drawip"
+    };
+  };
+
+  rpc GetPrefixIncludingIP(GetPrefixIncludingIPRequest) returns (GetPrefixIncludingIPResponse) {
+    option (google.api.http) = {
+      get: "/api/ip/{ip}/prefix"
+    };
+  };
+
+  rpc ActivateIP(ActivateIPRequest) returns (ActivateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/ip/{ip}/activate"
     };
   };
 }
