@@ -59,7 +59,7 @@ func request_PrefixService_DrawIP_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "mask")
 	}
 
-	protoReq.Mask, err = runtime.String(val)
+	protoReq.Mask, err = runtime.Int32(val)
 
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "mask", err)

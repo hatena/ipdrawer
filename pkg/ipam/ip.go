@@ -28,6 +28,7 @@ const (
 	IP_RESERVED
 )
 
+// NewIPManager creates IPManager instance
 func NewIPManager() *IPManager {
 	return &IPManager{
 		redis: storage.NewRedis(),
@@ -77,4 +78,8 @@ func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 		}
 	}
 	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
+}
+
+func (m *IPManager) GetPoolsIncludingIP(ip net.IP) ([]*IPPool, error) {
+	return nil, nil
 }

@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
@@ -18,7 +19,6 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 )
@@ -98,13 +98,17 @@ func (api *APIServer) Shutdown(
 ) {
 	api.grpcS.GracefulStop()
 	api.httpS.Shutdown(ctx)
-	stopped <- struct{}{} 
+	stopped <- struct{}{}
 }
 
 func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,
 ) (*serverpb.DrawIPResponse, error) {
+	//pools, err := api.manager.GetPoolsIncludingIP()
+	if err := req.Validate(); err != nil {
+		return nil, err
+	}
 	return &serverpb.DrawIPResponse{
 		Msg: "test",
 	}, nil
