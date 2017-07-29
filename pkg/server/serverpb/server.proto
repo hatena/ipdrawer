@@ -11,7 +11,7 @@ message DrawIPRequest {
 }
 
 message DrawIPResponse {
-  string msg = 1;
+  string ip = 1;
 }
 
 message GetPrefixIncludingIPRequest {

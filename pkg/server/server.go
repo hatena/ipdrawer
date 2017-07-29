@@ -13,6 +13,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/meatballhat/negroni-logrus"
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"github.com/urfave/negroni"
@@ -105,12 +106,44 @@ func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,
 ) (*serverpb.DrawIPResponse, error) {
-	//pools, err := api.manager.GetPoolsIncludingIP()
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return &serverpb.DrawIPResponse{}, err
+	}
+	ip := &net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	}
+	pre, err := api.manager.GetPrefix(ip)
+	if err != nil {
+		return &serverpb.DrawIPResponse{}, err
+	}
+	pools, err := pre.GetPools()
+	if err != nil {
+		return &serverpb.DrawIPResponse{}, err
+	}
+	if len(pools) == 0 {
+		return &serverpb.DrawIPResponse{}, errors.New("not found prefix")
+	}
+	tags := make(map[string]string)
+	for _, t := range req.Tags {
+		tags[t.Key] = t.Value
+	}
+	var pool *ipam.IPPool
+	for _, p := range pools {
+		if p.MatchTags(tags) {
+			pool = p
+			break
+		}
+	}
+	if pool == nil {
+		return &serverpb.DrawIPResponse{}, errors.New("not matched tags")
+	}
+	ret, err := pool.DrawIP()
+	if err != nil {
+		return &serverpb.DrawIPResponse{}, err
 	}
 	return &serverpb.DrawIPResponse{
-		Msg: "test",
+		Ip: ret.String(),
 	}, nil
 }
 

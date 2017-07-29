@@ -80,6 +80,10 @@ func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
 }
 
-func (m *IPManager) GetPoolsIncludingIP(ip net.IP) ([]*IPPool, error) {
+func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
 	return nil, nil
+}
+
+func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
+	return getPrefix(m.redis, ipnet)
 }

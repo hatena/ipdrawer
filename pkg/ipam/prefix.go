@@ -28,6 +28,10 @@ const (
 	PREFIX_RESERVED
 )
 
+func (p *Prefix) GetPools() ([]*IPPool, error) {
+	return nil, nil
+}
+
 func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
 	lkey := makePrefixListKey()
 	ps, err := r.Client.SMembers(lkey).Result()
@@ -57,6 +61,11 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 	dkey := makePrefixDetailsKey(ipnet)
 	tagKey := makePrefixTagKey(ipnet)
 	gwKey := makePrefixDefaultGWKey(ipnet)
+
+	check, err := r.Client.Exists(dkey).Result()
+	if err != nil || check == 0 {
+		return nil, errors.New("not found prefix")
+	}
 
 	data, err := r.Client.HMGet(dkey, prefixFieldsKey...).Result()
 	if err != nil {
