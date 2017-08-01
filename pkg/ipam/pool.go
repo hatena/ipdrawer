@@ -29,10 +29,6 @@ func (p *IPPool) MatchTags(tags map[string]string) bool {
 	return true
 }
 
-func (p *IPPool) DrawIP() (net.IP, error) {
-	return nil, nil
-}
-
 func getPoolIncludingIP(r *storage.Redis, ip net.IP) (*IPPool, error) {
 	return nil, nil
 }

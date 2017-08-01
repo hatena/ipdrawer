@@ -4,11 +4,12 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
-
-	"github.com/taku-k/ipdrawer/pkg/storage"
+	"time"
 
 	"github.com/go-redis/redis"
 	"github.com/pkg/errors"
+
+	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
 type IPManager struct {
@@ -35,11 +36,58 @@ func NewIPManager() *IPManager {
 	}
 }
 
-func (m *IPManager) DrawIP(pools []*IPPool, reserve bool) (net.IP, error) {
+// DrawIP returns an available IP.
+func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
+	token, err := m.redis.Lock()
+	if err != nil {
+		return nil, err
+	}
+	defer m.redis.Unlock(token)
+
+	zkey := makePoolUsedIPZset(pool.start, pool.end)
+	var cur uint64
+	avail := pool.start
+	for {
+		var err error
+		var keys []string
+		keys, cur, err = m.redis.Client.ZScan(zkey, cur, "", 1000).Result()
+		if err != nil {
+			return nil, err
+		}
+		for _, k := range keys {
+			ip := net.ParseIP(k)
+			if ip == nil {
+				continue
+			}
+			if avail.Equal(ip) {
+				avail = ip
+				continue
+			} else {
+				check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
+				if err != nil || check != 0 {
+					avail = ip
+					continue
+				}
+				if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
+					avail = ip
+					continue
+				}
+				return ip, nil
+			}
+		}
+	}
+
 	return nil, nil
 }
 
+// Activate activates IP.
 func (m *IPManager) Active(p *IPPool, ip net.IP) error {
+	token, err := m.redis.Lock()
+	if err != nil {
+		return err
+	}
+	defer m.redis.Unlock(token)
+
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))

@@ -138,7 +138,7 @@ func (api *APIServer) DrawIP(
 	if pool == nil {
 		return &serverpb.DrawIPResponse{}, errors.New("not matched tags")
 	}
-	ret, err := pool.DrawIP()
+	ret, err := api.manager.DrawIP(pool, true)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
