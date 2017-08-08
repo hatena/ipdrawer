@@ -47,37 +47,35 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 	zkey := makePoolUsedIPZset(pool.start, pool.end)
 	var cur uint64
 	avail := pool.start
-	for {
-		var err error
-		var keys []string
-		keys, cur, err = m.redis.Client.ZScan(zkey, cur, "", 1000).Result()
-		if err != nil {
-			return nil, err
+
+	var keys []string
+	keys, cur, err = m.redis.Client.ZScan(zkey, cur, "", 0).Result()
+	if err != nil {
+		return nil, err
+	}
+	for _, k := range keys {
+		ip := net.ParseIP(k)
+		if ip == nil {
+			continue
 		}
-		for _, k := range keys {
-			ip := net.ParseIP(k)
-			if ip == nil {
-				continue
-			}
-			if avail.Equal(ip) {
+		if avail.Equal(ip) {
+			avail = ip
+			continue
+		} else {
+			check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
+			if err != nil || check != 0 {
 				avail = ip
 				continue
-			} else {
-				check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
-				if err != nil || check != 0 {
-					avail = ip
-					continue
-				}
-				if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
-					avail = ip
-					continue
-				}
-				return ip, nil
 			}
+			if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
+				avail = ip
+				continue
+			}
+			return ip, nil
 		}
 	}
 
-	return nil, nil
+	return nil, errors.New("")
 }
 
 // Activate activates IP.
