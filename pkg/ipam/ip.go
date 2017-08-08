@@ -59,19 +59,19 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 			continue
 		}
 		if avail.Equal(ip) {
-			avail = ip
+			avail = nextIP(ip)
 			continue
 		} else {
 			check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
 			if err != nil || check != 0 {
-				avail = ip
+				avail = nextIP(ip)
 				continue
 			}
 			if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
-				avail = ip
+				avail = nextIP(ip)
 				continue
 			}
-			return ip, nil
+			return avail, nil
 		}
 	}
 
@@ -79,7 +79,7 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 }
 
 // Activate activates IP.
-func (m *IPManager) Active(p *IPPool, ip net.IP) error {
+func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
 	token, err := m.redis.Lock()
 	if err != nil {
 		return err
@@ -90,7 +90,7 @@ func (m *IPManager) Active(p *IPPool, ip net.IP) error {
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))
 	// Change IP status to ACTIVE
-	pipe.HSet(makeIPDetailsKey(ip), "status", IP_ACTIVE)
+	pipe.HSet(makeIPDetailsKey(ip), "status", int(IP_ACTIVE))
 	// Add IP to used IP zset
 	score := float64(binary.BigEndian.Uint32(ip))
 	z := redis.Z{score, ip.String()}
@@ -133,3 +133,5 @@ func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
 func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
 	return getPrefix(m.redis, ipnet)
 }
+
+

@@ -14,20 +14,21 @@ const (
 	lockExpirationTime = 10 * time.Second
 )
 
-type redisAPI interface {
-	TxPipeline() redis.Pipeliner
-	Exists(keys ...string) *redis.IntCmd
-	SMembers(key string) *redis.StringSliceCmd
-	HMGet(key string, fields ...string) *redis.SliceCmd
-	HGetAll(key string) *redis.StringStringMapCmd
-	SetNX(key string, value interface{}, expiration time.Duration) *redis.BoolCmd
-	Eval(script string, keys []string, args ...interface{}) *redis.Cmd
-	ZScan(key string, cursor uint64, match string, count int64) *redis.ScanCmd
-	Set(key string, value interface{}, expiration time.Duration) *redis.StatusCmd
-}
+//type redisAPI interface {
+//	TxPipeline() redis.Pipeliner
+//	Exists(keys ...string) *redis.IntCmd
+//	SMembers(key string) *redis.StringSliceCmd
+//	HMGet(key string, fields ...string) *redis.SliceCmd
+//	HGetAll(key string) *redis.StringStringMapCmd
+//	SetNX(key string, value interface{}, expiration time.Duration) *redis.BoolCmd
+//	Eval(script string, keys []string, args ...interface{}) *redis.Cmd
+//	ZScan(key string, cursor uint64, match string, count int64) *redis.ScanCmd
+//	Set(key string, value interface{}, expiration time.Duration) *redis.StatusCmd
+//	FlushDB() *redis.StatusCmd
+//}
 
 type Redis struct {
-	Client redisAPI
+	Client *redis.Client
 }
 
 func NewRedis() *Redis {
