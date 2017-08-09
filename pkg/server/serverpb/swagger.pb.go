@@ -38,7 +38,7 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "IPService"
         ]
       }
     },
@@ -62,12 +62,12 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "IPService"
         ]
       }
     },
     "/api/prefix/{ip}/{mask}": {
-      "post": {
+      "get": {
         "operationId": "GetPrefix",
         "responses": {
           "200": {

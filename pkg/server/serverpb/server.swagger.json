@@ -35,7 +35,7 @@
           }
         ],
         "tags": [
-          "PrefixService"
+          "IPService"
         ]
       }
     },
@@ -59,7 +59,7 @@
           }
         ],
         "tags": [
-          "PrefixService"
+          "IPService"
         ]
       }
     },

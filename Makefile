@@ -67,7 +67,8 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --go_out=plugins=grpc:pkg; \
 	done
-	go generate
+	go generate ./pkg/...
+	make fmt imports
 
 .PHONY: deps
 deps:

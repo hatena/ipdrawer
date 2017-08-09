@@ -77,18 +77,6 @@ service PrefixService {
     };
   };
 
-  rpc GetPrefixIncludingIP(GetPrefixIncludingIPRequest) returns (GetPrefixIncludingIPResponse) {
-    option (google.api.http) = {
-      get: "/api/ip/{ip}/prefix"
-    };
-  };
-
-  rpc ActivateIP(ActivateIPRequest) returns (ActivateIPResponse) {
-    option (google.api.http) = {
-      post: "/api/ip/{ip}/activate"
-    };
-  };
-
   rpc GetPrefix(GetPrefixRequest) returns (GetPrefixResponse) {
     option (google.api.http) = {
       get: "/api/prefix/{ip}/{mask}"
@@ -105,6 +93,20 @@ service PrefixService {
     option (google.api.http) = {
       post: "/api/prefix/{ip}/{mask}/pool/create"
       body: "*"
+    };
+  };
+}
+
+service IPService {
+  rpc GetPrefixIncludingIP(GetPrefixIncludingIPRequest) returns (GetPrefixIncludingIPResponse) {
+    option (google.api.http) = {
+      get: "/api/ip/{ip}/prefix"
+    };
+  };
+
+  rpc ActivateIP(ActivateIPRequest) returns (ActivateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/ip/{ip}/activate"
     };
   };
 }
