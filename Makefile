@@ -13,6 +13,8 @@ LINKFLAGS := \
 override LINUX_LDFLAGS += $(LINKFLAGS)
 override DARWIN_LDFLAGS += $(LINKFLAGS)
 
+SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
+SWAGGER_UI_SRC := third_party/swagger-ui/...
 
 .DEFAULT_GOAL := bin/$(NAME)
 
@@ -73,3 +75,8 @@ deps:
 	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
 	go get -u github.com/golang/protobuf/protoc-gen-go
 	go get -u github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
+
+.PHONY: ui
+ui:
+	go-bindata -nocompress -o $(SWAGGER_UI_DATA_PATH) -pkg swagger $(SWAGGER_UI_SRC)
+	make fmt imports
