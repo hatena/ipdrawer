@@ -26,9 +26,34 @@ message ActivateIPRequest {
 
 message ActivateIPResponse {}
 
+message CreatePrefixRequest {
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  repeated string default_gateways = 3;
+  string broadcast = 4;
+  string netmask = 5;
+  repeated Tag tags = 6;
+}
+
+message CreatePrefixResponse {}
+
+message CreatePoolsRequest {
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  repeated Pool pools = 3;
+}
+
+message CreatePoolsResponse {}
+
 message Tag {
   string key = 1 [(validator.field) = {string_not_empty: true}];
   string value = 2 [(validator.field) = {string_not_empty: true}];
+}
+
+message Pool {
+  string start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"}];
+  string end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"}];
+  int32 status = 3;
 }
 
 service PrefixService {
@@ -47,6 +72,18 @@ service PrefixService {
   rpc ActivateIP(ActivateIPRequest) returns (ActivateIPResponse) {
     option (google.api.http) = {
       post: "/api/ip/{ip}/activate"
+    };
+  };
+
+  rpc CreatePrefix(CreatePrefixRequest) returns (CreatePrefixResponse) {
+    option (google.api.http) = {
+      post: "/api/prefix/{ip}/{mask}/create"
+    };
+  };
+
+  rpc CreatePools(CreatePoolsRequest) returns (CreatePoolsResponse) {
+    option (google.api.http) = {
+      post: "/api/prefix/{ip}/{mask}/pools/create"
     };
   };
 }

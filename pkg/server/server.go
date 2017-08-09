@@ -161,6 +161,20 @@ func (api *APIServer) ActivateIP(
 	return &serverpb.ActivateIPResponse{}, nil
 }
 
+func (api *APIServer) CreatePrefix(
+	ctx context.Context,
+	req *serverpb.CreatePrefixRequest,
+) (*serverpb.CreatePrefixResponse, error) {
+	return &serverpb.CreatePrefixResponse{}, nil
+}
+
+func (api *APIServer) CreatePools(
+	ctx context.Context,
+	req *serverpb.CreatePoolsRequest,
+) (*serverpb.CreatePoolsResponse, error) {
+	return &serverpb.CreatePoolsResponse{}, nil
+}
+
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}

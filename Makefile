@@ -58,6 +58,7 @@ proto: $(PROTOSRCS)
 	   -Ipkg \
 	   -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 	   -I$$GOPATH/src \
+	   -Ivendor \
 	   $$src \
 	   --grpc-gateway_out=logtostderr=true:pkg \
 	   --govalidators_out=pkg \
