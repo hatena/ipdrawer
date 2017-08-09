@@ -1,7 +1,6 @@
 package ipam
 
 import (
-	"encoding/binary"
 	"fmt"
 	"net"
 	"time"
@@ -49,43 +48,18 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 	defer m.locker.Unlock(token)
 
 	zkey := makePoolUsedIPZset(pool.Start, pool.End)
-	var cur uint64
 	avail := pool.Start
 
-	var keys []string
-	keys, cur, err = m.redis.Client.ZScan(zkey, cur, "", 0).Result()
+	keys, err := m.redis.Client.ZRange(zkey, 0, -1).Result()
 	if err != nil {
 		return nil, err
 	}
-	//for _, k := range keys {
-	//	ip := net.ParseIP(k)
-	//	if ip == nil {
-	//		continue
-	//	}
-	//	if avail.Equal(ip) {
-	//		avail = nextIP(ip)
-	//		continue
-	//	} else {
-	//		check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
-	//		if err != nil || check != 0 {
-	//			avail = nextIP(ip)
-	//			continue
-	//		}
-	//		if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
-	//			avail = nextIP(ip)
-	//			continue
-	//		}
-	//		return avail, nil
-	//	}
-	//}
 
 	i := 0
 	for !prevIP(avail).Equal(pool.End) {
 		flag := false
-
 		if i < len(keys) {
 			usedIP := net.ParseIP(keys[i])
-			fmt.Println(avail, i, usedIP)
 			if usedIP != nil {
 				if avail.Equal(usedIP) {
 					flag = true
@@ -127,7 +101,7 @@ func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
 	// Change IP status to ACTIVE
 	pipe.HSet(makeIPDetailsKey(ip), "status", int(IP_ACTIVE))
 	// Add IP to used IP zset
-	score := float64(binary.BigEndian.Uint32(ip))
+	score := float64(ip2int(ip))
 	z := redis.Z{score, ip.String()}
 	pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
 	if _, err := pipe.Exec(); err != nil {
