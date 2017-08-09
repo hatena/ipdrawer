@@ -62,6 +62,7 @@ proto: $(PROTOSRCS)
 	   $$src \
 	   --grpc-gateway_out=logtostderr=true:pkg \
 	   --govalidators_out=pkg \
+	   --swagger_out=logtostderr=true:pkg \
 	   --go_out=plugins=grpc:pkg; \
 	done
 

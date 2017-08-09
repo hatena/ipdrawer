@@ -138,8 +138,8 @@ func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 }
 
 // GetPools gets pools.
-func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
-	return nil, nil
+func (m *IPManager) GetPools(prefix *Prefix) ([]*IPPool, error) {
+	return getPools(m.redis, prefix)
 }
 
 // GetPrefix gets prefix.
@@ -159,6 +159,12 @@ func (m *IPManager) CreatePrefix(p *Prefix) error {
 }
 
 // CreatePool creates pool
-func (m *IPManager) CreatePool(pool *IPPool) {
+func (m *IPManager) CreatePool(prefix *Prefix, pool *IPPool) error {
+	token, err := m.locker.Lock()
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(token)
 
+	return setPool(m.redis, prefix, pool)
 }

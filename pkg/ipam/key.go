@@ -42,12 +42,12 @@ func makePrefixPoolKey(ip *net.IPNet) string {
 	return makePrefixDetailsKey(ip) + ":pools"
 }
 
-func makePoolDetails(s, e net.IP) string {
+func makePoolDetailsKey(s, e net.IP) string {
 	return fmt.Sprintf(poolDetails, s.String(), e.String())
 }
 
-func makePoolTags(s, e net.IP) string {
-	return makePoolDetails(s, e) + ":tags"
+func makePoolTagsKey(s, e net.IP) string {
+	return makePoolDetailsKey(s, e) + ":tags"
 }
 
 func makePoolUsedIPZset(s, e net.IP) string {

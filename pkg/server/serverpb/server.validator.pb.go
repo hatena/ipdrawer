@@ -18,8 +18,8 @@ It has these top-level messages:
 	GetPrefixResponse
 	CreatePrefixRequest
 	CreatePrefixResponse
-	CreatePoolsRequest
-	CreatePoolsResponse
+	CreatePoolRequest
+	CreatePoolResponse
 	Tag
 	Pool
 */
@@ -143,10 +143,10 @@ func (this *CreatePrefixResponse) Validate() error {
 	return nil
 }
 
-var _regex_CreatePoolsRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_CreatePoolRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
-func (this *CreatePoolsRequest) Validate() error {
-	if !_regex_CreatePoolsRequest_Ip.MatchString(this.Ip) {
+func (this *CreatePoolRequest) Validate() error {
+	if !_regex_CreatePoolRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
 	if !(this.Mask > -1) {
@@ -155,16 +155,14 @@ func (this *CreatePoolsRequest) Validate() error {
 	if !(this.Mask < 33) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
 	}
-	for _, item := range this.Pools {
-		if item != nil {
-			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("Pools", err)
-			}
+	if this.Pool != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Pool); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("Pool", err)
 		}
 	}
 	return nil
 }
-func (this *CreatePoolsResponse) Validate() error {
+func (this *CreatePoolResponse) Validate() error {
 	return nil
 }
 func (this *Tag) Validate() error {
@@ -186,6 +184,13 @@ func (this *Pool) Validate() error {
 	}
 	if !_regex_Pool_End.MatchString(this.End) {
 		return github_com_mwitkow_go_proto_validators.FieldError("End", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"`, this.End))
+	}
+	for _, item := range this.Tags {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
+			}
+		}
 	}
 	return nil
 }

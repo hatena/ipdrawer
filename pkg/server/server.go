@@ -117,7 +117,7 @@ func (api *APIServer) DrawIP(
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
-	pools, err := pre.GetPools()
+	pools, err := api.manager.GetPools(pre)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
@@ -130,7 +130,7 @@ func (api *APIServer) DrawIP(
 	}
 	var pool *ipam.IPPool
 	for _, p := range pools {
-		if p.MatchTags(tags) {
+		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags(tags) {
 			pool = p
 			break
 		}
@@ -246,14 +246,45 @@ func (api *APIServer) CreatePrefix(
 	return &serverpb.CreatePrefixResponse{}, nil
 }
 
-func (api *APIServer) CreatePools(
+func (api *APIServer) CreatePool(
 	ctx context.Context,
-	req *serverpb.CreatePoolsRequest,
-) (*serverpb.CreatePoolsResponse, error) {
+	req *serverpb.CreatePoolRequest,
+) (*serverpb.CreatePoolResponse, error) {
 	if err := req.Validate(); err != nil {
-		return &serverpb.CreatePoolsResponse{}, err
+		return &serverpb.CreatePoolResponse{}, err
 	}
-	return &serverpb.CreatePoolsResponse{}, nil
+
+	ip := &net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	}
+
+	logrus.Print(req)
+
+	tags := make(map[string]string)
+	if len(req.Pool.Tags) != 0 {
+		for _, tag := range req.Pool.Tags {
+			tags[tag.Key] = tag.Value
+		}
+	}
+
+	pool := &ipam.IPPool{
+		Start:  net.ParseIP(req.Pool.Start),
+		End:    net.ParseIP(req.Pool.End),
+		Status: ipam.POOL_AVAILABLE,
+		Tags:   tags,
+	}
+
+	prefix, err := api.manager.GetPrefix(ip)
+	if err != nil {
+		return &serverpb.CreatePoolResponse{}, err
+	}
+
+	if err := api.manager.CreatePool(prefix, pool); err != nil {
+		return &serverpb.CreatePoolResponse{}, err
+	}
+
+	return &serverpb.CreatePoolResponse{}, nil
 }
 
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {

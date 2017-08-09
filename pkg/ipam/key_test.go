@@ -42,11 +42,11 @@ func TestKey(t *testing.T) {
 			e: "prefix:192.168.0.0/24:details:pools",
 		},
 		{
-			a: makePoolDetails(ip, ip),
+			a: makePoolDetailsKey(ip, ip),
 			e: "pool:192.168.0.2,192.168.0.2:details",
 		},
 		{
-			a: makePoolTags(ip, ip),
+			a: makePoolTagsKey(ip, ip),
 			e: "pool:192.168.0.2,192.168.0.2:details:tags",
 		},
 	}

@@ -29,10 +29,6 @@ const (
 	PREFIX_RESERVED
 )
 
-func (p *Prefix) GetPools() ([]*IPPool, error) {
-	return nil, nil
-}
-
 func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
 	lkey := makePrefixListKey()
 	ps, err := r.Client.SMembers(lkey).Result()
