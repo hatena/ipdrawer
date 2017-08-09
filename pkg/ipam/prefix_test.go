@@ -15,11 +15,11 @@ func TestPrefixUnmarshal(t *testing.T) {
 		errmsg string
 	}{
 		{
-			data: []interface{}{0, "255.255.0.0", "192.168.255.255"},
+			data: []interface{}{"0", "255.255.0.0", "192.168.255.255"},
 			out: &Prefix{
-				status:    PREFIX_AVAILABLE,
-				netmask:   net.ParseIP("255.255.0.0"),
-				broadcast: net.ParseIP("192.168.255.255"),
+				Status:    PREFIX_AVAILABLE,
+				Netmask:   net.ParseIP("255.255.0.0"),
+				Broadcast: net.ParseIP("192.168.255.255"),
 			},
 		},
 	}

@@ -52,7 +52,6 @@ func TestDrawIP(t *testing.T) {
 		start: net.ParseIP("10.0.0.1"),
 		end:   net.ParseIP("10.0.0.254"),
 	}
-	//zkey := makePoolUsedIPZset(pool.start, pool.end)
 
 	m.Activate(pool, net.ParseIP("10.0.0.1"))
 	m.Activate(pool, net.ParseIP("10.0.0.3"))

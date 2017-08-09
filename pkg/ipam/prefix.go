@@ -3,6 +3,7 @@ package ipam
 import (
 	"fmt"
 	"net"
+	"strconv"
 
 	"github.com/pkg/errors"
 
@@ -10,12 +11,12 @@ import (
 )
 
 type Prefix struct {
-	prefix    *net.IPNet
-	gateways  []net.IP
-	broadcast net.IP
-	netmask   net.IP
-	status    PrefixStatus
-	tags      map[string]string
+	Prefix    *net.IPNet
+	Gateways  []net.IP
+	Broadcast net.IP
+	Netmask   net.IP
+	Status    PrefixStatus
+	Tags      map[string]string
 	pools     []*IPPool
 }
 
@@ -57,6 +58,45 @@ func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
 	return nil, nil
 }
 
+func setPrefix(r *storage.Redis, p *Prefix) error {
+	// Set details
+	dkey := makePrefixDetailsKey(p.Prefix)
+	details := map[string]interface{}{
+		"status":    int(p.Status),
+		"netmask":   p.Netmask.String(),
+		"broadcast": p.Broadcast.String(),
+	}
+	if _, err := r.Client.HMSet(dkey, details).Result(); err != nil {
+		return err
+	}
+
+	// Set tags
+	if len(p.Tags) != 0 {
+		tagKey := makePrefixTagKey(p.Prefix)
+		tags := make(map[string]interface{})
+		for k, v := range p.Tags {
+			tags[k] = v
+		}
+		if _, err := r.Client.HMSet(tagKey, tags).Result(); err != nil {
+			return err
+		}
+	}
+
+	// Set default Gateways
+	if len(p.Gateways) != 0 {
+		gwKey := makePrefixDefaultGWKey(p.Prefix)
+		gws := make([]string, len(p.Gateways))
+		for i, gw := range p.Gateways {
+			gws[i] = gw.String()
+		}
+		if _, err := r.Client.SAdd(gwKey, gws).Result(); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 	dkey := makePrefixDetailsKey(ipnet)
 	tagKey := makePrefixTagKey(ipnet)
@@ -64,7 +104,7 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 
 	check, err := r.Client.Exists(dkey).Result()
 	if err != nil || check == 0 {
-		return nil, errors.New("not found prefix")
+		return nil, errors.New("not found Prefix")
 	}
 
 	data, err := r.Client.HMGet(dkey, prefixFieldsKey...).Result()
@@ -81,8 +121,8 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 	}
 
 	pre := &Prefix{
-		prefix: ipnet,
-		tags:   tags,
+		Prefix: ipnet,
+		Tags:   tags,
 	}
 	if err := pre.unmarshal(data); err != nil {
 		return nil, err
@@ -93,37 +133,42 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 			return nil, errors.New(fmt.Sprintf("Failed parse IP: %s", g))
 		}
 	}
-	pre.gateways = gateways
+	pre.Gateways = gateways
 
 	return pre, nil
 }
 
 func (p *Prefix) unmarshal(data []interface{}) error {
-	var ok bool
 	var status int
 	var netmask, broadcast net.IP
 
-	if status, ok = data[0].(int); !ok {
-		return errors.New("Failed unwrap")
+	if ss, ok := data[0].(string); ok {
+		var err error
+		status, err = strconv.Atoi(ss)
+		if err != nil {
+			return errors.New(fmt.Sprintf("Failed unwrap of status: %v", data[0]))
+		}
+	} else {
+		return errors.New(fmt.Sprintf("Failed unwrap of status: %v", data[0]))
 	}
 	if ss, ok := data[1].(string); ok {
 		if netmask = net.ParseIP(ss); netmask == nil {
 			return errors.New(fmt.Sprintf("Failed parse IP: %s", ss))
 		}
 	} else {
-		return errors.New("Failed unwrap")
+		return errors.New(fmt.Sprintf("Failed unwrap of netmask: %v", data[1]))
 	}
 	if ss, ok := data[2].(string); ok {
 		if broadcast = net.ParseIP(ss); broadcast == nil {
 			return errors.New(fmt.Sprintf("Failed parse IP: %s", ss))
 		}
 	} else {
-		return errors.New("Failed unwrap")
+		return errors.New(fmt.Sprintf("Failed unwrap of broadcast: %v", data[2]))
 	}
 
-	p.status = PrefixStatus(status)
-	p.netmask = netmask
-	p.broadcast = broadcast
+	p.Status = PrefixStatus(status)
+	p.Netmask = netmask
+	p.Broadcast = broadcast
 
 	return nil
 }

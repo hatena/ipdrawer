@@ -23,23 +23,23 @@ func TestKey(t *testing.T) {
 		},
 		{
 			a: makePrefixListKey(),
-			e: "Prefix:list",
+			e: "prefix:list",
 		},
 		{
 			a: makePrefixDetailsKey(ipnet),
-			e: "Prefix:192.168.0.0/24:details",
+			e: "prefix:192.168.0.0/24:details",
 		},
 		{
 			a: makePrefixDefaultGWKey(ipnet),
-			e: "Prefix:192.168.0.0/24:details:default_gateways",
+			e: "prefix:192.168.0.0/24:details:default_gateways",
 		},
 		{
 			a: makePrefixTagKey(ipnet),
-			e: "Prefix:192.168.0.0/24:details:tags",
+			e: "prefix:192.168.0.0/24:details:tags",
 		},
 		{
 			a: makePrefixPoolKey(ipnet),
-			e: "Prefix:192.168.0.0/24:details:pools",
+			e: "prefix:192.168.0.0/24:details:pools",
 		},
 		{
 			a: makePoolDetails(ip, ip),

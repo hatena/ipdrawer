@@ -151,6 +151,9 @@ func (api *APIServer) GetPrefixIncludingIP(
 	ctx context.Context,
 	req *serverpb.GetPrefixIncludingIPRequest,
 ) (*serverpb.GetPrefixIncludingIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return &serverpb.GetPrefixIncludingIPResponse{}, err
+	}
 	return &serverpb.GetPrefixIncludingIPResponse{}, nil
 }
 
@@ -158,13 +161,88 @@ func (api *APIServer) ActivateIP(
 	ctx context.Context,
 	req *serverpb.ActivateIPRequest,
 ) (*serverpb.ActivateIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return &serverpb.ActivateIPResponse{}, err
+	}
 	return &serverpb.ActivateIPResponse{}, nil
+}
+
+func (api *APIServer) GetPrefix(
+	ctx context.Context,
+	req *serverpb.GetPrefixRequest,
+) (*serverpb.GetPrefixResponse, error) {
+	if err := req.Validate(); err != nil {
+		return &serverpb.GetPrefixResponse{}, err
+	}
+
+	p, err := api.manager.GetPrefix(&net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	})
+	if err != nil {
+		return &serverpb.GetPrefixResponse{}, err
+	}
+
+	gws := make([]string, len(p.Gateways))
+	for i, gw := range p.Gateways {
+		gws[i] = gw.String()
+	}
+
+	tags := make([]*serverpb.Tag, len(p.Tags))
+	i := 0
+	for k, v := range p.Tags {
+		tags[i] = &serverpb.Tag{
+			Key:   k,
+			Value: v,
+		}
+		i += 1
+	}
+
+	return &serverpb.GetPrefixResponse{
+		Ipnet:           p.Prefix.String(),
+		Broadcast:       p.Broadcast.String(),
+		Netmask:         p.Netmask.String(),
+		DefaultGateways: gws,
+		Tags:            tags,
+	}, nil
 }
 
 func (api *APIServer) CreatePrefix(
 	ctx context.Context,
 	req *serverpb.CreatePrefixRequest,
 ) (*serverpb.CreatePrefixResponse, error) {
+	if err := req.Validate(); err != nil {
+		return &serverpb.CreatePrefixResponse{}, err
+	}
+
+	ip := &net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	}
+
+	gws := make([]net.IP, len(req.DefaultGateways))
+	for i, gw := range req.DefaultGateways {
+		gws[i] = net.ParseIP(gw)
+	}
+
+	tags := make(map[string]string)
+	for _, tag := range req.Tags {
+		tags[tag.Key] = tag.Value
+	}
+
+	p := &ipam.Prefix{
+		Prefix:    ip,
+		Broadcast: net.ParseIP(req.Broadcast),
+		Netmask:   net.ParseIP(req.Netmask),
+		Gateways:  gws,
+		Tags:      tags,
+		Status:    ipam.PREFIX_AVAILABLE,
+	}
+
+	if err := api.manager.CreatePrefix(p); err != nil {
+		return &serverpb.CreatePrefixResponse{}, err
+	}
+
 	return &serverpb.CreatePrefixResponse{}, nil
 }
 
@@ -172,6 +250,9 @@ func (api *APIServer) CreatePools(
 	ctx context.Context,
 	req *serverpb.CreatePoolsRequest,
 ) (*serverpb.CreatePoolsResponse, error) {
+	if err := req.Validate(); err != nil {
+		return &serverpb.CreatePoolsResponse{}, err
+	}
 	return &serverpb.CreatePoolsResponse{}, nil
 }
 

@@ -14,6 +14,8 @@ It has these top-level messages:
 	GetPrefixIncludingIPResponse
 	ActivateIPRequest
 	ActivateIPResponse
+	GetPrefixRequest
+	GetPrefixResponse
 	CreatePrefixRequest
 	CreatePrefixResponse
 	CreatePoolsRequest
@@ -82,6 +84,37 @@ func (this *ActivateIPRequest) Validate() error {
 	return nil
 }
 func (this *ActivateIPResponse) Validate() error {
+	return nil
+}
+
+var _regex_GetPrefixRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
+func (this *GetPrefixRequest) Validate() error {
+	if !_regex_GetPrefixRequest_Ip.MatchString(this.Ip) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
+	}
+	if !(this.Mask > -1) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
+	}
+	if !(this.Mask < 33) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
+	}
+	return nil
+}
+
+var _regex_GetPrefixResponse_Ipnet = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$")
+
+func (this *GetPrefixResponse) Validate() error {
+	if !_regex_GetPrefixResponse_Ipnet.MatchString(this.Ipnet) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Ipnet", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"`, this.Ipnet))
+	}
+	for _, item := range this.Tags {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
+			}
+		}
+	}
 	return nil
 }
 

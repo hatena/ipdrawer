@@ -8,8 +8,8 @@ import (
 const (
 	ipDetails      = "ip:%s:details"
 	ipTempReserved = "ip:%s:temporary_deserved"
-	prefixList     = "Prefix:list"
-	prefixDetails  = "Prefix:%s:details"
+	prefixList     = "prefix:list"
+	prefixDetails  = "prefix:%s:details"
 	poolDetails    = "pool:%s,%s:details"
 	poolUsedIPZSet = "pool:%s,%s:used_ip_zset"
 )

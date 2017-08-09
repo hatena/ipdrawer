@@ -146,3 +146,14 @@ func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
 func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
 	return getPrefix(m.redis, ipnet)
 }
+
+// CreatePrefix creates prefix.
+func (m *IPManager) CreatePrefix(p *Prefix) error {
+	token, err := m.locker.Lock()
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(token)
+
+	return setPrefix(m.redis, p)
+}
