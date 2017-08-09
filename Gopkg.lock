@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/alicebob/miniredis"
+  packages = [".","server"]
+  revision = "995ba133bd8fe5dae5a34732bd99f558b0b60e1a"
+  version = "2.1.0"
+
+[[projects]]
   name = "github.com/cenkalti/backoff"
   packages = ["."]
   revision = "32cd0c5b3aef12c76ed64aaf678f6c79736be7dc"
@@ -136,6 +142,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e6b52d07a92a903092793318cb9d0e05582679681795b552870cb84371797a67"
+  inputs-digest = "6d5ed283e84544a9804fd60351261526707dec6b8aed7e06802778ccc18d625d"
   solver-name = "gps-cdcl"
   solver-version = 1

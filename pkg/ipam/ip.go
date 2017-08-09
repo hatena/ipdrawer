@@ -13,7 +13,8 @@ import (
 )
 
 type IPManager struct {
-	redis *storage.Redis
+	redis  *storage.Redis
+	locker storage.Locker
 }
 
 type ipAddr struct {
@@ -31,18 +32,21 @@ const (
 
 // NewIPManager creates IPManager instance
 func NewIPManager() *IPManager {
+	redis := storage.NewRedis()
+	locker := storage.NewLocker(redis)
 	return &IPManager{
-		redis: storage.NewRedis(),
+		redis:  redis,
+		locker: locker,
 	}
 }
 
 // DrawIP returns an available IP.
 func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
-	token, err := m.redis.Lock()
+	token, err := m.locker.Lock()
 	if err != nil {
 		return nil, err
 	}
-	defer m.redis.Unlock(token)
+	defer m.locker.Unlock(token)
 
 	zkey := makePoolUsedIPZset(pool.start, pool.end)
 	var cur uint64
@@ -84,11 +88,11 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 
 // Activate activates IP.
 func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
-	token, err := m.redis.Lock()
+	token, err := m.locker.Lock()
 	if err != nil {
 		return err
 	}
-	defer m.redis.Unlock(token)
+	defer m.locker.Unlock(token)
 
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way

@@ -3,10 +3,7 @@ package storage
 import (
 	"time"
 
-	"github.com/cenkalti/backoff"
 	"github.com/go-redis/redis"
-	"github.com/google/uuid"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -40,37 +37,4 @@ func NewRedis() *Redis {
 	return &Redis{
 		Client: client,
 	}
-}
-
-func (r *Redis) Lock() (string, error) {
-	token := uuid.New().String()
-	err := backoff.Retry(func() error {
-		res, err := r.Client.SetNX(lockResourceName, token, lockExpirationTime).Result()
-		if err != nil {
-			return err
-		}
-		if res {
-			return nil
-		} else {
-			return errors.New("can't lock")
-		}
-	}, backoff.NewExponentialBackOff())
-	if err != nil {
-		return "", err
-	}
-	return token, nil
-}
-
-func (r *Redis) Unlock(token string) error {
-	_, err := r.Client.Eval(`
-if redis.call("get",KEYS[1]) == ARGV[1]
-then
-  return redis.call("del",KEYS[1])
-else
-  return 0
-end`, []string{token}, lockResourceName).Result()
-	if err != nil {
-		return err
-	}
-	return nil
 }

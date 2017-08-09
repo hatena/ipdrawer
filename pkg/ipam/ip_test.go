@@ -9,13 +9,14 @@ import (
 
 func newTestIPManager(r *storage.Redis) *IPManager {
 	return &IPManager{
-		redis: r,
+		redis:  r,
+		locker: &storage.LocalLocker{},
 	}
 }
 
 func TestIPActivation(t *testing.T) {
 	r, deferFunc := storage.NewTestRedis()
-	defer deferFunc(r)
+	defer deferFunc()
 
 	m := newTestIPManager(r)
 
@@ -43,7 +44,7 @@ func TestIPActivation(t *testing.T) {
 
 func TestDrawIP(t *testing.T) {
 	r, deferFunc := storage.NewTestRedis()
-	defer deferFunc(r)
+	defer deferFunc()
 
 	m := newTestIPManager(r)
 
@@ -65,12 +66,12 @@ func TestDrawIP(t *testing.T) {
 		t.Errorf("Expected %v, but got %v", expected, ip)
 	}
 
-	m.Activate(pool, net.ParseIP("10.0.0.2"))
+	m.Activate(pool, net.ParseIP("10.0.0.4"))
 	ip, err = m.DrawIP(pool, true)
 	if err != nil {
 		t.Errorf("Got error: %v", err)
 	}
-	expected = net.ParseIP("10.0.0.4")
+	expected = net.ParseIP("10.0.0.5")
 	if !ip.Equal(expected) {
 		t.Errorf("Expected %v, but got %v", expected, ip)
 	}
