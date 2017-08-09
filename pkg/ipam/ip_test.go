@@ -21,8 +21,8 @@ func TestIPActivation(t *testing.T) {
 	m := newTestIPManager(r)
 
 	pool := &IPPool{
-		start: net.ParseIP("10.0.0.1"),
-		end:   net.ParseIP("10.0.0.254"),
+		Start: net.ParseIP("10.0.0.1"),
+		End:   net.ParseIP("10.0.0.254"),
 	}
 
 	if err := m.Activate(pool, net.ParseIP("10.0.0.1")); err != nil {
@@ -32,7 +32,7 @@ func TestIPActivation(t *testing.T) {
 		t.Fatalf("Got error: %v", err)
 	}
 
-	zkey := makePoolUsedIPZset(pool.start, pool.end)
+	zkey := makePoolUsedIPZset(pool.Start, pool.End)
 	cnt, err := r.Client.ZCard(zkey).Result()
 	if err != nil {
 		t.Errorf("Got error: %v", err)
@@ -49,8 +49,8 @@ func TestDrawIP(t *testing.T) {
 	m := newTestIPManager(r)
 
 	pool := &IPPool{
-		start: net.ParseIP("10.0.0.1"),
-		end:   net.ParseIP("10.0.0.254"),
+		Start: net.ParseIP("10.0.0.1"),
+		End:   net.ParseIP("10.0.0.254"),
 	}
 
 	m.Activate(pool, net.ParseIP("10.0.0.1"))

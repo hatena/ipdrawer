@@ -48,9 +48,9 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 	}
 	defer m.locker.Unlock(token)
 
-	zkey := makePoolUsedIPZset(pool.start, pool.end)
+	zkey := makePoolUsedIPZset(pool.Start, pool.End)
 	var cur uint64
-	avail := pool.start
+	avail := pool.Start
 
 	var keys []string
 	keys, cur, err = m.redis.Client.ZScan(zkey, cur, "", 0).Result()
@@ -79,7 +79,7 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 		}
 	}
 
-	if prevIP(avail).Equal(pool.end) {
+	if prevIP(avail).Equal(pool.End) {
 		return nil, errors.New("Nothing IP to serve")
 	} else {
 		return avail, nil
@@ -102,7 +102,7 @@ func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
 	// Add IP to used IP zset
 	score := float64(binary.BigEndian.Uint32(ip))
 	z := redis.Z{score, ip.String()}
-	pipe.ZAdd(makePoolUsedIPZset(p.start, p.end), z)
+	pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
 	if _, err := pipe.Exec(); err != nil {
 		return err
 	}
@@ -156,4 +156,9 @@ func (m *IPManager) CreatePrefix(p *Prefix) error {
 	defer m.locker.Unlock(token)
 
 	return setPrefix(m.redis, p)
+}
+
+// CreatePool creates pool
+func (m *IPManager) CreatePool(pool *IPPool) {
+
 }

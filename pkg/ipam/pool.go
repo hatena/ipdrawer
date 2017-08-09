@@ -7,10 +7,10 @@ import (
 )
 
 type IPPool struct {
-	start  net.IP
-	end    net.IP
-	status poolStatus
-	tags   map[string]string
+	Start  net.IP
+	End    net.IP
+	Status poolStatus
+	Tags   map[string]string
 }
 
 type poolStatus int
@@ -22,7 +22,7 @@ const (
 
 func (p *IPPool) MatchTags(tags map[string]string) bool {
 	for k, v := range tags {
-		if vv, ok := p.tags[k]; !ok || vv != v {
+		if vv, ok := p.Tags[k]; !ok || vv != v {
 			return false
 		}
 	}
