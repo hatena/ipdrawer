@@ -1,4 +1,7 @@
-{
+package serverpb
+
+const (
+	swagger = `{
   "swagger": "2.0",
   "info": {
     "title": "server/serverpb/server.proto",
@@ -292,3 +295,5 @@
     }
   }
 }
+`
+)

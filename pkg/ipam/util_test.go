@@ -1,8 +1,8 @@
 package ipam
 
 import (
-	"testing"
 	"net"
+	"testing"
 )
 
 func TestNextIP(t *testing.T) {

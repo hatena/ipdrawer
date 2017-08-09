@@ -65,6 +65,7 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --go_out=plugins=grpc:pkg; \
 	done
+	go generate
 
 .PHONY: deps
 deps:
