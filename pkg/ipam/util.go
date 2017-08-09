@@ -19,6 +19,9 @@ func int2ip(nn uint32) net.IP {
 }
 
 func nextIP(ip net.IP) net.IP {
-	next := ip2int(ip) + 1
-	return int2ip(next)
+	return int2ip(ip2int(ip) + 1)
+}
+
+func prevIP(ip net.IP) net.IP {
+	return int2ip(ip2int(ip) - 1)
 }

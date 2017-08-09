@@ -75,7 +75,11 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 		}
 	}
 
-	return nil, errors.New("")
+	if prevIP(avail).Equal(pool.end) {
+		return nil, errors.New("Nothing IP to serve")
+	} else {
+		return avail, nil
+	}
 }
 
 // Activate activates IP.
@@ -133,5 +137,3 @@ func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
 func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
 	return getPrefix(m.redis, ipnet)
 }
-
-

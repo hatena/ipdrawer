@@ -64,5 +64,14 @@ func TestDrawIP(t *testing.T) {
 	if !ip.Equal(expected) {
 		t.Errorf("Expected %v, but got %v", expected, ip)
 	}
-}
 
+	m.Activate(pool, net.ParseIP("10.0.0.2"))
+	ip, err = m.DrawIP(pool, true)
+	if err != nil {
+		t.Errorf("Got error: %v", err)
+	}
+	expected = net.ParseIP("10.0.0.4")
+	if !ip.Equal(expected) {
+		t.Errorf("Expected %v, but got %v", expected, ip)
+	}
+}
