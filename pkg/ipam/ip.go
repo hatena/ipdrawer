@@ -57,33 +57,60 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 	if err != nil {
 		return nil, err
 	}
-	for _, k := range keys {
-		ip := net.ParseIP(k)
-		if ip == nil {
-			continue
-		}
-		if avail.Equal(ip) {
-			avail = nextIP(ip)
-			continue
-		} else {
-			check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
-			if err != nil || check != 0 {
-				avail = nextIP(ip)
-				continue
-			}
-			if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
-				avail = nextIP(ip)
-				continue
-			}
-			return avail, nil
-		}
-	}
+	//for _, k := range keys {
+	//	ip := net.ParseIP(k)
+	//	if ip == nil {
+	//		continue
+	//	}
+	//	if avail.Equal(ip) {
+	//		avail = nextIP(ip)
+	//		continue
+	//	} else {
+	//		check, err := m.redis.Client.Exists(makeIPTempReserved(ip)).Result()
+	//		if err != nil || check != 0 {
+	//			avail = nextIP(ip)
+	//			continue
+	//		}
+	//		if _, err = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result(); err != nil {
+	//			avail = nextIP(ip)
+	//			continue
+	//		}
+	//		return avail, nil
+	//	}
+	//}
 
-	if prevIP(avail).Equal(pool.End) {
-		return nil, errors.New("Nothing IP to serve")
-	} else {
-		return avail, nil
+	i := 0
+	for !prevIP(avail).Equal(pool.End) {
+		flag := false
+
+		if i < len(keys) {
+			usedIP := net.ParseIP(keys[i])
+			fmt.Println(avail, i, usedIP)
+			if usedIP != nil {
+				if avail.Equal(usedIP) {
+					flag = true
+					i += 1
+				}
+			}
+		}
+		if !flag {
+			check, err := m.redis.Client.Exists(makeIPTempReserved(avail)).Result()
+			if err != nil || check != 0 {
+				flag = true
+
+			} else {
+				if _, err = m.redis.Client.Set(makeIPTempReserved(avail), 1, 24*time.Hour).Result(); err != nil {
+					flag = true
+				}
+			}
+		}
+		if !flag {
+			return avail, nil
+		} else {
+			avail = nextIP(avail)
+		}
 	}
+	return nil, errors.New("Nothing IP to serve")
 }
 
 // Activate activates IP.
