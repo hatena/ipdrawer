@@ -109,14 +109,17 @@ func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
 	return nil
 }
 
+// Reserve makes the status of given IP reserved.
 func (m *IPManager) Reserve(p *Prefix, ip net.IP) error {
 	return nil
 }
 
+// Release makes the status of given IP available.
 func (m *IPManager) Release(p *Prefix, ip net.IP) error {
 	return nil
 }
 
+// GetPrefixIncludingIP returns a prefix including given IP.
 func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 	ps, err := m.redis.Client.SMembers(makePrefixListKey()).Result()
 	if err != nil {
@@ -134,10 +137,12 @@ func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
 }
 
+// GetPools gets pools.
 func (m *IPManager) GetPools(ip net.IP) ([]*IPPool, error) {
 	return nil, nil
 }
 
+// GetPrefix gets prefix.
 func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
 	return getPrefix(m.redis, ipnet)
 }
