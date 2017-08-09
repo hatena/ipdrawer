@@ -74,6 +74,12 @@
   version = "v1.0.2"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/philips/go-bindata-assetfs"
+  packages = ["."]
+  revision = "3dcc96556217539f50599357fb481ac0dc7439b9"
+
+[[projects]]
   name = "github.com/pkg/errors"
   packages = ["."]
   revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
@@ -142,6 +148,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6d5ed283e84544a9804fd60351261526707dec6b8aed7e06802778ccc18d625d"
+  inputs-digest = "f3f6727fb4cb64573ce5cfc0b8c343e928e92a5eee8853389cb405d382e37e2a"
   solver-name = "gps-cdcl"
   solver-version = 1

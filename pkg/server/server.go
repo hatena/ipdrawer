@@ -2,9 +2,12 @@ package server
 
 import (
 	ocontext "context"
+	"io"
 	"log"
+	"mime"
 	"net"
 	"net/http"
+	"strings"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
@@ -20,8 +23,10 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
+	"github.com/philips/go-bindata-assetfs"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
+	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
 )
 
 type APIServer struct {
@@ -37,6 +42,39 @@ func NewAPIServer(port string) *APIServer {
 		addr:    ":" + port,
 		manager: mngr,
 	}
+}
+
+func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
+	mux := runtime.NewServeMux()
+	opts := []grpc.DialOption{grpc.WithInsecure()}
+	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, api.addr, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	n := negroni.New()
+	n.Use(negroni.NewRecovery())
+	n.Use(negronilogrus.NewMiddleware())
+	n.UseHandler(mux)
+
+	return n, nil
+}
+
+func serveSwagger(mux *http.ServeMux) {
+	mime.AddExtensionType(".svg", "image/svg+xml")
+
+	// Expose files in third_party/swagger-ui/ on <host>/swagger-ui
+	fileServer := http.FileServer(&assetfs.AssetFS{
+		Asset:    swagger.Asset,
+		AssetDir: swagger.AssetDir,
+		Prefix:   "third_party/swagger-ui",
+	})
+	prefix := "/swagger-ui/"
+	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
+
+	mux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
+		io.Copy(w, strings.NewReader(serverpb.Swagger))
+	})
 }
 
 func (api *APIServer) Start() error {
@@ -75,8 +113,12 @@ func (api *APIServer) Start() error {
 	if err != nil {
 		return err
 	}
+
+	mux := http.NewServeMux()
+	mux.Handle("/", gw)
+	serveSwagger(mux)
 	api.httpS = &http.Server{
-		Handler: gw,
+		Handler: mux,
 	}
 
 	go func() {
@@ -285,22 +327,6 @@ func (api *APIServer) CreatePool(
 	}
 
 	return &serverpb.CreatePoolResponse{}, nil
-}
-
-func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
-	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(ctx, mux, api.addr, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	n := negroni.New()
-	n.Use(negroni.NewRecovery())
-	n.Use(negronilogrus.NewMiddleware())
-	n.UseHandler(mux)
-
-	return n, nil
 }
 
 func parseIPAndMask(ip, mask string) (net.IP, error) {
