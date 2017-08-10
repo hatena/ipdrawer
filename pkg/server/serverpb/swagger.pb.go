@@ -18,7 +18,7 @@ const (
     "application/json"
   ],
   "paths": {
-    "/api/ip/{ip}/activate": {
+    "/api/v0/ip/{ip}/activate": {
       "post": {
         "operationId": "ActivateIP",
         "responses": {
@@ -38,18 +38,18 @@ const (
           }
         ],
         "tags": [
-          "IPService"
+          "IPServiceV0"
         ]
       }
     },
-    "/api/ip/{ip}/prefix": {
+    "/api/v0/ip/{ip}/network": {
       "get": {
-        "operationId": "GetPrefixIncludingIP",
+        "operationId": "GetNetworkIncludingIP",
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbGetPrefixIncludingIPResponse"
+              "$ref": "#/definitions/serverpbGetNetworkIncludingIPResponse"
             }
           }
         },
@@ -62,18 +62,18 @@ const (
           }
         ],
         "tags": [
-          "IPService"
+          "IPServiceV0"
         ]
       }
     },
-    "/api/prefix/{ip}/{mask}": {
+    "/api/v0/network/{ip}/{mask}": {
       "get": {
-        "operationId": "GetPrefix",
+        "operationId": "GetNetwork",
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbGetPrefixResponse"
+              "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
           }
         },
@@ -93,18 +93,18 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "NetworkServiceV0"
         ]
       }
     },
-    "/api/prefix/{ip}/{mask}/create": {
+    "/api/v0/network/{ip}/{mask}/create": {
       "post": {
-        "operationId": "CreatePrefix",
+        "operationId": "CreateNetwork",
         "responses": {
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbCreatePrefixResponse"
+              "$ref": "#/definitions/serverpbCreateNetworkResponse"
             }
           }
         },
@@ -124,11 +124,11 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "NetworkServiceV0"
         ]
       }
     },
-    "/api/prefix/{ip}/{mask}/drawip": {
+    "/api/v0/network/{ip}/{mask}/drawip": {
       "get": {
         "operationId": "DrawIP",
         "responses": {
@@ -155,11 +155,11 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "NetworkServiceV0"
         ]
       }
     },
-    "/api/prefix/{ip}/{mask}/pool/create": {
+    "/api/v0/network/{ip}/{mask}/pool/create": {
       "post": {
         "operationId": "CreatePool",
         "responses": {
@@ -194,13 +194,16 @@ const (
           }
         ],
         "tags": [
-          "PrefixService"
+          "NetworkServiceV0"
         ]
       }
     }
   },
   "definitions": {
     "serverpbActivateIPResponse": {
+      "type": "object"
+    },
+    "serverpbCreateNetworkResponse": {
       "type": "object"
     },
     "serverpbCreatePoolRequest": {
@@ -221,9 +224,6 @@ const (
     "serverpbCreatePoolResponse": {
       "type": "object"
     },
-    "serverpbCreatePrefixResponse": {
-      "type": "object"
-    },
     "serverpbDrawIPResponse": {
       "type": "object",
       "properties": {
@@ -232,10 +232,10 @@ const (
         }
       }
     },
-    "serverpbGetPrefixIncludingIPResponse": {
+    "serverpbGetNetworkIncludingIPResponse": {
       "type": "object"
     },
-    "serverpbGetPrefixResponse": {
+    "serverpbGetNetworkResponse": {
       "type": "object",
       "properties": {
         "ipnet": {

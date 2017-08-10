@@ -19,27 +19,27 @@ func TestKey(t *testing.T) {
 		},
 		{
 			a: makeIPTempReserved(ip),
-			e: "ip:192.168.0.2:temporary_deserved",
+			e: "ip:192.168.0.2:temporary_reserved",
 		},
 		{
-			a: makePrefixListKey(),
-			e: "prefix:list",
+			a: makeNetworkListKey(),
+			e: "network:list",
 		},
 		{
-			a: makePrefixDetailsKey(ipnet),
-			e: "prefix:192.168.0.0/24:details",
+			a: makeNetworkDetailsKey(ipnet),
+			e: "network:192.168.0.0/24:details",
 		},
 		{
-			a: makePrefixDefaultGWKey(ipnet),
-			e: "prefix:192.168.0.0/24:details:default_gateways",
+			a: makeNetworkDefaultGWKey(ipnet),
+			e: "network:192.168.0.0/24:details:default_gateways",
 		},
 		{
-			a: makePrefixTagKey(ipnet),
-			e: "prefix:192.168.0.0/24:details:tags",
+			a: makeNetworkTagKey(ipnet),
+			e: "network:192.168.0.0/24:details:tags",
 		},
 		{
-			a: makePrefixPoolKey(ipnet),
-			e: "prefix:192.168.0.0/24:details:pools",
+			a: makeNetworkPoolKey(ipnet),
+			e: "network:192.168.0.0/24:details:pools",
 		},
 		{
 			a: makePoolDetailsKey(ip, ip),

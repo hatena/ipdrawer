@@ -22,11 +22,11 @@ func (api *APIServer) DrawIP(
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
-	pre, err := api.manager.GetPrefix(ip)
+	n, err := api.manager.GetNetwork(ip)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
-	pools, err := api.manager.GetPools(pre)
+	pools, err := api.manager.GetPools(n)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
@@ -56,14 +56,14 @@ func (api *APIServer) DrawIP(
 	}, nil
 }
 
-func (api *APIServer) GetPrefixIncludingIP(
+func (api *APIServer) GetNetworkIncludingIP(
 	ctx context.Context,
-	req *serverpb.GetPrefixIncludingIPRequest,
-) (*serverpb.GetPrefixIncludingIPResponse, error) {
+	req *serverpb.GetNetworkIncludingIPRequest,
+) (*serverpb.GetNetworkIncludingIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return &serverpb.GetPrefixIncludingIPResponse{}, err
+		return &serverpb.GetNetworkIncludingIPResponse{}, err
 	}
-	return &serverpb.GetPrefixIncludingIPResponse{}, nil
+	return &serverpb.GetNetworkIncludingIPResponse{}, nil
 }
 
 func (api *APIServer) ActivateIP(
@@ -76,12 +76,12 @@ func (api *APIServer) ActivateIP(
 
 	ip := net.ParseIP(req.Ip)
 
-	prefix, err := api.manager.GetPrefixIncludingIP(ip)
+	n, err := api.manager.GetNetworkIncludingIP(ip)
 	if err != nil {
 		return &serverpb.ActivateIPResponse{}, err
 	}
 
-	pools, err := api.manager.GetPools(prefix)
+	pools, err := api.manager.GetPools(n)
 	if err != nil {
 		return &serverpb.ActivateIPResponse{}, err
 	}
@@ -99,30 +99,30 @@ func (api *APIServer) ActivateIP(
 	return &serverpb.ActivateIPResponse{}, errors.New("Not found pool")
 }
 
-func (api *APIServer) GetPrefix(
+func (api *APIServer) GetNetwork(
 	ctx context.Context,
-	req *serverpb.GetPrefixRequest,
-) (*serverpb.GetPrefixResponse, error) {
+	req *serverpb.GetNetworkRequest,
+) (*serverpb.GetNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return &serverpb.GetPrefixResponse{}, err
+		return &serverpb.GetNetworkResponse{}, err
 	}
 
-	p, err := api.manager.GetPrefix(&net.IPNet{
+	n, err := api.manager.GetNetwork(&net.IPNet{
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	})
 	if err != nil {
-		return &serverpb.GetPrefixResponse{}, err
+		return &serverpb.GetNetworkResponse{}, err
 	}
 
-	gws := make([]string, len(p.Gateways))
-	for i, gw := range p.Gateways {
+	gws := make([]string, len(n.Gateways))
+	for i, gw := range n.Gateways {
 		gws[i] = gw.String()
 	}
 
-	tags := make([]*serverpb.Tag, len(p.Tags))
+	tags := make([]*serverpb.Tag, len(n.Tags))
 	i := 0
-	for k, v := range p.Tags {
+	for k, v := range n.Tags {
 		tags[i] = &serverpb.Tag{
 			Key:   k,
 			Value: v,
@@ -130,21 +130,21 @@ func (api *APIServer) GetPrefix(
 		i += 1
 	}
 
-	return &serverpb.GetPrefixResponse{
-		Ipnet:           p.Prefix.String(),
-		Broadcast:       p.Broadcast.String(),
-		Netmask:         p.Netmask.String(),
+	return &serverpb.GetNetworkResponse{
+		Ipnet:           n.Prefix.String(),
+		Broadcast:       n.Broadcast.String(),
+		Netmask:         n.Netmask.String(),
 		DefaultGateways: gws,
 		Tags:            tags,
 	}, nil
 }
 
-func (api *APIServer) CreatePrefix(
+func (api *APIServer) CreateNetwork(
 	ctx context.Context,
-	req *serverpb.CreatePrefixRequest,
-) (*serverpb.CreatePrefixResponse, error) {
+	req *serverpb.CreateNetworkRequest,
+) (*serverpb.CreateNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return &serverpb.CreatePrefixResponse{}, err
+		return &serverpb.CreateNetworkResponse{}, err
 	}
 
 	ip := &net.IPNet{
@@ -162,20 +162,20 @@ func (api *APIServer) CreatePrefix(
 		tags[tag.Key] = tag.Value
 	}
 
-	p := &ipam.Prefix{
+	n := &ipam.Network{
 		Prefix:    ip,
 		Broadcast: net.ParseIP(req.Broadcast),
 		Netmask:   net.ParseIP(req.Netmask),
 		Gateways:  gws,
 		Tags:      tags,
-		Status:    ipam.PREFIX_AVAILABLE,
+		Status:    ipam.NETWORK_AVAILABLE,
 	}
 
-	if err := api.manager.CreatePrefix(p); err != nil {
-		return &serverpb.CreatePrefixResponse{}, err
+	if err := api.manager.CreateNetwork(n); err != nil {
+		return &serverpb.CreateNetworkResponse{}, err
 	}
 
-	return &serverpb.CreatePrefixResponse{}, nil
+	return &serverpb.CreateNetworkResponse{}, nil
 }
 
 func (api *APIServer) CreatePool(
@@ -207,12 +207,12 @@ func (api *APIServer) CreatePool(
 		Tags:   tags,
 	}
 
-	prefix, err := api.manager.GetPrefix(ip)
+	n, err := api.manager.GetNetwork(ip)
 	if err != nil {
 		return &serverpb.CreatePoolResponse{}, err
 	}
 
-	if err := api.manager.CreatePool(prefix, pool); err != nil {
+	if err := api.manager.CreatePool(n, pool); err != nil {
 		return &serverpb.CreatePoolResponse{}, err
 	}
 

@@ -120,9 +120,9 @@ func (m *IPManager) Release(p *IPPool, ip net.IP) error {
 	return nil
 }
 
-// GetPrefixIncludingIP returns a prefix including given IP.
-func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
-	ps, err := m.redis.Client.SMembers(makePrefixListKey()).Result()
+// GetNetworkIncludingIP returns a prefix including given IP.
+func (m *IPManager) GetNetworkIncludingIP(ip net.IP) (*Network, error) {
+	ps, err := m.redis.Client.SMembers(makeNetworkListKey()).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -132,40 +132,46 @@ func (m *IPManager) GetPrefixIncludingIP(ip net.IP) (*Prefix, error) {
 			continue
 		}
 		if ipnet.Contains(ip) {
-			return getPrefix(m.redis, ipnet)
+			return getNetwork(m.redis, ipnet)
 		}
 	}
 	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
 }
 
 // GetPools gets pools.
-func (m *IPManager) GetPools(prefix *Prefix) ([]*IPPool, error) {
-	return getPools(m.redis, prefix)
+func (m *IPManager) GetPools(n *Network) ([]*IPPool, error) {
+	return getPools(m.redis, n)
 }
 
-// GetPrefix gets prefix.
-func (m *IPManager) GetPrefix(ipnet *net.IPNet) (*Prefix, error) {
-	return getPrefix(m.redis, ipnet)
+// GetNetwork gets prefix.
+func (m *IPManager) GetNetwork(ipnet *net.IPNet) (*Network, error) {
+	return getNetwork(m.redis, ipnet)
 }
 
-// CreatePrefix creates prefix.
-func (m *IPManager) CreatePrefix(p *Prefix) error {
+// CreateNetwork creates prefix.
+func (m *IPManager) CreateNetwork(n *Network) error {
 	token, err := m.locker.Lock()
 	if err != nil {
 		return err
 	}
 	defer m.locker.Unlock(token)
 
-	return setPrefix(m.redis, p)
+	if err := setNetwork(m.redis, n); err != nil {
+		return err
+	}
+
+	_, err = m.redis.Client.SAdd(makeNetworkListKey(), n.Prefix.String()).Result()
+
+	return err
 }
 
 // CreatePool creates pool
-func (m *IPManager) CreatePool(prefix *Prefix, pool *IPPool) error {
+func (m *IPManager) CreatePool(n *Network, pool *IPPool) error {
 	token, err := m.locker.Lock()
 	if err != nil {
 		return err
 	}
 	defer m.locker.Unlock(token)
 
-	return setPool(m.redis, prefix, pool)
+	return setPool(m.redis, n, pool)
 }

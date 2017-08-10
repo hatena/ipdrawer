@@ -19,18 +19,18 @@ func Test_getPools(t *testing.T) {
 		Status: POOL_AVAILABLE,
 	}
 
-	prefix := &Prefix{
+	n := &Network{
 		Prefix: &net.IPNet{
 			IP:   net.ParseIP("10.0.0.0"),
 			Mask: net.CIDRMask(24, 32),
 		},
-		Status: PREFIX_AVAILABLE,
+		Status: NETWORK_AVAILABLE,
 	}
 
-	_ = m.CreatePrefix(prefix)
-	_ = m.CreatePool(prefix, pool)
+	_ = m.CreateNetwork(n)
+	_ = m.CreatePool(n, pool)
 
-	pools, err := getPools(r, prefix)
+	pools, err := getPools(r, n)
 	if err != nil {
 		t.Fatalf("Got error: %v", err)
 	}

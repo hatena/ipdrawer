@@ -46,11 +46,11 @@ func NewAPIServer(port string) *APIServer {
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	if err := serverpb.RegisterPrefixServiceHandlerFromEndpoint(
+	if err := serverpb.RegisterNetworkServiceV0HandlerFromEndpoint(
 		ctx, mux, api.addr, opts); err != nil {
 		return nil, err
 	}
-	if err := serverpb.RegisterIPServiceHandlerFromEndpoint(
+	if err := serverpb.RegisterIPServiceV0HandlerFromEndpoint(
 		ctx, mux, api.addr, opts); err != nil {
 		return nil, err
 	}
@@ -113,8 +113,8 @@ func (api *APIServer) Start() error {
 			grpc_logrus.UnaryServerInterceptor(logrusEntry),
 		)),
 	)
-	serverpb.RegisterPrefixServiceServer(api.grpcS, api)
-	serverpb.RegisterIPServiceServer(api.grpcS, api)
+	serverpb.RegisterNetworkServiceV0Server(api.grpcS, api)
+	serverpb.RegisterIPServiceV0Server(api.grpcS, api)
 	gw, err := api.newGateway(ctx)
 	if err != nil {
 		return err

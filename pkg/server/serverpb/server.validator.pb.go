@@ -10,14 +10,14 @@ It is generated from these files:
 It has these top-level messages:
 	DrawIPRequest
 	DrawIPResponse
-	GetPrefixIncludingIPRequest
-	GetPrefixIncludingIPResponse
+	GetNetworkIncludingIPRequest
+	GetNetworkIncludingIPResponse
 	ActivateIPRequest
 	ActivateIPResponse
-	GetPrefixRequest
-	GetPrefixResponse
-	CreatePrefixRequest
-	CreatePrefixResponse
+	GetNetworkRequest
+	GetNetworkResponse
+	CreateNetworkRequest
+	CreateNetworkResponse
 	CreatePoolRequest
 	CreatePoolResponse
 	Tag
@@ -63,15 +63,15 @@ func (this *DrawIPResponse) Validate() error {
 	return nil
 }
 
-var _regex_GetPrefixIncludingIPRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_GetNetworkIncludingIPRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
-func (this *GetPrefixIncludingIPRequest) Validate() error {
-	if !_regex_GetPrefixIncludingIPRequest_Ip.MatchString(this.Ip) {
+func (this *GetNetworkIncludingIPRequest) Validate() error {
+	if !_regex_GetNetworkIncludingIPRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
 	return nil
 }
-func (this *GetPrefixIncludingIPResponse) Validate() error {
+func (this *GetNetworkIncludingIPResponse) Validate() error {
 	return nil
 }
 
@@ -87,10 +87,10 @@ func (this *ActivateIPResponse) Validate() error {
 	return nil
 }
 
-var _regex_GetPrefixRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_GetNetworkRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
-func (this *GetPrefixRequest) Validate() error {
-	if !_regex_GetPrefixRequest_Ip.MatchString(this.Ip) {
+func (this *GetNetworkRequest) Validate() error {
+	if !_regex_GetNetworkRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
 	if !(this.Mask > -1) {
@@ -102,10 +102,10 @@ func (this *GetPrefixRequest) Validate() error {
 	return nil
 }
 
-var _regex_GetPrefixResponse_Ipnet = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$")
+var _regex_GetNetworkResponse_Ipnet = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$")
 
-func (this *GetPrefixResponse) Validate() error {
-	if !_regex_GetPrefixResponse_Ipnet.MatchString(this.Ipnet) {
+func (this *GetNetworkResponse) Validate() error {
+	if !_regex_GetNetworkResponse_Ipnet.MatchString(this.Ipnet) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ipnet", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"`, this.Ipnet))
 	}
 	for _, item := range this.Tags {
@@ -118,10 +118,10 @@ func (this *GetPrefixResponse) Validate() error {
 	return nil
 }
 
-var _regex_CreatePrefixRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_CreateNetworkRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
-func (this *CreatePrefixRequest) Validate() error {
-	if !_regex_CreatePrefixRequest_Ip.MatchString(this.Ip) {
+func (this *CreateNetworkRequest) Validate() error {
+	if !_regex_CreateNetworkRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
 	if !(this.Mask > -1) {
@@ -139,7 +139,7 @@ func (this *CreatePrefixRequest) Validate() error {
 	}
 	return nil
 }
-func (this *CreatePrefixResponse) Validate() error {
+func (this *CreateNetworkResponse) Validate() error {
 	return nil
 }
 

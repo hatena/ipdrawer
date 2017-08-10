@@ -29,10 +29,10 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
 var (
-	filter_PrefixService_DrawIP_0 = &utilities.DoubleArray{Encoding: map[string]int{"ip": 0, "mask": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_NetworkServiceV0_DrawIP_0 = &utilities.DoubleArray{Encoding: map[string]int{"ip": 0, "mask": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_PrefixService_DrawIP_0(ctx context.Context, marshaler runtime.Marshaler, client PrefixServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_NetworkServiceV0_DrawIP_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DrawIPRequest
 	var metadata runtime.ServerMetadata
 
@@ -65,7 +65,7 @@ func request_PrefixService_DrawIP_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "mask", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PrefixService_DrawIP_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_NetworkServiceV0_DrawIP_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -74,8 +74,8 @@ func request_PrefixService_DrawIP_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func request_PrefixService_GetPrefix_0(ctx context.Context, marshaler runtime.Marshaler, client PrefixServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetPrefixRequest
+func request_NetworkServiceV0_GetNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetNetworkRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -107,17 +107,17 @@ func request_PrefixService_GetPrefix_0(ctx context.Context, marshaler runtime.Ma
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "mask", err)
 	}
 
-	msg, err := client.GetPrefix(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetNetwork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
 var (
-	filter_PrefixService_CreatePrefix_0 = &utilities.DoubleArray{Encoding: map[string]int{"ip": 0, "mask": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_NetworkServiceV0_CreateNetwork_0 = &utilities.DoubleArray{Encoding: map[string]int{"ip": 0, "mask": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
 
-func request_PrefixService_CreatePrefix_0(ctx context.Context, marshaler runtime.Marshaler, client PrefixServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreatePrefixRequest
+func request_NetworkServiceV0_CreateNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateNetworkRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -149,16 +149,16 @@ func request_PrefixService_CreatePrefix_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "mask", err)
 	}
 
-	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_PrefixService_CreatePrefix_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_NetworkServiceV0_CreateNetwork_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.CreatePrefix(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateNetwork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func request_PrefixService_CreatePool_0(ctx context.Context, marshaler runtime.Marshaler, client PrefixServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_NetworkServiceV0_CreatePool_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CreatePoolRequest
 	var metadata runtime.ServerMetadata
 
@@ -200,8 +200,8 @@ func request_PrefixService_CreatePool_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func request_IPService_GetPrefixIncludingIP_0(ctx context.Context, marshaler runtime.Marshaler, client IPServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetPrefixIncludingIPRequest
+func request_IPServiceV0_GetNetworkIncludingIP_0(ctx context.Context, marshaler runtime.Marshaler, client IPServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetNetworkIncludingIPRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -222,12 +222,12 @@ func request_IPService_GetPrefixIncludingIP_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ip", err)
 	}
 
-	msg, err := client.GetPrefixIncludingIP(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetNetworkIncludingIP(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func request_IPService_ActivateIP_0(ctx context.Context, marshaler runtime.Marshaler, client IPServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_IPServiceV0_ActivateIP_0(ctx context.Context, marshaler runtime.Marshaler, client IPServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ActivateIPRequest
 	var metadata runtime.ServerMetadata
 
@@ -254,9 +254,9 @@ func request_IPService_ActivateIP_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-// RegisterPrefixServiceHandlerFromEndpoint is same as RegisterPrefixServiceHandler but
+// RegisterNetworkServiceV0HandlerFromEndpoint is same as RegisterNetworkServiceV0Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterPrefixServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterNetworkServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -276,15 +276,15 @@ func RegisterPrefixServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.
 		}()
 	}()
 
-	return RegisterPrefixServiceHandler(ctx, mux, conn)
+	return RegisterNetworkServiceV0Handler(ctx, mux, conn)
 }
 
-// RegisterPrefixServiceHandler registers the http handlers for service PrefixService to "mux".
+// RegisterNetworkServiceV0Handler registers the http handlers for service NetworkServiceV0 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewPrefixServiceClient(conn)
+func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	client := NewNetworkServiceV0Client(conn)
 
-	mux.Handle("GET", pattern_PrefixService_DrawIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_NetworkServiceV0_DrawIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -302,18 +302,18 @@ func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, co
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_PrefixService_DrawIP_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NetworkServiceV0_DrawIP_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_PrefixService_DrawIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NetworkServiceV0_DrawIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_PrefixService_GetPrefix_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_NetworkServiceV0_GetNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -331,18 +331,18 @@ func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, co
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_PrefixService_GetPrefix_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NetworkServiceV0_GetNetwork_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_PrefixService_GetPrefix_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NetworkServiceV0_GetNetwork_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_PrefixService_CreatePrefix_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NetworkServiceV0_CreateNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -360,18 +360,18 @@ func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, co
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_PrefixService_CreatePrefix_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NetworkServiceV0_CreateNetwork_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_PrefixService_CreatePrefix_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NetworkServiceV0_CreateNetwork_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_PrefixService_CreatePool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_NetworkServiceV0_CreatePool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -389,14 +389,14 @@ func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, co
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_PrefixService_CreatePool_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_NetworkServiceV0_CreatePool_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_PrefixService_CreatePool_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_NetworkServiceV0_CreatePool_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -404,28 +404,28 @@ func RegisterPrefixServiceHandler(ctx context.Context, mux *runtime.ServeMux, co
 }
 
 var (
-	pattern_PrefixService_DrawIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "prefix", "ip", "mask", "drawip"}, ""))
+	pattern_NetworkServiceV0_DrawIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v0", "network", "ip", "mask", "drawip"}, ""))
 
-	pattern_PrefixService_GetPrefix_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "prefix", "ip", "mask"}, ""))
+	pattern_NetworkServiceV0_GetNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v0", "network", "ip", "mask"}, ""))
 
-	pattern_PrefixService_CreatePrefix_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "prefix", "ip", "mask", "create"}, ""))
+	pattern_NetworkServiceV0_CreateNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v0", "network", "ip", "mask", "create"}, ""))
 
-	pattern_PrefixService_CreatePool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 2, 4, 2, 5}, []string{"api", "prefix", "ip", "mask", "pool", "create"}, ""))
+	pattern_NetworkServiceV0_CreatePool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"api", "v0", "network", "ip", "mask", "pool", "create"}, ""))
 )
 
 var (
-	forward_PrefixService_DrawIP_0 = runtime.ForwardResponseMessage
+	forward_NetworkServiceV0_DrawIP_0 = runtime.ForwardResponseMessage
 
-	forward_PrefixService_GetPrefix_0 = runtime.ForwardResponseMessage
+	forward_NetworkServiceV0_GetNetwork_0 = runtime.ForwardResponseMessage
 
-	forward_PrefixService_CreatePrefix_0 = runtime.ForwardResponseMessage
+	forward_NetworkServiceV0_CreateNetwork_0 = runtime.ForwardResponseMessage
 
-	forward_PrefixService_CreatePool_0 = runtime.ForwardResponseMessage
+	forward_NetworkServiceV0_CreatePool_0 = runtime.ForwardResponseMessage
 )
 
-// RegisterIPServiceHandlerFromEndpoint is same as RegisterIPServiceHandler but
+// RegisterIPServiceV0HandlerFromEndpoint is same as RegisterIPServiceV0Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterIPServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterIPServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -445,15 +445,15 @@ func RegisterIPServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.Serv
 		}()
 	}()
 
-	return RegisterIPServiceHandler(ctx, mux, conn)
+	return RegisterIPServiceV0Handler(ctx, mux, conn)
 }
 
-// RegisterIPServiceHandler registers the http handlers for service IPService to "mux".
+// RegisterIPServiceV0Handler registers the http handlers for service IPServiceV0 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterIPServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewIPServiceClient(conn)
+func RegisterIPServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	client := NewIPServiceV0Client(conn)
 
-	mux.Handle("GET", pattern_IPService_GetPrefixIncludingIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_IPServiceV0_GetNetworkIncludingIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -471,18 +471,18 @@ func RegisterIPServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_IPService_GetPrefixIncludingIP_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_IPServiceV0_GetNetworkIncludingIP_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_IPService_GetPrefixIncludingIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IPServiceV0_GetNetworkIncludingIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_IPService_ActivateIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_IPServiceV0_ActivateIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
 		if cn, ok := w.(http.CloseNotifier); ok {
@@ -500,14 +500,14 @@ func RegisterIPServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_IPService_ActivateIP_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_IPServiceV0_ActivateIP_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_IPService_ActivateIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_IPServiceV0_ActivateIP_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -515,13 +515,13 @@ func RegisterIPServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *
 }
 
 var (
-	pattern_IPService_GetPrefixIncludingIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"api", "ip", "prefix"}, ""))
+	pattern_IPServiceV0_GetNetworkIncludingIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v0", "ip", "network"}, ""))
 
-	pattern_IPService_ActivateIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 1, 2, 2}, []string{"api", "ip", "activate"}, ""))
+	pattern_IPServiceV0_ActivateIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v0", "ip", "activate"}, ""))
 )
 
 var (
-	forward_IPService_GetPrefixIncludingIP_0 = runtime.ForwardResponseMessage
+	forward_IPServiceV0_GetNetworkIncludingIP_0 = runtime.ForwardResponseMessage
 
-	forward_IPService_ActivateIP_0 = runtime.ForwardResponseMessage
+	forward_IPServiceV0_ActivateIP_0 = runtime.ForwardResponseMessage
 )

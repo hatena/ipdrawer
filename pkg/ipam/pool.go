@@ -63,7 +63,7 @@ func (p *IPPool) unmarshal(data []interface{}) error {
 	return nil
 }
 
-func setPool(r *storage.Redis, prefix *Prefix, pool *IPPool) error {
+func setPool(r *storage.Redis, prefix *Network, pool *IPPool) error {
 	// Set details
 	dkey := makePoolDetailsKey(pool.Start, pool.End)
 	details := map[string]interface{}{
@@ -86,7 +86,7 @@ func setPool(r *storage.Redis, prefix *Prefix, pool *IPPool) error {
 	}
 
 	// Add pools
-	poolKey := makePrefixPoolKey(prefix.Prefix)
+	poolKey := makeNetworkPoolKey(prefix.Prefix)
 	if _, err := r.Client.SAdd(poolKey, pool.Key()).Result(); err != nil {
 		return err
 	}
@@ -125,8 +125,8 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*IPPool, error) {
 	return pool, nil
 }
 
-func getPools(r *storage.Redis, prefix *Prefix) ([]*IPPool, error) {
-	poolKey := makePrefixPoolKey(prefix.Prefix)
+func getPools(r *storage.Redis, prefix *Network) ([]*IPPool, error) {
+	poolKey := makeNetworkPoolKey(prefix.Prefix)
 	keys, err := r.Client.SMembers(poolKey).Result()
 	if err != nil {
 		return nil, err

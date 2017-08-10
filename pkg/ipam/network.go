@@ -10,33 +10,33 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
-type Prefix struct {
+type Network struct {
 	Prefix    *net.IPNet
 	Gateways  []net.IP
 	Broadcast net.IP
 	Netmask   net.IP
-	Status    PrefixStatus
+	Status    NetworkStatus
 	Tags      map[string]string
 	pools     []*IPPool
 }
 
-var prefixFieldsKey = []string{"status", "netmask", "broadcast"}
+var networkFieldsKey = []string{"status", "netmask", "broadcast"}
 
-type PrefixStatus int
+type NetworkStatus int
 
 const (
-	PREFIX_AVAILABLE PrefixStatus = iota
-	PREFIX_RESERVED
+	NETWORK_AVAILABLE NetworkStatus = iota
+	NETWORK_RESERVED
 )
 
-func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
-	lkey := makePrefixListKey()
+func getNetworks(r *storage.Redis) ([]*Network, error) {
+	lkey := makeNetworkListKey()
 	ps, err := r.Client.SMembers(lkey).Result()
 	if err != nil {
 		return nil, err
 	}
 
-	ret := make([]*Prefix, len(ps))
+	ret := make([]*Network, len(ps))
 
 	for i, p := range ps {
 		_, ipnet, err := net.ParseCIDR(p)
@@ -44,7 +44,7 @@ func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
 			return nil, err
 		}
 
-		pre, err := getPrefix(r, ipnet)
+		pre, err := getNetwork(r, ipnet)
 		if err != nil {
 			return nil, err
 		}
@@ -54,23 +54,23 @@ func getPrefixes(r *storage.Redis) ([]*Prefix, error) {
 	return nil, nil
 }
 
-func setPrefix(r *storage.Redis, p *Prefix) error {
+func setNetwork(r *storage.Redis, n *Network) error {
 	// Set details
-	dkey := makePrefixDetailsKey(p.Prefix)
+	dkey := makeNetworkDetailsKey(n.Prefix)
 	details := map[string]interface{}{
-		"status":    int(p.Status),
-		"netmask":   p.Netmask.String(),
-		"broadcast": p.Broadcast.String(),
+		"status":    int(n.Status),
+		"netmask":   n.Netmask.String(),
+		"broadcast": n.Broadcast.String(),
 	}
 	if _, err := r.Client.HMSet(dkey, details).Result(); err != nil {
 		return err
 	}
 
 	// Set tags
-	if len(p.Tags) != 0 {
-		tagKey := makePrefixTagKey(p.Prefix)
+	if len(n.Tags) != 0 {
+		tagKey := makeNetworkTagKey(n.Prefix)
 		tags := make(map[string]interface{})
-		for k, v := range p.Tags {
+		for k, v := range n.Tags {
 			tags[k] = v
 		}
 		if _, err := r.Client.HMSet(tagKey, tags).Result(); err != nil {
@@ -79,10 +79,10 @@ func setPrefix(r *storage.Redis, p *Prefix) error {
 	}
 
 	// Set default Gateways
-	if len(p.Gateways) != 0 {
-		gwKey := makePrefixDefaultGWKey(p.Prefix)
-		gws := make([]string, len(p.Gateways))
-		for i, gw := range p.Gateways {
+	if len(n.Gateways) != 0 {
+		gwKey := makeNetworkDefaultGWKey(n.Prefix)
+		gws := make([]string, len(n.Gateways))
+		for i, gw := range n.Gateways {
 			gws[i] = gw.String()
 		}
 		if _, err := r.Client.SAdd(gwKey, gws).Result(); err != nil {
@@ -93,17 +93,17 @@ func setPrefix(r *storage.Redis, p *Prefix) error {
 	return nil
 }
 
-func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
-	dkey := makePrefixDetailsKey(ipnet)
-	tagKey := makePrefixTagKey(ipnet)
-	gwKey := makePrefixDefaultGWKey(ipnet)
+func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*Network, error) {
+	dkey := makeNetworkDetailsKey(ipnet)
+	tagKey := makeNetworkTagKey(ipnet)
+	gwKey := makeNetworkDefaultGWKey(ipnet)
 
 	check, err := r.Client.Exists(dkey).Result()
 	if err != nil || check == 0 {
-		return nil, errors.New("not found Prefix")
+		return nil, errors.New("not found Network")
 	}
 
-	data, err := r.Client.HMGet(dkey, prefixFieldsKey...).Result()
+	data, err := r.Client.HMGet(dkey, networkFieldsKey...).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -116,11 +116,11 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 		return nil, err
 	}
 
-	pre := &Prefix{
+	n := &Network{
 		Prefix: ipnet,
 		Tags:   tags,
 	}
-	if err := pre.unmarshal(data); err != nil {
+	if err := n.unmarshal(data); err != nil {
 		return nil, err
 	}
 	gateways := make([]net.IP, len(gws))
@@ -129,12 +129,12 @@ func getPrefix(r *storage.Redis, ipnet *net.IPNet) (*Prefix, error) {
 			return nil, errors.New(fmt.Sprintf("Failed parse IP: %s", g))
 		}
 	}
-	pre.Gateways = gateways
+	n.Gateways = gateways
 
-	return pre, nil
+	return n, nil
 }
 
-func (p *Prefix) unmarshal(data []interface{}) error {
+func (n *Network) unmarshal(data []interface{}) error {
 	var status int
 	var netmask, broadcast net.IP
 
@@ -162,9 +162,9 @@ func (p *Prefix) unmarshal(data []interface{}) error {
 		return errors.New(fmt.Sprintf("Failed unwrap of broadcast: %v", data[2]))
 	}
 
-	p.Status = PrefixStatus(status)
-	p.Netmask = netmask
-	p.Broadcast = broadcast
+	n.Status = NetworkStatus(status)
+	n.Netmask = netmask
+	n.Broadcast = broadcast
 
 	return nil
 }

@@ -8,16 +8,16 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
 )
 
-func TestPrefixUnmarshal(t *testing.T) {
+func TestNetworkUnmarshal(t *testing.T) {
 	testCases := []struct {
 		data   []interface{}
-		out    *Prefix
+		out    *Network
 		errmsg string
 	}{
 		{
 			data: []interface{}{"0", "255.255.0.0", "192.168.255.255"},
-			out: &Prefix{
-				Status:    PREFIX_AVAILABLE,
+			out: &Network{
+				Status:    NETWORK_AVAILABLE,
 				Netmask:   net.ParseIP("255.255.0.0"),
 				Broadcast: net.ParseIP("192.168.255.255"),
 			},
@@ -25,15 +25,15 @@ func TestPrefixUnmarshal(t *testing.T) {
 	}
 
 	for i, tt := range testCases {
-		p := &Prefix{}
-		err := p.unmarshal(tt.data)
+		n := &Network{}
+		err := n.unmarshal(tt.data)
 
 		if tt.errmsg == "" {
 			if err != nil {
 				t.Errorf("%d: found error: %#+v", i, err)
 			}
-			if !reflect.DeepEqual(p, tt.out) {
-				t.Errorf("%d: expected %#+v, but found %#+v", i, tt.out, p)
+			if !reflect.DeepEqual(n, tt.out) {
+				t.Errorf("%d: expected %#+v, but found %#+v", i, tt.out, n)
 			}
 		} else {
 			if err == nil {
