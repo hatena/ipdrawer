@@ -3,7 +3,6 @@ package server
 import (
 	"net"
 
-	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -205,8 +204,6 @@ func (api *APIServer) CreatePool(
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
-
-	logrus.Print(req)
 
 	tags := make(map[string]string)
 	if len(req.Pool.Tags) != 0 {
