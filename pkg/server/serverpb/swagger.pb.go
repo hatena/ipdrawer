@@ -160,6 +160,18 @@ const (
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "pool_tag.key",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pool_tag.value",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [

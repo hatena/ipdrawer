@@ -50,11 +50,9 @@ func (this *DrawIPRequest) Validate() error {
 	if !(this.Mask < 33) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
 	}
-	for _, item := range this.Tags {
-		if item != nil {
-			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
-			}
+	if this.PoolTag != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.PoolTag); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("PoolTag", err)
 		}
 	}
 	return nil
