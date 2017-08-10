@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/taku-k/ipdrawer/pkg/storage"
+	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
 )
 
 func newTestIPManager(r *storage.Redis) *IPManager {
@@ -52,6 +53,7 @@ func TestDrawIPSeq(t *testing.T) {
 		pool     *IPPool
 		ips      []*ipAddr
 		expected net.IP
+		errmsg   string
 	}{
 		{
 			pool: &IPPool{
@@ -89,6 +91,63 @@ func TestDrawIPSeq(t *testing.T) {
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
+		}, {
+			pool: &IPPool{
+				Start: net.ParseIP("10.0.0.1"),
+				End:   net.ParseIP("10.0.0.254"),
+			},
+			ips: []*ipAddr{
+				{
+					ip:     net.ParseIP("10.0.0.1"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.2"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.3"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.4"),
+					status: IP_TEMPORARY_RESERVED,
+				},
+			},
+			expected: net.ParseIP("10.0.0.5"),
+		}, {
+			pool: &IPPool{
+				Start: net.ParseIP("10.0.0.1"),
+				End:   net.ParseIP("10.0.0.254"),
+			},
+			ips: []*ipAddr{
+				{
+					ip:     net.ParseIP("10.0.0.1"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.2"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.3"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.4"),
+					status: IP_ACTIVE,
+				},
+			},
+			expected: net.ParseIP("10.0.0.5"),
+		}, {
+			pool: &IPPool{
+				Start: net.ParseIP("10.0.0.1"),
+				End:   net.ParseIP("10.0.0.2"),
+			},
+			ips: []*ipAddr{
+				{
+					ip:     net.ParseIP("10.0.0.1"),
+					status: IP_TEMPORARY_RESERVED,
+				}, {
+					ip:     net.ParseIP("10.0.0.2"),
+					status: IP_TEMPORARY_RESERVED,
+				},
+			},
+			errmsg: "Nothing IP to serve",
 		},
 	}
 
@@ -108,11 +167,21 @@ func TestDrawIPSeq(t *testing.T) {
 		}
 
 		actual, err := m.DrawIP(c.pool, true)
-		if err != nil {
-			t.Errorf("Got error: %v", err)
-		}
-		if !c.expected.Equal(actual) {
-			t.Errorf("#%d: expected %v, but got %v", i, c.expected, actual)
+
+		if c.errmsg == "" {
+			if err != nil {
+				t.Errorf("#%d: Got error: %#+v", i, err)
+			}
+			if !c.expected.Equal(actual) {
+				t.Errorf("#%d: expected %#+v, but got %#+v", i, c.expected, actual)
+			}
+		} else {
+			if err == nil {
+				t.Errorf("#%d: expected error message %sf", i, c.errmsg)
+			}
+			if !testutil.IsError(err, c.errmsg) {
+				t.Errorf("#%d: expected %q, but got %#+v", i, c.errmsg, err)
+			}
 		}
 
 		deferFunc()
