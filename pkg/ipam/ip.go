@@ -111,12 +111,12 @@ func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
 }
 
 // Reserve makes the status of given IP reserved.
-func (m *IPManager) Reserve(p *Prefix, ip net.IP) error {
+func (m *IPManager) Reserve(p *IPPool, ip net.IP) error {
 	return nil
 }
 
 // Release makes the status of given IP available.
-func (m *IPManager) Release(p *Prefix, ip net.IP) error {
+func (m *IPManager) Release(p *IPPool, ip net.IP) error {
 	return nil
 }
 
