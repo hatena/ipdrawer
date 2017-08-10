@@ -8,6 +8,7 @@ func init() {
 
 	rootCmd.AddCommand(
 		startCmd,
+		importCmd,
 		versionCmd,
 	)
 }
