@@ -121,6 +121,14 @@ const (
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverpbCreateNetworkRequest"
+            }
           }
         ],
         "tags": [
@@ -203,6 +211,30 @@ const (
     "serverpbActivateIPResponse": {
       "type": "object"
     },
+    "serverpbCreateNetworkRequest": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "mask": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "default_gateways": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/serverpbTag"
+          }
+        }
+      }
+    },
     "serverpbCreateNetworkResponse": {
       "type": "object"
     },
@@ -238,7 +270,7 @@ const (
     "serverpbGetNetworkResponse": {
       "type": "object",
       "properties": {
-        "ipnet": {
+        "network": {
           "type": "string"
         },
         "default_gateways": {

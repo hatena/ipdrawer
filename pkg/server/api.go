@@ -9,6 +9,7 @@ import (
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
+	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
 func (api *APIServer) DrawIP(
@@ -131,7 +132,7 @@ func (api *APIServer) GetNetwork(
 	}
 
 	return &serverpb.GetNetworkResponse{
-		Ipnet:           n.Prefix.String(),
+		Network:         n.Prefix.String(),
 		Broadcast:       n.Broadcast.String(),
 		Netmask:         n.Netmask.String(),
 		DefaultGateways: gws,
@@ -152,6 +153,9 @@ func (api *APIServer) CreateNetwork(
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
 
+	netmask := netutil.IPMaskToIP(net.CIDRMask(int(req.Mask), 32))
+	broadcast := netutil.BroadcastIP(ip)
+
 	gws := make([]net.IP, len(req.DefaultGateways))
 	for i, gw := range req.DefaultGateways {
 		gws[i] = net.ParseIP(gw)
@@ -164,8 +168,8 @@ func (api *APIServer) CreateNetwork(
 
 	n := &ipam.Network{
 		Prefix:    ip,
-		Broadcast: net.ParseIP(req.Broadcast),
-		Netmask:   net.ParseIP(req.Netmask),
+		Broadcast: broadcast,
+		Netmask:   netmask,
 		Gateways:  gws,
 		Tags:      tags,
 		Status:    ipam.NETWORK_AVAILABLE,
