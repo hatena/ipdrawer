@@ -37,6 +37,10 @@ func (p *IPPool) Key() string {
 	return fmt.Sprintf("%v,%v", p.Start, p.End)
 }
 
+func (p *IPPool) String() string {
+	return fmt.Sprintf("%v,%v", p.Start, p.End)
+}
+
 func getPoolIncludingIP(r *storage.Redis, ip net.IP) (*IPPool, error) {
 	return nil, nil
 }

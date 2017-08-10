@@ -29,6 +29,10 @@ const (
 	NETWORK_RESERVED
 )
 
+func (n *Network) String() string {
+	return n.Prefix.String()
+}
+
 func getNetworks(r *storage.Redis) ([]*Network, error) {
 	lkey := makeNetworkListKey()
 	ps, err := r.Client.SMembers(lkey).Result()
