@@ -44,26 +44,27 @@ func (api *APIServer) DrawIP(
 		tags[req.PoolTag.Key] = req.PoolTag.Value
 	}
 
-	var pool *ipam.IPPool
+	target := make([]*ipam.IPPool, 0)
 	for _, p := range pools {
 		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags(tags) {
-			pool = p
-			break
+			target = append(target, p)
 		}
 	}
-	if pool == nil {
+	if len(target) == 0 {
 		return nil, status.Errorf(
 			codes.NotFound, "Not found matched tags: %v", tags)
 	}
 
-	ret, err := api.manager.DrawIP(ctx, pool, true)
-	if err != nil {
-		return nil, err
+	for _, p := range target {
+		ret, err := api.manager.DrawIP(ctx, p, true)
+		if err == nil {
+			return &serverpb.DrawIPResponse{
+				Ip: ret.String(),
+			}, nil
+		}
 	}
 
-	return &serverpb.DrawIPResponse{
-		Ip: ret.String(),
-	}, nil
+	return nil, status.Error(codes.NotFound, "Not found IP to serve")
 }
 
 func (api *APIServer) GetNetworkIncludingIP(
