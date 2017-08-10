@@ -6,7 +6,9 @@ import (
 	"time"
 
 	"github.com/go-redis/redis"
+	"github.com/opentracing/opentracing-go"
 	"github.com/pkg/errors"
+	"golang.org/x/net/context"
 
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
@@ -40,12 +42,15 @@ func NewIPManager() *IPManager {
 }
 
 // DrawIP returns an available IP.
-func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
-	token, err := m.locker.Lock()
+func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net.IP, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DrawIP")
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx)
 	if err != nil {
 		return nil, err
 	}
-	defer m.locker.Unlock(token)
+	defer m.locker.Unlock(ctx, token)
 
 	zkey := makePoolUsedIPZset(pool.Start, pool.End)
 	avail := pool.Start
@@ -88,12 +93,15 @@ func (m *IPManager) DrawIP(pool *IPPool, reserve bool) (net.IP, error) {
 }
 
 // Activate activates IP.
-func (m *IPManager) Activate(p *IPPool, ip net.IP) error {
-	token, err := m.locker.Lock()
+func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip net.IP) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx)
 	if err != nil {
 		return err
 	}
-	defer m.locker.Unlock(token)
+	defer m.locker.Unlock(ctx, token)
 
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
@@ -120,8 +128,11 @@ func (m *IPManager) Release(p *IPPool, ip net.IP) error {
 	return nil
 }
 
-// GetNetworkIncludingIP returns a prefix including given IP.
-func (m *IPManager) GetNetworkIncludingIP(ip net.IP) (*Network, error) {
+// GetNetworkIncludingIP returns a network including given IP.
+func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkIncludingIP")
+	defer span.Finish()
+
 	ps, err := m.redis.Client.SMembers(makeNetworkListKey()).Result()
 	if err != nil {
 		return nil, err
@@ -139,22 +150,31 @@ func (m *IPManager) GetNetworkIncludingIP(ip net.IP) (*Network, error) {
 }
 
 // GetPools gets pools.
-func (m *IPManager) GetPools(n *Network) ([]*IPPool, error) {
+func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPools")
+	defer span.Finish()
+
 	return getPools(m.redis, n)
 }
 
-// GetNetwork gets prefix.
-func (m *IPManager) GetNetwork(ipnet *net.IPNet) (*Network, error) {
+// GetNetwork gets network.
+func (m *IPManager) GetNetwork(ctx context.Context, ipnet *net.IPNet) (*Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetwork")
+	defer span.Finish()
+
 	return getNetwork(m.redis, ipnet)
 }
 
-// CreateNetwork creates prefix.
-func (m *IPManager) CreateNetwork(n *Network) error {
-	token, err := m.locker.Lock()
+// CreateNetwork creates network.
+func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreateNetwork")
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx)
 	if err != nil {
 		return err
 	}
-	defer m.locker.Unlock(token)
+	defer m.locker.Unlock(ctx, token)
 
 	if err := setNetwork(m.redis, n); err != nil {
 		return err
@@ -166,12 +186,15 @@ func (m *IPManager) CreateNetwork(n *Network) error {
 }
 
 // CreatePool creates pool
-func (m *IPManager) CreatePool(n *Network, pool *IPPool) error {
-	token, err := m.locker.Lock()
+func (m *IPManager) CreatePool(ctx context.Context, n *Network, pool *IPPool) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreatePool")
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx)
 	if err != nil {
 		return err
 	}
-	defer m.locker.Unlock(token)
+	defer m.locker.Unlock(ctx, token)
 
 	return setPool(m.redis, n, pool)
 }

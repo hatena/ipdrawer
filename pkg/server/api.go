@@ -22,11 +22,11 @@ func (api *APIServer) DrawIP(
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
-	n, err := api.manager.GetNetwork(ip)
+	n, err := api.manager.GetNetwork(ctx, ip)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
-	pools, err := api.manager.GetPools(n)
+	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
@@ -47,7 +47,7 @@ func (api *APIServer) DrawIP(
 	if pool == nil {
 		return &serverpb.DrawIPResponse{}, errors.New("not matched tags")
 	}
-	ret, err := api.manager.DrawIP(pool, true)
+	ret, err := api.manager.DrawIP(ctx, pool, true)
 	if err != nil {
 		return &serverpb.DrawIPResponse{}, err
 	}
@@ -76,19 +76,19 @@ func (api *APIServer) ActivateIP(
 
 	ip := net.ParseIP(req.Ip)
 
-	n, err := api.manager.GetNetworkIncludingIP(ip)
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
 	if err != nil {
 		return &serverpb.ActivateIPResponse{}, err
 	}
 
-	pools, err := api.manager.GetPools(n)
+	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
 		return &serverpb.ActivateIPResponse{}, err
 	}
 
 	for _, pool := range pools {
 		if pool.Contains(ip) {
-			if err := api.manager.Activate(pool, ip); err != nil {
+			if err := api.manager.Activate(ctx, pool, ip); err != nil {
 				return &serverpb.ActivateIPResponse{}, err
 			} else {
 				return &serverpb.ActivateIPResponse{}, nil
@@ -107,7 +107,7 @@ func (api *APIServer) GetNetwork(
 		return &serverpb.GetNetworkResponse{}, err
 	}
 
-	n, err := api.manager.GetNetwork(&net.IPNet{
+	n, err := api.manager.GetNetwork(ctx, &net.IPNet{
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	})
@@ -171,7 +171,7 @@ func (api *APIServer) CreateNetwork(
 		Status:    ipam.NETWORK_AVAILABLE,
 	}
 
-	if err := api.manager.CreateNetwork(n); err != nil {
+	if err := api.manager.CreateNetwork(ctx, n); err != nil {
 		return &serverpb.CreateNetworkResponse{}, err
 	}
 
@@ -207,12 +207,12 @@ func (api *APIServer) CreatePool(
 		Tags:   tags,
 	}
 
-	n, err := api.manager.GetNetwork(ip)
+	n, err := api.manager.GetNetwork(ctx, ip)
 	if err != nil {
 		return &serverpb.CreatePoolResponse{}, err
 	}
 
-	if err := api.manager.CreatePool(n, pool); err != nil {
+	if err := api.manager.CreatePool(ctx, n, pool); err != nil {
 		return &serverpb.CreatePoolResponse{}, err
 	}
 

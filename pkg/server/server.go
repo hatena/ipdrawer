@@ -22,6 +22,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
+	"github.com/opentracing/opentracing-go"
 	"github.com/philips/go-bindata-assetfs"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
@@ -107,7 +108,9 @@ func (api *APIServer) Start() error {
 		)),
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_ctxtags.UnaryServerInterceptor(),
-			grpc_opentracing.UnaryServerInterceptor(),
+			grpc_opentracing.UnaryServerInterceptor(
+				grpc_opentracing.WithTracer(opentracing.GlobalTracer()),
+			),
 			grpc_recovery.UnaryServerInterceptor(
 				grpc_recovery.WithRecoveryHandler(recoveryFunc)),
 			grpc_logrus.UnaryServerInterceptor(logrusEntry),

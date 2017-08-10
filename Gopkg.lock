@@ -8,10 +8,22 @@
   version = "2.1.0"
 
 [[projects]]
+  name = "github.com/apache/thrift"
+  packages = ["lib/go/thrift"]
+  revision = "b2a4d4ae21c789b689dd162deb819665567f481c"
+  version = "0.10.0"
+
+[[projects]]
   name = "github.com/cenkalti/backoff"
   packages = ["."]
   revision = "32cd0c5b3aef12c76ed64aaf678f6c79736be7dc"
   version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/codahale/hdrhistogram"
+  packages = ["."]
+  revision = "3a0bb77429bd3a61596f5e8a3172445844342120"
 
 [[projects]]
   name = "github.com/go-redis/redis"
@@ -110,6 +122,18 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/uber/jaeger-client-go"
+  packages = [".","config","internal/spanlog","log","rpcmetrics","thrift-gen/agent","thrift-gen/jaeger","thrift-gen/sampling","thrift-gen/zipkincore","utils"]
+  revision = "d021e646f5187d77b55592c3efee1a2810e895d7"
+  version = "v2.8.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/uber/jaeger-lib"
+  packages = ["metrics"]
+  revision = "575c678b2873b62aaadd0fa5817a2aeb3155dc4d"
+
+[[projects]]
   name = "github.com/urfave/negroni"
   packages = ["."]
   revision = "fde5e16d32adc7ad637e9cd9ad21d4ebc6192535"
@@ -148,6 +172,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f3f6727fb4cb64573ce5cfc0b8c343e928e92a5eee8853389cb405d382e37e2a"
+  inputs-digest = "094fe24502c34edad26f8c20dde8c445f3ec6abd02bdbbd56098a40d2522aba3"
   solver-name = "gps-cdcl"
   solver-version = 1

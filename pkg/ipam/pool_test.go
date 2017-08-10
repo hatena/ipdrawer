@@ -4,6 +4,8 @@ import (
 	"net"
 	"testing"
 
+	"golang.org/x/net/context"
+
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
@@ -12,6 +14,8 @@ func Test_getPools(t *testing.T) {
 	defer deferFunc()
 
 	m := newTestIPManager(r)
+
+	ctx := context.Background()
 
 	pool := &IPPool{
 		Start:  net.ParseIP("10.0.0.1"),
@@ -27,8 +31,8 @@ func Test_getPools(t *testing.T) {
 		Status: NETWORK_AVAILABLE,
 	}
 
-	_ = m.CreateNetwork(n)
-	_ = m.CreatePool(n, pool)
+	_ = m.CreateNetwork(ctx, n)
+	_ = m.CreatePool(ctx, n, pool)
 
 	pools, err := getPools(r, n)
 	if err != nil {

@@ -7,6 +7,7 @@ import (
 
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
+	"golang.org/x/net/context"
 )
 
 func newTestIPManager(r *storage.Redis) *IPManager {
@@ -26,15 +27,17 @@ func TestIPActivation(t *testing.T) {
 
 	m := newTestIPManager(r)
 
+	ctx := context.Background()
+
 	pool := &IPPool{
 		Start: net.ParseIP("10.0.0.1"),
 		End:   net.ParseIP("10.0.0.254"),
 	}
 
-	if err := m.Activate(pool, net.ParseIP("10.0.0.1")); err != nil {
+	if err := m.Activate(ctx, pool, net.ParseIP("10.0.0.1")); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
-	if err := m.Activate(pool, net.ParseIP("10.0.0.4")); err != nil {
+	if err := m.Activate(ctx, pool, net.ParseIP("10.0.0.4")); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
 
@@ -49,6 +52,8 @@ func TestIPActivation(t *testing.T) {
 }
 
 func TestDrawIPSeq(t *testing.T) {
+	ctx := context.Background()
+
 	testCases := []struct {
 		pool     *IPPool
 		ips      []*ipAddr
@@ -158,7 +163,7 @@ func TestDrawIPSeq(t *testing.T) {
 		for _, ip := range c.ips {
 			switch ip.status {
 			case IP_ACTIVE:
-				m.Activate(c.pool, ip.ip)
+				m.Activate(ctx, c.pool, ip.ip)
 			case IP_TEMPORARY_RESERVED:
 				m.reserveTemporary(ip.ip)
 			case IP_RESERVED:
@@ -166,7 +171,7 @@ func TestDrawIPSeq(t *testing.T) {
 			}
 		}
 
-		actual, err := m.DrawIP(c.pool, true)
+		actual, err := m.DrawIP(ctx, c.pool, true)
 
 		if c.errmsg == "" {
 			if err != nil {

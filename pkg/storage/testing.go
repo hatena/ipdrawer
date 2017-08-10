@@ -3,6 +3,7 @@ package storage
 import (
 	"github.com/alicebob/miniredis"
 	"github.com/go-redis/redis"
+	"golang.org/x/net/context"
 )
 
 func NewTestRedis() (*Redis, func()) {
@@ -23,10 +24,10 @@ func NewTestRedis() (*Redis, func()) {
 
 type LocalLocker struct{}
 
-func (l *LocalLocker) Lock() (string, error) {
+func (l *LocalLocker) Lock(ctx context.Context) (string, error) {
 	return "", nil
 }
 
-func (l *LocalLocker) Unlock(_ string) error {
+func (l *LocalLocker) Unlock(ctx context.Context, _ string) error {
 	return nil
 }
