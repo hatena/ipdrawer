@@ -44,6 +44,7 @@ func NewIPManager() *IPManager {
 // DrawIP returns an available IP.
 func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net.IP, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DrawIP")
+	span.SetTag("pool", pool.Key())
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx)
@@ -95,6 +96,8 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 // Activate activates IP.
 func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip net.IP) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
+	span.SetTag("pool", p.Key())
+	span.SetTag("ip", ip.String())
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx)
@@ -131,6 +134,7 @@ func (m *IPManager) Release(p *IPPool, ip net.IP) error {
 // GetNetworkIncludingIP returns a network including given IP.
 func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkIncludingIP")
+	span.SetTag("ip", ip.String())
 	defer span.Finish()
 
 	ps, err := m.redis.Client.SMembers(makeNetworkListKey()).Result()
@@ -152,6 +156,7 @@ func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Netw
 // GetPools gets pools.
 func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPools")
+	span.SetTag("network", n.String())
 	defer span.Finish()
 
 	return getPools(m.redis, n)
@@ -160,6 +165,7 @@ func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error)
 // GetNetwork gets network.
 func (m *IPManager) GetNetwork(ctx context.Context, ipnet *net.IPNet) (*Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetwork")
+	span.SetTag("ip", ipnet.String())
 	defer span.Finish()
 
 	return getNetwork(m.redis, ipnet)
@@ -168,6 +174,7 @@ func (m *IPManager) GetNetwork(ctx context.Context, ipnet *net.IPNet) (*Network,
 // CreateNetwork creates network.
 func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreateNetwork")
+	span.SetTag("network", n.String())
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx)
@@ -188,6 +195,8 @@ func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
 // CreatePool creates pool
 func (m *IPManager) CreatePool(ctx context.Context, n *Network, pool *IPPool) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreatePool")
+	span.SetTag("network", n.String())
+	span.SetTag("pool", pool.Key())
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx)
