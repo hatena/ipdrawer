@@ -3,9 +3,10 @@ package server
 import (
 	"net"
 
-	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
@@ -17,27 +18,33 @@ func (api *APIServer) DrawIP(
 	req *serverpb.DrawIPRequest,
 ) (*serverpb.DrawIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
+
 	ip := &net.IPNet{
 		IP:   net.ParseIP(req.Ip),
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
+
 	n, err := api.manager.GetNetwork(ctx, ip)
 	if err != nil {
 		return nil, err
 	}
+
 	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
 		return nil, err
 	}
 	if len(pools) == 0 {
-		return nil, errors.New("not found prefix")
+		return nil, status.Errorf(
+			codes.NotFound, "Not found prefix: %s", ip.String())
 	}
+
 	tags := make(map[string]string)
 	if req.PoolTag != nil {
 		tags[req.PoolTag.Key] = req.PoolTag.Value
 	}
+
 	var pool *ipam.IPPool
 	for _, p := range pools {
 		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags(tags) {
@@ -46,12 +53,15 @@ func (api *APIServer) DrawIP(
 		}
 	}
 	if pool == nil {
-		return nil, errors.New("not matched tags")
+		return nil, status.Errorf(
+			codes.NotFound, "Not found matched tags: %v", tags)
 	}
+
 	ret, err := api.manager.DrawIP(ctx, pool, true)
 	if err != nil {
 		return nil, err
 	}
+
 	return &serverpb.DrawIPResponse{
 		Ip: ret.String(),
 	}, nil
@@ -62,9 +72,9 @@ func (api *APIServer) GetNetworkIncludingIP(
 	req *serverpb.GetNetworkIncludingIPRequest,
 ) (*serverpb.GetNetworkIncludingIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
-	return &serverpb.GetNetworkIncludingIPResponse{}, nil
+	return nil, status.Error(codes.Unimplemented, "Not implemented yet")
 }
 
 func (api *APIServer) ActivateIP(
@@ -72,7 +82,7 @@ func (api *APIServer) ActivateIP(
 	req *serverpb.ActivateIPRequest,
 ) (*serverpb.ActivateIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
 	ip := net.ParseIP(req.Ip)
@@ -97,7 +107,8 @@ func (api *APIServer) ActivateIP(
 		}
 	}
 
-	return nil, errors.New("Not found pool")
+	return nil, status.Errorf(
+		codes.NotFound, "Not found pool: %s", ip.String())
 }
 
 func (api *APIServer) GetNetwork(
@@ -105,7 +116,7 @@ func (api *APIServer) GetNetwork(
 	req *serverpb.GetNetworkRequest,
 ) (*serverpb.GetNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
 	n, err := api.manager.GetNetwork(ctx, &net.IPNet{
@@ -145,7 +156,7 @@ func (api *APIServer) CreateNetwork(
 	req *serverpb.CreateNetworkRequest,
 ) (*serverpb.CreateNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
 	ip := &net.IPNet{
@@ -187,7 +198,7 @@ func (api *APIServer) CreatePool(
 	req *serverpb.CreatePoolRequest,
 ) (*serverpb.CreatePoolResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, err
+		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
 	ip := &net.IPNet{
