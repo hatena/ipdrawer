@@ -55,7 +55,8 @@ func getNetworks(r *storage.Redis) ([]*Network, error) {
 
 		ret[i] = pre
 	}
-	return nil, nil
+
+	return ret, nil
 }
 
 func setNetwork(r *storage.Redis, n *Network) error {

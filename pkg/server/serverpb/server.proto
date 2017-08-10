@@ -5,9 +5,10 @@ import "google/api/annotations.proto";
 import "github.com/mwitkow/go-proto-validators/validator.proto";
 
 message DrawIPRequest {
-  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
   Tag pool_tag = 3;
+  string name = 4;
 }
 
 message DrawIPResponse {
@@ -27,8 +28,9 @@ message ActivateIPRequest {
 message ActivateIPResponse {}
 
 message GetNetworkRequest {
-  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  string name = 3;
 }
 
 message GetNetworkResponse {
@@ -69,15 +71,22 @@ message Pool {
 }
 
 service NetworkServiceV0 {
+
   rpc DrawIP (DrawIPRequest) returns (DrawIPResponse) {
     option (google.api.http) = {
       get: "/api/v0/network/{ip}/{mask}/drawip"
+      additional_bindings {
+        get: "/api/v0/network/{name}/drawip"
+      }
     };
   };
 
   rpc GetNetwork (GetNetworkRequest) returns (GetNetworkResponse) {
     option (google.api.http) = {
       get: "/api/v0/network/{ip}/{mask}"
+      additional_bindings {
+        get: "/api/v0/network/{name}"
+      }
     };
   };
 
@@ -94,9 +103,11 @@ service NetworkServiceV0 {
       body: "*"
     };
   };
+
 }
 
 service IPServiceV0 {
+
   rpc GetNetworkIncludingIP (GetNetworkIncludingIPRequest) returns (GetNetworkIncludingIPResponse) {
     option (google.api.http) = {
       get: "/api/v0/ip/{ip}/network"
@@ -108,4 +119,5 @@ service IPServiceV0 {
       post: "/api/v0/ip/{ip}/activate"
     };
   };
+
 }

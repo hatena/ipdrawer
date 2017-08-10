@@ -162,13 +162,35 @@ func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error)
 	return getPools(m.redis, n)
 }
 
-// GetNetwork gets network.
-func (m *IPManager) GetNetwork(ctx context.Context, ipnet *net.IPNet) (*Network, error) {
-	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetwork")
+// GetNetworkByIP returns network by IP.
+func (m *IPManager) GetNetworkByIP(ctx context.Context, ipnet *net.IPNet) (*Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkByIP")
 	span.SetTag("ip", ipnet.String())
 	defer span.Finish()
 
 	return getNetwork(m.redis, ipnet)
+}
+
+// GetNetworkByName returns network by name.
+func (m *IPManager) GetNetworkByName(ctx context.Context, name string) (*Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkByName")
+	span.SetTag("name", name)
+	defer span.Finish()
+
+	networks, err := getNetworks(m.redis)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, n := range networks {
+		if v, ok := n.Tags["Name"]; ok {
+			if v == name {
+				return n, nil
+			}
+		}
+	}
+
+	return nil, errors.New("Not found network")
 }
 
 // CreateNetwork creates network.

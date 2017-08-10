@@ -90,6 +90,12 @@ const (
             "required": true,
             "type": "integer",
             "format": "int32"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -172,6 +178,12 @@ const (
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -211,6 +223,92 @@ const (
             "schema": {
               "$ref": "#/definitions/serverpbCreatePoolRequest"
             }
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
+    "/api/v0/network/{name}": {
+      "get": {
+        "operationId": "GetNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbGetNetworkResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ip",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mask",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
+    "/api/v0/network/{name}/drawip": {
+      "get": {
+        "operationId": "DrawIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDrawIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ip",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mask",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pool_tag.key",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pool_tag.value",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [

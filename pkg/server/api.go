@@ -20,12 +20,18 @@ func (api *APIServer) DrawIP(
 		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
-	ip := &net.IPNet{
-		IP:   net.ParseIP(req.Ip),
-		Mask: net.CIDRMask(int(req.Mask), 32),
-	}
+	var n *ipam.Network
+	var err error
+	if req.Name == "" {
+		ip := &net.IPNet{
+			IP:   net.ParseIP(req.Ip),
+			Mask: net.CIDRMask(int(req.Mask), 32),
+		}
 
-	n, err := api.manager.GetNetwork(ctx, ip)
+		n, err = api.manager.GetNetworkByIP(ctx, ip)
+	} else {
+		n, err = api.manager.GetNetworkByName(ctx, req.Name)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -35,8 +41,8 @@ func (api *APIServer) DrawIP(
 		return nil, err
 	}
 	if len(pools) == 0 {
-		return nil, status.Errorf(
-			codes.NotFound, "Not found prefix: %s", ip.String())
+		return nil, status.Error(
+			codes.NotFound, "Not found any pools")
 	}
 
 	tags := make(map[string]string)
@@ -119,10 +125,16 @@ func (api *APIServer) GetNetwork(
 		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
-	n, err := api.manager.GetNetwork(ctx, &net.IPNet{
-		IP:   net.ParseIP(req.Ip),
-		Mask: net.CIDRMask(int(req.Mask), 32),
-	})
+	var n *ipam.Network
+	var err error
+	if req.Name == "" {
+		n, err = api.manager.GetNetworkByIP(ctx, &net.IPNet{
+			IP:   net.ParseIP(req.Ip),
+			Mask: net.CIDRMask(int(req.Mask), 32),
+		})
+	} else {
+		n, err = api.manager.GetNetworkByName(ctx, req.Name)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +232,7 @@ func (api *APIServer) CreatePool(
 		Tags:   tags,
 	}
 
-	n, err := api.manager.GetNetwork(ctx, ip)
+	n, err := api.manager.GetNetworkByIP(ctx, ip)
 	if err != nil {
 		return nil, err
 	}
