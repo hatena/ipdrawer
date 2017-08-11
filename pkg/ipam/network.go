@@ -60,6 +60,8 @@ func getNetworks(r *storage.Redis) ([]*Network, error) {
 }
 
 func setNetwork(r *storage.Redis, n *Network) error {
+	pipe := r.Client.TxPipeline()
+
 	// Set details
 	dkey := makeNetworkDetailsKey(n.Prefix)
 	details := map[string]interface{}{
@@ -67,9 +69,7 @@ func setNetwork(r *storage.Redis, n *Network) error {
 		"netmask":   n.Netmask.String(),
 		"broadcast": n.Broadcast.String(),
 	}
-	if _, err := r.Client.HMSet(dkey, details).Result(); err != nil {
-		return err
-	}
+	pipe.HMSet(dkey, details)
 
 	// Set tags
 	if len(n.Tags) != 0 {
@@ -78,9 +78,7 @@ func setNetwork(r *storage.Redis, n *Network) error {
 		for k, v := range n.Tags {
 			tags[k] = v
 		}
-		if _, err := r.Client.HMSet(tagKey, tags).Result(); err != nil {
-			return err
-		}
+		pipe.HMSet(tagKey, tags)
 	}
 
 	// Set default Gateways
@@ -90,12 +88,14 @@ func setNetwork(r *storage.Redis, n *Network) error {
 		for i, gw := range n.Gateways {
 			gws[i] = gw.String()
 		}
-		if _, err := r.Client.SAdd(gwKey, gws).Result(); err != nil {
-			return err
-		}
+		pipe.SAdd(gwKey, gws)
 	}
 
-	return nil
+	pipe.SAdd(makeNetworkListKey(), n.Prefix.String())
+
+	_, err := pipe.Exec()
+
+	return err
 }
 
 func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*Network, error) {

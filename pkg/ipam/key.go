@@ -6,6 +6,9 @@ import (
 )
 
 const (
+	lockPrefix = "lock:"
+	globalLock = "global"
+
 	ipDetails      = "ip:%s:details"
 	ipTempReserved = "ip:%s:temporary_reserved"
 	networkList    = "network:list"
@@ -13,6 +16,10 @@ const (
 	poolDetails    = "pool:%s,%s:details"
 	poolUsedIPZSet = "pool:%s,%s:used_ip_zset"
 )
+
+func makeGlobalLock() string {
+	return lockPrefix + globalLock
+}
 
 func makeIPDetailsKey(ip net.IP) string {
 	return fmt.Sprintf(ipDetails, ip.String())

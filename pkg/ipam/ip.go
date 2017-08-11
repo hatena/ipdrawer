@@ -47,11 +47,11 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
 
-	token, err := m.locker.Lock(ctx)
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
 	if err != nil {
 		return nil, err
 	}
-	defer m.locker.Unlock(ctx, token)
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
 	zkey := makePoolUsedIPZset(pool.Start, pool.End)
 	avail := pool.Start
@@ -100,11 +100,11 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip net.IP) error {
 	span.SetTag("ip", ip.String())
 	defer span.Finish()
 
-	token, err := m.locker.Lock(ctx)
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
 	if err != nil {
 		return err
 	}
-	defer m.locker.Unlock(ctx, token)
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
@@ -199,19 +199,7 @@ func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
 	span.SetTag("network", n.String())
 	defer span.Finish()
 
-	token, err := m.locker.Lock(ctx)
-	if err != nil {
-		return err
-	}
-	defer m.locker.Unlock(ctx, token)
-
-	if err := setNetwork(m.redis, n); err != nil {
-		return err
-	}
-
-	_, err = m.redis.Client.SAdd(makeNetworkListKey(), n.Prefix.String()).Result()
-
-	return err
+	return setNetwork(m.redis, n)
 }
 
 // CreatePool creates pool
@@ -220,12 +208,6 @@ func (m *IPManager) CreatePool(ctx context.Context, n *Network, pool *IPPool) er
 	span.SetTag("network", n.String())
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
-
-	token, err := m.locker.Lock(ctx)
-	if err != nil {
-		return err
-	}
-	defer m.locker.Unlock(ctx, token)
 
 	return setPool(m.redis, n, pool)
 }

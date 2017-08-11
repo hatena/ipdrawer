@@ -68,14 +68,14 @@ func (p *IPPool) unmarshal(data []interface{}) error {
 }
 
 func setPool(r *storage.Redis, prefix *Network, pool *IPPool) error {
+	pipe := r.Client.TxPipeline()
+
 	// Set details
 	dkey := makePoolDetailsKey(pool.Start, pool.End)
 	details := map[string]interface{}{
 		"status": int(pool.Status),
 	}
-	if _, err := r.Client.HMSet(dkey, details).Result(); err != nil {
-		return err
-	}
+	pipe.HMSet(dkey, details)
 
 	// Set tags
 	if len(pool.Tags) != 0 {
@@ -84,18 +84,16 @@ func setPool(r *storage.Redis, prefix *Network, pool *IPPool) error {
 		for k, v := range pool.Tags {
 			tags[k] = v
 		}
-		if _, err := r.Client.HMSet(tagKey, tags).Result(); err != nil {
-			return err
-		}
+		pipe.HMSet(tagKey, tags)
 	}
 
 	// Add pools
 	poolKey := makeNetworkPoolKey(prefix.Prefix)
-	if _, err := r.Client.SAdd(poolKey, pool.Key()).Result(); err != nil {
-		return err
-	}
+	pipe.SAdd(poolKey, pool.Key())
 
-	return nil
+	_, err := pipe.Exec()
+
+	return err
 }
 
 func getPool(r *storage.Redis, start net.IP, end net.IP) (*IPPool, error) {

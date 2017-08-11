@@ -24,10 +24,10 @@ func NewTestRedis() (*Redis, func()) {
 
 type LocalLocker struct{}
 
-func (l *LocalLocker) Lock(ctx context.Context) (string, error) {
+func (l *LocalLocker) Lock(ctx context.Context, _ string) (string, error) {
 	return "", nil
 }
 
-func (l *LocalLocker) Unlock(ctx context.Context, _ string) error {
+func (l *LocalLocker) Unlock(ctx context.Context, _, _ string) error {
 	return nil
 }

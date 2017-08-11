@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"time"
+
 	"github.com/cenkalti/backoff"
 	"github.com/google/uuid"
 	"github.com/opentracing/opentracing-go"
@@ -8,9 +10,13 @@ import (
 	"golang.org/x/net/context"
 )
 
+const (
+	lockExpirationTime = 10 * time.Second
+)
+
 type Locker interface {
-	Lock(ctx context.Context) (string, error)
-	Unlock(ctx context.Context, token string) error
+	Lock(ctx context.Context, resource string) (string, error)
+	Unlock(ctx context.Context, resource, token string) error
 }
 
 type RedisLocker struct {
@@ -23,13 +29,13 @@ func NewLocker(r *Redis) *RedisLocker {
 	}
 }
 
-func (l *RedisLocker) Lock(ctx context.Context) (string, error) {
+func (l *RedisLocker) Lock(ctx context.Context, resource string) (string, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "RedisLocker.Lock")
 	defer span.Finish()
 
 	token := uuid.New().String()
 	err := backoff.Retry(func() error {
-		res, err := l.redis.Client.SetNX(lockResourceName, token, lockExpirationTime).Result()
+		res, err := l.redis.Client.SetNX(resource, token, lockExpirationTime).Result()
 		if err != nil {
 			return err
 		}
@@ -45,7 +51,7 @@ func (l *RedisLocker) Lock(ctx context.Context) (string, error) {
 	return token, nil
 }
 
-func (l *RedisLocker) Unlock(ctx context.Context, token string) error {
+func (l *RedisLocker) Unlock(ctx context.Context, resouce, token string) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "RedisLocker.Unlock")
 	defer span.Finish()
 
@@ -55,7 +61,7 @@ then
   return redis.call("del",KEYS[1])
 else
   return 0
-end`, []string{lockResourceName}, token).Result()
+end`, []string{resouce}, token).Result()
 	if err != nil {
 		return err
 	}

@@ -1,14 +1,7 @@
 package storage
 
 import (
-	"time"
-
 	"github.com/go-redis/redis"
-)
-
-const (
-	lockResourceName   = "redis-lock"
-	lockExpirationTime = 10 * time.Second
 )
 
 //type redisAPI interface {
