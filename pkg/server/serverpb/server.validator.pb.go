@@ -20,8 +20,6 @@ It has these top-level messages:
 	CreateNetworkResponse
 	CreatePoolRequest
 	CreatePoolResponse
-	Tag
-	Pool
 */
 package serverpb
 
@@ -32,6 +30,8 @@ import proto "github.com/golang/protobuf/proto"
 import math "math"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 import _ "github.com/mwitkow/go-proto-validators"
+import _ "github.com/taku-k/ipdrawer/pkg/model"
+import _ "github.com/gogo/protobuf/gogoproto"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -161,34 +161,5 @@ func (this *CreatePoolRequest) Validate() error {
 	return nil
 }
 func (this *CreatePoolResponse) Validate() error {
-	return nil
-}
-func (this *Tag) Validate() error {
-	if this.Key == "" {
-		return github_com_mwitkow_go_proto_validators.FieldError("Key", fmt.Errorf(`value '%v' must not be an empty string`, this.Key))
-	}
-	if this.Value == "" {
-		return github_com_mwitkow_go_proto_validators.FieldError("Value", fmt.Errorf(`value '%v' must not be an empty string`, this.Value))
-	}
-	return nil
-}
-
-var _regex_Pool_Start = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
-var _regex_Pool_End = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
-
-func (this *Pool) Validate() error {
-	if !_regex_Pool_Start.MatchString(this.Start) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Start", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Start))
-	}
-	if !_regex_Pool_End.MatchString(this.End) {
-		return github_com_mwitkow_go_proto_validators.FieldError("End", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.End))
-	}
-	for _, item := range this.Tags {
-		if item != nil {
-			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
-			}
-		}
-	}
 	return nil
 }

@@ -318,6 +318,38 @@ const (
     }
   },
   "definitions": {
+    "modelPool": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string"
+        },
+        "end": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelTag"
+          }
+        }
+      }
+    },
+    "modelTag": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
     "serverpbActivateIPResponse": {
       "type": "object"
     },
@@ -340,7 +372,7 @@ const (
         "tags": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/serverpbTag"
+            "$ref": "#/definitions/modelTag"
           }
         }
       }
@@ -359,7 +391,7 @@ const (
           "format": "int32"
         },
         "pool": {
-          "$ref": "#/definitions/serverpbPool"
+          "$ref": "#/definitions/modelPool"
         }
       }
     },
@@ -398,40 +430,8 @@ const (
         "tags": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/serverpbTag"
+            "$ref": "#/definitions/modelTag"
           }
-        }
-      }
-    },
-    "serverpbPool": {
-      "type": "object",
-      "properties": {
-        "start": {
-          "type": "string"
-        },
-        "end": {
-          "type": "string"
-        },
-        "status": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "tags": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/serverpbTag"
-          }
-        }
-      }
-    },
-    "serverpbTag": {
-      "type": "object",
-      "properties": {
-        "key": {
-          "type": "string"
-        },
-        "value": {
-          "type": "string"
         }
       }
     }

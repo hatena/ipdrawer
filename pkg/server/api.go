@@ -8,6 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
+	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
@@ -144,10 +145,10 @@ func (api *APIServer) GetNetwork(
 		gws[i] = gw.String()
 	}
 
-	tags := make([]*serverpb.Tag, len(n.Tags))
+	tags := make([]*model.Tag, len(n.Tags))
 	i := 0
 	for k, v := range n.Tags {
-		tags[i] = &serverpb.Tag{
+		tags[i] = &model.Tag{
 			Key:   k,
 			Value: v,
 		}
