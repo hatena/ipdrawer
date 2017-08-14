@@ -15,6 +15,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/taku-k/ipdrawer/pkg/server"
+	"github.com/taku-k/ipdrawer/pkg/utils/tracer"
 )
 
 var startCmd = &cobra.Command{
@@ -28,11 +29,16 @@ func startServer(cmd *cobra.Command, args []string) error {
 		return usageAndError(cmd)
 	}
 
+	if cfg.EnableTracer {
+		closer := tracer.SetupTracer()
+		defer closer.Close()
+	}
+
 	// Signal
 	signalCh := make(chan os.Signal, 1)
 	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
-	s := server.NewAPIServer("8080")
+	s := server.NewAPIServer(cfg.Port)
 
 	errCh := make(chan error, 1)
 	go func() {
@@ -40,7 +46,7 @@ func startServer(cmd *cobra.Command, args []string) error {
 			var buf bytes.Buffer
 			tw := tabwriter.NewWriter(&buf, 2, 1, 2, ' ', 0)
 			fmt.Fprintf(tw, "ipdrawer server starting at %s\n", time.Now())
-			fmt.Fprintf(tw, "port:\t%s\n", "8080")
+			fmt.Fprintf(tw, "port:\t%s\n", cfg.Port)
 			if err := tw.Flush(); err != nil {
 				return err
 			}

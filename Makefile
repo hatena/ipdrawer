@@ -77,6 +77,7 @@ deps:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 	go get -u github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
 	go get -u github.com/gogo/protobuf/protoc-gen-gofast
+	go get -u github.com/jteeuwen/go-bindata/...
 
 .PHONY: ui
 ui:
