@@ -123,8 +123,9 @@ func runIPAddrImport(cmd *cobra.Command, args []string) error {
 			_, err := cli.ActivateIP(context.Background(), req)
 			if err != nil {
 				failedIps = append(failedIps, req)
+			} else {
+				fmt.Printf("Activated: %v\n", req.Ip)
 			}
-			fmt.Printf("Activated: %v\n", req.Ip)
 		}
 	}
 
