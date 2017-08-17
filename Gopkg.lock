@@ -32,6 +32,12 @@
   version = "v6.5.4"
 
 [[projects]]
+  branch = "v2"
+  name = "github.com/go-yaml/yaml"
+  packages = ["."]
+  revision = "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
+
+[[projects]]
   name = "github.com/gogo/protobuf"
   packages = ["gogoproto","proto","protoc-gen-gogo/descriptor"]
   revision = "100ba4e885062801d56799d78530b73b178a78f3"
@@ -172,6 +178,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b4b841848fcd87460503c40a20a83693fad5bb39749fe09875e4412f31151be2"
+  inputs-digest = "2981562123e6a817a646a9b6053990bdf39bc90d288196f338959205c0ad0f93"
   solver-name = "gps-cdcl"
   solver-version = 1
