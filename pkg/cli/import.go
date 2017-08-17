@@ -90,9 +90,48 @@ func runPoolImport(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+var ipAddrImportCmd = &cobra.Command{
+	Use:   "ipaddr",
+	Short: "Import ipaddr",
+	RunE:  runIPAddrImport,
+}
+
+func runIPAddrImport(cmd *cobra.Command, args []string) error {
+	if len(args) == 0 {
+		usageAndError(cmd)
+	}
+
+	addr := net.JoinHostPort(cfg.Host, cfg.Port)
+	conn, err := grpc.DialContext(context.Background(), addr, grpc.WithInsecure())
+	if err != nil {
+		return err
+	}
+	cli := serverpb.NewIPServiceV0Client(conn)
+
+	for _, fn := range args {
+		reqs := make([]*serverpb.ActivateIPRequest, 0)
+		data, err := ioutil.ReadFile(fn)
+		if err != nil {
+			return err
+		}
+		if err = yaml.Unmarshal([]byte(data), &reqs); err != nil {
+			return err
+		}
+		for _, req := range reqs {
+			_, err := cli.ActivateIP(context.Background(), req)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("Activated: %v\n", req.Ip)
+		}
+	}
+	return nil
+}
+
 var importCmds = []*cobra.Command{
 	networkImportCmd,
 	poolImportCmd,
+	ipAddrImportCmd,
 }
 
 var importCmd = &cobra.Command{
