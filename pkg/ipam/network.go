@@ -84,21 +84,21 @@ func setNetwork(r *storage.Redis, n *Network) error {
 	// Set tags
 	if len(n.Tags) != 0 {
 		tagKey := makeNetworkTagKey(n.Prefix)
-		tags := make([]string, len(n.Tags))
+		tags := make([]interface{}, len(n.Tags))
 		for i, t := range n.Tags {
 			tags[i] = t.Key + "=" + t.Value
 		}
-		pipe.SAdd(tagKey, tags)
+		pipe.SAdd(tagKey, tags...)
 	}
 
 	// Set default Gateways
 	if len(n.Gateways) != 0 {
 		gwKey := makeNetworkDefaultGWKey(n.Prefix)
-		gws := make([]string, len(n.Gateways))
+		gws := make([]interface{}, len(n.Gateways))
 		for i, gw := range n.Gateways {
 			gws[i] = gw.String()
 		}
-		pipe.SAdd(gwKey, gws)
+		pipe.SAdd(gwKey, gws...)
 	}
 
 	pipe.SAdd(makeNetworkListKey(), n.Prefix.String())

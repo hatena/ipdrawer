@@ -88,11 +88,11 @@ func setPool(r *storage.Redis, prefix *Network, pool *IPPool) error {
 	// Set tags
 	if len(pool.Tags) != 0 {
 		tagKey := makePoolTagsKey(pool.Start, pool.End)
-		tags := make([]string, len(pool.Tags))
+		tags := make([]interface{}, len(pool.Tags))
 		for i, t := range pool.Tags {
 			tags[i] = t.Key + "=" + t.Value
 		}
-		pipe.SAdd(tagKey, tags)
+		pipe.SAdd(tagKey, tags...)
 	}
 
 	// Add pools
