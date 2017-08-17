@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 
+	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
@@ -182,11 +183,13 @@ func (m *IPManager) GetNetworkByName(ctx context.Context, name string) (*Network
 		return nil, err
 	}
 
+	target := &model.Tag{
+		Key:   "Name",
+		Value: name,
+	}
 	for _, n := range networks {
-		if v, ok := n.Tags["Name"]; ok {
-			if v == name {
-				return n, nil
-			}
+		if n.HasTag(target) {
+			return n, nil
 		}
 	}
 

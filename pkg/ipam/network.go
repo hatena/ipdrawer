@@ -7,6 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
+	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
@@ -16,7 +17,7 @@ type Network struct {
 	Broadcast net.IP
 	Netmask   net.IP
 	Status    NetworkStatus
-	Tags      map[string]string
+	Tags      []*model.Tag
 	pools     []*IPPool
 }
 
@@ -31,6 +32,15 @@ const (
 
 func (n *Network) String() string {
 	return n.Prefix.String()
+}
+
+func (n *Network) HasTag(tag *model.Tag) bool {
+	for _, t := range n.Tags {
+		if t.Key == tag.Key && t.Value == tag.Value {
+			return true
+		}
+	}
+	return false
 }
 
 func getNetworks(r *storage.Redis) ([]*Network, error) {
@@ -74,11 +84,11 @@ func setNetwork(r *storage.Redis, n *Network) error {
 	// Set tags
 	if len(n.Tags) != 0 {
 		tagKey := makeNetworkTagKey(n.Prefix)
-		tags := make(map[string]interface{})
-		for k, v := range n.Tags {
-			tags[k] = v
+		tags := make([]string, len(n.Tags))
+		for i, t := range n.Tags {
+			tags[i] = t.Key + "=" + t.Value
 		}
-		pipe.HMSet(tagKey, tags)
+		pipe.SAdd(tagKey, tags)
 	}
 
 	// Set default Gateways
@@ -112,7 +122,7 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*Network, error) {
 	if err != nil {
 		return nil, err
 	}
-	tags, err := r.Client.HGetAll(tagKey).Result()
+	tagd, err := r.Client.SMembers(tagKey).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -123,11 +133,18 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*Network, error) {
 
 	n := &Network{
 		Prefix: ipnet,
-		Tags:   tags,
 	}
 	if err := n.unmarshal(data); err != nil {
 		return nil, err
 	}
+	tags := make([]*model.Tag, len(tagd))
+	for i, t := range tagd {
+		var err error
+		if tags[i], err = unmarshalTag(t); err != nil {
+			return nil, err
+		}
+	}
+	n.Tags = tags
 	gateways := make([]net.IP, len(gws))
 	for i, g := range gws {
 		if gateways[i] = net.ParseIP(g); gateways[i] == nil {

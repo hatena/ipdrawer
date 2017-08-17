@@ -2,7 +2,12 @@ package ipam
 
 import (
 	"encoding/binary"
+	"fmt"
 	"net"
+	"strings"
+
+	"github.com/pkg/errors"
+	"github.com/taku-k/ipdrawer/pkg/model"
 )
 
 func ip2int(ip net.IP) uint32 {
@@ -24,4 +29,16 @@ func nextIP(ip net.IP) net.IP {
 
 func prevIP(ip net.IP) net.IP {
 	return int2ip(ip2int(ip) - 1)
+}
+
+func unmarshalTag(s string) (*model.Tag, error) {
+	kv := strings.Split(s, "=")
+	if len(kv) != 2 {
+		return nil, errors.New(
+			fmt.Sprintf("Failed to unmarshal tag: %s", s))
+	}
+	return &model.Tag{
+		Key:   kv[0],
+		Value: kv[1],
+	}, nil
 }

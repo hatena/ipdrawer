@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
@@ -14,7 +15,7 @@ type IPPool struct {
 	Start  net.IP
 	End    net.IP
 	Status poolStatus
-	Tags   map[string]string
+	Tags   []*model.Tag
 }
 
 type poolStatus int
@@ -24,9 +25,16 @@ const (
 	POOL_RESERVED
 )
 
-func (p *IPPool) MatchTags(tags map[string]string) bool {
-	for k, v := range tags {
-		if vv, ok := p.Tags[k]; !ok || vv != v {
+func (p *IPPool) MatchTags(tags []*model.Tag) bool {
+	var flag bool
+	for _, target := range tags {
+		flag = false
+		for _, t := range p.Tags {
+			if target.Key == t.Key && target.Value == t.Value {
+				flag = true
+			}
+		}
+		if !flag {
 			return false
 		}
 	}
@@ -80,11 +88,11 @@ func setPool(r *storage.Redis, prefix *Network, pool *IPPool) error {
 	// Set tags
 	if len(pool.Tags) != 0 {
 		tagKey := makePoolTagsKey(pool.Start, pool.End)
-		tags := make(map[string]interface{})
-		for k, v := range pool.Tags {
-			tags[k] = v
+		tags := make([]string, len(pool.Tags))
+		for i, t := range pool.Tags {
+			tags[i] = t.Key + "=" + t.Value
 		}
-		pipe.HMSet(tagKey, tags)
+		pipe.SAdd(tagKey, tags)
 	}
 
 	// Add pools
@@ -110,7 +118,7 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*IPPool, error) {
 	if err != nil {
 		return nil, err
 	}
-	tags, err := r.Client.HGetAll(tagKey).Result()
+	tagd, err := r.Client.SMembers(tagKey).Result()
 	if err != nil {
 		return nil, err
 	}
@@ -118,11 +126,18 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*IPPool, error) {
 	pool := &IPPool{
 		Start: start,
 		End:   end,
-		Tags:  tags,
 	}
 	if err := pool.unmarshal(data); err != nil {
 		return nil, err
 	}
+	tags := make([]*model.Tag, len(tagd))
+	for i, t := range tagd {
+		var err error
+		if tags[i], err = unmarshalTag(t); err != nil {
+			return nil, err
+		}
+	}
+	pool.Tags = tags
 
 	return pool, nil
 }

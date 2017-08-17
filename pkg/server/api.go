@@ -46,20 +46,15 @@ func (api *APIServer) DrawIP(
 			codes.NotFound, "Not found any pools")
 	}
 
-	tags := make(map[string]string)
-	if req.PoolTag != nil {
-		tags[req.PoolTag.Key] = req.PoolTag.Value
-	}
-
 	target := make([]*ipam.IPPool, 0)
 	for _, p := range pools {
-		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags(tags) {
+		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags([]*model.Tag{req.PoolTag}) {
 			target = append(target, p)
 		}
 	}
 	if len(target) == 0 {
 		return nil, status.Errorf(
-			codes.NotFound, "Not found matched tags: %v", tags)
+			codes.NotFound, "Not found matched tags: %v", req.PoolTag.String())
 	}
 
 	for _, p := range target {
@@ -145,22 +140,12 @@ func (api *APIServer) GetNetwork(
 		gws[i] = gw.String()
 	}
 
-	tags := make([]*model.Tag, len(n.Tags))
-	i := 0
-	for k, v := range n.Tags {
-		tags[i] = &model.Tag{
-			Key:   k,
-			Value: v,
-		}
-		i += 1
-	}
-
 	return &serverpb.GetNetworkResponse{
 		Network:         n.Prefix.String(),
 		Broadcast:       n.Broadcast.String(),
 		Netmask:         n.Netmask.String(),
 		DefaultGateways: gws,
-		Tags:            tags,
+		Tags:            n.Tags,
 	}, nil
 }
 
@@ -185,17 +170,12 @@ func (api *APIServer) CreateNetwork(
 		gws[i] = net.ParseIP(gw)
 	}
 
-	tags := make(map[string]string)
-	for _, tag := range req.Tags {
-		tags[tag.Key] = tag.Value
-	}
-
 	n := &ipam.Network{
 		Prefix:    ip,
 		Broadcast: broadcast,
 		Netmask:   netmask,
 		Gateways:  gws,
-		Tags:      tags,
+		Tags:      req.Tags,
 		Status:    ipam.NETWORK_AVAILABLE,
 	}
 
@@ -219,18 +199,11 @@ func (api *APIServer) CreatePool(
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
 
-	tags := make(map[string]string)
-	if len(req.Pool.Tags) != 0 {
-		for _, tag := range req.Pool.Tags {
-			tags[tag.Key] = tag.Value
-		}
-	}
-
 	pool := &ipam.IPPool{
 		Start:  net.ParseIP(req.Pool.Start),
 		End:    net.ParseIP(req.Pool.End),
 		Status: ipam.POOL_AVAILABLE,
-		Tags:   tags,
+		Tags:   req.Pool.Tags,
 	}
 
 	n, err := api.manager.GetNetworkByIP(ctx, ip)
