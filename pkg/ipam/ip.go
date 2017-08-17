@@ -19,15 +19,16 @@ type IPManager struct {
 	locker storage.Locker
 }
 
-type ipAddr struct {
-	ip     net.IP
-	status ipStatus
+type IPAddr struct {
+	IP     net.IP
+	Status IPStatus
+	Tags   []*model.Tag
 }
 
-type ipStatus int
+type IPStatus int
 
 const (
-	IP_ACTIVE ipStatus = iota
+	IP_ACTIVE IPStatus = iota
 	IP_TEMPORARY_RESERVED
 	IP_RESERVED
 )
@@ -95,10 +96,10 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 }
 
 // Activate activates IP.
-func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip net.IP) error {
+func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
 	span.SetTag("pool", p.Key())
-	span.SetTag("ip", ip.String())
+	span.SetTag("ip", ip.IP.String())
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx, makeGlobalLock())
@@ -109,13 +110,22 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip net.IP) error {
 
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
-	pipe.Del(makeIPTempReserved(ip))
+	pipe.Del(makeIPTempReserved(ip.IP))
 	// Change IP status to ACTIVE
-	pipe.HSet(makeIPDetailsKey(ip), "status", int(IP_ACTIVE))
+	pipe.HSet(makeIPDetailsKey(ip.IP), "status", int(IP_ACTIVE))
 	// Add IP to used IP zset
-	score := float64(ip2int(ip))
-	z := redis.Z{score, ip.String()}
+	score := float64(ip2int(ip.IP))
+	z := redis.Z{score, ip.IP.String()}
 	pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
+	// Set tags
+	if len(ip.Tags) != 0 {
+		tagKey := makeIPTagKey(ip.IP)
+		tags := make([]interface{}, len(ip.Tags))
+		for i, t := range ip.Tags {
+			tags[i] = t.Key + "=" + t.Value
+		}
+		pipe.SAdd(tagKey, tags...)
+	}
 	if _, err := pipe.Exec(); err != nil {
 		return err
 	}

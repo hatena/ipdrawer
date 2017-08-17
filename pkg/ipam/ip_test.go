@@ -5,9 +5,10 @@ import (
 	"testing"
 	"time"
 
+	"golang.org/x/net/context"
+
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
-	"golang.org/x/net/context"
 )
 
 func newTestIPManager(r *storage.Redis) *IPManager {
@@ -34,10 +35,10 @@ func TestIPActivation(t *testing.T) {
 		End:   net.ParseIP("10.0.0.254"),
 	}
 
-	if err := m.Activate(ctx, pool, net.ParseIP("10.0.0.1")); err != nil {
+	if err := m.Activate(ctx, pool, &IPAddr{IP: net.ParseIP("10.0.0.1")}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
-	if err := m.Activate(ctx, pool, net.ParseIP("10.0.0.4")); err != nil {
+	if err := m.Activate(ctx, pool, &IPAddr{IP: net.ParseIP("10.0.0.4")}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
 
@@ -56,7 +57,7 @@ func TestDrawIPSeq(t *testing.T) {
 
 	testCases := []struct {
 		pool     *IPPool
-		ips      []*ipAddr
+		ips      []*IPAddr
 		expected net.IP
 		errmsg   string
 	}{
@@ -65,13 +66,13 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*ipAddr{
+			ips: []*IPAddr{
 				{
-					ip:     net.ParseIP("10.0.0.1"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.1"),
+					Status: IP_ACTIVE,
 				}, {
-					ip:     net.ParseIP("10.0.0.3"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.3"),
+					Status: IP_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.2"),
@@ -80,19 +81,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*ipAddr{
+			ips: []*IPAddr{
 				{
-					ip:     net.ParseIP("10.0.0.1"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.1"),
+					Status: IP_ACTIVE,
 				}, {
-					ip:     net.ParseIP("10.0.0.2"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.2"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.3"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.3"),
+					Status: IP_ACTIVE,
 				}, {
-					ip:     net.ParseIP("10.0.0.4"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.4"),
+					Status: IP_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -101,19 +102,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*ipAddr{
+			ips: []*IPAddr{
 				{
-					ip:     net.ParseIP("10.0.0.1"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.1"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.2"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.2"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.3"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.3"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.4"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.4"),
+					Status: IP_TEMPORARY_RESERVED,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -122,19 +123,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*ipAddr{
+			ips: []*IPAddr{
 				{
-					ip:     net.ParseIP("10.0.0.1"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.1"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.2"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.2"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.3"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.3"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.4"),
-					status: IP_ACTIVE,
+					IP:     net.ParseIP("10.0.0.4"),
+					Status: IP_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -143,13 +144,13 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.2"),
 			},
-			ips: []*ipAddr{
+			ips: []*IPAddr{
 				{
-					ip:     net.ParseIP("10.0.0.1"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.1"),
+					Status: IP_TEMPORARY_RESERVED,
 				}, {
-					ip:     net.ParseIP("10.0.0.2"),
-					status: IP_TEMPORARY_RESERVED,
+					IP:     net.ParseIP("10.0.0.2"),
+					Status: IP_TEMPORARY_RESERVED,
 				},
 			},
 			errmsg: "Nothing IP to serve",
@@ -161,13 +162,13 @@ func TestDrawIPSeq(t *testing.T) {
 		m := newTestIPManager(r)
 
 		for _, ip := range c.ips {
-			switch ip.status {
+			switch ip.Status {
 			case IP_ACTIVE:
-				m.Activate(ctx, c.pool, ip.ip)
+				m.Activate(ctx, c.pool, ip)
 			case IP_TEMPORARY_RESERVED:
-				m.reserveTemporary(ip.ip)
+				m.reserveTemporary(ip.IP)
 			case IP_RESERVED:
-				m.Reserve(c.pool, ip.ip)
+				m.Reserve(c.pool, ip.IP)
 			}
 		}
 

@@ -25,6 +25,10 @@ func makeIPDetailsKey(ip net.IP) string {
 	return fmt.Sprintf(ipDetails, ip.String())
 }
 
+func makeIPTagKey(ip net.IP) string {
+	return makeIPDetailsKey(ip) + ":tags"
+}
+
 func makeIPTempReserved(ip net.IP) string {
 	return fmt.Sprintf(ipTempReserved, ip.String())
 }

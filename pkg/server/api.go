@@ -87,9 +87,12 @@ func (api *APIServer) ActivateIP(
 		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
 	}
 
-	ip := net.ParseIP(req.Ip)
+	ip := &ipam.IPAddr{
+		IP:   net.ParseIP(req.Ip),
+		Tags: req.Tags,
+	}
 
-	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.IP)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +103,7 @@ func (api *APIServer) ActivateIP(
 	}
 
 	for _, pool := range pools {
-		if pool.Contains(ip) {
+		if pool.Contains(ip.IP) {
 			if err := api.manager.Activate(ctx, pool, ip); err != nil {
 				return nil, err
 			} else {
@@ -110,7 +113,7 @@ func (api *APIServer) ActivateIP(
 	}
 
 	return nil, status.Errorf(
-		codes.NotFound, "Not found pool: %s", ip.String())
+		codes.NotFound, "Not found pool: %s", ip.IP.String())
 }
 
 func (api *APIServer) GetNetwork(

@@ -305,6 +305,10 @@ func request_IPServiceV0_ActivateIP_0(ctx context.Context, marshaler runtime.Mar
 	var protoReq ActivateIPRequest
 	var metadata runtime.ServerMetadata
 
+	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
 	var (
 		val string
 		ok  bool

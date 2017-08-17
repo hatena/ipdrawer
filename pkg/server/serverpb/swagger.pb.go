@@ -35,6 +35,14 @@ const (
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/serverpbActivateIPRequest"
+            }
           }
         ],
         "tags": [
@@ -347,6 +355,20 @@ const (
         },
         "value": {
           "type": "string"
+        }
+      }
+    },
+    "serverpbActivateIPRequest": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelTag"
+          }
         }
       }
     },
