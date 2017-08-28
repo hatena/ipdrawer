@@ -128,6 +128,12 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/tatsushid/go-fastping"
+  packages = ["."]
+  revision = "d7bb493dee3e090e2ffb6914adddf17c1e7c026c"
+
+[[projects]]
   name = "github.com/uber/jaeger-client-go"
   packages = [".","config","internal/spanlog","log","rpcmetrics","thrift-gen/agent","thrift-gen/jaeger","thrift-gen/sampling","thrift-gen/zipkincore","utils"]
   revision = "d021e646f5187d77b55592c3efee1a2810e895d7"
@@ -148,7 +154,7 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = ["context","http2","http2/hpack","idna","internal/timeseries","lex/httplex","trace"]
+  packages = ["bpf","context","http2","http2/hpack","icmp","idna","internal/iana","internal/socket","internal/timeseries","ipv4","ipv6","lex/httplex","trace"]
   revision = "f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f"
 
 [[projects]]
@@ -178,6 +184,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "2981562123e6a817a646a9b6053990bdf39bc90d288196f338959205c0ad0f93"
+  inputs-digest = "4bae6a96f00438e757fb21bcd2f9dca24398564bd2c0c538f20ac355cc0d1923"
   solver-name = "gps-cdcl"
   solver-version = 1

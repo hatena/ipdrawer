@@ -8,6 +8,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/opentracing/opentracing-go"
 	"github.com/pkg/errors"
+	"github.com/tatsushid/go-fastping"
 	"golang.org/x/net/context"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
@@ -87,7 +88,12 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 			}
 		}
 		if !flag {
-			return avail, nil
+			p := fastping.NewPinger()
+			p.AddIP(avail.String())
+			if err := p.Run(); err != nil {
+				return avail, nil
+			}
+			avail = nextIP(avail)
 		} else {
 			avail = nextIP(avail)
 		}
