@@ -24,6 +24,7 @@ import (
 
 	"github.com/opentracing/opentracing-go"
 	"github.com/philips/go-bindata-assetfs"
+	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
@@ -36,10 +37,10 @@ type APIServer struct {
 	httpS   *http.Server
 }
 
-func NewAPIServer(port string) *APIServer {
+func NewServer(cfg *base.Config) *APIServer {
 	mngr := ipam.NewIPManager()
 	return &APIServer{
-		addr:    ":" + port,
+		addr:    ":" + cfg.Port,
 		manager: mngr,
 	}
 }

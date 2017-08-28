@@ -38,7 +38,7 @@ func startServer(cmd *cobra.Command, args []string) error {
 	signalCh := make(chan os.Signal, 1)
 	signal.Notify(signalCh, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
 
-	s := server.NewAPIServer(cfg.Port)
+	s := server.NewServer(cfg)
 
 	errCh := make(chan error, 1)
 	go func() {
