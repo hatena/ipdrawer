@@ -150,7 +150,7 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 }
 
 func (m *IPManager) Deactivate(ctx context.Context, p *IPPool, ip *IPAddr) error {
-	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
 	span.SetTag("pool", p.Key())
 	span.SetTag("ip", ip.IP.String())
 	defer span.Finish()
