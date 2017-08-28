@@ -108,7 +108,7 @@ func runIPAddrImport(cmd *cobra.Command, args []string) error {
 	}
 	cli := serverpb.NewIPServiceV0Client(conn)
 
-	failedIps := make([]*serverpb.ActivateIPRequest, 0)
+	failedIps := make([]string, 0)
 
 	for _, fn := range args {
 		reqs := make([]*serverpb.ActivateIPRequest, 0)
@@ -122,7 +122,7 @@ func runIPAddrImport(cmd *cobra.Command, args []string) error {
 		for _, req := range reqs {
 			_, err := cli.ActivateIP(context.Background(), req)
 			if err != nil {
-				failedIps = append(failedIps, req)
+				failedIps = append(failedIps, req.Ip)
 			} else {
 				fmt.Printf("Activated: %v\n", req.Ip)
 			}
