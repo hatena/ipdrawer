@@ -92,6 +92,17 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 			p.AddIP(avail.String())
 			if err := p.Run(); err != nil {
 				return avail, nil
+			} else {
+				// Activate
+				m.Activate(ctx, pool, &IPAddr{
+					IP: avail,
+					Tags: []*model.Tag{
+						{
+							Key:   "Role",
+							Value: "unknown",
+						},
+					},
+				})
 			}
 			avail = nextIP(avail)
 		} else {
