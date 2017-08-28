@@ -72,11 +72,28 @@ func (api *APIServer) DrawIP(
 func (api *APIServer) GetNetworkIncludingIP(
 	ctx context.Context,
 	req *serverpb.GetNetworkIncludingIPRequest,
-) (*serverpb.GetNetworkIncludingIPResponse, error) {
+) (*serverpb.GetNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, err.Error())
 	}
-	return nil, status.Error(codes.Unimplemented, "Not implemented yet")
+
+	n, err := api.manager.GetNetworkIncludingIP(ctx, net.ParseIP(req.Ip))
+	if err != nil {
+		return nil, err
+	}
+
+	gws := make([]string, len(n.Gateways))
+	for i, gw := range n.Gateways {
+		gws[i] = gw.String()
+	}
+
+	return &serverpb.GetNetworkResponse{
+		Network:         n.Prefix.String(),
+		Broadcast:       n.Broadcast.String(),
+		Netmask:         n.Netmask.String(),
+		DefaultGateways: gws,
+		Tags:            n.Tags,
+	}, nil
 }
 
 func (api *APIServer) ActivateIP(

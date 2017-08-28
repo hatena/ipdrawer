@@ -11,7 +11,6 @@ It has these top-level messages:
 	DrawIPRequest
 	DrawIPResponse
 	GetNetworkIncludingIPRequest
-	GetNetworkIncludingIPResponse
 	ActivateIPRequest
 	ActivateIPResponse
 	DeactivateIPRequest
@@ -69,9 +68,6 @@ func (this *GetNetworkIncludingIPRequest) Validate() error {
 	if !_regex_GetNetworkIncludingIPRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
-	return nil
-}
-func (this *GetNetworkIncludingIPResponse) Validate() error {
 	return nil
 }
 

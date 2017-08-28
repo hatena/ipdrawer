@@ -81,7 +81,7 @@ const (
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbGetNetworkIncludingIPResponse"
+              "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
           }
         },
@@ -454,9 +454,6 @@ const (
           "type": "string"
         }
       }
-    },
-    "serverpbGetNetworkIncludingIPResponse": {
-      "type": "object"
     },
     "serverpbGetNetworkResponse": {
       "type": "object",

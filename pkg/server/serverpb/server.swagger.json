@@ -78,7 +78,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbGetNetworkIncludingIPResponse"
+              "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
           }
         },
@@ -451,9 +451,6 @@
           "type": "string"
         }
       }
-    },
-    "serverpbGetNetworkIncludingIPResponse": {
-      "type": "object"
     },
     "serverpbGetNetworkResponse": {
       "type": "object",

@@ -22,8 +22,6 @@ message GetNetworkIncludingIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
-message GetNetworkIncludingIPResponse {}
-
 message ActivateIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   repeated model.Tag tags = 2;
@@ -106,7 +104,7 @@ service NetworkServiceV0 {
 
 service IPServiceV0 {
 
-  rpc GetNetworkIncludingIP (GetNetworkIncludingIPRequest) returns (GetNetworkIncludingIPResponse) {
+  rpc GetNetworkIncludingIP (GetNetworkIncludingIPRequest) returns (GetNetworkResponse) {
     option (google.api.http) = {
       get: "/api/v0/ip/{ip}/network"
     };
