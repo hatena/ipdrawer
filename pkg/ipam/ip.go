@@ -138,6 +138,28 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 	return nil
 }
 
+func (m *IPManager) Deactivate(ctx context.Context, p *IPPool, ip *IPAddr) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
+	span.SetTag("pool", p.Key())
+	span.SetTag("ip", ip.IP.String())
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	pipe := m.redis.Client.TxPipeline()
+	pipe.Del(makeIPDetailsKey(ip.IP))
+	pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.IP.String())
+	pipe.Del(makeIPTagKey(ip.IP))
+	if _, err := pipe.Exec(); err != nil {
+		return err
+	}
+	return nil
+}
+
 // Reserve makes the status of given IP reserved.
 func (m *IPManager) Reserve(p *IPPool, ip net.IP) error {
 	return nil

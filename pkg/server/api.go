@@ -18,7 +18,7 @@ func (api *APIServer) DrawIP(
 	req *serverpb.DrawIPRequest,
 ) (*serverpb.DrawIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	var n *ipam.Network
@@ -74,7 +74,7 @@ func (api *APIServer) GetNetworkIncludingIP(
 	req *serverpb.GetNetworkIncludingIPRequest,
 ) (*serverpb.GetNetworkIncludingIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Errorf(codes.InvalidArgument, err.Error())
 	}
 	return nil, status.Error(codes.Unimplemented, "Not implemented yet")
 }
@@ -84,7 +84,7 @@ func (api *APIServer) ActivateIP(
 	req *serverpb.ActivateIPRequest,
 ) (*serverpb.ActivateIPResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	ip := &ipam.IPAddr{
@@ -116,12 +116,48 @@ func (api *APIServer) ActivateIP(
 		codes.NotFound, "Not found pool: %s", ip.IP.String())
 }
 
+func (api *APIServer) DeactivateIP(
+	ctx context.Context,
+	req *serverpb.DeactivateIPRequest,
+) (*serverpb.DeactivateIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	ip := &ipam.IPAddr{
+		IP: net.ParseIP(req.Ip),
+	}
+
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.IP)
+	if err != nil {
+		return nil, err
+	}
+
+	pools, err := api.manager.GetPools(ctx, n)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, pool := range pools {
+		if pool.Contains(ip.IP) {
+			if err := api.manager.Deactivate(ctx, pool, ip); err != nil {
+				return nil, err
+			} else {
+				return &serverpb.DeactivateIPResponse{}, nil
+			}
+		}
+	}
+
+	return nil, status.Errorf(
+		codes.NotFound, "Not found activated IP: %s", ip.IP.String())
+}
+
 func (api *APIServer) GetNetwork(
 	ctx context.Context,
 	req *serverpb.GetNetworkRequest,
 ) (*serverpb.GetNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	var n *ipam.Network
@@ -157,7 +193,7 @@ func (api *APIServer) CreateNetwork(
 	req *serverpb.CreateNetworkRequest,
 ) (*serverpb.CreateNetworkResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	ip := &net.IPNet{
@@ -194,7 +230,7 @@ func (api *APIServer) CreatePool(
 	req *serverpb.CreatePoolRequest,
 ) (*serverpb.CreatePoolResponse, error) {
 	if err := req.Validate(); err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "%s", err)
+		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
 	ip := &net.IPNet{

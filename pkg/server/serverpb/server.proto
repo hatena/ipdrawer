@@ -31,6 +31,12 @@ message ActivateIPRequest {
 
 message ActivateIPResponse {}
 
+message DeactivateIPRequest {
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+}
+
+message DeactivateIPResponse {}
+
 message GetNetworkRequest {
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
@@ -110,6 +116,12 @@ service IPServiceV0 {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/activate"
       body: "*"
+    };
+  };
+
+  rpc DeactivateIP (DeactivateIPRequest) returns (DeactivateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/ip/{ip}/deactivate"
     };
   };
 

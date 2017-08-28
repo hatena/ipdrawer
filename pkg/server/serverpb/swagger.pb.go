@@ -50,6 +50,30 @@ const (
         ]
       }
     },
+    "/api/v0/ip/{ip}/deactivate": {
+      "post": {
+        "operationId": "DeactivateIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDeactivateIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
     "/api/v0/ip/{ip}/network": {
       "get": {
         "operationId": "GetNetworkIncludingIP",
@@ -418,6 +442,9 @@ const (
       }
     },
     "serverpbCreatePoolResponse": {
+      "type": "object"
+    },
+    "serverpbDeactivateIPResponse": {
       "type": "object"
     },
     "serverpbDrawIPResponse": {

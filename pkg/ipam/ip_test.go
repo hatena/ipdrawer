@@ -193,3 +193,27 @@ func TestDrawIPSeq(t *testing.T) {
 		deferFunc()
 	}
 }
+
+func TestDeactivateAfterActivating(t *testing.T) {
+	r, deferFunc := storage.NewTestRedis()
+	defer deferFunc()
+
+	m := newTestIPManager(r)
+
+	ctx := context.Background()
+
+	pool := &IPPool{
+		Start: net.ParseIP("10.0.0.1"),
+		End:   net.ParseIP("10.0.0.254"),
+	}
+
+	ip := &IPAddr{
+		IP: net.ParseIP("10.0.0.1"),
+	}
+
+	m.Activate(ctx, pool, ip)
+
+	if err := m.Deactivate(ctx, pool, ip); err != nil {
+		t.Errorf("Failed deactivating: %#+v", err)
+	}
+}
