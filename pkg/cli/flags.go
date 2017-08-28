@@ -10,6 +10,8 @@ func init() {
 
 		f.StringVar(&cfg.Port, "port", cfg.Port, "ipdrawer server port.")
 		f.BoolVar(&cfg.EnableTracer, "enable-tracer", cfg.EnableTracer, "Flag of enabling tracer.")
+		f.StringVar(&cfg.SlackToken, "slack-token", cfg.SlackToken, "Slack Token for ipdrawer bot.")
+		f.StringVar(&cfg.BotName, "bot-name", cfg.BotName, "Slack Bot name for ipdrawer bot.")
 	}
 
 	{

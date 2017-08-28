@@ -12,6 +12,10 @@ type Config struct {
 	Host         string
 	Port         string
 	EnableTracer bool
+
+	// Slack Bot
+	SlackToken string
+	BotName    string
 }
 
 func MakeConfig() *Config {
