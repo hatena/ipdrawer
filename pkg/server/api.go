@@ -80,24 +80,24 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	var ip string
+	var ip net.IP
 	// In case that request is passed through grpc-gateway
 	if md, ok := metadata.FromContext(ctx); ok {
 		if ips, ok := md["x-forwarded-for"]; ok {
-			ip = ips[0]
+			ip = net.ParseIP(ips[0])
 		}
 	} else {
 		if pr, ok := peer.FromContext(ctx); ok {
 			if tcpAddr, ok := pr.Addr.(*net.TCPAddr); ok {
-				ip = tcpAddr.IP.String()
+				ip = tcpAddr.IP
 			}
 		}
 	}
-	if ip == "" {
+	if ip == nil {
 		return nil, status.Error(codes.Internal, "Not support remote addr")
 	}
 
-	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.To4())
 	if err != nil {
 		return nil, err
 	}
