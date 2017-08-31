@@ -2,6 +2,7 @@ NAME     := ipdrawer
 VERSION  := $(shell git describe --tags --exact-match 2> /dev/null || git rev-parse --short HEAD || echo "unknown")
 REVISION := $(shell git rev-parse HEAD)
 PROTO := protoc
+PKG := github.com/taku-k/ipdrawer
 
 SRCS    := $(shell find . -type f -name '*.go')
 PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor)
@@ -16,10 +17,10 @@ override DARWIN_LDFLAGS += $(LINKFLAGS)
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
 
-.DEFAULT_GOAL := bin/$(NAME)
+.DEFAULT_GOAL := $(NAME)
 
-bin/$(NAME): $(SRCS)
-	go build -ldflags '$(DARWIN_LDFLAGS)' -o bin/$(NAME)
+$(NAME): $(SRCS)
+	go build -ldflags '$(DARWIN_LDFLAGS)' $(PKG)/cmd/...
 
 .PHONY: cross-build
 cross-build:
