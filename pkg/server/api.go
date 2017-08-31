@@ -3,14 +3,17 @@ package server
 import (
 	"net"
 
+	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"google.golang.org/grpc/metadata"
 )
 
 func (api *APIServer) DrawIP(
@@ -69,6 +72,44 @@ func (api *APIServer) DrawIP(
 	return nil, status.Error(codes.NotFound, "Not found IP to serve")
 }
 
+func (api *APIServer) DrawIPEstimatingNetwork(
+	ctx context.Context,
+	req *serverpb.DrawIPEstimatingNetworkRequest,
+) (*serverpb.DrawIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	var ip string
+	// In case that request is passed through grpc-gateway
+	if md, ok := metadata.FromContext(ctx); ok {
+		if ips, ok := md["x-forwarded-for"]; ok {
+			ip = ips[0]
+		}
+	} else {
+		if pr, ok := peer.FromContext(ctx); ok {
+			if tcpAddr, ok := pr.Addr.(*net.TCPAddr); ok {
+				ip = tcpAddr.IP.String()
+			}
+		}
+	}
+	if ip == "" {
+		return nil, status.Error(codes.Internal, "Not support remote addr")
+	}
+
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
+	if err != nil {
+		return nil, err
+	}
+
+	ones, _ := n.Prefix.Mask.Size()
+	return api.DrawIP(ctx, &serverpb.DrawIPRequest{
+		Ip:      n.Prefix.IP.String(),
+		Mask:    int32(ones),
+		PoolTag: req.PoolTag,
+	})
+}
+
 func (api *APIServer) GetNetworkIncludingIP(
 	ctx context.Context,
 	req *serverpb.GetNetworkIncludingIPRequest,
@@ -96,6 +137,38 @@ func (api *APIServer) GetNetworkIncludingIP(
 	}, nil
 }
 
+func (api *APIServer) GetEstimatedNetwork(
+	ctx context.Context,
+	req *serverpb.GetEstimatedNetworkRequest,
+) (*serverpb.GetNetworkResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, err.Error())
+	}
+
+	// In case that request is passed through grpc-gateway
+	if md, ok := metadata.FromContext(ctx); ok {
+		if ip, ok := md["x-forwarded-for"]; ok {
+			return api.GetNetworkIncludingIP(ctx, &serverpb.GetNetworkIncludingIPRequest{
+				Ip: ip[0],
+			})
+		}
+	}
+
+	var ip net.IP
+	if pr, ok := peer.FromContext(ctx); ok {
+		if tcpAddr, ok := pr.Addr.(*net.TCPAddr); ok {
+			ip = tcpAddr.IP
+		}
+	}
+	if ip == nil {
+		return nil, status.Error(codes.Internal, "Not support remote addr")
+	}
+
+	return api.GetNetworkIncludingIP(ctx, &serverpb.GetNetworkIncludingIPRequest{
+		Ip: ip.String(),
+	})
+}
+
 func (api *APIServer) ActivateIP(
 	ctx context.Context,
 	req *serverpb.ActivateIPRequest,
@@ -121,10 +194,10 @@ func (api *APIServer) ActivateIP(
 
 	for _, pool := range pools {
 		if pool.Contains(ip.IP) {
-			if err := api.manager.Activate(ctx, pool, ip); err != nil {
-				return nil, err
-			} else {
+			if err := api.manager.Activate(ctx, pool, ip); err == nil {
 				return &serverpb.ActivateIPResponse{}, nil
+			} else {
+				logrus.Warn(err)
 			}
 		}
 	}
@@ -157,10 +230,10 @@ func (api *APIServer) DeactivateIP(
 
 	for _, pool := range pools {
 		if pool.Contains(ip.IP) {
-			if err := api.manager.Deactivate(ctx, pool, ip); err != nil {
-				return nil, err
-			} else {
+			if err := api.manager.Deactivate(ctx, pool, ip); err == nil {
 				return &serverpb.DeactivateIPResponse{}, nil
+			} else {
+				logrus.Warn(err)
 			}
 		}
 	}

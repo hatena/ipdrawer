@@ -10,12 +10,14 @@ It is generated from these files:
 It has these top-level messages:
 	DrawIPRequest
 	DrawIPResponse
+	DrawIPEstimatingNetworkRequest
 	GetNetworkIncludingIPRequest
 	ActivateIPRequest
 	ActivateIPResponse
 	DeactivateIPRequest
 	DeactivateIPResponse
 	GetNetworkRequest
+	GetEstimatedNetworkRequest
 	GetNetworkResponse
 	CreateNetworkRequest
 	CreateNetworkResponse
@@ -59,6 +61,14 @@ func (this *DrawIPRequest) Validate() error {
 	return nil
 }
 func (this *DrawIPResponse) Validate() error {
+	return nil
+}
+func (this *DrawIPEstimatingNetworkRequest) Validate() error {
+	if this.PoolTag != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.PoolTag); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("PoolTag", err)
+		}
+	}
 	return nil
 }
 
@@ -114,6 +124,9 @@ func (this *GetNetworkRequest) Validate() error {
 	if !(this.Mask < 33) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
 	}
+	return nil
+}
+func (this *GetEstimatedNetworkRequest) Validate() error {
 	return nil
 }
 

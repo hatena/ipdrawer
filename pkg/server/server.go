@@ -3,7 +3,6 @@ package server
 import (
 	ocontext "context"
 	"io"
-	"log"
 	"mime"
 	"net"
 	"net/http"
@@ -31,7 +30,7 @@ import (
 )
 
 type APIServer struct {
-	addr    string
+	lis     net.Listener
 	manager *ipam.IPManager
 	grpcS   *grpc.Server
 	httpS   *http.Server
@@ -39,21 +38,26 @@ type APIServer struct {
 
 func NewServer(cfg *base.Config) *APIServer {
 	mngr := ipam.NewIPManager()
+	lis, err := net.Listen("tcp", ":"+cfg.Port)
+	if err != nil {
+		panic(err)
+	}
 	return &APIServer{
-		addr:    ":" + cfg.Port,
+		lis:     lis,
 		manager: mngr,
 	}
 }
 
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	mux := runtime.NewServeMux()
+	addr := api.lis.Addr().String()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	if err := serverpb.RegisterNetworkServiceV0HandlerFromEndpoint(
-		ctx, mux, api.addr, opts); err != nil {
+		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
 	if err := serverpb.RegisterIPServiceV0HandlerFromEndpoint(
-		ctx, mux, api.addr, opts); err != nil {
+		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
 
@@ -87,12 +91,7 @@ func (api *APIServer) Start() error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	l, err := net.Listen("tcp", api.addr)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	cm := cmux.New(l)
+	cm := cmux.New(api.lis)
 	grpcL := cm.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
 	httpL := cm.Match(cmux.HTTP1Fast())
 

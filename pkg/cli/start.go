@@ -14,9 +14,9 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/taku-k/ipdrawer/pkg/bot"
 	"github.com/taku-k/ipdrawer/pkg/server"
 	"github.com/taku-k/ipdrawer/pkg/utils/tracer"
-	"github.com/taku-k/ipdrawer/pkg/bot"
 )
 
 var startCmd = &cobra.Command{
