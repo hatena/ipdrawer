@@ -16,6 +16,7 @@ import (
 
 	"github.com/taku-k/ipdrawer/pkg/server"
 	"github.com/taku-k/ipdrawer/pkg/utils/tracer"
+	"github.com/taku-k/ipdrawer/pkg/bot"
 )
 
 var startCmd = &cobra.Command{
@@ -41,6 +42,8 @@ func startServer(cmd *cobra.Command, args []string) error {
 	s := server.NewServer(cfg)
 
 	errCh := make(chan error, 1)
+
+	// Server
 	go func() {
 		if err := func() error {
 			var buf bytes.Buffer
@@ -63,6 +66,14 @@ func startServer(cmd *cobra.Command, args []string) error {
 			errCh <- err
 		}
 	}()
+
+	// Bot
+	if cfg.BotToken != "" && cfg.BotID != "" {
+		go func() {
+			l := bot.NewSlackListner(cfg.BotID, cfg.BotToken)
+			l.ListenAndResponse()
+		}()
+	}
 
 	select {
 	case err := <-errCh:

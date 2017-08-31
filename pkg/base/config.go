@@ -6,6 +6,8 @@ const (
 	// This port is unregistered for now.
 	// https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?&page=126
 	defaultPort = "25577"
+
+	defaultBotPort = "25578"
 )
 
 type Config struct {
@@ -14,8 +16,9 @@ type Config struct {
 	EnableTracer bool
 
 	// Slack Bot
-	SlackToken string
-	BotName    string
+	BotPort  string
+	BotToken string
+	BotID    string
 }
 
 func MakeConfig() *Config {
@@ -23,5 +26,6 @@ func MakeConfig() *Config {
 		Host:         defaultHost,
 		Port:         defaultPort,
 		EnableTracer: true,
+		BotPort:      defaultBotPort,
 	}
 }

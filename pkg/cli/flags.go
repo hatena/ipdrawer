@@ -36,17 +36,14 @@ func init() {
 	{
 		f := startCmd.Flags()
 
+		// Server
 		stringFlag(f, &cfg.Port, cliflags.ServerPort, cfg.Port)
 		boolFlag(f, &cfg.EnableTracer, cliflags.EnableTracerFlag, cfg.EnableTracer)
-	}
 
-	{
-		f := slackBotCmd.Flags()
-
-		stringFlag(f, &cfg.Port, cliflags.BotPort, cfg.Port)
-		// TODO: Rename
-		stringFlag(f, &cfg.SlackToken, cliflags.BotToken, cfg.SlackToken)
-		stringFlag(f, &cfg.BotName, cliflags.BotID, cfg.BotName)
+		// Bot
+		stringFlag(f, &cfg.BotPort, cliflags.BotPort, cfg.BotPort)
+		stringFlag(f, &cfg.BotToken, cliflags.BotToken, cfg.BotToken)
+		stringFlag(f, &cfg.BotID, cliflags.BotID, cfg.BotID)
 	}
 
 	{
@@ -58,7 +55,6 @@ func init() {
 
 	rootCmd.AddCommand(
 		startCmd,
-		slackBotCmd,
 		importCmd,
 		versionCmd,
 	)
