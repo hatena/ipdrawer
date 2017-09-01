@@ -132,7 +132,10 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 	pipe.HSet(makeIPDetailsKey(ip.IP), "status", int(IP_ACTIVE))
 	// Add IP to used IP zset
 	score := float64(ip2int(ip.IP))
-	z := redis.Z{score, ip.IP.String()}
+	z := redis.Z{
+		Score:  score,
+		Member: ip.IP.String(),
+	}
 	pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
 	// Set tags
 	if len(ip.Tags) != 0 {
