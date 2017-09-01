@@ -25,7 +25,7 @@ func MakeConfig() *Config {
 	return &Config{
 		Host:         defaultHost,
 		Port:         defaultPort,
-		EnableTracer: true,
+		EnableTracer: false,
 		BotPort:      defaultBotPort,
 	}
 }

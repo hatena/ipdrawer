@@ -190,6 +190,9 @@ func (api *APIServer) ActivateIP(
 
 	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	if len(pools) == 0 {
 		return nil, status.Errorf(
 			codes.NotFound, "Not found pool: %s: %#+v", ip.IP.String(), err)
 	}
@@ -220,8 +223,11 @@ func (api *APIServer) DeactivateIP(
 
 	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	if len(pools) == 0 {
 		return nil, status.Errorf(
-			codes.NotFound, "Not found activated IP: %s", ip.IP.String())
+			codes.NotFound, "Not found pool: IP: %s", ip.IP.String())
 	}
 
 	if err := api.manager.Deactivate(ctx, pools, ip); err != nil {
