@@ -93,7 +93,7 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 					return avail, nil
 				} else {
 					// Activate
-					m.Activate(ctx, pool, &IPAddr{
+					m.Activate(ctx, []*IPPool{pool}, &IPAddr{
 						IP: avail,
 						Tags: []*model.Tag{
 							{
@@ -115,9 +115,9 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 }
 
 // Activate activates IP.
-func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
+func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, ip *IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
-	span.SetTag("pool", p.Key())
+	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", ip.IP.String())
 	defer span.Finish()
 
@@ -138,7 +138,11 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 		Score:  score,
 		Member: ip.IP.String(),
 	}
-	pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
+	for _, p := range ps {
+		if p.Contains(ip.IP) {
+			pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
+		}
+	}
 	// Set tags
 	if len(ip.Tags) != 0 {
 		tagKey := makeIPTagKey(ip.IP)
@@ -154,9 +158,9 @@ func (m *IPManager) Activate(ctx context.Context, p *IPPool, ip *IPAddr) error {
 	return nil
 }
 
-func (m *IPManager) Deactivate(ctx context.Context, p *IPPool, ip *IPAddr) error {
+func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, ip *IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
-	span.SetTag("pool", p.Key())
+	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", ip.IP.String())
 	defer span.Finish()
 
@@ -168,7 +172,11 @@ func (m *IPManager) Deactivate(ctx context.Context, p *IPPool, ip *IPAddr) error
 
 	pipe := m.redis.Client.TxPipeline()
 	pipe.Del(makeIPDetailsKey(ip.IP))
-	pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.IP.String())
+	for _, p := range ps {
+		if p.Contains(ip.IP) {
+			pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.IP.String())
+		}
+	}
 	pipe.Del(makeIPTagKey(ip.IP))
 	if _, err := pipe.Exec(); err != nil {
 		return err

@@ -28,10 +28,10 @@ func TestIPActivation(t *testing.T) {
 		End:   net.ParseIP("10.0.0.254"),
 	}
 
-	if err := m.Activate(ctx, pool, &IPAddr{IP: net.ParseIP("10.0.0.1")}); err != nil {
+	if err := m.Activate(ctx, []*IPPool{pool}, &IPAddr{IP: net.ParseIP("10.0.0.1")}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
-	if err := m.Activate(ctx, pool, &IPAddr{IP: net.ParseIP("10.0.0.4")}); err != nil {
+	if err := m.Activate(ctx, []*IPPool{pool}, &IPAddr{IP: net.ParseIP("10.0.0.4")}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
 
@@ -161,7 +161,7 @@ func TestDrawIPSeq(t *testing.T) {
 		for _, ip := range c.ips {
 			switch ip.Status {
 			case IP_ACTIVE:
-				m.Activate(ctx, c.pool, ip)
+				m.Activate(ctx, []*IPPool{c.pool}, ip)
 			case IP_TEMPORARY_RESERVED:
 				m.reserveTemporary(ip.IP)
 			case IP_RESERVED:
@@ -208,9 +208,9 @@ func TestDeactivateAfterActivating(t *testing.T) {
 		IP: net.ParseIP("10.0.0.1"),
 	}
 
-	m.Activate(ctx, pool, ip)
+	m.Activate(ctx, []*IPPool{pool}, ip)
 
-	if err := m.Deactivate(ctx, pool, ip); err != nil {
+	if err := m.Deactivate(ctx, []*IPPool{pool}, ip); err != nil {
 		t.Errorf("Failed deactivating: %#+v", err)
 	}
 }
@@ -238,14 +238,9 @@ func TestActivateIPInSeveralPools(t *testing.T) {
 		IP: net.ParseIP("10.0.0.40"),
 	}
 
-	err := m.Activate(ctx, pools[0], ip)
+	err := m.Activate(ctx, pools, ip)
 	if err != nil {
-		t.Errorf("Activate(%v, %v) returns %#+v; want success", pools[0], ip, err)
-	}
-
-	err = m.Activate(ctx, pools[1], ip)
-	if err != nil {
-		t.Errorf("Activate(%v, %v) returns %#+v; want succes", pools[1], ip, err)
+		t.Errorf("Activate(%v, %v) returns %#+v; want success", pools, ip, err)
 	}
 }
 
@@ -272,15 +267,10 @@ func TestDeactivateIPInSeveralPools(t *testing.T) {
 		IP: net.ParseIP("10.0.0.40"),
 	}
 
-	m.Activate(ctx, pools[0], ip)
-	m.Activate(ctx, pools[1], ip)
+	m.Activate(ctx, pools, ip)
 
-	if err := m.Deactivate(ctx, pools[0], ip); err != nil {
-		t.Errorf("Deactivate(%v, %v) returns %#+v; want success", pools[0], ip, err)
-	}
-
-	if err := m.Deactivate(ctx, pools[1], ip); err != nil {
-		t.Errorf("Deactivate(%v, %v) returns %#+v; want succes", pools[1], ip, err)
+	if err := m.Deactivate(ctx, pools, ip); err != nil {
+		t.Errorf("Deactivate(%v, %v) returns %#+v; want success", pools, ip, err)
 	}
 }
 
@@ -307,8 +297,7 @@ func TestCorrectDrawIPFromInclusivePools(t *testing.T) {
 		IP: net.ParseIP("10.0.0.1"),
 	}
 
-	m.Activate(ctx, pools[0], ip)
-	m.Activate(ctx, pools[1], ip)
+	m.Activate(ctx, pools, ip)
 
 	actual, err := m.DrawIP(ctx, pools[1], true, false)
 	if err != nil {

@@ -4,7 +4,6 @@ import (
 	"net"
 	"strings"
 
-	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -195,12 +194,8 @@ func (api *APIServer) ActivateIP(
 			codes.NotFound, "Not found pool: %s: %#+v", ip.IP.String(), err)
 	}
 
-	for _, pool := range pools {
-		if pool.Contains(ip.IP) {
-			if err := api.manager.Activate(ctx, pool, ip); err != nil {
-				logrus.Warn(err)
-			}
-		}
+	if err := api.manager.Activate(ctx, pools, ip); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	return &serverpb.ActivateIPResponse{}, nil
@@ -229,12 +224,8 @@ func (api *APIServer) DeactivateIP(
 			codes.NotFound, "Not found activated IP: %s", ip.IP.String())
 	}
 
-	for _, pool := range pools {
-		if pool.Contains(ip.IP) {
-			if err := api.manager.Deactivate(ctx, pool, ip); err != nil {
-				logrus.Warn(err)
-			}
-		}
+	if err := api.manager.Deactivate(ctx, pools, ip); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	return &serverpb.DeactivateIPResponse{}, nil
