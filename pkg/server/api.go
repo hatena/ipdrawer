@@ -122,7 +122,7 @@ func (api *APIServer) GetNetworkIncludingIP(
 
 	n, err := api.manager.GetNetworkIncludingIP(ctx, net.ParseIP(req.Ip))
 	if err != nil {
-		return nil, err
+		return nil, status.Error(codes.NotFound, err.Error())
 	}
 
 	gws := make([]string, len(n.Gateways))

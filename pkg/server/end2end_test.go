@@ -43,7 +43,7 @@ func (te *test) clientConn() *grpc.ClientConn {
 	return te.cc
 }
 
-func TestDrawIPEstimatingNetwork_E2E(t *testing.T) {
+func TestDrawIPEstimatingNetwork_E2E_ViaGW(t *testing.T) {
 	te := newTest(t)
 	te.startServer()
 	defer te.tearDown()
@@ -101,7 +101,8 @@ func TestDrawIPEstimatingNetwork_E2E(t *testing.T) {
 		resp, apiresp, err := cl.DrawIPEstimatingNetwork(tc.tagKey, tc.tagValue)
 
 		if err != nil {
-			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork failed with %v; want success", i, tc.desc, err)
+			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork failed with %v; want success",
+				i, tc.desc, err)
 		}
 
 		if apiresp.StatusCode != tc.status {
@@ -112,6 +113,65 @@ func TestDrawIPEstimatingNetwork_E2E(t *testing.T) {
 		if resp.Ip != tc.ip {
 			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork returns unexpected IP(%v); want IP(%v)",
 				i, tc.desc, resp.Ip, tc.ip)
+		}
+	}
+}
+
+func TestGetEstimatedNetwork_E2E_ViaGW(t *testing.T) {
+	te := newTest(t)
+	te.startServer()
+	defer te.tearDown()
+
+	// Use testdata
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	testCases := []struct {
+		// Input
+		remote string
+
+		// Expected
+		status  int
+		network string
+
+		desc string
+	}{
+		{
+			remote: "192.168.0.1",
+
+			status:  http.StatusOK,
+			network: "192.168.0.0/24",
+
+			desc: "Ideal case",
+		},
+		{
+			remote: "192.168.1.1",
+
+			status: http.StatusNotFound,
+
+			desc: "Network including 192.168.1.1 does not exists",
+		},
+	}
+
+	for i, tc := range testCases {
+		cl := apiclient.NewNetworkServiceV0ApiWithBasePath(te.base)
+		cl.Configuration.AddDefaultHeader("X-Forwarded-For", tc.remote)
+
+		resp, apiresp, err := cl.GetEstimatedNetwork()
+
+		if err != nil {
+			t.Errorf("#%d(desc=%s): cl.GetEstimatedNetwork() failed with %v; want success",
+				i, tc.desc, err)
+		}
+
+		if apiresp.StatusCode != tc.status {
+			t.Errorf("#%d(desc=%s): cl.GetEstimatedNetwork() returns %v; want %d %v",
+				i, tc.desc, apiresp.Status, tc.status, http.StatusText(tc.status))
+		}
+
+		if resp.Network != tc.network {
+			t.Errorf("#%d(desc=%s): cl.GetEstimatedNetwork() returns unexpected network(%v); want network(%v)",
+				i, tc.desc, resp.Network, tc.network)
 		}
 	}
 }
