@@ -283,3 +283,38 @@ func TestDeactivateIPInSeveralPools(t *testing.T) {
 		t.Errorf("Deactivate(%v, %v) returns %#+v; want succes", pools[1], ip, err)
 	}
 }
+
+func TestCorrectDrawIPFromInclusivePools(t *testing.T) {
+	r, deferFunc := storage.NewTestRedis()
+	defer deferFunc()
+
+	m := NewTestIPManager(r)
+
+	ctx := context.Background()
+
+	pools := []*IPPool{
+		{
+			Start: net.ParseIP("10.0.0.1"),
+			End:   net.ParseIP("10.0.0.254"),
+		},
+		{
+			Start: net.ParseIP("10.0.0.1"),
+			End:   net.ParseIP("10.0.0.10"),
+		},
+	}
+
+	ip := &IPAddr{
+		IP: net.ParseIP("10.0.0.1"),
+	}
+
+	m.Activate(ctx, pools[0], ip)
+	m.Activate(ctx, pools[1], ip)
+
+	actual, err := m.DrawIP(ctx, pools[1], true, false)
+	if err != nil {
+		t.Errorf("DrawIP returns err(%v); want success", err)
+	}
+	if !actual.Equal(net.ParseIP("10.0.0.2")) {
+		t.Errorf("DrawIP returns incorrect IP(%v); want 10.0.0.2", actual.String())
+	}
+}
