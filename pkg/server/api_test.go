@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
@@ -53,7 +54,10 @@ type test struct {
 	manager    *ipam.IPManager
 	redis      *storage.Redis
 	redisDefer func()
-	srvAddr    string
+
+	srvAddr string
+
+	cc *grpc.ClientConn
 }
 
 func newTest(t *testing.T) *test {
@@ -72,7 +76,19 @@ func newTest(t *testing.T) *test {
 }
 
 func (t *test) tearDown() {
-	t.redisDefer()
+	if t.redisDefer != nil {
+		t.redisDefer()
+	}
+	if t.api.grpcS != nil {
+		t.api.grpcS.Stop()
+	}
+	if t.api.httpS != nil {
+		t.api.httpS.Close()
+	}
+	if t.cc != nil {
+		t.cc.Close()
+		t.cc = nil
+	}
 }
 
 func TestDrawIPSequentialOrder(t *testing.T) {
