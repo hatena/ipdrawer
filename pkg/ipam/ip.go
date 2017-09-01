@@ -11,7 +11,6 @@ import (
 	"github.com/tatsushid/go-fastping"
 	"golang.org/x/net/context"
 
-	"github.com/sirupsen/logrus"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
@@ -199,7 +198,6 @@ func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Netw
 		}
 		if ipnet.Contains(ip) {
 			net, err := getNetwork(m.redis, ipnet)
-			logrus.Info(net)
 			return net, err
 		}
 	}
