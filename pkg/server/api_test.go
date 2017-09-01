@@ -80,15 +80,15 @@ func (t *test) tearDown() {
 	if t.redisDefer != nil {
 		t.redisDefer()
 	}
-	if t.api.grpcS != nil {
-		t.api.grpcS.Stop()
-	}
-	if t.api.httpS != nil {
-		t.api.httpS.Close()
-	}
 	if t.cc != nil {
 		t.cc.Close()
 		t.cc = nil
+	}
+	if t.api.httpS != nil {
+		t.api.httpS.Shutdown(t.ctx)
+	}
+	if t.api.grpcS != nil {
+		t.api.grpcS.Stop()
 	}
 }
 

@@ -15,19 +15,21 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/meatballhat/negroni-logrus"
+	"github.com/opentracing/opentracing-go"
+	"github.com/philips/go-bindata-assetfs"
 	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"github.com/urfave/negroni"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/opentracing/opentracing-go"
-	"github.com/philips/go-bindata-assetfs"
 	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
 )
+
+var logrusEntry = logrus.NewEntry(logrus.New())
 
 type APIServer struct {
 	lis     net.Listener
@@ -39,6 +41,7 @@ type APIServer struct {
 func NewServer(cfg *base.Config) *APIServer {
 	mngr := ipam.NewIPManager()
 	lis, err := net.Listen("tcp", ":"+cfg.Port)
+
 	if err != nil {
 		panic(err)
 	}
@@ -94,9 +97,6 @@ func (api *APIServer) Start() error {
 	cm := cmux.New(api.lis)
 	grpcL := cm.Match(cmux.HTTP2HeaderField("content-type", "application/grpc"))
 	httpL := cm.Match(cmux.HTTP1Fast())
-
-	logrusEntry := logrus.NewEntry(logrus.New())
-	grpc_logrus.ReplaceGrpcLogger(logrusEntry)
 
 	api.grpcS = grpc.NewServer(
 		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
@@ -155,4 +155,8 @@ func (api *APIServer) Shutdown(
 
 func parseIPAndMask(ip, mask string) (net.IP, error) {
 	return nil, nil
+}
+
+func init() {
+	grpc_logrus.ReplaceGrpcLogger(logrusEntry)
 }
