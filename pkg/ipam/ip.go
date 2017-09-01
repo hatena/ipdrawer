@@ -8,11 +8,11 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/opentracing/opentracing-go"
 	"github.com/pkg/errors"
-	"github.com/tatsushid/go-fastping"
 	"golang.org/x/net/context"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
+	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
 type IPManager struct {
@@ -45,7 +45,7 @@ func NewIPManager() *IPManager {
 }
 
 // DrawIP returns an available IP.
-func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net.IP, error) {
+func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping bool) (net.IP, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DrawIP")
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
@@ -88,23 +88,25 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool) (net
 			}
 		}
 		if !flag {
-			p := fastping.NewPinger()
-			p.AddIP(avail.String())
-			if err := p.Run(); err != nil {
-				return avail, nil
-			} else {
-				// Activate
-				m.Activate(ctx, pool, &IPAddr{
-					IP: avail,
-					Tags: []*model.Tag{
-						{
-							Key:   "Role",
-							Value: "unknown",
+			if ping {
+				if err := netutil.Ping(avail.String()); err != nil {
+					return avail, nil
+				} else {
+					// Activate
+					m.Activate(ctx, pool, &IPAddr{
+						IP: avail,
+						Tags: []*model.Tag{
+							{
+								Key:   "Role",
+								Value: "unknown",
+							},
 						},
-					},
-				})
+					})
+				}
+				avail = nextIP(avail)
+			} else {
+				return avail, nil
 			}
-			avail = nextIP(avail)
 		} else {
 			avail = nextIP(avail)
 		}

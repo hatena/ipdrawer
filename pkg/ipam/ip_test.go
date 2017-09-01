@@ -69,7 +69,8 @@ func TestDrawIPSeq(t *testing.T) {
 				},
 			},
 			expected: net.ParseIP("10.0.0.2"),
-		}, {
+		},
+		{
 			pool: &IPPool{
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
@@ -90,7 +91,8 @@ func TestDrawIPSeq(t *testing.T) {
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
-		}, {
+		},
+		{
 			pool: &IPPool{
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
@@ -111,7 +113,8 @@ func TestDrawIPSeq(t *testing.T) {
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
-		}, {
+		},
+		{
 			pool: &IPPool{
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
@@ -132,7 +135,8 @@ func TestDrawIPSeq(t *testing.T) {
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
-		}, {
+		},
+		{
 			pool: &IPPool{
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.2"),
@@ -165,14 +169,14 @@ func TestDrawIPSeq(t *testing.T) {
 			}
 		}
 
-		actual, err := m.DrawIP(ctx, c.pool, true)
+		actual, err := m.DrawIP(ctx, c.pool, true, false)
 
 		if c.errmsg == "" {
 			if err != nil {
 				t.Errorf("#%d: Got error: %#+v", i, err)
 			}
 			if !c.expected.Equal(actual) {
-				t.Errorf("#%d: expected %#+v, but got %#+v", i, c.expected, actual)
+				t.Errorf("#%d: expected %#+v, but got %#+v", i, c.expected.String(), actual.String())
 			}
 		} else {
 			if err == nil {
@@ -208,5 +212,74 @@ func TestDeactivateAfterActivating(t *testing.T) {
 
 	if err := m.Deactivate(ctx, pool, ip); err != nil {
 		t.Errorf("Failed deactivating: %#+v", err)
+	}
+}
+
+func TestActivateIPInSeveralPools(t *testing.T) {
+	r, deferFunc := storage.NewTestRedis()
+	defer deferFunc()
+
+	m := NewTestIPManager(r)
+
+	ctx := context.Background()
+
+	pools := []*IPPool{
+		{
+			Start: net.ParseIP("10.0.0.1"),
+			End:   net.ParseIP("10.0.0.254"),
+		},
+		{
+			Start: net.ParseIP("10.0.0.30"),
+			End:   net.ParseIP("10.0.0.50"),
+		},
+	}
+
+	ip := &IPAddr{
+		IP: net.ParseIP("10.0.0.40"),
+	}
+
+	err := m.Activate(ctx, pools[0], ip)
+	if err != nil {
+		t.Errorf("Activate(%v, %v) returns %#+v; want success", pools[0], ip, err)
+	}
+
+	err = m.Activate(ctx, pools[1], ip)
+	if err != nil {
+		t.Errorf("Activate(%v, %v) returns %#+v; want succes", pools[1], ip, err)
+	}
+}
+
+func TestDeactivateIPInSeveralPools(t *testing.T) {
+	r, deferFunc := storage.NewTestRedis()
+	defer deferFunc()
+
+	m := NewTestIPManager(r)
+
+	ctx := context.Background()
+
+	pools := []*IPPool{
+		{
+			Start: net.ParseIP("10.0.0.1"),
+			End:   net.ParseIP("10.0.0.254"),
+		},
+		{
+			Start: net.ParseIP("10.0.0.30"),
+			End:   net.ParseIP("10.0.0.50"),
+		},
+	}
+
+	ip := &IPAddr{
+		IP: net.ParseIP("10.0.0.40"),
+	}
+
+	m.Activate(ctx, pools[0], ip)
+	m.Activate(ctx, pools[1], ip)
+
+	if err := m.Deactivate(ctx, pools[0], ip); err != nil {
+		t.Errorf("Deactivate(%v, %v) returns %#+v; want success", pools[0], ip, err)
+	}
+
+	if err := m.Deactivate(ctx, pools[1], ip); err != nil {
+		t.Errorf("Deactivate(%v, %v) returns %#+v; want succes", pools[1], ip, err)
 	}
 }

@@ -62,7 +62,7 @@ func (api *APIServer) DrawIP(
 	}
 
 	for _, p := range target {
-		ret, err := api.manager.DrawIP(ctx, p, true)
+		ret, err := api.manager.DrawIP(ctx, p, true, false)
 		if err == nil {
 			return &serverpb.DrawIPResponse{
 				Ip: ret.String(),
@@ -191,21 +191,19 @@ func (api *APIServer) ActivateIP(
 
 	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
-		return nil, err
+		return nil, status.Errorf(
+			codes.NotFound, "Not found pool: %s: %#+v", ip.IP.String(), err)
 	}
 
 	for _, pool := range pools {
 		if pool.Contains(ip.IP) {
-			if err := api.manager.Activate(ctx, pool, ip); err == nil {
-				return &serverpb.ActivateIPResponse{}, nil
-			} else {
+			if err := api.manager.Activate(ctx, pool, ip); err != nil {
 				logrus.Warn(err)
 			}
 		}
 	}
 
-	return nil, status.Errorf(
-		codes.NotFound, "Not found pool: %s", ip.IP.String())
+	return &serverpb.ActivateIPResponse{}, nil
 }
 
 func (api *APIServer) DeactivateIP(
@@ -227,21 +225,19 @@ func (api *APIServer) DeactivateIP(
 
 	pools, err := api.manager.GetPools(ctx, n)
 	if err != nil {
-		return nil, err
+		return nil, status.Errorf(
+			codes.NotFound, "Not found activated IP: %s", ip.IP.String())
 	}
 
 	for _, pool := range pools {
 		if pool.Contains(ip.IP) {
-			if err := api.manager.Deactivate(ctx, pool, ip); err == nil {
-				return &serverpb.DeactivateIPResponse{}, nil
-			} else {
+			if err := api.manager.Deactivate(ctx, pool, ip); err != nil {
 				logrus.Warn(err)
 			}
 		}
 	}
 
-	return nil, status.Errorf(
-		codes.NotFound, "Not found activated IP: %s", ip.IP.String())
+	return &serverpb.DeactivateIPResponse{}, nil
 }
 
 func (api *APIServer) GetNetwork(

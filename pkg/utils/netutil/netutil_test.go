@@ -26,3 +26,9 @@ func TestBroadcastIP(t *testing.T) {
 		}
 	}
 }
+
+func TestPing(t *testing.T) {
+	if err := Ping("8.8.8.8"); err != nil {
+		t.Errorf("Ping(8.8.8.8) returns %#+v; want success", err)
+	}
+}
