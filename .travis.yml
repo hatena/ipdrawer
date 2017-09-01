@@ -2,7 +2,7 @@ language: go
 sudo: false
 go:
 - 1.8.x
-- 1.7.x
+- 1.9.x
 go_import_path: github.com/taku-k/ipdrawer
 cache:
   directories:
@@ -12,7 +12,7 @@ before_install:
 install:
 - dep ensure
 script:
-- make test-all 
+- make test-all
 env:
   global:
   - "PATH=$PATH:$HOME/local/bin"
