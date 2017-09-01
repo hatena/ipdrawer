@@ -3,6 +3,7 @@ VERSION  := $(shell git describe --tags --exact-match 2> /dev/null || git rev-pa
 REVISION := $(shell git rev-parse HEAD)
 PROTO := protoc
 PKG := github.com/taku-k/ipdrawer
+SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
 PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor)
@@ -13,6 +14,9 @@ LINKFLAGS := \
 	-X "github.com/taku-k/ipdrawer/pkg/build.rev=$(REVISION)"
 override LINUX_LDFLAGS += $(LINKFLAGS)
 override DARWIN_LDFLAGS += $(LINKFLAGS)
+
+API_CLIENT_DIR := pkg/server/apiclient
+API_SPEC := pkg/server/serverpb/server.swagger.json
 
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
@@ -69,6 +73,7 @@ proto: $(PROTOSRCS)
 	   --gofast_out=plugins=grpc:pkg; \
 	done
 	go generate ./pkg/...
+	make gen-client
 	make fmt imports
 
 .PHONY: deps
@@ -84,3 +89,12 @@ deps:
 ui:
 	go-bindata -nocompress -o $(SWAGGER_UI_DATA_PATH) -pkg swagger $(SWAGGER_UI_SRC)
 	make fmt imports
+
+.PHONY: gen-client
+gen-client: $(API_SPEC)
+	$(SWAGGER_CODEGEN) generate -i $(API_SPEC) \
+	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
+	@rm -rf $(API_CLIENT_DIR)/README.md \
+	       $(API_CLIENT_DIR)/git_push.sh \
+	       $(API_CLIENT_DIR)/.travis.yml \
+	       $(API_CLIENT_DIR)/docs
