@@ -5,13 +5,13 @@ import (
 	"testing"
 
 	"golang.org/x/net/context"
+	"google.golang.org/grpc/peer"
 
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
-	"google.golang.org/grpc/peer"
 )
 
 var (
