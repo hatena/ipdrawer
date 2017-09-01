@@ -2,10 +2,12 @@ package server
 
 import (
 	"net"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
@@ -13,7 +15,6 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
-	"google.golang.org/grpc/metadata"
 )
 
 func (api *APIServer) DrawIP(
@@ -84,9 +85,10 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 	// In case that request is passed through grpc-gateway
 	if md, ok := metadata.FromContext(ctx); ok {
 		if ips, ok := md["x-forwarded-for"]; ok {
-			ip = net.ParseIP(ips[0])
+			ip = net.ParseIP(strings.Split(ips[0], ",")[0])
 		}
-	} else {
+	}
+	if ip == nil {
 		if pr, ok := peer.FromContext(ctx); ok {
 			if tcpAddr, ok := pr.Addr.(*net.TCPAddr); ok {
 				ip = tcpAddr.IP
@@ -99,7 +101,7 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 
 	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.To4())
 	if err != nil {
-		return nil, err
+		return nil, status.Error(codes.NotFound, err.Error())
 	}
 
 	ones, _ := n.Prefix.Mask.Size()
@@ -147,9 +149,9 @@ func (api *APIServer) GetEstimatedNetwork(
 
 	// In case that request is passed through grpc-gateway
 	if md, ok := metadata.FromContext(ctx); ok {
-		if ip, ok := md["x-forwarded-for"]; ok {
+		if ips, ok := md["x-forwarded-for"]; ok {
 			return api.GetNetworkIncludingIP(ctx, &serverpb.GetNetworkIncludingIPRequest{
-				Ip: ip[0],
+				Ip: strings.Split(ips[0], ",")[0],
 			})
 		}
 	}

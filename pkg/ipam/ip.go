@@ -201,7 +201,7 @@ func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Netw
 			return net, err
 		}
 	}
-	return nil, errors.New(fmt.Sprintf("Not found IP: %s", ip.String()))
+	return nil, errors.New(fmt.Sprintf("Not found network including the IP: %s", ip.String()))
 }
 
 // GetPools gets pools.

@@ -56,6 +56,7 @@ type test struct {
 	redisDefer func()
 
 	srvAddr string
+	base    string
 
 	cc *grpc.ClientConn
 }

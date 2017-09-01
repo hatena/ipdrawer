@@ -4,8 +4,8 @@ package model;
 import "github.com/mwitkow/go-proto-validators/validator.proto";
 
 message Tag {
-  string key = 1 [(validator.field) = {string_not_empty: true}];
-  string value = 2 [(validator.field) = {string_not_empty: true}];
+  string key = 1;
+  string value = 2;
 }
 
 message Pool {

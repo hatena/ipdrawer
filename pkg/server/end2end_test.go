@@ -2,10 +2,12 @@ package server
 
 import (
 	"net"
+	"net/http"
 	"testing"
 
-	"github.com/taku-k/ipdrawer/pkg/server/apiclient"
 	"google.golang.org/grpc"
+
+	"github.com/taku-k/ipdrawer/pkg/server/apiclient"
 )
 
 func (te *test) startServer() {
@@ -23,6 +25,7 @@ func (te *test) startServer() {
 	addr = "localhost:" + port
 	go te.api.Start()
 	te.srvAddr = addr
+	te.base = "http://" + addr
 }
 
 func (te *test) clientConn() *grpc.ClientConn {
@@ -45,11 +48,70 @@ func TestDrawIPEstimatingNetwork_E2E(t *testing.T) {
 	te.startServer()
 	defer te.tearDown()
 
-	base := "http://" + te.srvAddr
-	cl := apiclient.NewNetworkServiceV0ApiWithBasePath(base)
-	resp, apiresp, err := cl.DrawIPEstimatingNetwork("", "")
-	if err != nil {
-		t.Errorf("cl.DrawIPEstimatingNetwork failed with %v; want success", err)
+	// Use testdata
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	testCases := []struct {
+		// Input
+		remote   string
+		tagKey   string
+		tagValue string
+
+		// Expected
+		status int
+		ip     string
+
+		desc string
+	}{
+		{
+			remote:   "192.168.0.1",
+			tagKey:   "Role",
+			tagValue: "test",
+
+			status: http.StatusOK,
+			ip:     "192.168.0.2",
+
+			desc: "Ideal case",
+		},
+		{
+			remote:   "192.168.0.1",
+			tagKey:   "Role",
+			tagValue: "nothing",
+
+			status: http.StatusNotFound,
+
+			desc: "Pool tag Role=nothing does not exists",
+		},
+		{
+			remote:   "192.168.1.1",
+			tagKey:   "Role",
+			tagValue: "test",
+
+			status: http.StatusNotFound,
+
+			desc: "Network does not exists",
+		},
 	}
-	t.Log(resp)
+
+	for i, tc := range testCases {
+		cl := apiclient.NewNetworkServiceV0ApiWithBasePath(te.base)
+		cl.Configuration.AddDefaultHeader("X-Forwarded-For", tc.remote)
+
+		resp, apiresp, err := cl.DrawIPEstimatingNetwork(tc.tagKey, tc.tagValue)
+
+		if err != nil {
+			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork failed with %v; want success", i, tc.desc, err)
+		}
+
+		if apiresp.StatusCode != tc.status {
+			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork returns %v; want %d %v",
+				i, tc.desc, apiresp.Status, tc.status, http.StatusText(tc.status))
+		}
+
+		if resp.Ip != tc.ip {
+			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork returns unexpected IP(%v); want IP(%v)",
+				i, tc.desc, resp.Ip, tc.ip)
+		}
+	}
 }
