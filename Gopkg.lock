@@ -160,7 +160,7 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
-  packages = ["bpf","context","http2","http2/hpack","icmp","idna","internal/iana","internal/socket","internal/timeseries","ipv4","ipv6","lex/httplex","trace","websocket"]
+  packages = ["bpf","context","http2","http2/hpack","icmp","idna","internal/iana","internal/socket","internal/timeseries","ipv4","ipv6","lex/httplex","publicsuffix","trace","websocket"]
   revision = "f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f"
 
 [[projects]]
@@ -187,9 +187,15 @@
   revision = "b8669c35455183da6d5c474ea6e72fbf55183274"
   version = "v1.5.1"
 
+[[projects]]
+  name = "gopkg.in/go-resty/resty.v0"
+  packages = ["."]
+  revision = "7a8134d8718193eb857994adee49d73a302e7718"
+  version = "v0.12"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e7d1b52dafce3a05645e2d9017aaad960353625c68379a6fdc7285556ed002ff"
+  inputs-digest = "ea63e84f7d855ece109828d9ce23bf099bf23562cf6956e4f53ca4d95a149964"
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -132,7 +132,10 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*Network, error) {
 	}
 
 	n := &Network{
-		Prefix: ipnet,
+		Prefix: &net.IPNet{
+			IP:   ipnet.IP,
+			Mask: ipnet.Mask,
+		},
 	}
 	if err := n.unmarshal(data); err != nil {
 		return nil, err

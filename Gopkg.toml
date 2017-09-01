@@ -21,3 +21,6 @@
 [[constraint]]
   name = "github.com/grpc-ecosystem/grpc-gateway"
   branch = "master"
+[[constraint]]
+  name = "github.com/go-resty/resty"
+  version = "0.13.0"

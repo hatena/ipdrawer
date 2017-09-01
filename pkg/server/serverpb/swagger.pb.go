@@ -18,6 +18,36 @@ const (
     "application/json"
   ],
   "paths": {
+    "/api/v0/drawip": {
+      "get": {
+        "operationId": "DrawIPEstimatingNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDrawIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pool_tag.key",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pool_tag.value",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
     "/api/v0/ip/{ip}/activate": {
       "post": {
         "operationId": "ActivateIP",
@@ -95,6 +125,22 @@ const (
         ],
         "tags": [
           "IPServiceV0"
+        ]
+      }
+    },
+    "/api/v0/network": {
+      "get": {
+        "operationId": "GetEstimatedNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbGetNetworkResponse"
+            }
+          }
+        },
+        "tags": [
+          "NetworkServiceV0"
         ]
       }
     },

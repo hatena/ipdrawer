@@ -11,13 +11,6 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
 )
 
-func newTestIPManager(r *storage.Redis) *IPManager {
-	return &IPManager{
-		redis:  r,
-		locker: &storage.LocalLocker{},
-	}
-}
-
 func (m *IPManager) reserveTemporary(ip net.IP) {
 	_, _ = m.redis.Client.Set(makeIPTempReserved(ip), 1, 24*time.Hour).Result()
 }
@@ -26,7 +19,7 @@ func TestIPActivation(t *testing.T) {
 	r, deferFunc := storage.NewTestRedis()
 	defer deferFunc()
 
-	m := newTestIPManager(r)
+	m := NewTestIPManager(r)
 
 	ctx := context.Background()
 
@@ -159,7 +152,7 @@ func TestDrawIPSeq(t *testing.T) {
 
 	for i, c := range testCases {
 		r, deferFunc := storage.NewTestRedis()
-		m := newTestIPManager(r)
+		m := NewTestIPManager(r)
 
 		for _, ip := range c.ips {
 			switch ip.Status {
@@ -198,7 +191,7 @@ func TestDeactivateAfterActivating(t *testing.T) {
 	r, deferFunc := storage.NewTestRedis()
 	defer deferFunc()
 
-	m := newTestIPManager(r)
+	m := NewTestIPManager(r)
 
 	ctx := context.Background()
 

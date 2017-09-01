@@ -13,7 +13,7 @@ func Test_getPools(t *testing.T) {
 	r, deferFunc := storage.NewTestRedis()
 	defer deferFunc()
 
-	m := newTestIPManager(r)
+	m := NewTestIPManager(r)
 
 	ctx := context.Background()
 

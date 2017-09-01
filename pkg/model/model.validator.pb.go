@@ -26,12 +26,6 @@ var _ = fmt.Errorf
 var _ = math.Inf
 
 func (this *Tag) Validate() error {
-	if this.Key == "" {
-		return github_com_mwitkow_go_proto_validators.FieldError("Key", fmt.Errorf(`value '%v' must not be an empty string`, this.Key))
-	}
-	if this.Value == "" {
-		return github_com_mwitkow_go_proto_validators.FieldError("Value", fmt.Errorf(`value '%v' must not be an empty string`, this.Value))
-	}
 	return nil
 }
 

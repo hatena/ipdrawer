@@ -28,6 +28,15 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
+func request_NetworkServiceV0_GetEstimatedNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetEstimatedNetworkRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.GetEstimatedNetwork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
 var (
 	filter_NetworkServiceV0_DrawIP_0 = &utilities.DoubleArray{Encoding: map[string]int{"ip": 0, "mask": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 )
@@ -105,6 +114,23 @@ func request_NetworkServiceV0_DrawIP_1(ctx context.Context, marshaler runtime.Ma
 	}
 
 	msg, err := client.DrawIP(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+var (
+	filter_NetworkServiceV0_DrawIPEstimatingNetwork_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
+func request_NetworkServiceV0_DrawIPEstimatingNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DrawIPEstimatingNetworkRequest
+	var metadata runtime.ServerMetadata
+
+	if err := runtime.PopulateQueryParameters(&protoReq, req.URL.Query(), filter_NetworkServiceV0_DrawIPEstimatingNetwork_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.DrawIPEstimatingNetwork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
@@ -389,6 +415,35 @@ func RegisterNetworkServiceV0HandlerFromEndpoint(ctx context.Context, mux *runti
 func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
 	client := NewNetworkServiceV0Client(conn)
 
+	mux.Handle("GET", pattern_NetworkServiceV0_GetEstimatedNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+		if cn, ok := w.(http.CloseNotifier); ok {
+			go func(done <-chan struct{}, closed <-chan bool) {
+				select {
+				case <-done:
+				case <-closed:
+					cancel()
+				}
+			}(ctx.Done(), cn.CloseNotify())
+		}
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_NetworkServiceV0_GetEstimatedNetwork_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_NetworkServiceV0_GetEstimatedNetwork_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_NetworkServiceV0_DrawIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
@@ -444,6 +499,35 @@ func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux,
 		}
 
 		forward_NetworkServiceV0_DrawIP_1(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_NetworkServiceV0_DrawIPEstimatingNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+		if cn, ok := w.(http.CloseNotifier); ok {
+			go func(done <-chan struct{}, closed <-chan bool) {
+				select {
+				case <-done:
+				case <-closed:
+					cancel()
+				}
+			}(ctx.Done(), cn.CloseNotify())
+		}
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_NetworkServiceV0_DrawIPEstimatingNetwork_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_NetworkServiceV0_DrawIPEstimatingNetwork_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -567,9 +651,13 @@ func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
+	pattern_NetworkServiceV0_GetEstimatedNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v0", "network"}, ""))
+
 	pattern_NetworkServiceV0_DrawIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v0", "network", "ip", "mask", "drawip"}, ""))
 
 	pattern_NetworkServiceV0_DrawIP_1 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"api", "v0", "network", "name", "drawip"}, ""))
+
+	pattern_NetworkServiceV0_DrawIPEstimatingNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v0", "drawip"}, ""))
 
 	pattern_NetworkServiceV0_GetNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v0", "network", "ip", "mask"}, ""))
 
@@ -581,9 +669,13 @@ var (
 )
 
 var (
+	forward_NetworkServiceV0_GetEstimatedNetwork_0 = runtime.ForwardResponseMessage
+
 	forward_NetworkServiceV0_DrawIP_0 = runtime.ForwardResponseMessage
 
 	forward_NetworkServiceV0_DrawIP_1 = runtime.ForwardResponseMessage
+
+	forward_NetworkServiceV0_DrawIPEstimatingNetwork_0 = runtime.ForwardResponseMessage
 
 	forward_NetworkServiceV0_GetNetwork_0 = runtime.ForwardResponseMessage
 
