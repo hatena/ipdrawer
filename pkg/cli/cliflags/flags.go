@@ -22,6 +22,18 @@ var (
 		Desc:      "ipdrawer server port.",
 	}
 
+	RedisHost = FlagInfo{
+		Name:   "redis-host",
+		EnvVar: "IPDRAWER_REDIS_HOST",
+		Desc:   "redis host.",
+	}
+
+	RedisPort = FlagInfo{
+		Name:   "redis-port",
+		EnvVar: "IPDRAWER_REDIS_PORT",
+		Desc:   "redis port.",
+	}
+
 	EnableTracerFlag = FlagInfo{
 		Name:   "enable-tracer",
 		EnvVar: "IPDRAWER_ENABLE_TRACER",

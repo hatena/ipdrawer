@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 
+	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
@@ -35,8 +36,11 @@ const (
 )
 
 // NewIPManager creates IPManager instance
-func NewIPManager() *IPManager {
-	redis := storage.NewRedis()
+func NewIPManager(cfg *base.Config) *IPManager {
+	redis, err := storage.NewRedis(cfg)
+	if err != nil {
+		panic(errors.New(fmt.Sprintf("Connection is faied with redis: %#+v", err)))
+	}
 	locker := storage.NewLocker(redis)
 	return &IPManager{
 		redis:  redis,

@@ -39,7 +39,7 @@ type APIServer struct {
 }
 
 func NewServer(cfg *base.Config) *APIServer {
-	mngr := ipam.NewIPManager()
+	mngr := ipam.NewIPManager(cfg)
 	lis, err := net.Listen("tcp", ":"+cfg.Port)
 
 	if err != nil {
