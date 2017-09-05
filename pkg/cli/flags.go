@@ -38,6 +38,8 @@ func init() {
 
 		// Server
 		stringFlag(f, &cfg.Port, cliflags.ServerPort, cfg.Port)
+		stringFlag(f, &cfg.RedisHost, cliflags.RedisHost, cfg.RedisHost)
+		stringFlag(f, &cfg.RedisPort, cliflags.RedisPort, cfg.RedisPort)
 		boolFlag(f, &cfg.EnableTracer, cliflags.EnableTracerFlag, cfg.EnableTracer)
 
 		// Bot
