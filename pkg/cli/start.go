@@ -15,6 +15,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/taku-k/ipdrawer/pkg/bot"
+	"github.com/taku-k/ipdrawer/pkg/build"
 	"github.com/taku-k/ipdrawer/pkg/server"
 	"github.com/taku-k/ipdrawer/pkg/utils/tracer"
 )
@@ -47,8 +48,12 @@ func startServer(cmd *cobra.Command, args []string) error {
 	go func() {
 		if err := func() error {
 			var buf bytes.Buffer
+			info := build.GetInfo()
 			tw := tabwriter.NewWriter(&buf, 2, 1, 2, ' ', 0)
 			fmt.Fprintf(tw, "ipdrawer server starting at %s\n", time.Now())
+			fmt.Fprintf(tw, "Go version:\t%s\n", info.GoVersion)
+			fmt.Fprintf(tw, "Tag:\t%s\n", info.Tag)
+			fmt.Fprintf(tw, "Revision:\t%s\n", info.Revision)
 			fmt.Fprintf(tw, "port:\t%s\n", cfg.Port)
 			if err := tw.Flush(); err != nil {
 				return err
