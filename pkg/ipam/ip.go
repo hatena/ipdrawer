@@ -175,6 +175,7 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, ip *IPAddr) er
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
 	pipe := m.redis.Client.TxPipeline()
+	pipe.Del(makeIPTempReserved(ip.IP))
 	pipe.Del(makeIPDetailsKey(ip.IP))
 	for _, p := range ps {
 		if p.Contains(ip.IP) {
