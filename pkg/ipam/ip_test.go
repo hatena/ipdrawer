@@ -213,6 +213,11 @@ func TestDeactivateAfterActivating(t *testing.T) {
 	if err := m.Deactivate(ctx, []*IPPool{pool}, ip); err != nil {
 		t.Errorf("Failed deactivating: %#+v", err)
 	}
+
+	keys, _ := r.Client.Keys(makeIPTempReserved(ip.IP)).Result()
+	if len(keys) != 0 {
+		t.Errorf("Deactivation should remove temporary reserved key")
+	}
 }
 
 func TestActivateIPInSeveralPools(t *testing.T) {
