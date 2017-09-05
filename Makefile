@@ -94,7 +94,5 @@ ui:
 gen-client: $(API_SPEC)
 	$(SWAGGER_CODEGEN) generate -i $(API_SPEC) \
 	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
-	@rm -rf $(API_CLIENT_DIR)/README.md \
-	       $(API_CLIENT_DIR)/git_push.sh \
-	       $(API_CLIENT_DIR)/.travis.yml \
-	       $(API_CLIENT_DIR)/docs
+	@rm -rf $(API_CLIENT_DIR)/git_push.sh \
+	       $(API_CLIENT_DIR)/.travis.yml
