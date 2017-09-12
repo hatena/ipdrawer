@@ -134,12 +134,6 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/tatsushid/go-fastping"
-  packages = ["."]
-  revision = "d7bb493dee3e090e2ffb6914adddf17c1e7c026c"
-
-[[projects]]
   name = "github.com/uber/jaeger-client-go"
   packages = [".","config","internal/spanlog","log","rpcmetrics","thrift-gen/agent","thrift-gen/jaeger","thrift-gen/sampling","thrift-gen/zipkincore","utils"]
   revision = "d021e646f5187d77b55592c3efee1a2810e895d7"
@@ -196,6 +190,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ea63e84f7d855ece109828d9ce23bf099bf23562cf6956e4f53ca4d95a149964"
+  inputs-digest = "5616b01080032e7cede4b399c2b0f506d444f888ec8f9f76405ea2602cf8daa0"
   solver-name = "gps-cdcl"
   solver-version = 1
