@@ -13,27 +13,12 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
 type IPManager struct {
 	redis  *storage.Redis
 	locker storage.Locker
 }
-
-type IPAddr struct {
-	IP     net.IP
-	Status IPStatus
-	Tags   []*model.Tag
-}
-
-type IPStatus int
-
-const (
-	IP_ACTIVE IPStatus = iota
-	IP_TEMPORARY_RESERVED
-	IP_RESERVED
-)
 
 // NewIPManager creates IPManager instance
 func NewIPManager(cfg *base.Config) *IPManager {
@@ -92,25 +77,7 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 			}
 		}
 		if !flag {
-			if ping {
-				if err := netutil.Ping(avail.String()); err != nil {
-					return avail, nil
-				} else {
-					// Activate
-					m.Activate(ctx, []*IPPool{pool}, &IPAddr{
-						IP: avail,
-						Tags: []*model.Tag{
-							{
-								Key:   "Role",
-								Value: "unknown",
-							},
-						},
-					})
-				}
-				avail = nextIP(avail)
-			} else {
-				return avail, nil
-			}
+			return avail, nil
 		} else {
 			avail = nextIP(avail)
 		}
@@ -119,10 +86,10 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 }
 
 // Activate activates IP.
-func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, ip *IPAddr) error {
+func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
 	span.SetTag("pool", ps[0].Key())
-	span.SetTag("ip", ip.IP.String())
+	span.SetTag("ip", addr.Ip)
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx, makeGlobalLock())
@@ -131,27 +98,34 @@ func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, ip *IPAddr) erro
 	}
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
+	ip := net.ParseIP(addr.Ip)
+
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
-	pipe.Del(makeIPTempReserved(ip.IP))
+	pipe.Del(makeIPTempReserved(ip))
 	// Change IP status to ACTIVE
-	pipe.HSet(makeIPDetailsKey(ip.IP), "status", int(IP_ACTIVE))
+	data, err := addr.Marshal()
+	if err != nil {
+		return err
+	}
+	pipe.Set(makeIPDetailsKey(ip), string(data), 0)
+	//pipe.HSet(makeIPDetailsKey(ip), "status", int(model.IPAddr_ACTIVE))
 	// Add IP to used IP zset
-	score := float64(ip2int(ip.IP))
+	score := float64(ip2int(ip))
 	z := redis.Z{
 		Score:  score,
-		Member: ip.IP.String(),
+		Member: ip.String(),
 	}
 	for _, p := range ps {
-		if p.Contains(ip.IP) {
+		if p.Contains(ip) {
 			pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
 		}
 	}
 	// Set tags
-	if len(ip.Tags) != 0 {
-		tagKey := makeIPTagKey(ip.IP)
-		tags := make([]interface{}, len(ip.Tags))
-		for i, t := range ip.Tags {
+	if len(addr.Tags) != 0 {
+		tagKey := makeIPTagKey(ip)
+		tags := make([]interface{}, len(addr.Tags))
+		for i, t := range addr.Tags {
 			tags[i] = t.Key + "=" + t.Value
 		}
 		pipe.SAdd(tagKey, tags...)
@@ -162,10 +136,10 @@ func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, ip *IPAddr) erro
 	return nil
 }
 
-func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, ip *IPAddr) error {
+func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
 	span.SetTag("pool", ps[0].Key())
-	span.SetTag("ip", ip.IP.String())
+	span.SetTag("ip", addr.Ip)
 	defer span.Finish()
 
 	token, err := m.locker.Lock(ctx, makeGlobalLock())
@@ -174,15 +148,17 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, ip *IPAddr) er
 	}
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
+	ip := net.ParseIP(addr.Ip)
+
 	pipe := m.redis.Client.TxPipeline()
-	pipe.Del(makeIPTempReserved(ip.IP))
-	pipe.Del(makeIPDetailsKey(ip.IP))
+	pipe.Del(makeIPTempReserved(ip))
+	pipe.Del(makeIPDetailsKey(ip))
 	for _, p := range ps {
-		if p.Contains(ip.IP) {
-			pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.IP.String())
+		if p.Contains(ip) {
+			pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.String())
 		}
 	}
-	pipe.Del(makeIPTagKey(ip.IP))
+	pipe.Del(makeIPTagKey(ip))
 	if _, err := pipe.Exec(); err != nil {
 		return err
 	}
@@ -281,4 +257,42 @@ func (m *IPManager) CreatePool(ctx context.Context, n *Network, pool *IPPool) er
 	defer span.Finish()
 
 	return setPool(m.redis, n, pool)
+}
+
+func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.ListIP")
+	defer span.Finish()
+
+	keys, err := m.redis.Client.Keys(makeIPListPattern()).Result()
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to fetch IP list keys")
+	}
+
+	addrs := make([]*model.IPAddr, len(keys))
+	for i, key := range keys {
+		ip, err := parseDetailsKey(key)
+		if err != nil {
+			return nil, errors.Wrapf(err, "Parse failed: %s", key)
+		}
+		if addrs[i], err = getIP(m.redis, ip); err != nil {
+			return nil, err
+		}
+	}
+
+	return addrs, nil
+}
+
+func getIP(r *storage.Redis, ip net.IP) (*model.IPAddr, error) {
+	dkey := makeIPDetailsKey(ip)
+	data, err := r.Client.Get(dkey).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	ipaddr := &model.IPAddr{}
+	if err := ipaddr.Unmarshal([]byte(data)); err != nil {
+		return nil, err
+	}
+
+	return ipaddr, nil
 }

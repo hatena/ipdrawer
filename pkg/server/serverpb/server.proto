@@ -72,6 +72,12 @@ message CreatePoolRequest {
 
 message CreatePoolResponse {}
 
+message ListIPRequest {}
+
+message ListIPResponse {
+  repeated model.IPAddr ips = 1;
+}
+
 service NetworkServiceV0 {
 
   rpc GetEstimatedNetwork (GetEstimatedNetworkRequest) returns (GetNetworkResponse) {
@@ -138,6 +144,12 @@ service IPServiceV0 {
   rpc DeactivateIP (DeactivateIPRequest) returns (DeactivateIPResponse) {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/deactivate"
+    };
+  };
+
+  rpc ListIP (ListIPRequest) returns (ListIPResponse) {
+    option (google.api.http) = {
+      get: "/api/v0/ip/list"
     };
   };
 

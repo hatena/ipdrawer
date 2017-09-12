@@ -23,6 +23,8 @@ It has these top-level messages:
 	CreateNetworkResponse
 	CreatePoolRequest
 	CreatePoolResponse
+	ListIPRequest
+	ListIPResponse
 */
 package serverpb
 
@@ -191,5 +193,18 @@ func (this *CreatePoolRequest) Validate() error {
 	return nil
 }
 func (this *CreatePoolResponse) Validate() error {
+	return nil
+}
+func (this *ListIPRequest) Validate() error {
+	return nil
+}
+func (this *ListIPResponse) Validate() error {
+	for _, item := range this.Ips {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Ips", err)
+			}
+		}
+	}
 	return nil
 }

@@ -10,6 +10,7 @@
 	It has these top-level messages:
 		Tag
 		Pool
+		IPAddr
 */
 package model
 
@@ -30,6 +31,30 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+
+type IPAddr_IPStatus int32
+
+const (
+	IPAddr_ACTIVE             IPAddr_IPStatus = 0
+	IPAddr_TEMPORARY_RESERVED IPAddr_IPStatus = 1
+	IPAddr_RESERVED           IPAddr_IPStatus = 2
+)
+
+var IPAddr_IPStatus_name = map[int32]string{
+	0: "ACTIVE",
+	1: "TEMPORARY_RESERVED",
+	2: "RESERVED",
+}
+var IPAddr_IPStatus_value = map[string]int32{
+	"ACTIVE":             0,
+	"TEMPORARY_RESERVED": 1,
+	"RESERVED":           2,
+}
+
+func (x IPAddr_IPStatus) String() string {
+	return proto.EnumName(IPAddr_IPStatus_name, int32(x))
+}
+func (IPAddr_IPStatus) EnumDescriptor() ([]byte, []int) { return fileDescriptorModel, []int{2, 0} }
 
 type Tag struct {
 	Key   string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
@@ -95,9 +120,43 @@ func (m *Pool) GetTags() []*Tag {
 	return nil
 }
 
+type IPAddr struct {
+	Ip     string          `protobuf:"bytes,1,opt,name=ip,proto3" json:"ip,omitempty"`
+	Status IPAddr_IPStatus `protobuf:"varint,2,opt,name=status,proto3,enum=model.IPAddr_IPStatus" json:"status,omitempty"`
+	Tags   []*Tag          `protobuf:"bytes,3,rep,name=tags" json:"tags,omitempty"`
+}
+
+func (m *IPAddr) Reset()                    { *m = IPAddr{} }
+func (m *IPAddr) String() string            { return proto.CompactTextString(m) }
+func (*IPAddr) ProtoMessage()               {}
+func (*IPAddr) Descriptor() ([]byte, []int) { return fileDescriptorModel, []int{2} }
+
+func (m *IPAddr) GetIp() string {
+	if m != nil {
+		return m.Ip
+	}
+	return ""
+}
+
+func (m *IPAddr) GetStatus() IPAddr_IPStatus {
+	if m != nil {
+		return m.Status
+	}
+	return IPAddr_ACTIVE
+}
+
+func (m *IPAddr) GetTags() []*Tag {
+	if m != nil {
+		return m.Tags
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*Tag)(nil), "model.Tag")
 	proto.RegisterType((*Pool)(nil), "model.Pool")
+	proto.RegisterType((*IPAddr)(nil), "model.IPAddr")
+	proto.RegisterEnum("model.IPAddr_IPStatus", IPAddr_IPStatus_name, IPAddr_IPStatus_value)
 }
 func (m *Tag) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
@@ -176,6 +235,47 @@ func (m *Pool) MarshalTo(dAtA []byte) (int, error) {
 	return i, nil
 }
 
+func (m *IPAddr) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *IPAddr) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if len(m.Ip) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintModel(dAtA, i, uint64(len(m.Ip)))
+		i += copy(dAtA[i:], m.Ip)
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintModel(dAtA, i, uint64(m.Status))
+	}
+	if len(m.Tags) > 0 {
+		for _, msg := range m.Tags {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintModel(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
 func encodeFixed64Model(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	dAtA[offset+1] = uint8(v >> 8)
@@ -225,6 +325,25 @@ func (m *Pool) Size() (n int) {
 		n += 1 + l + sovModel(uint64(l))
 	}
 	l = len(m.End)
+	if l > 0 {
+		n += 1 + l + sovModel(uint64(l))
+	}
+	if m.Status != 0 {
+		n += 1 + sovModel(uint64(m.Status))
+	}
+	if len(m.Tags) > 0 {
+		for _, e := range m.Tags {
+			l = e.Size()
+			n += 1 + l + sovModel(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *IPAddr) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Ip)
 	if l > 0 {
 		n += 1 + l + sovModel(uint64(l))
 	}
@@ -519,6 +638,135 @@ func (m *Pool) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *IPAddr) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowModel
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: IPAddr: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: IPAddr: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ip", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModel
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthModel
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Ip = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			m.Status = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModel
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Status |= (IPAddr_IPStatus(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Tags", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowModel
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthModel
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Tags = append(m.Tags, &Tag{})
+			if err := m.Tags[len(m.Tags)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipModel(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthModel
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipModel(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -627,7 +875,7 @@ var (
 func init() { proto.RegisterFile("model/model.proto", fileDescriptorModel) }
 
 var fileDescriptorModel = []byte{
-	// 285 bytes of a gzipped FileDescriptorProto
+	// 380 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcc, 0xcd, 0x4f, 0x49,
 	0xcd, 0xd1, 0x07, 0x93, 0x7a, 0x05, 0x45, 0xf9, 0x25, 0xf9, 0x42, 0xac, 0x60, 0x8e, 0x94, 0x59,
 	0x7a, 0x66, 0x49, 0x46, 0x69, 0x92, 0x5e, 0x72, 0x7e, 0xae, 0x7e, 0x6e, 0x79, 0x66, 0x49, 0x76,
@@ -643,7 +891,13 @@ var fileDescriptorModel = []byte{
 	0xcc, 0xa9, 0x79, 0x29, 0x10, 0x57, 0xd2, 0xdf, 0x15, 0x20, 0xbb, 0x85, 0xc4, 0xb8, 0xd8, 0x8a,
 	0x4b, 0x12, 0x4b, 0x4a, 0x8b, 0x25, 0x98, 0x15, 0x18, 0x35, 0x58, 0x83, 0xa0, 0x3c, 0x21, 0x39,
 	0x2e, 0x96, 0x92, 0xc4, 0xf4, 0x62, 0x09, 0x16, 0x05, 0x66, 0x0d, 0x6e, 0x23, 0x2e, 0x3d, 0x48,
-	0xb4, 0x85, 0x24, 0xa6, 0x07, 0x81, 0xc5, 0x9d, 0x04, 0x4e, 0x3c, 0x92, 0x63, 0xbc, 0xf0, 0x48,
-	0x8e, 0xf1, 0xc1, 0x23, 0x39, 0xc6, 0x19, 0x8f, 0xe5, 0x18, 0x92, 0xd8, 0xc0, 0x91, 0x62, 0x0c,
-	0x08, 0x00, 0x00, 0xff, 0xff, 0x93, 0x2d, 0xdd, 0x89, 0xe8, 0x01, 0x00, 0x00,
+	0xb4, 0x85, 0x24, 0xa6, 0x07, 0x81, 0xc5, 0x95, 0x96, 0x31, 0x72, 0xb1, 0x79, 0x06, 0x38, 0xa6,
+	0xa4, 0x14, 0x09, 0xf1, 0x71, 0x31, 0x65, 0x16, 0x40, 0x83, 0x9f, 0x29, 0xb3, 0x40, 0x48, 0x0f,
+	0x6e, 0x24, 0xc8, 0x63, 0x7c, 0x46, 0x62, 0x50, 0xcd, 0x10, 0xe5, 0x7a, 0x9e, 0x01, 0xc1, 0x60,
+	0x59, 0x0c, 0xab, 0x98, 0x71, 0x58, 0x65, 0xc3, 0xc5, 0x01, 0xd3, 0x23, 0xc4, 0xc5, 0xc5, 0xe6,
+	0xe8, 0x1c, 0xe2, 0x19, 0xe6, 0x2a, 0xc0, 0x20, 0x24, 0xc6, 0x25, 0x14, 0xe2, 0xea, 0x1b, 0xe0,
+	0x1f, 0xe4, 0x18, 0x14, 0x19, 0x1f, 0xe4, 0x1a, 0xec, 0x1a, 0x14, 0xe6, 0xea, 0x22, 0xc0, 0x28,
+	0xc4, 0xc3, 0xc5, 0x01, 0xe7, 0x31, 0x39, 0x09, 0x9c, 0x78, 0x24, 0xc7, 0x78, 0xe1, 0x91, 0x1c,
+	0xe3, 0x83, 0x47, 0x72, 0x8c, 0x33, 0x1e, 0xcb, 0x31, 0x24, 0xb1, 0x81, 0x53, 0x8f, 0x31, 0x20,
+	0x00, 0x00, 0xff, 0xff, 0xf4, 0x72, 0xae, 0xa6, 0x91, 0x02, 0x00, 0x00,
 }

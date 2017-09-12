@@ -9,6 +9,7 @@ import (
 
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
+	"github.com/taku-k/ipdrawer/pkg/model"
 )
 
 func (m *IPManager) reserveTemporary(ip net.IP) {
@@ -28,10 +29,10 @@ func TestIPActivation(t *testing.T) {
 		End:   net.ParseIP("10.0.0.254"),
 	}
 
-	if err := m.Activate(ctx, []*IPPool{pool}, &IPAddr{IP: net.ParseIP("10.0.0.1")}); err != nil {
+	if err := m.Activate(ctx, []*IPPool{pool}, &model.IPAddr{Ip: "10.0.0.1"}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
-	if err := m.Activate(ctx, []*IPPool{pool}, &IPAddr{IP: net.ParseIP("10.0.0.4")}); err != nil {
+	if err := m.Activate(ctx, []*IPPool{pool}, &model.IPAddr{Ip: "10.0.0.4"}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
 
@@ -50,7 +51,7 @@ func TestDrawIPSeq(t *testing.T) {
 
 	testCases := []struct {
 		pool     *IPPool
-		ips      []*IPAddr
+		ips      []*model.IPAddr
 		expected net.IP
 		errmsg   string
 	}{
@@ -59,13 +60,13 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*IPAddr{
+			ips: []*model.IPAddr{
 				{
-					IP:     net.ParseIP("10.0.0.1"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.1",
+					Status: model.IPAddr_ACTIVE,
 				}, {
-					IP:     net.ParseIP("10.0.0.3"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.3",
+					Status: model.IPAddr_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.2"),
@@ -75,19 +76,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*IPAddr{
+			ips: []*model.IPAddr{
 				{
-					IP:     net.ParseIP("10.0.0.1"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.1",
+					Status: model.IPAddr_ACTIVE,
 				}, {
-					IP:     net.ParseIP("10.0.0.2"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.2",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.3"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.3",
+					Status: model.IPAddr_ACTIVE,
 				}, {
-					IP:     net.ParseIP("10.0.0.4"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.4",
+					Status: model.IPAddr_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -97,19 +98,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*IPAddr{
+			ips: []*model.IPAddr{
 				{
-					IP:     net.ParseIP("10.0.0.1"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.1",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.2"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.2",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.3"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.3",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.4"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.4",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -119,19 +120,19 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.254"),
 			},
-			ips: []*IPAddr{
+			ips: []*model.IPAddr{
 				{
-					IP:     net.ParseIP("10.0.0.1"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.1",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.2"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.2",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.3"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.3",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.4"),
-					Status: IP_ACTIVE,
+					Ip:     "10.0.0.4",
+					Status: model.IPAddr_ACTIVE,
 				},
 			},
 			expected: net.ParseIP("10.0.0.5"),
@@ -141,13 +142,13 @@ func TestDrawIPSeq(t *testing.T) {
 				Start: net.ParseIP("10.0.0.1"),
 				End:   net.ParseIP("10.0.0.2"),
 			},
-			ips: []*IPAddr{
+			ips: []*model.IPAddr{
 				{
-					IP:     net.ParseIP("10.0.0.1"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.1",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				}, {
-					IP:     net.ParseIP("10.0.0.2"),
-					Status: IP_TEMPORARY_RESERVED,
+					Ip:     "10.0.0.2",
+					Status: model.IPAddr_TEMPORARY_RESERVED,
 				},
 			},
 			errmsg: "Nothing IP to serve",
@@ -160,12 +161,12 @@ func TestDrawIPSeq(t *testing.T) {
 
 		for _, ip := range c.ips {
 			switch ip.Status {
-			case IP_ACTIVE:
+			case model.IPAddr_ACTIVE:
 				m.Activate(ctx, []*IPPool{c.pool}, ip)
-			case IP_TEMPORARY_RESERVED:
-				m.reserveTemporary(ip.IP)
-			case IP_RESERVED:
-				m.Reserve(c.pool, ip.IP)
+			case model.IPAddr_TEMPORARY_RESERVED:
+				m.reserveTemporary(net.ParseIP(ip.Ip))
+			case model.IPAddr_RESERVED:
+				m.Reserve(c.pool, net.ParseIP(ip.Ip))
 			}
 		}
 
@@ -204,8 +205,8 @@ func TestDeactivateAfterActivating(t *testing.T) {
 		End:   net.ParseIP("10.0.0.254"),
 	}
 
-	ip := &IPAddr{
-		IP: net.ParseIP("10.0.0.1"),
+	ip := &model.IPAddr{
+		Ip: "10.0.0.1",
 	}
 
 	m.Activate(ctx, []*IPPool{pool}, ip)
@@ -214,7 +215,7 @@ func TestDeactivateAfterActivating(t *testing.T) {
 		t.Errorf("Failed deactivating: %#+v", err)
 	}
 
-	keys, _ := r.Client.Keys(makeIPTempReserved(ip.IP)).Result()
+	keys, _ := r.Client.Keys(makeIPTempReserved(net.ParseIP(ip.Ip))).Result()
 	if len(keys) != 0 {
 		t.Errorf("Deactivation should remove temporary reserved key")
 	}
@@ -239,8 +240,8 @@ func TestActivateIPInSeveralPools(t *testing.T) {
 		},
 	}
 
-	ip := &IPAddr{
-		IP: net.ParseIP("10.0.0.40"),
+	ip := &model.IPAddr{
+		Ip: "10.0.0.40",
 	}
 
 	err := m.Activate(ctx, pools, ip)
@@ -268,8 +269,8 @@ func TestDeactivateIPInSeveralPools(t *testing.T) {
 		},
 	}
 
-	ip := &IPAddr{
-		IP: net.ParseIP("10.0.0.40"),
+	ip := &model.IPAddr{
+		Ip: "10.0.0.40",
 	}
 
 	m.Activate(ctx, pools, ip)
@@ -298,8 +299,8 @@ func TestCorrectDrawIPFromInclusivePools(t *testing.T) {
 		},
 	}
 
-	ip := &IPAddr{
-		IP: net.ParseIP("10.0.0.1"),
+	ip := &model.IPAddr{
+		Ip: "10.0.0.1",
 	}
 
 	m.Activate(ctx, pools, ip)
