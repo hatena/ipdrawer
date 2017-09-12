@@ -2,6 +2,7 @@ package server
 
 import (
 	ocontext "context"
+	"html/template"
 	"io"
 	"mime"
 	"net"
@@ -27,6 +28,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
+	"github.com/taku-k/ipdrawer/pkg/ui/tmpl"
 )
 
 var logrusEntry = logrus.NewEntry(logrus.New())
@@ -89,6 +91,22 @@ func serveSwagger(mux *http.ServeMux) {
 	})
 }
 
+func (api *APIServer) serverUI(mux *http.ServeMux) {
+	mux.HandleFunc("/ui/ip", func(w http.ResponseWriter, req *http.Request) {
+		addrs, err := api.manager.ListIP(context.Background())
+		if err != nil {
+			w.Write([]byte("Failed"))
+			return
+		}
+		t, err := template.New("ip-list").Parse(tmpl.IPListTmpl)
+		if err != nil {
+			w.Write([]byte(err.Error()))
+			return
+		}
+		t.Execute(w, addrs)
+	})
+}
+
 func (api *APIServer) Start() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -126,6 +144,7 @@ func (api *APIServer) Start() error {
 	mux := http.NewServeMux()
 	mux.Handle("/", gw)
 	serveSwagger(mux)
+	api.serverUI(mux)
 	api.httpS = &http.Server{
 		Handler: mux,
 	}

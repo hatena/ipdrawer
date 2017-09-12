@@ -4,6 +4,7 @@ import (
 	"net"
 	"strings"
 
+	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -178,12 +179,13 @@ func (api *APIServer) ActivateIP(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	ip := &ipam.IPAddr{
-		IP:   net.ParseIP(req.Ip),
+	ip := net.ParseIP(req.Ip)
+	addr := &model.IPAddr{
+		Ip:   req.Ip,
 		Tags: req.Tags,
 	}
 
-	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.IP)
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
 	if err != nil {
 		return nil, err
 	}
@@ -194,10 +196,10 @@ func (api *APIServer) ActivateIP(
 	}
 	if len(pools) == 0 {
 		return nil, status.Errorf(
-			codes.NotFound, "Not found pool: %s: %#+v", ip.IP.String(), err)
+			codes.NotFound, "Not found pool: %s: %#+v", ip.String(), err)
 	}
 
-	if err := api.manager.Activate(ctx, pools, ip); err != nil {
+	if err := api.manager.Activate(ctx, pools, addr); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
@@ -212,11 +214,12 @@ func (api *APIServer) DeactivateIP(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	ip := &ipam.IPAddr{
-		IP: net.ParseIP(req.Ip),
+	ip := net.ParseIP(req.Ip)
+	addr := &model.IPAddr{
+		Ip: req.Ip,
 	}
 
-	n, err := api.manager.GetNetworkIncludingIP(ctx, ip.IP)
+	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
 	if err != nil {
 		return nil, err
 	}
@@ -227,10 +230,10 @@ func (api *APIServer) DeactivateIP(
 	}
 	if len(pools) == 0 {
 		return nil, status.Errorf(
-			codes.NotFound, "Not found pool: IP: %s", ip.IP.String())
+			codes.NotFound, "Not found pool: IP: %s", ip.String())
 	}
 
-	if err := api.manager.Deactivate(ctx, pools, ip); err != nil {
+	if err := api.manager.Deactivate(ctx, pools, addr); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
@@ -340,4 +343,21 @@ func (api *APIServer) CreatePool(
 	}
 
 	return &serverpb.CreatePoolResponse{}, nil
+}
+
+func (api *APIServer) ListIP(
+	ctx context.Context,
+	req *serverpb.ListIPRequest,
+) (*serverpb.ListIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	addrs, err := api.manager.ListIP(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get ip list")
+	}
+	return &serverpb.ListIPResponse{
+		Ips: addrs,
+	}, nil
 }

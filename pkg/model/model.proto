@@ -14,3 +14,14 @@ message Pool {
   int32 status = 3;
   repeated Tag tags = 4;
 }
+
+message IPAddr {
+  string ip = 1;
+  enum IPStatus {
+    ACTIVE = 0;
+    TEMPORARY_RESERVED = 1;
+    RESERVED = 2;
+  }
+  IPStatus status = 2;
+  repeated Tag tags = 3;
+}

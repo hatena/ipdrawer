@@ -24,6 +24,7 @@ Class | Method | HTTP request | Description
 *IPServiceV0Api* | [**ActivateIP**](docs/IPServiceV0Api.md#activateip) | **Post** /api/v0/ip/{ip}/activate | 
 *IPServiceV0Api* | [**DeactivateIP**](docs/IPServiceV0Api.md#deactivateip) | **Post** /api/v0/ip/{ip}/deactivate | 
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
+*IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 
 *NetworkServiceV0Api* | [**CreateNetwork**](docs/NetworkServiceV0Api.md#createnetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 *NetworkServiceV0Api* | [**CreatePool**](docs/NetworkServiceV0Api.md#createpool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
@@ -36,6 +37,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [IpAddrIpStatus](docs/IpAddrIpStatus.md)
+ - [ModelIpAddr](docs/ModelIpAddr.md)
  - [ModelPool](docs/ModelPool.md)
  - [ModelTag](docs/ModelTag.md)
  - [ServerpbActivateIpRequest](docs/ServerpbActivateIpRequest.md)
@@ -47,6 +50,7 @@ Class | Method | HTTP request | Description
  - [ServerpbDeactivateIpResponse](docs/ServerpbDeactivateIpResponse.md)
  - [ServerpbDrawIpResponse](docs/ServerpbDrawIpResponse.md)
  - [ServerpbGetNetworkResponse](docs/ServerpbGetNetworkResponse.md)
+ - [ServerpbListIpResponse](docs/ServerpbListIpResponse.md)
 
 
 ## Documentation For Authorization

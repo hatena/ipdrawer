@@ -3,6 +3,9 @@ package ipam
 import (
 	"fmt"
 	"net"
+	"strings"
+
+	"github.com/pkg/errors"
 )
 
 const (
@@ -23,6 +26,23 @@ func makeGlobalLock() string {
 
 func makeIPDetailsKey(ip net.IP) string {
 	return fmt.Sprintf(ipDetails, ip.String())
+}
+
+func makeIPListPattern() string {
+	return strings.Replace(ipDetails, "%s", "*", 1)
+}
+
+func parseDetailsKey(key string) (net.IP, error) {
+	d := strings.Split(key, ":")
+	if len(d) != 3 {
+		return nil, errors.New("Not matched format")
+	}
+	ip := d[1]
+	addr := net.ParseIP(ip)
+	if addr == nil {
+		return nil, errors.New("Failed parse IP")
+	}
+	return addr, nil
 }
 
 func makeIPTagKey(ip net.IP) string {

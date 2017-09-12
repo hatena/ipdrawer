@@ -48,6 +48,22 @@ const (
         ]
       }
     },
+    "/api/v0/ip/list": {
+      "get": {
+        "operationId": "ListIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListIPResponse"
+            }
+          }
+        },
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
     "/api/v0/ip/{ip}/activate": {
       "post": {
         "operationId": "ActivateIP",
@@ -396,6 +412,32 @@ const (
     }
   },
   "definitions": {
+    "IPAddrIPStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "TEMPORARY_RESERVED",
+        "RESERVED"
+      ],
+      "default": "ACTIVE"
+    },
+    "modelIPAddr": {
+      "type": "object",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/IPAddrIPStatus"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelTag"
+          }
+        }
+      }
+    },
     "modelPool": {
       "type": "object",
       "properties": {
@@ -523,6 +565,17 @@ const (
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelTag"
+          }
+        }
+      }
+    },
+    "serverpbListIPResponse": {
+      "type": "object",
+      "properties": {
+        "ips": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelIPAddr"
           }
         }
       }
