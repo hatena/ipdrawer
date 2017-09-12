@@ -175,3 +175,30 @@ func TestGetEstimatedNetwork_E2E_ViaGW(t *testing.T) {
 		}
 	}
 }
+
+func TestActivateIP_E2E_ViaGW(t *testing.T) {
+	te := newTest(t)
+	te.startServer()
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	cl := apiclient.NewIPServiceV0ApiWithBasePath(te.base)
+
+	_, apiresp, err := cl.ActivateIP("192.168.0.111", apiclient.ServerpbActivateIpRequest{
+		Tags: []apiclient.ModelTag{
+			{
+				Key:   "Role",
+				Value: "test",
+			},
+		},
+	})
+
+	if err != nil {
+		t.Fatalf("cl.ActivateIP failed with %v; want success", err)
+	}
+	if apiresp.StatusCode != http.StatusOK {
+		t.Errorf("cl.ActivateIP returns %v; want %v", apiresp.Status, http.StatusOK)
+	}
+}

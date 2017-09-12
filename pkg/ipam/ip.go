@@ -103,6 +103,10 @@ func (m *IPManager) Activate(ctx context.Context, ps []*model.Pool, addr *model.
 
 	ip := net.ParseIP(addr.Ip)
 
+	if check, _ := m.redis.Client.Exists(makeIPDetailsKey(ip)).Result(); check != 0 {
+		return errors.New(fmt.Sprintf("%s has been already activated", ip.String()))
+	}
+
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))
