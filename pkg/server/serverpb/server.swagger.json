@@ -38,6 +38,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -275,6 +282,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -400,6 +414,13 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -543,6 +564,9 @@
       "type": "object",
       "properties": {
         "ip": {
+          "type": "string"
+        },
+        "message": {
           "type": "string"
         }
       }

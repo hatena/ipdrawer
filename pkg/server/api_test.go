@@ -213,3 +213,29 @@ func TestActivateIPWhenAlreadyActivated(t *testing.T) {
 		t.Fatalf("Got nil; want error")
 	}
 }
+
+func TestDrawIPAndActivateImmediately(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	resp, err := te.api.DrawIP(te.ctx, &serverpb.DrawIPRequest{
+		Ip:   testPrefix.IP.String(),
+		Mask: int32(24),
+		PoolTag: &model.Tag{
+			Key:   "Role",
+			Value: "test",
+		},
+		ActivateImmediately: true,
+	})
+
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+
+	if resp.Message != DrawIPActivationSuccessMsg {
+		t.Errorf("Got message %s; want %s", resp.Message, DrawIPActivationSuccessMsg)
+	}
+}

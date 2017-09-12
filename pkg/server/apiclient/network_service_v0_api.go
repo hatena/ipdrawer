@@ -175,9 +175,10 @@ func (a NetworkServiceV0Api) CreatePool(ip string, mask int32, body ServerpbCrea
  * @param poolTagKey
  * @param poolTagValue
  * @param name
+ * @param activateImmediately
  * @return *ServerpbDrawIpResponse
  */
-func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, poolTagValue string, name string) (*ServerpbDrawIpResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, poolTagValue string, name string, activateImmediately bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -198,6 +199,7 @@ func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, po
 	localVarQueryParams.Add("pool_tag.key", a.Configuration.APIClient.ParameterToString(poolTagKey, ""))
 	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
 	localVarQueryParams.Add("name", a.Configuration.APIClient.ParameterToString(name, ""))
+	localVarQueryParams.Add("activate_immediately", a.Configuration.APIClient.ParameterToString(activateImmediately, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
@@ -240,9 +242,10 @@ func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, po
  *
  * @param poolTagKey
  * @param poolTagValue
+ * @param activateImmediately
  * @return *ServerpbDrawIpResponse
  */
-func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagValue string) (*ServerpbDrawIpResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagValue string, activateImmediately bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -260,6 +263,7 @@ func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagV
 	}
 	localVarQueryParams.Add("pool_tag.key", a.Configuration.APIClient.ParameterToString(poolTagKey, ""))
 	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
+	localVarQueryParams.Add("activate_immediately", a.Configuration.APIClient.ParameterToString(activateImmediately, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
@@ -305,9 +309,10 @@ func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagV
  * @param mask
  * @param poolTagKey
  * @param poolTagValue
+ * @param activateImmediately
  * @return *ServerpbDrawIpResponse
  */
-func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTagKey string, poolTagValue string) (*ServerpbDrawIpResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTagKey string, poolTagValue string, activateImmediately bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -328,6 +333,7 @@ func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTa
 	localVarQueryParams.Add("mask", a.Configuration.APIClient.ParameterToString(mask, ""))
 	localVarQueryParams.Add("pool_tag.key", a.Configuration.APIClient.ParameterToString(poolTagKey, ""))
 	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
+	localVarQueryParams.Add("activate_immediately", a.Configuration.APIClient.ParameterToString(activateImmediately, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}

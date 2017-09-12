@@ -73,7 +73,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP**
-> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name)
+> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name, $activateImmediately)
 
 
 
@@ -87,6 +87,7 @@ Name | Type | Description  | Notes
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
  **name** | **string**|  | [optional] 
+ **activateImmediately** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -104,7 +105,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIPEstimatingNetwork**
-> ServerpbDrawIpResponse DrawIPEstimatingNetwork($poolTagKey, $poolTagValue)
+> ServerpbDrawIpResponse DrawIPEstimatingNetwork($poolTagKey, $poolTagValue, $activateImmediately)
 
 
 
@@ -115,6 +116,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
+ **activateImmediately** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -132,7 +134,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP_0**
-> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue)
+> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue, $activateImmediately)
 
 
 
@@ -146,6 +148,7 @@ Name | Type | Description  | Notes
  **mask** | **int32**|  | [optional] 
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
+ **activateImmediately** | **bool**|  | [optional] 
 
 ### Return type
 

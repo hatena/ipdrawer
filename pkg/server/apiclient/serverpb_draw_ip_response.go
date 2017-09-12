@@ -12,4 +12,6 @@ package apiclient
 
 type ServerpbDrawIpResponse struct {
 	Ip string `json:"ip,omitempty"`
+
+	Message string `json:"message,omitempty"`
 }
