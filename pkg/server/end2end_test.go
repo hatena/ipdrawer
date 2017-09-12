@@ -98,7 +98,7 @@ func TestDrawIPEstimatingNetwork_E2E_ViaGW(t *testing.T) {
 		cl := apiclient.NewNetworkServiceV0ApiWithBasePath(te.base)
 		cl.Configuration.AddDefaultHeader("X-Forwarded-For", tc.remote)
 
-		resp, apiresp, err := cl.DrawIPEstimatingNetwork(tc.tagKey, tc.tagValue)
+		resp, apiresp, err := cl.DrawIPEstimatingNetwork(tc.tagKey, tc.tagValue, false)
 
 		if err != nil {
 			t.Errorf("#%d(desc=%s): cl.DrawIPEstimatingNetwork failed with %v; want success",

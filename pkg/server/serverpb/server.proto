@@ -12,14 +12,17 @@ message DrawIPRequest {
   int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
   model.Tag pool_tag = 3;
   string name = 4;
+  bool activate_immediately = 5;
 }
 
 message DrawIPResponse {
   string ip = 1;
+  string message = 2;
 }
 
 message DrawIPEstimatingNetworkRequest {
   model.Tag pool_tag = 1;
+  bool activate_immediately = 2;
 }
 
 message GetNetworkIncludingIPRequest {

@@ -41,6 +41,13 @@ const (
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -278,6 +285,13 @@ const (
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -403,6 +417,13 @@ const (
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "activate_immediately",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
           }
         ],
         "tags": [
@@ -546,6 +567,9 @@ const (
       "type": "object",
       "properties": {
         "ip": {
+          "type": "string"
+        },
+        "message": {
           "type": "string"
         }
       }

@@ -16,6 +16,11 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
+var (
+	DrawIPSuccessMsg           = "succss"
+	DrawIPActivationSuccessMsg = "success activation"
+)
+
 func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,
@@ -63,9 +68,20 @@ func (api *APIServer) DrawIP(
 	for _, p := range target {
 		ret, err := api.manager.DrawIP(ctx, p, true, false)
 		if err == nil {
-			return &serverpb.DrawIPResponse{
-				Ip: ret.String(),
-			}, nil
+			res := &serverpb.DrawIPResponse{
+				Ip:      ret.String(),
+				Message: DrawIPSuccessMsg,
+			}
+			if req.ActivateImmediately {
+				_, err := api.ActivateIP(ctx, &serverpb.ActivateIPRequest{
+					Ip: ret.String(),
+				})
+				if err != nil {
+					continue
+				}
+				res.Message = DrawIPActivationSuccessMsg
+			}
+			return res, nil
 		}
 	}
 
@@ -109,9 +125,10 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 	}
 	ones, _ := pre.Mask.Size()
 	return api.DrawIP(ctx, &serverpb.DrawIPRequest{
-		Ip:      pre.IP.String(),
-		Mask:    int32(ones),
-		PoolTag: req.PoolTag,
+		Ip:                  pre.IP.String(),
+		Mask:                int32(ones),
+		PoolTag:             req.PoolTag,
+		ActivateImmediately: req.ActivateImmediately,
 	})
 }
 
