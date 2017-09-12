@@ -162,3 +162,54 @@ func TestDrawIPEstimatingNetwork(t *testing.T) {
 		t.Errorf("#%d: expected %s, but got %s", 1, "192.168.0.2", resp.Ip)
 	}
 }
+
+func TestActivateIP(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	_, err := te.api.ActivateIP(te.ctx, &serverpb.ActivateIPRequest{
+		Ip: "192.168.0.122",
+		Tags: []*model.Tag{
+			{
+				Key:   "Role",
+				Value: "test",
+			},
+		},
+	})
+
+	if err != nil {
+		t.Fatalf("Got error: %#+v", err)
+	}
+}
+
+// TestActivateIPWhenAlreadyActivated checks server returns error
+// when activated ip will be again activated.
+func TestActivateIPWhenAlreadyActivated(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	req := &serverpb.ActivateIPRequest{
+		Ip: "192.168.0.122",
+		Tags: []*model.Tag{
+			{
+				Key:   "Role",
+				Value: "test",
+			},
+		},
+	}
+	_, err := te.api.ActivateIP(te.ctx, req)
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+
+	_, err = te.api.ActivateIP(te.ctx, req)
+	if err == nil {
+		t.Fatalf("Got nil; want error")
+	}
+}
