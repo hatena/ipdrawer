@@ -30,24 +30,12 @@ func TestKey(t *testing.T) {
 			e: "network:192.168.0.0/24:details",
 		},
 		{
-			a: makeNetworkDefaultGWKey(ipnet),
-			e: "network:192.168.0.0/24:details:default_gateways",
-		},
-		{
-			a: makeNetworkTagKey(ipnet),
-			e: "network:192.168.0.0/24:details:tags",
-		},
-		{
 			a: makeNetworkPoolKey(ipnet),
 			e: "network:192.168.0.0/24:details:pools",
 		},
 		{
 			a: makePoolDetailsKey(ip, ip),
 			e: "pool:192.168.0.2,192.168.0.2:details",
-		},
-		{
-			a: makePoolTagsKey(ip, ip),
-			e: "pool:192.168.0.2,192.168.0.2:details:tags",
 		},
 	}
 

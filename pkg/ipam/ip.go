@@ -156,7 +156,6 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*model.Pool, addr *mode
 			pipe.ZRem(makePoolUsedIPZset(s, e), ip.String())
 		}
 	}
-	pipe.Del(makeIPTagKey(ip))
 	if _, err := pipe.Exec(); err != nil {
 		return err
 	}

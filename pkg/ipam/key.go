@@ -45,10 +45,6 @@ func parseDetailsKey(key string) (net.IP, error) {
 	return addr, nil
 }
 
-func makeIPTagKey(ip net.IP) string {
-	return makeIPDetailsKey(ip) + ":tags"
-}
-
 func makeIPTempReserved(ip net.IP) string {
 	return fmt.Sprintf(ipTempReserved, ip.String())
 }
@@ -61,24 +57,12 @@ func makeNetworkDetailsKey(ip *net.IPNet) string {
 	return fmt.Sprintf(networkDetails, ip.String())
 }
 
-func makeNetworkDefaultGWKey(ip *net.IPNet) string {
-	return makeNetworkDetailsKey(ip) + ":default_gateways"
-}
-
-func makeNetworkTagKey(ip *net.IPNet) string {
-	return makeNetworkDetailsKey(ip) + ":tags"
-}
-
 func makeNetworkPoolKey(ip *net.IPNet) string {
 	return makeNetworkDetailsKey(ip) + ":pools"
 }
 
 func makePoolDetailsKey(s, e net.IP) string {
 	return fmt.Sprintf(poolDetails, s.String(), e.String())
-}
-
-func makePoolTagsKey(s, e net.IP) string {
-	return makePoolDetailsKey(s, e) + ":tags"
 }
 
 func makePoolUsedIPZset(s, e net.IP) string {
