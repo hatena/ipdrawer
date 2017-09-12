@@ -11,7 +11,11 @@ message Tag {
 message Pool {
   string start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   string end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  int32 status = 3;
+  enum Status {
+    AVAILABLE = 0;
+    RESERVED = 1;
+  }
+  Status status = 3;
   repeated Tag tags = 4;
 }
 
@@ -24,4 +28,17 @@ message IPAddr {
   }
   IPStatus status = 2;
   repeated Tag tags = 3;
+}
+
+message Network {
+  string prefix = 1;
+  repeated string gateways = 2;
+  string broadcast = 3;
+  string netmask = 4;
+  enum Status {
+    AVAILABLE = 0;
+    RESERVED = 1;
+  }
+  Status status = 5;
+  repeated Tag tags = 6;
 }

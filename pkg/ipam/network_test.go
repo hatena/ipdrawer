@@ -2,46 +2,33 @@ package ipam
 
 import (
 	"net"
-	"reflect"
 	"testing"
 
-	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
+	"github.com/taku-k/ipdrawer/pkg/model"
+	"github.com/taku-k/ipdrawer/pkg/storage"
+	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
-func TestNetworkUnmarshal(t *testing.T) {
-	testCases := []struct {
-		data   []interface{}
-		out    *Network
-		errmsg string
-	}{
-		{
-			data: []interface{}{"0", "255.255.0.0", "192.168.255.255"},
-			out: &Network{
-				Status:    NETWORK_AVAILABLE,
-				Netmask:   net.ParseIP("255.255.0.0"),
-				Broadcast: net.ParseIP("192.168.255.255"),
-			},
+func TestSetNetwork(t *testing.T) {
+	r, deferFunc := storage.NewTestRedis()
+	defer deferFunc()
+
+	testPrefix := &net.IPNet{
+		IP:   net.ParseIP("192.168.0.0"),
+		Mask: net.CIDRMask(24, 32),
+	}
+	n := &model.Network{
+		Prefix:    testPrefix.String(),
+		Broadcast: netutil.BroadcastIP(testPrefix).String(),
+		Netmask:   netutil.IPMaskToIP(net.CIDRMask(24, 32)).String(),
+		Gateways: []string{
+			"192.168.0.1",
 		},
+		Status: model.Network_AVAILABLE,
 	}
 
-	for i, tt := range testCases {
-		n := &Network{}
-		err := n.unmarshal(tt.data)
-
-		if tt.errmsg == "" {
-			if err != nil {
-				t.Errorf("%d: found error: %#+v", i, err)
-			}
-			if !reflect.DeepEqual(n, tt.out) {
-				t.Errorf("%d: expected %#+v, but found %#+v", i, tt.out, n)
-			}
-		} else {
-			if err == nil {
-				t.Errorf("%d: expected error message %sf", i, tt.errmsg)
-			}
-			if !testutil.IsError(err, tt.errmsg) {
-				t.Errorf("%d: expected %q, but found %#+v", i, tt.errmsg, err)
-			}
-		}
+	err := setNetwork(r, n)
+	if err != nil {
+		t.Fatalf("Get error: %v", err)
 	}
 }

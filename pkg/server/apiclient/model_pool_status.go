@@ -10,12 +10,5 @@
 
 package apiclient
 
-type ModelPool struct {
-	Start string `json:"start,omitempty"`
-
-	End string `json:"end,omitempty"`
-
-	Status ModelPoolStatus `json:"status,omitempty"`
-
-	Tags []ModelTag `json:"tags,omitempty"`
+type ModelPoolStatus struct {
 }

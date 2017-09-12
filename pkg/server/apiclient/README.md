@@ -40,6 +40,7 @@ Class | Method | HTTP request | Description
  - [IpAddrIpStatus](docs/IpAddrIpStatus.md)
  - [ModelIpAddr](docs/ModelIpAddr.md)
  - [ModelPool](docs/ModelPool.md)
+ - [ModelPoolStatus](docs/ModelPoolStatus.md)
  - [ModelTag](docs/ModelTag.md)
  - [ServerpbActivateIpRequest](docs/ServerpbActivateIpRequest.md)
  - [ServerpbActivateIpResponse](docs/ServerpbActivateIpResponse.md)

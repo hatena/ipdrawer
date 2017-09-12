@@ -448,8 +448,7 @@ const (
           "type": "string"
         },
         "status": {
-          "type": "integer",
-          "format": "int32"
+          "$ref": "#/definitions/modelPoolStatus"
         },
         "tags": {
           "type": "array",
@@ -458,6 +457,14 @@ const (
           }
         }
       }
+    },
+    "modelPoolStatus": {
+      "type": "string",
+      "enum": [
+        "AVAILABLE",
+        "RESERVED"
+      ],
+      "default": "AVAILABLE"
     },
     "modelTag": {
       "type": "object",
