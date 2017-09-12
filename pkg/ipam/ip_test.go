@@ -7,9 +7,9 @@ import (
 
 	"golang.org/x/net/context"
 
+	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
-	"github.com/taku-k/ipdrawer/pkg/model"
 )
 
 func (m *IPManager) reserveTemporary(ip net.IP) {
@@ -24,19 +24,21 @@ func TestIPActivation(t *testing.T) {
 
 	ctx := context.Background()
 
-	pool := &IPPool{
-		Start: net.ParseIP("10.0.0.1"),
-		End:   net.ParseIP("10.0.0.254"),
+	pool := &model.Pool{
+		Start: "10.0.0.1",
+		End:   "10.0.0.254",
 	}
 
-	if err := m.Activate(ctx, []*IPPool{pool}, &model.IPAddr{Ip: "10.0.0.1"}); err != nil {
+	if err := m.Activate(ctx, []*model.Pool{pool}, &model.IPAddr{Ip: "10.0.0.1"}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
-	if err := m.Activate(ctx, []*IPPool{pool}, &model.IPAddr{Ip: "10.0.0.4"}); err != nil {
+	if err := m.Activate(ctx, []*model.Pool{pool}, &model.IPAddr{Ip: "10.0.0.4"}); err != nil {
 		t.Fatalf("Got error: %v", err)
 	}
 
-	zkey := makePoolUsedIPZset(pool.Start, pool.End)
+	s := net.ParseIP(pool.Start)
+	e := net.ParseIP(pool.End)
+	zkey := makePoolUsedIPZset(s, e)
 	cnt, err := r.Client.ZCard(zkey).Result()
 	if err != nil {
 		t.Errorf("Got error: %v", err)
@@ -50,15 +52,15 @@ func TestDrawIPSeq(t *testing.T) {
 	ctx := context.Background()
 
 	testCases := []struct {
-		pool     *IPPool
+		pool     *model.Pool
 		ips      []*model.IPAddr
 		expected net.IP
 		errmsg   string
 	}{
 		{
-			pool: &IPPool{
-				Start: net.ParseIP("10.0.0.1"),
-				End:   net.ParseIP("10.0.0.254"),
+			pool: &model.Pool{
+				Start: "10.0.0.1",
+				End:   "10.0.0.254",
 			},
 			ips: []*model.IPAddr{
 				{
@@ -72,9 +74,9 @@ func TestDrawIPSeq(t *testing.T) {
 			expected: net.ParseIP("10.0.0.2"),
 		},
 		{
-			pool: &IPPool{
-				Start: net.ParseIP("10.0.0.1"),
-				End:   net.ParseIP("10.0.0.254"),
+			pool: &model.Pool{
+				Start: "10.0.0.1",
+				End:   "10.0.0.254",
 			},
 			ips: []*model.IPAddr{
 				{
@@ -94,9 +96,9 @@ func TestDrawIPSeq(t *testing.T) {
 			expected: net.ParseIP("10.0.0.5"),
 		},
 		{
-			pool: &IPPool{
-				Start: net.ParseIP("10.0.0.1"),
-				End:   net.ParseIP("10.0.0.254"),
+			pool: &model.Pool{
+				Start: "10.0.0.1",
+				End:   "10.0.0.254",
 			},
 			ips: []*model.IPAddr{
 				{
@@ -116,9 +118,9 @@ func TestDrawIPSeq(t *testing.T) {
 			expected: net.ParseIP("10.0.0.5"),
 		},
 		{
-			pool: &IPPool{
-				Start: net.ParseIP("10.0.0.1"),
-				End:   net.ParseIP("10.0.0.254"),
+			pool: &model.Pool{
+				Start: "10.0.0.1",
+				End:   "10.0.0.254",
 			},
 			ips: []*model.IPAddr{
 				{
@@ -138,9 +140,9 @@ func TestDrawIPSeq(t *testing.T) {
 			expected: net.ParseIP("10.0.0.5"),
 		},
 		{
-			pool: &IPPool{
-				Start: net.ParseIP("10.0.0.1"),
-				End:   net.ParseIP("10.0.0.2"),
+			pool: &model.Pool{
+				Start: "10.0.0.1",
+				End:   "10.0.0.2",
 			},
 			ips: []*model.IPAddr{
 				{
@@ -162,7 +164,7 @@ func TestDrawIPSeq(t *testing.T) {
 		for _, ip := range c.ips {
 			switch ip.Status {
 			case model.IPAddr_ACTIVE:
-				m.Activate(ctx, []*IPPool{c.pool}, ip)
+				m.Activate(ctx, []*model.Pool{c.pool}, ip)
 			case model.IPAddr_TEMPORARY_RESERVED:
 				m.reserveTemporary(net.ParseIP(ip.Ip))
 			case model.IPAddr_RESERVED:
@@ -200,18 +202,18 @@ func TestDeactivateAfterActivating(t *testing.T) {
 
 	ctx := context.Background()
 
-	pool := &IPPool{
-		Start: net.ParseIP("10.0.0.1"),
-		End:   net.ParseIP("10.0.0.254"),
+	pool := &model.Pool{
+		Start: "10.0.0.1",
+		End:   "10.0.0.254",
 	}
 
 	ip := &model.IPAddr{
 		Ip: "10.0.0.1",
 	}
 
-	m.Activate(ctx, []*IPPool{pool}, ip)
+	m.Activate(ctx, []*model.Pool{pool}, ip)
 
-	if err := m.Deactivate(ctx, []*IPPool{pool}, ip); err != nil {
+	if err := m.Deactivate(ctx, []*model.Pool{pool}, ip); err != nil {
 		t.Errorf("Failed deactivating: %#+v", err)
 	}
 
@@ -229,14 +231,14 @@ func TestActivateIPInSeveralPools(t *testing.T) {
 
 	ctx := context.Background()
 
-	pools := []*IPPool{
+	pools := []*model.Pool{
 		{
-			Start: net.ParseIP("10.0.0.1"),
-			End:   net.ParseIP("10.0.0.254"),
+			Start: "10.0.0.1",
+			End:   "10.0.0.254",
 		},
 		{
-			Start: net.ParseIP("10.0.0.30"),
-			End:   net.ParseIP("10.0.0.50"),
+			Start: "10.0.0.30",
+			End:   "10.0.0.50",
 		},
 	}
 
@@ -258,14 +260,14 @@ func TestDeactivateIPInSeveralPools(t *testing.T) {
 
 	ctx := context.Background()
 
-	pools := []*IPPool{
+	pools := []*model.Pool{
 		{
-			Start: net.ParseIP("10.0.0.1"),
-			End:   net.ParseIP("10.0.0.254"),
+			Start: "10.0.0.1",
+			End:   "10.0.0.254",
 		},
 		{
-			Start: net.ParseIP("10.0.0.30"),
-			End:   net.ParseIP("10.0.0.50"),
+			Start: "10.0.0.30",
+			End:   "10.0.0.50",
 		},
 	}
 
@@ -288,14 +290,14 @@ func TestCorrectDrawIPFromInclusivePools(t *testing.T) {
 
 	ctx := context.Background()
 
-	pools := []*IPPool{
+	pools := []*model.Pool{
 		{
-			Start: net.ParseIP("10.0.0.1"),
-			End:   net.ParseIP("10.0.0.254"),
+			Start: "10.0.0.1",
+			End:   "10.0.0.254",
 		},
 		{
-			Start: net.ParseIP("10.0.0.1"),
-			End:   net.ParseIP("10.0.0.10"),
+			Start: "10.0.0.1",
+			End:   "10.0.0.10",
 		},
 	}
 

@@ -21,20 +21,20 @@ var (
 		Mask: net.CIDRMask(24, 32),
 	}
 
-	testNetwork = &ipam.Network{
-		Prefix:    testPrefix,
-		Broadcast: netutil.BroadcastIP(testPrefix),
-		Netmask:   netutil.IPMaskToIP(net.CIDRMask(24, 32)),
-		Gateways: []net.IP{
-			net.ParseIP("192.168.0.1"),
+	testNetwork = &model.Network{
+		Prefix:    testPrefix.String(),
+		Broadcast: netutil.BroadcastIP(testPrefix).String(),
+		Netmask:   netutil.IPMaskToIP(net.CIDRMask(24, 32)).String(),
+		Gateways: []string{
+			"192.168.0.1",
 		},
-		Status: ipam.NETWORK_AVAILABLE,
+		Status: model.Network_AVAILABLE,
 	}
 
-	testPool = &ipam.IPPool{
-		Start:  net.ParseIP("192.168.0.2"),
-		End:    net.ParseIP("192.168.0.254"),
-		Status: ipam.POOL_AVAILABLE,
+	testPool = &model.Pool{
+		Start:  "192.168.0.2",
+		End:    "192.168.0.254",
+		Status: model.Pool_AVAILABLE,
 		Tags: []*model.Tag{
 			{
 				Key:   "Role",

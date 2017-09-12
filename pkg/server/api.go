@@ -11,7 +11,6 @@ import (
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
-	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
@@ -25,7 +24,7 @@ func (api *APIServer) DrawIP(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	var n *ipam.Network
+	var n *model.Network
 	var err error
 	if req.Name == "" {
 		ip := &net.IPNet{
@@ -50,9 +49,9 @@ func (api *APIServer) DrawIP(
 			codes.NotFound, "Not found any pools")
 	}
 
-	target := make([]*ipam.IPPool, 0)
+	target := make([]*model.Pool, 0)
 	for _, p := range pools {
-		if p.Status == ipam.POOL_AVAILABLE && p.MatchTags([]*model.Tag{req.PoolTag}) {
+		if p.Status == model.Pool_AVAILABLE && p.MatchTags([]*model.Tag{req.PoolTag}) {
 			target = append(target, p)
 		}
 	}
@@ -104,9 +103,13 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 		return nil, status.Error(codes.NotFound, err.Error())
 	}
 
-	ones, _ := n.Prefix.Mask.Size()
+	_, pre, _ := net.ParseCIDR(n.Prefix)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	ones, _ := pre.Mask.Size()
 	return api.DrawIP(ctx, &serverpb.DrawIPRequest{
-		Ip:      n.Prefix.IP.String(),
+		Ip:      pre.IP.String(),
 		Mask:    int32(ones),
 		PoolTag: req.PoolTag,
 	})
@@ -127,13 +130,13 @@ func (api *APIServer) GetNetworkIncludingIP(
 
 	gws := make([]string, len(n.Gateways))
 	for i, gw := range n.Gateways {
-		gws[i] = gw.String()
+		gws[i] = gw
 	}
 
 	return &serverpb.GetNetworkResponse{
-		Network:         n.Prefix.String(),
-		Broadcast:       n.Broadcast.String(),
-		Netmask:         n.Netmask.String(),
+		Network:         n.Prefix,
+		Broadcast:       n.Broadcast,
+		Netmask:         n.Netmask,
 		DefaultGateways: gws,
 		Tags:            n.Tags,
 	}, nil
@@ -248,7 +251,7 @@ func (api *APIServer) GetNetwork(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	var n *ipam.Network
+	var n *model.Network
 	var err error
 	if req.Name == "" {
 		n, err = api.manager.GetNetworkByIP(ctx, &net.IPNet{
@@ -264,13 +267,13 @@ func (api *APIServer) GetNetwork(
 
 	gws := make([]string, len(n.Gateways))
 	for i, gw := range n.Gateways {
-		gws[i] = gw.String()
+		gws[i] = gw
 	}
 
 	return &serverpb.GetNetworkResponse{
-		Network:         n.Prefix.String(),
-		Broadcast:       n.Broadcast.String(),
-		Netmask:         n.Netmask.String(),
+		Network:         n.Prefix,
+		Broadcast:       n.Broadcast,
+		Netmask:         n.Netmask,
 		DefaultGateways: gws,
 		Tags:            n.Tags,
 	}, nil
@@ -292,18 +295,13 @@ func (api *APIServer) CreateNetwork(
 	netmask := netutil.IPMaskToIP(net.CIDRMask(int(req.Mask), 32))
 	broadcast := netutil.BroadcastIP(ip)
 
-	gws := make([]net.IP, len(req.DefaultGateways))
-	for i, gw := range req.DefaultGateways {
-		gws[i] = net.ParseIP(gw)
-	}
-
-	n := &ipam.Network{
-		Prefix:    ip,
-		Broadcast: broadcast,
-		Netmask:   netmask,
-		Gateways:  gws,
+	n := &model.Network{
+		Prefix:    ip.String(),
+		Broadcast: broadcast.String(),
+		Netmask:   netmask.String(),
+		Gateways:  req.DefaultGateways,
 		Tags:      req.Tags,
-		Status:    ipam.NETWORK_AVAILABLE,
+		Status:    model.Network_AVAILABLE,
 	}
 
 	if err := api.manager.CreateNetwork(ctx, n); err != nil {
@@ -326,10 +324,10 @@ func (api *APIServer) CreatePool(
 		Mask: net.CIDRMask(int(req.Mask), 32),
 	}
 
-	pool := &ipam.IPPool{
-		Start:  net.ParseIP(req.Pool.Start),
-		End:    net.ParseIP(req.Pool.End),
-		Status: ipam.POOL_AVAILABLE,
+	pool := &model.Pool{
+		Start:  req.Pool.Start,
+		End:    req.Pool.End,
+		Status: model.Pool_AVAILABLE,
 		Tags:   req.Pool.Tags,
 	}
 

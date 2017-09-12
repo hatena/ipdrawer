@@ -13,6 +13,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
+	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
 )
 
 type IPManager struct {
@@ -34,7 +35,7 @@ func NewIPManager(cfg *base.Config) *IPManager {
 }
 
 // DrawIP returns an available IP.
-func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping bool) (net.IP, error) {
+func (m *IPManager) DrawIP(ctx context.Context, pool *model.Pool, reserve bool, ping bool) (net.IP, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DrawIP")
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
@@ -45,8 +46,10 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 	}
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
-	zkey := makePoolUsedIPZset(pool.Start, pool.End)
-	avail := pool.Start
+	s := net.ParseIP(pool.Start)
+	e := net.ParseIP(pool.End)
+	zkey := makePoolUsedIPZset(s, e)
+	avail := s
 
 	keys, err := m.redis.Client.ZRange(zkey, 0, -1).Result()
 	if err != nil {
@@ -54,7 +57,7 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 	}
 
 	i := 0
-	for !prevIP(avail).Equal(pool.End) {
+	for !netutil.PrevIP(avail).Equal(e) {
 		flag := false
 		if i < len(keys) {
 			usedIP := net.ParseIP(keys[i])
@@ -79,14 +82,14 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *IPPool, reserve bool, ping
 		if !flag {
 			return avail, nil
 		} else {
-			avail = nextIP(avail)
+			avail = netutil.NextIP(avail)
 		}
 	}
 	return nil, errors.New("Nothing IP to serve")
 }
 
 // Activate activates IP.
-func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, addr *model.IPAddr) error {
+func (m *IPManager) Activate(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
 	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", addr.Ip)
@@ -111,24 +114,17 @@ func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, addr *model.IPAd
 	pipe.Set(makeIPDetailsKey(ip), string(data), 0)
 	//pipe.HSet(makeIPDetailsKey(ip), "status", int(model.IPAddr_ACTIVE))
 	// Add IP to used IP zset
-	score := float64(ip2int(ip))
+	score := float64(netutil.IP2Uint(ip))
 	z := redis.Z{
 		Score:  score,
 		Member: ip.String(),
 	}
 	for _, p := range ps {
 		if p.Contains(ip) {
-			pipe.ZAdd(makePoolUsedIPZset(p.Start, p.End), z)
+			s := net.ParseIP(p.Start)
+			e := net.ParseIP(p.End)
+			pipe.ZAdd(makePoolUsedIPZset(s, e), z)
 		}
-	}
-	// Set tags
-	if len(addr.Tags) != 0 {
-		tagKey := makeIPTagKey(ip)
-		tags := make([]interface{}, len(addr.Tags))
-		for i, t := range addr.Tags {
-			tags[i] = t.Key + "=" + t.Value
-		}
-		pipe.SAdd(tagKey, tags...)
 	}
 	if _, err := pipe.Exec(); err != nil {
 		return err
@@ -136,7 +132,7 @@ func (m *IPManager) Activate(ctx context.Context, ps []*IPPool, addr *model.IPAd
 	return nil
 }
 
-func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, addr *model.IPAddr) error {
+func (m *IPManager) Deactivate(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
 	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", addr.Ip)
@@ -155,10 +151,11 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, addr *model.IP
 	pipe.Del(makeIPDetailsKey(ip))
 	for _, p := range ps {
 		if p.Contains(ip) {
-			pipe.ZRem(makePoolUsedIPZset(p.Start, p.End), ip.String())
+			s := net.ParseIP(p.Start)
+			e := net.ParseIP(p.End)
+			pipe.ZRem(makePoolUsedIPZset(s, e), ip.String())
 		}
 	}
-	pipe.Del(makeIPTagKey(ip))
 	if _, err := pipe.Exec(); err != nil {
 		return err
 	}
@@ -166,17 +163,17 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*IPPool, addr *model.IP
 }
 
 // Reserve makes the status of given IP reserved.
-func (m *IPManager) Reserve(p *IPPool, ip net.IP) error {
+func (m *IPManager) Reserve(p *model.Pool, ip net.IP) error {
 	return nil
 }
 
 // Release makes the status of given IP available.
-func (m *IPManager) Release(p *IPPool, ip net.IP) error {
+func (m *IPManager) Release(p *model.Pool, ip net.IP) error {
 	return nil
 }
 
 // GetNetworkIncludingIP returns a network including given IP.
-func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Network, error) {
+func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*model.Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkIncludingIP")
 	span.SetTag("ip", ip.String())
 	defer span.Finish()
@@ -199,7 +196,7 @@ func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*Netw
 }
 
 // GetPools gets pools.
-func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error) {
+func (m *IPManager) GetPools(ctx context.Context, n *model.Network) ([]*model.Pool, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPools")
 	span.SetTag("network", n.String())
 	defer span.Finish()
@@ -208,7 +205,7 @@ func (m *IPManager) GetPools(ctx context.Context, n *Network) ([]*IPPool, error)
 }
 
 // GetNetworkByIP returns network by IP.
-func (m *IPManager) GetNetworkByIP(ctx context.Context, ipnet *net.IPNet) (*Network, error) {
+func (m *IPManager) GetNetworkByIP(ctx context.Context, ipnet *net.IPNet) (*model.Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkByIP")
 	span.SetTag("ip", ipnet.String())
 	defer span.Finish()
@@ -217,7 +214,7 @@ func (m *IPManager) GetNetworkByIP(ctx context.Context, ipnet *net.IPNet) (*Netw
 }
 
 // GetNetworkByName returns network by name.
-func (m *IPManager) GetNetworkByName(ctx context.Context, name string) (*Network, error) {
+func (m *IPManager) GetNetworkByName(ctx context.Context, name string) (*model.Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworkByName")
 	span.SetTag("name", name)
 	defer span.Finish()
@@ -241,7 +238,7 @@ func (m *IPManager) GetNetworkByName(ctx context.Context, name string) (*Network
 }
 
 // CreateNetwork creates network.
-func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
+func (m *IPManager) CreateNetwork(ctx context.Context, n *model.Network) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreateNetwork")
 	span.SetTag("network", n.String())
 	defer span.Finish()
@@ -250,7 +247,7 @@ func (m *IPManager) CreateNetwork(ctx context.Context, n *Network) error {
 }
 
 // CreatePool creates pool
-func (m *IPManager) CreatePool(ctx context.Context, n *Network, pool *IPPool) error {
+func (m *IPManager) CreatePool(ctx context.Context, n *model.Network, pool *model.Pool) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.CreatePool")
 	span.SetTag("network", n.String())
 	span.SetTag("pool", pool.Key())

@@ -1,6 +1,7 @@
 package netutil
 
 import (
+	"encoding/binary"
 	"fmt"
 	"net"
 	"os"
@@ -79,4 +80,25 @@ func Ping(addr string) error {
 		return errors.New(fmt.Sprintf("got %+v; want echo reply", rm))
 	}
 	return nil
+}
+
+func IP2Uint(ip net.IP) uint32 {
+	if len(ip) == 16 {
+		return binary.BigEndian.Uint32(ip[12:16])
+	}
+	return binary.BigEndian.Uint32(ip)
+}
+
+func Int2IP(nn uint32) net.IP {
+	ip := make(net.IP, 4)
+	binary.BigEndian.PutUint32(ip, nn)
+	return ip
+}
+
+func NextIP(ip net.IP) net.IP {
+	return Int2IP(IP2Uint(ip) + 1)
+}
+
+func PrevIP(ip net.IP) net.IP {
+	return Int2IP(IP2Uint(ip) - 1)
 }
