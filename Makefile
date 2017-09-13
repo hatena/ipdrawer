@@ -71,7 +71,17 @@ proto: $(PROTOSRCS)
 	   --govalidators_out=pkg \
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
-	done
+	done;
+	for src in $(PROTOSRCS); do \
+	  $(PROTO) \
+	    --plugin=protoc-gen-ts=./pkg/ui/node_modules/.bin/protoc-gen-ts \
+	    --js_out=import_style=commonjs,binary:./pkg/ui/src/proto \
+	    --ts_out=service=true:./pkg/ui/src/proto \
+	    -I../../.. \
+	    -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+	    -Ipkg \
+	    $$src; \
+	done;
 	go generate ./pkg/...
 	make gen-client
 	make fmt imports
