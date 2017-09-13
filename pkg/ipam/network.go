@@ -36,6 +36,10 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 }
 
 func setNetwork(r *storage.Redis, n *model.Network) error {
+	if err := n.Validate(); err != nil {
+		return err
+	}
+
 	pipe := r.Client.TxPipeline()
 
 	data, err := n.Marshal()

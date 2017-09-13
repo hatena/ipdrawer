@@ -2,6 +2,12 @@ syntax = "proto3";
 package model;
 
 import "github.com/mwitkow/go-proto-validators/validator.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option (gogoproto.populate_all) = true;
+option (gogoproto.unmarshaler_all) = true;
+option (gogoproto.marshaler_all) = true;
+option (gogoproto.equal_all) = true;
 
 message Tag {
   string key = 1;
@@ -12,32 +18,35 @@ message Pool {
   string start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   string end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   enum Status {
-    AVAILABLE = 0;
-    RESERVED = 1;
+    UNKNOWN = 0;
+    AVAILABLE = 1;
+    RESERVED = 2;
   }
   Status status = 3;
   repeated Tag tags = 4;
 }
 
 message IPAddr {
-  string ip = 1;
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   enum IPStatus {
-    ACTIVE = 0;
-    TEMPORARY_RESERVED = 1;
-    RESERVED = 2;
+    UNKNOWN = 0;
+    ACTIVE = 1;
+    TEMPORARY_RESERVED = 2;
+    RESERVED = 3;
   }
   IPStatus status = 2;
   repeated Tag tags = 3;
 }
 
 message Network {
-  string prefix = 1;
-  repeated string gateways = 2;
-  string broadcast = 3;
-  string netmask = 4;
+  string prefix = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"}];
+  repeated string gateways = 2 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string broadcast = 3 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string netmask = 4 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   enum Status {
-    AVAILABLE = 0;
-    RESERVED = 1;
+    UNKNOWN = 0;
+    AVAILABLE = 1;
+    RESERVED = 2;
   }
   Status status = 5;
   repeated Tag tags = 6;

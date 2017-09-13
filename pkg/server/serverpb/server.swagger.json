@@ -433,11 +433,12 @@
     "IPAddrIPStatus": {
       "type": "string",
       "enum": [
+        "UNKNOWN",
         "ACTIVE",
         "TEMPORARY_RESERVED",
         "RESERVED"
       ],
-      "default": "ACTIVE"
+      "default": "UNKNOWN"
     },
     "modelIPAddr": {
       "type": "object",
@@ -479,10 +480,11 @@
     "modelPoolStatus": {
       "type": "string",
       "enum": [
+        "UNKNOWN",
         "AVAILABLE",
         "RESERVED"
       ],
-      "default": "AVAILABLE"
+      "default": "UNKNOWN"
     },
     "modelTag": {
       "type": "object",

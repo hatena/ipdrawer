@@ -436,11 +436,12 @@ const (
     "IPAddrIPStatus": {
       "type": "string",
       "enum": [
+        "UNKNOWN",
         "ACTIVE",
         "TEMPORARY_RESERVED",
         "RESERVED"
       ],
-      "default": "ACTIVE"
+      "default": "UNKNOWN"
     },
     "modelIPAddr": {
       "type": "object",
@@ -482,10 +483,11 @@ const (
     "modelPoolStatus": {
       "type": "string",
       "enum": [
+        "UNKNOWN",
         "AVAILABLE",
         "RESERVED"
       ],
-      "default": "AVAILABLE"
+      "default": "UNKNOWN"
     },
     "modelTag": {
       "type": "object",
