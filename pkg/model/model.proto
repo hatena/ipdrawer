@@ -26,7 +26,7 @@ message Pool {
 }
 
 message IPAddr {
-  string ip = 1;
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   enum IPStatus {
     ACTIVE = 0;
     TEMPORARY_RESERVED = 1;
@@ -37,10 +37,10 @@ message IPAddr {
 }
 
 message Network {
-  string prefix = 1;
-  repeated string gateways = 2;
-  string broadcast = 3;
-  string netmask = 4;
+  string prefix = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"}];
+  repeated string gateways = 2 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string broadcast = 3 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string netmask = 4 [(validator.field) = {regex: "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   enum Status {
     AVAILABLE = 0;
     RESERVED = 1;

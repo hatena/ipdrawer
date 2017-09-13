@@ -51,7 +51,13 @@ func (this *Pool) Validate() error {
 	}
 	return nil
 }
+
+var _regex_IPAddr_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
 func (this *IPAddr) Validate() error {
+	if !_regex_IPAddr_Ip.MatchString(this.Ip) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
+	}
 	for _, item := range this.Tags {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
@@ -61,7 +67,27 @@ func (this *IPAddr) Validate() error {
 	}
 	return nil
 }
+
+var _regex_Network_Prefix = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$")
+var _regex_Network_Gateways = regexp.MustCompile("(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_Network_Broadcast = regexp.MustCompile("(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_Network_Netmask = regexp.MustCompile("(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
 func (this *Network) Validate() error {
+	if !_regex_Network_Prefix.MatchString(this.Prefix) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Prefix", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"`, this.Prefix))
+	}
+	for _, item := range this.Gateways {
+		if !_regex_Network_Gateways.MatchString(item) {
+			return github_com_mwitkow_go_proto_validators.FieldError("Gateways", fmt.Errorf(`value '%v' must be a string conforming to regex "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, item))
+		}
+	}
+	if !_regex_Network_Broadcast.MatchString(this.Broadcast) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Broadcast", fmt.Errorf(`value '%v' must be a string conforming to regex "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Broadcast))
+	}
+	if !_regex_Network_Netmask.MatchString(this.Netmask) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Netmask", fmt.Errorf(`value '%v' must be a string conforming to regex "(^$)|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Netmask))
+	}
 	for _, item := range this.Tags {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
