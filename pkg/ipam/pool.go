@@ -5,11 +5,16 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
 func setPool(r *storage.Redis, prefix *model.Network, pool *model.Pool) error {
+	if err := pool.Validate(); err != nil {
+		return err
+	}
+
 	pipe := r.Client.TxPipeline()
 	s := net.ParseIP(pool.Start)
 	e := net.ParseIP(pool.End)
