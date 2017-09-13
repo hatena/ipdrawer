@@ -56,3 +56,28 @@ func TestGetIPAddr(t *testing.T) {
 		t.Errorf("Got wrong IPAddr %v; want %v", resp, testIPAddr)
 	}
 }
+
+func TestSetIPAddrWithInvalidModel(t *testing.T) {
+	r, def := storage.NewTestRedis()
+	defer def()
+
+	testCases := []struct {
+		model *model.IPAddr
+
+		desc string
+	}{
+		{
+			model: &model.IPAddr{
+				Ip: "invalid-ip",
+			},
+			desc: "Invalid IP address",
+		},
+	}
+
+	for i, tc := range testCases {
+		err := setIPAddr(r, tc.model)
+		if err == nil {
+			t.Errorf("#%d(%s): Want error but get nil", i, tc.desc)
+		}
+	}
+}
