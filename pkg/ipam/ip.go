@@ -10,6 +10,10 @@ import (
 )
 
 func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
+	if err := addr.Validate(); err != nil {
+		return err
+	}
+
 	ip := net.ParseIP(addr.Ip)
 	if ip == nil {
 		return errors.New("Parse IP failed")
