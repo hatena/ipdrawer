@@ -54,7 +54,9 @@ func NewServer(cfg *base.Config) *APIServer {
 }
 
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
-	mux := runtime.NewServeMux()
+	mux := runtime.NewServeMux(
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+	)
 	addr := api.lis.Addr().String()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	if err := serverpb.RegisterNetworkServiceV0HandlerFromEndpoint(

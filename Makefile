@@ -6,7 +6,7 @@ PKG := github.com/taku-k/ipdrawer
 SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
-PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor)
+PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
@@ -20,6 +20,9 @@ API_SPEC := pkg/server/serverpb/server.swagger.json
 
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
+
+PBJS := pbjs
+PBTS := pbts
 
 .DEFAULT_GOAL := $(NAME)
 
@@ -72,17 +75,9 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
 	done;
-	for src in $(PROTOSRCS); do \
-	  $(PROTO) \
-	    --plugin=protoc-gen-ts=./pkg/ui/node_modules/.bin/protoc-gen-ts \
-	    --js_out=import_style=commonjs,binary:./pkg/ui/src/proto \
-	    --ts_out=service=true:./pkg/ui/src/proto \
-	    -I../../.. \
-	    -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
-	    -Ipkg \
-	    $$src; \
-	done;
-	go generate ./pkg/...
+	$(PBJS) -t static-module -w commonjs --path ./ipdrawer/vendor/github.com/gogo/protobuf --path ./ipdrawer/vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --path ./ipdrawer/vendor/github.com/witkow/go-proto-validators $(PROTOSRCS) > pkg/ui/src/proto/protos.js
+	$(PBTS) pkg/ui/src/proto/protos.js > pkg/ui/src/proto/protos.d.ts
+	go generate ./pkg/server/serverpb
 	make gen-client
 	make fmt imports
 

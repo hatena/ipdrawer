@@ -1,13 +1,11 @@
 import { combineReducers, Reducer } from 'redux';
-import backups from './backups';
-import todos from './todos';
+import ipam from './ipam';
+import {IPAMStoreState} from "../../types/ipam";
 
 export interface AdminUIState {
-  backups: BackupStoreState;
-  todos: TodoStoreState;
+  ipam: IPAMStoreState;
 }
 
 export default combineReducers<AdminUIState>({
-  backups,
-  todos
+  ipam,
 });

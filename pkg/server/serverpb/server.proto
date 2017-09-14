@@ -9,7 +9,8 @@ import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 message DrawIPRequest {
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+//  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  int32 mask = 2;
   model.Tag pool_tag = 3;
   string name = 4;
   bool activate_immediately = 5;
@@ -44,7 +45,8 @@ message DeactivateIPResponse {}
 
 message GetNetworkRequest {
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  // int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  int32 mask = 2;
   string name = 3;
 }
 
@@ -60,7 +62,8 @@ message GetNetworkResponse {
 
 message CreateNetworkRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  // int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  int32 mask = 2;
   repeated string default_gateways = 3;
   repeated model.Tag tags = 4;
 }
@@ -69,7 +72,8 @@ message CreateNetworkResponse {}
 
 message CreatePoolRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  // int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];
+  int32 mask = 2;
   model.Pool pool = 3;
 }
 

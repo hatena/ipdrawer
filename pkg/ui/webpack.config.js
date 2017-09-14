@@ -103,6 +103,12 @@ module.exports = {
     stats: {
       warnings: false
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:25577',
+        secure: false
+      }
+    }
   },
   node: {
     // workaround for webpack-dev-server issue

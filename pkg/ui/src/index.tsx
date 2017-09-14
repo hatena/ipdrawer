@@ -4,9 +4,9 @@ import { Provider } from 'react-redux';
 import { Router, Route, Switch, Redirect } from 'react-router';
 import { createBrowserHistory } from 'history';
 import { configureStore } from './store';
-import { Layout } from './containers/App/Layout';
-import { BackupTable } from './containers/Backups';
+import { Layout } from './containers/Layout';
 import * as injectTapEventPlugin from 'react-tap-event-plugin';
+import {IPAddrTable} from "./containers/IPAddr/index";
 
 // Work tap event
 injectTapEventPlugin();
@@ -19,8 +19,8 @@ ReactDOM.render(
     <Router history={history}>
       <Layout>
         <Switch>
-          <Route path="/backups" render={routeProps => <BackupTable {...routeProps} />} />
-          <Redirect from="*" to="/backups" />
+          <Route path="/ip" component={IPAddrTable} />
+          <Redirect from="*" to="/ip" />
         </Switch>
       </Layout>
     </Router>

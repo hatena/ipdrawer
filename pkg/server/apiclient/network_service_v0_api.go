@@ -306,7 +306,7 @@ func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagV
  *
  * @param name
  * @param ip
- * @param mask
+ * @param mask int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];.
  * @param poolTagKey
  * @param poolTagValue
  * @param activateImmediately
@@ -498,7 +498,7 @@ func (a NetworkServiceV0Api) GetNetwork(ip string, mask int32, name string) (*Se
  *
  * @param name
  * @param ip
- * @param mask
+ * @param mask int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];.
  * @return *ServerpbGetNetworkResponse
  */
 func (a NetworkServiceV0Api) GetNetwork_2(name string, ip string, mask int32) (*ServerpbGetNetworkResponse, *APIResponse, error) {

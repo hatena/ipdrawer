@@ -201,8 +201,9 @@ func (api *APIServer) ActivateIP(
 
 	ip := net.ParseIP(req.Ip)
 	addr := &model.IPAddr{
-		Ip:   req.Ip,
-		Tags: req.Tags,
+		Ip:     req.Ip,
+		Status: model.IPAddr_ACTIVE,
+		Tags:   req.Tags,
 	}
 
 	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)

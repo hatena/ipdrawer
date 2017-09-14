@@ -48,6 +48,7 @@
     "grpc-web-client": "^0.3.0",
     "material-ui": "^1.0.0-alpha.22",
     "material-ui-icons": "^1.0.0-alpha.19",
+    "protobufjs": "^6.8.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",

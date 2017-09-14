@@ -364,6 +364,7 @@ const (
           },
           {
             "name": "mask",
+            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -401,6 +402,7 @@ const (
           },
           {
             "name": "mask",
+            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -525,7 +527,8 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
         },
         "default_gateways": {
           "type": "array",
@@ -552,7 +555,8 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
         },
         "pool": {
           "$ref": "#/definitions/modelPool"

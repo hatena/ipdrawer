@@ -145,7 +145,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **ip** | **string**|  | [optional] 
- **mask** | **int32**|  | [optional] 
+ **mask** | **int32**| int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];. | [optional] 
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
  **activateImmediately** | **bool**|  | [optional] 
@@ -230,7 +230,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **ip** | **string**|  | [optional] 
- **mask** | **int32**|  | [optional] 
+ **mask** | **int32**| int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];. | [optional] 
 
 ### Return type
 

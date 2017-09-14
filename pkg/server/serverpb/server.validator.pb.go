@@ -49,12 +49,6 @@ func (this *DrawIPRequest) Validate() error {
 	if !_regex_DrawIPRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
-	if !(this.Mask > -1) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
-	}
-	if !(this.Mask < 33) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
-	}
 	if this.PoolTag != nil {
 		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.PoolTag); err != nil {
 			return github_com_mwitkow_go_proto_validators.FieldError("PoolTag", err)
@@ -120,12 +114,6 @@ func (this *GetNetworkRequest) Validate() error {
 	if !_regex_GetNetworkRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
-	if !(this.Mask > -1) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
-	}
-	if !(this.Mask < 33) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
-	}
 	return nil
 }
 func (this *GetEstimatedNetworkRequest) Validate() error {
@@ -154,12 +142,6 @@ func (this *CreateNetworkRequest) Validate() error {
 	if !_regex_CreateNetworkRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
 	}
-	if !(this.Mask > -1) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
-	}
-	if !(this.Mask < 33) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
-	}
 	for _, item := range this.Tags {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
@@ -178,12 +160,6 @@ var _regex_CreatePoolRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]
 func (this *CreatePoolRequest) Validate() error {
 	if !_regex_CreatePoolRequest_Ip.MatchString(this.Ip) {
 		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
-	}
-	if !(this.Mask > -1) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
-	}
-	if !(this.Mask < 33) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
 	}
 	if this.Pool != nil {
 		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Pool); err != nil {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import * as style from '../style.css';
-import { Header } from '../../../components';
+import * as style from './style.css';
+import { Header } from '../../components';
 import { MuiThemeProvider, createMuiTheme, createPalette } from 'material-ui/styles';
 import { blue, teal, red } from 'material-ui/colors';
 

@@ -57,12 +57,12 @@ class Header extends React.Component<Header.Props, Header.State> {
     const sideList = (
       <div>
         <List className={classes.list} disablePadding>
-          <Link to="/backups">
+          <Link to="/ip">
             <ListItem button>
               <ListItemIcon>
                 <BackupIcon />
               </ListItemIcon>
-              <ListItemText primary="Backups" />
+              <ListItemText primary="IPAddr" />
             </ListItem>
           </Link>
         </List>
@@ -77,7 +77,7 @@ class Header extends React.Component<Header.Props, Header.State> {
               <MenuIcon onClick={this.handleDrawerOpen} />
             </IconButton>
             <Typography type="title" color="inherit" className="initial">
-              Polymerase UI
+              IPDrawer UI
             </Typography>
           </Toolbar>
         </AppBar>

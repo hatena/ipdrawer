@@ -4,9 +4,6 @@ package model;
 import "github.com/mwitkow/go-proto-validators/validator.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
-option (gogoproto.populate_all) = true;
-option (gogoproto.unmarshaler_all) = true;
-option (gogoproto.marshaler_all) = true;
 option (gogoproto.equal_all) = true;
 
 message Tag {
