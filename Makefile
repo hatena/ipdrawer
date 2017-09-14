@@ -7,6 +7,7 @@ SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
 PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
+GO_PKGS := $(shell find . -maxdepth 2 -mindepth 2 -type d | grep -v -e "^\.\/\." -e vendor -e ui)
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
@@ -40,26 +41,26 @@ linux:
 
 .PHONY: vet
 vet:
-	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -maxdepth 1 -mindepth 1 -type d | grep -v -e "^\.\/\." -e vendor)
+	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: test
 test:
-	go test -cover -v ./pkg/...
+	go test -cover -v $$(go list ./... | grep -v -e node_modules)
 
 .PHONY: test-race
 test-race:
-	go test -v -race ./pkg/...
+	go test -v -race $$(go list ./... | grep -v -e node_modules)
 
 .PHONY: test-all
 test-all: vet test-race
 
 .PHONY: fmt
 fmt:
-	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e vendor)
+	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: imports
 imports:
-	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor)
+	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: proto
 proto: $(PROTOSRCS)
