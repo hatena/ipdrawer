@@ -19,8 +19,8 @@ ReactDOM.render(
     <Router history={history}>
       <Layout>
         <Switch>
-          <Route path="/ip" component={IPAddrTable} />
-          <Redirect from="*" to="/ip" />
+          <Route path="/ui/ip" component={IPAddrTable} />
+          <Redirect from="*" to="/ui/ip" />
         </Switch>
       </Layout>
     </Router>

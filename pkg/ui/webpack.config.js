@@ -24,7 +24,7 @@ module.exports = {
   },
   output: {
     path: outPath,
-    publicPath: '/',
+    publicPath: '/ui',
     filename: 'bundle.js',
   },
   target: 'web',
