@@ -4,14 +4,23 @@ import { logger } from '../middleware';
 import rootReducer, { AdminUIState } from '../reducers';
 
 export function configureStore(initialState?: AdminUIState): Store<AdminUIState> {
+  const isProduction = process.env.NODE_ENV === 'production';
+
   const create = window.devToolsExtension
     ? window.devToolsExtension()(createStore)
     : createStore;
 
-  const middlewares = [
-    logger,
-    thunk
-  ];
+  var middlewares = [];
+  if (isProduction) {
+    middlewares = [
+      thunk
+    ];
+  } else {
+    middlewares = [
+      logger,
+      thunk
+    ];
+  }
 
   const createStoreWithMiddleware = applyMiddleware(...middlewares)(create);
 

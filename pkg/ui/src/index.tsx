@@ -23,7 +23,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/ui/network" component={NetworkView} />
           <Route path="/ui/ip" component={IPAddrView} />
-          <Redirect from="*" to="/ui/ip" />
+          <Redirect from="*" to="/ui/network" />
         </Switch>
       </Layout>
     </Router>
