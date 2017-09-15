@@ -6,7 +6,6 @@ import (
 	"mime"
 	"net"
 	"net/http"
-	"path"
 	"strings"
 
 	"github.com/grpc-ecosystem/go-grpc-middleware"
@@ -101,13 +100,13 @@ func (api *APIServer) serverUI(mux *http.ServeMux) {
 		Prefix:   "pkg/ui/dist",
 	})
 
+	mux.Handle("/bundle.js", fileServer)
+	mux.Handle("/index.html", fileServer)
+	mux.Handle("/styles.css", fileServer)
+	mux.Handle("/vendor.bundle.js", fileServer)
+
 	mux.Handle("/ui/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		p := r.URL.Path
-		if p == "/ui/bundle.js" || p == "/ui/index.html" || p == "/ui/style.css" || p == "/ui/vendor.bundle.js" {
-			r.URL.Path = path.Base(r.URL.Path)
-		} else {
-			r.URL.Path = "/"
-		}
+		r.URL.Path = "/"
 		fileServer.ServeHTTP(w, r)
 	}))
 }
