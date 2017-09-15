@@ -2240,6 +2240,180 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a ListPoolRequest. */
+    interface IListPoolRequest {
+    }
+
+    /** Represents a ListPoolRequest. */
+    class ListPoolRequest {
+
+        /**
+         * Constructs a new ListPoolRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListPoolRequest);
+
+        /**
+         * Creates a new ListPoolRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListPoolRequest instance
+         */
+        public static create(properties?: serverpb.IListPoolRequest): serverpb.ListPoolRequest;
+
+        /**
+         * Encodes the specified ListPoolRequest message. Does not implicitly {@link serverpb.ListPoolRequest.verify|verify} messages.
+         * @param message ListPoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListPoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListPoolRequest message, length delimited. Does not implicitly {@link serverpb.ListPoolRequest.verify|verify} messages.
+         * @param message ListPoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListPoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListPoolRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListPoolRequest;
+
+        /**
+         * Decodes a ListPoolRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListPoolRequest;
+
+        /**
+         * Verifies a ListPoolRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListPoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListPoolRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListPoolRequest;
+
+        /**
+         * Creates a plain object from a ListPoolRequest message. Also converts values to other types if specified.
+         * @param message ListPoolRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListPoolRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListPoolRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ListPoolResponse. */
+    interface IListPoolResponse {
+
+        /** ListPoolResponse pools */
+        pools?: model.IPool[];
+    }
+
+    /** Represents a ListPoolResponse. */
+    class ListPoolResponse {
+
+        /**
+         * Constructs a new ListPoolResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListPoolResponse);
+
+        /** ListPoolResponse pools. */
+        public pools: model.IPool[];
+
+        /**
+         * Creates a new ListPoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListPoolResponse instance
+         */
+        public static create(properties?: serverpb.IListPoolResponse): serverpb.ListPoolResponse;
+
+        /**
+         * Encodes the specified ListPoolResponse message. Does not implicitly {@link serverpb.ListPoolResponse.verify|verify} messages.
+         * @param message ListPoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListPoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListPoolResponse message, length delimited. Does not implicitly {@link serverpb.ListPoolResponse.verify|verify} messages.
+         * @param message ListPoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListPoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListPoolResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListPoolResponse;
+
+        /**
+         * Decodes a ListPoolResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListPoolResponse;
+
+        /**
+         * Verifies a ListPoolResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListPoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListPoolResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListPoolResponse;
+
+        /**
+         * Creates a plain object from a ListPoolResponse message. Also converts values to other types if specified.
+         * @param message ListPoolResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListPoolResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListPoolResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Represents a NetworkServiceV0 */
     class NetworkServiceV0 extends $protobuf.rpc.Service {
 
@@ -2517,6 +2691,51 @@ export namespace serverpb {
          * @param [response] ListIPResponse
          */
         type ListIPCallback = (error: (Error|null), response?: serverpb.ListIPResponse) => void;
+    }
+
+    /** Represents a PoolServiceV0 */
+    class PoolServiceV0 extends $protobuf.rpc.Service {
+
+        /**
+         * Constructs a new PoolServiceV0 service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Creates new PoolServiceV0 service using the specified rpc implementation.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         * @returns RPC service. Useful where requests and/or responses are streamed.
+         */
+        public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): PoolServiceV0;
+
+        /**
+         * Calls ListPool.
+         * @param request ListPoolRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and ListPoolResponse
+         */
+        public listPool(request: serverpb.IListPoolRequest, callback: serverpb.PoolServiceV0.ListPoolCallback): void;
+
+        /**
+         * Calls ListPool.
+         * @param request ListPoolRequest message or plain object
+         * @returns Promise
+         */
+        public listPool(request: serverpb.IListPoolRequest): Promise<serverpb.ListPoolResponse>;
+    }
+
+    namespace PoolServiceV0 {
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#listPool}.
+         * @param error Error, if any
+         * @param [response] ListPoolResponse
+         */
+        type ListPoolCallback = (error: (Error|null), response?: serverpb.ListPoolResponse) => void;
     }
 }
 

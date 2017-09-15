@@ -59,11 +59,16 @@ func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	)
 	addr := api.lis.Addr().String()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+
 	if err := serverpb.RegisterNetworkServiceV0HandlerFromEndpoint(
 		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
 	if err := serverpb.RegisterIPServiceV0HandlerFromEndpoint(
+		ctx, mux, addr, opts); err != nil {
+		return nil, err
+	}
+	if err := serverpb.RegisterPoolServiceV0HandlerFromEndpoint(
 		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
@@ -138,8 +143,12 @@ func (api *APIServer) Start() error {
 			grpc_logrus.UnaryServerInterceptor(logrusEntry),
 		)),
 	)
+
+	// Register gRPC server to api
 	serverpb.RegisterNetworkServiceV0Server(api.grpcS, api)
 	serverpb.RegisterIPServiceV0Server(api.grpcS, api)
+	serverpb.RegisterPoolServiceV0Server(api.grpcS, api)
+
 	gw, err := api.newGateway(ctx)
 	if err != nil {
 		return err

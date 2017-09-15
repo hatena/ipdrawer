@@ -91,6 +91,12 @@ message ListIPResponse {
   repeated model.IPAddr ips = 1;
 }
 
+message ListPoolRequest {}
+
+message ListPoolResponse {
+  repeated model.Pool pools = 1;
+}
+
 service NetworkServiceV0 {
 
   rpc ListNetwork (ListNetworkRequest) returns (ListNetworkResponse) {
@@ -169,6 +175,16 @@ service IPServiceV0 {
   rpc ListIP (ListIPRequest) returns (ListIPResponse) {
     option (google.api.http) = {
       get: "/api/v0/ip/list"
+    };
+  };
+
+}
+
+service PoolServiceV0 {
+
+  rpc ListPool (ListPoolRequest) returns (ListPoolResponse) {
+    option (google.api.http) = {
+      get: "/api/v0/pool/list"
     };
   };
 

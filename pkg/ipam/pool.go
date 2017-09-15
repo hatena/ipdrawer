@@ -61,7 +61,7 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*model.Pool, error) {
 	return pool, nil
 }
 
-func getPools(r *storage.Redis, prefix *model.Network) ([]*model.Pool, error) {
+func getPoolsInNetwork(r *storage.Redis, prefix *model.Network) ([]*model.Pool, error) {
 	_, pre, err := net.ParseCIDR(prefix.Prefix)
 	if err != nil {
 		return nil, err

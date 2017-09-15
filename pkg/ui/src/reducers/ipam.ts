@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions';
 import { combineReducers, Reducer } from 'redux';
 import * as Actions from '../constants/actions';
-import {IPAMStoreState} from "../../types/ipam";
+import { IPAMStoreState } from "../../types/ipam";
 import {model} from "../proto/protos"
 import IPAddr = model.IPAddr;
 import Network = model.Network;
+import Pool = model.Pool;
 
 const ipaddrReducer = handleActions<IPAddr[], any>({
   [Actions.REQUEST_IPADDRS]: (state, action) => {
@@ -24,7 +25,17 @@ const networkReducer = handleActions<Network[], any>({
   }
 }, []);
 
+const poolReducer = handleActions<Pool[], any>({
+  [Actions.REQUEST_LIST_POOL]: (state, action) => {
+    return state;
+  },
+  [Actions.RECEIVE_LIST_POOL]: (state, action) => {
+    return action.payload.pools;
+  }
+}, []);
+
 export default combineReducers<IPAMStoreState>({
   ips: ipaddrReducer,
   networks: networkReducer,
+  pools: poolReducer,
 });

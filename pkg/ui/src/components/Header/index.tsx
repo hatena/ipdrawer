@@ -65,6 +65,14 @@ class Header extends React.Component<Header.Props, Header.State> {
               <ListItemText primary="Network" />
             </ListItem>
           </Link>
+          <Link to="/ui/pool">
+            <ListItem button>
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText primary="Pool" />
+            </ListItem>
+          </Link>
           <Link to="/ui/ip">
             <ListItem button>
               <ListItemIcon>

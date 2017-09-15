@@ -448,6 +448,22 @@ const (
           "NetworkServiceV0"
         ]
       }
+    },
+    "/api/v0/pool/list": {
+      "get": {
+        "operationId": "ListPool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListPoolResponse"
+            }
+          }
+        },
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
     }
   },
   "definitions": {
@@ -678,6 +694,17 @@ const (
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelNetwork"
+          }
+        }
+      }
+    },
+    "serverpbListPoolResponse": {
+      "type": "object",
+      "properties": {
+        "pools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPool"
           }
         }
       }

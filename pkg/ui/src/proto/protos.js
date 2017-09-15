@@ -5114,6 +5114,372 @@ $root.serverpb = (function() {
         return ListIPResponse;
     })();
 
+    serverpb.ListPoolRequest = (function() {
+
+        /**
+         * Properties of a ListPoolRequest.
+         * @memberof serverpb
+         * @interface IListPoolRequest
+         */
+
+        /**
+         * Constructs a new ListPoolRequest.
+         * @memberof serverpb
+         * @classdesc Represents a ListPoolRequest.
+         * @constructor
+         * @param {serverpb.IListPoolRequest=} [properties] Properties to set
+         */
+        function ListPoolRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new ListPoolRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {serverpb.IListPoolRequest=} [properties] Properties to set
+         * @returns {serverpb.ListPoolRequest} ListPoolRequest instance
+         */
+        ListPoolRequest.create = function create(properties) {
+            return new ListPoolRequest(properties);
+        };
+
+        /**
+         * Encodes the specified ListPoolRequest message. Does not implicitly {@link serverpb.ListPoolRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {serverpb.IListPoolRequest} message ListPoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListPoolRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListPoolRequest message, length delimited. Does not implicitly {@link serverpb.ListPoolRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {serverpb.IListPoolRequest} message ListPoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListPoolRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListPoolRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListPoolRequest} ListPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListPoolRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListPoolRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListPoolRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListPoolRequest} ListPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListPoolRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListPoolRequest message.
+         * @function verify
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListPoolRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListPoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListPoolRequest} ListPoolRequest
+         */
+        ListPoolRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListPoolRequest)
+                return object;
+            return new $root.serverpb.ListPoolRequest();
+        };
+
+        /**
+         * Creates a plain object from a ListPoolRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListPoolRequest
+         * @static
+         * @param {serverpb.ListPoolRequest} message ListPoolRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListPoolRequest.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this ListPoolRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListPoolRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListPoolRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListPoolRequest;
+    })();
+
+    serverpb.ListPoolResponse = (function() {
+
+        /**
+         * Properties of a ListPoolResponse.
+         * @memberof serverpb
+         * @interface IListPoolResponse
+         * @property {Array.<model.IPool>} [pools] ListPoolResponse pools
+         */
+
+        /**
+         * Constructs a new ListPoolResponse.
+         * @memberof serverpb
+         * @classdesc Represents a ListPoolResponse.
+         * @constructor
+         * @param {serverpb.IListPoolResponse=} [properties] Properties to set
+         */
+        function ListPoolResponse(properties) {
+            this.pools = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListPoolResponse pools.
+         * @member {Array.<model.IPool>}pools
+         * @memberof serverpb.ListPoolResponse
+         * @instance
+         */
+        ListPoolResponse.prototype.pools = $util.emptyArray;
+
+        /**
+         * Creates a new ListPoolResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {serverpb.IListPoolResponse=} [properties] Properties to set
+         * @returns {serverpb.ListPoolResponse} ListPoolResponse instance
+         */
+        ListPoolResponse.create = function create(properties) {
+            return new ListPoolResponse(properties);
+        };
+
+        /**
+         * Encodes the specified ListPoolResponse message. Does not implicitly {@link serverpb.ListPoolResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {serverpb.IListPoolResponse} message ListPoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListPoolResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pools != null && message.pools.length)
+                for (var i = 0; i < message.pools.length; ++i)
+                    $root.model.Pool.encode(message.pools[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListPoolResponse message, length delimited. Does not implicitly {@link serverpb.ListPoolResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {serverpb.IListPoolResponse} message ListPoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListPoolResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListPoolResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListPoolResponse} ListPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListPoolResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListPoolResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.pools && message.pools.length))
+                        message.pools = [];
+                    message.pools.push($root.model.Pool.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListPoolResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListPoolResponse} ListPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListPoolResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListPoolResponse message.
+         * @function verify
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListPoolResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pools != null && message.hasOwnProperty("pools")) {
+                if (!Array.isArray(message.pools))
+                    return "pools: array expected";
+                for (var i = 0; i < message.pools.length; ++i) {
+                    var error = $root.model.Pool.verify(message.pools[i]);
+                    if (error)
+                        return "pools." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a ListPoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListPoolResponse} ListPoolResponse
+         */
+        ListPoolResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListPoolResponse)
+                return object;
+            var message = new $root.serverpb.ListPoolResponse();
+            if (object.pools) {
+                if (!Array.isArray(object.pools))
+                    throw TypeError(".serverpb.ListPoolResponse.pools: array expected");
+                message.pools = [];
+                for (var i = 0; i < object.pools.length; ++i) {
+                    if (typeof object.pools[i] !== "object")
+                        throw TypeError(".serverpb.ListPoolResponse.pools: object expected");
+                    message.pools[i] = $root.model.Pool.fromObject(object.pools[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListPoolResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListPoolResponse
+         * @static
+         * @param {serverpb.ListPoolResponse} message ListPoolResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListPoolResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.pools = [];
+            if (message.pools && message.pools.length) {
+                object.pools = [];
+                for (var j = 0; j < message.pools.length; ++j)
+                    object.pools[j] = $root.model.Pool.toObject(message.pools[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListPoolResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListPoolResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListPoolResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListPoolResponse;
+    })();
+
     serverpb.NetworkServiceV0 = (function() {
 
         /**
@@ -5545,6 +5911,74 @@ $root.serverpb = (function() {
          */
 
         return IPServiceV0;
+    })();
+
+    serverpb.PoolServiceV0 = (function() {
+
+        /**
+         * Constructs a new PoolServiceV0 service.
+         * @memberof serverpb
+         * @classdesc Represents a PoolServiceV0
+         * @extends $protobuf.rpc.Service
+         * @constructor
+         * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
+         * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
+         * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
+         */
+        function PoolServiceV0(rpcImpl, requestDelimited, responseDelimited) {
+            $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+
+        (PoolServiceV0.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = PoolServiceV0;
+
+        /**
+         * Creates new PoolServiceV0 service using the specified rpc implementation.
+         * @function create
+         * @memberof serverpb.PoolServiceV0
+         * @static
+         * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
+         * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
+         * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
+         * @returns {PoolServiceV0} RPC service. Useful where requests and/or responses are streamed.
+         */
+        PoolServiceV0.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+            return new this(rpcImpl, requestDelimited, responseDelimited);
+        };
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#listPool}.
+         * @memberof serverpb.PoolServiceV0
+         * @typedef ListPoolCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.ListPoolResponse} [response] ListPoolResponse
+         */
+
+        /**
+         * Calls ListPool.
+         * @function .listPool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IListPoolRequest} request ListPoolRequest message or plain object
+         * @param {serverpb.PoolServiceV0.ListPoolCallback} callback Node-style callback called with the error, if any, and ListPoolResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        PoolServiceV0.prototype.listPool = function listPool(request, callback) {
+            return this.rpcCall(listPool, $root.serverpb.ListPoolRequest, $root.serverpb.ListPoolResponse, request, callback);
+        };
+
+        /**
+         * Calls ListPool.
+         * @function listPool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IListPoolRequest} request ListPoolRequest message or plain object
+         * @returns {Promise<serverpb.ListPoolResponse>} Promise
+         * @variation 2
+         */
+
+        return PoolServiceV0;
     })();
 
     return serverpb;

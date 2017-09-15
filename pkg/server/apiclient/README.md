@@ -34,6 +34,7 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**GetNetwork**](docs/NetworkServiceV0Api.md#getnetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 *NetworkServiceV0Api* | [**GetNetwork_0**](docs/NetworkServiceV0Api.md#getnetwork_0) | **Get** /api/v0/network/{name} | 
 *NetworkServiceV0Api* | [**ListNetwork**](docs/NetworkServiceV0Api.md#listnetwork) | **Get** /api/v0/network/list | 
+*PoolServiceV0Api* | [**ListPool**](docs/PoolServiceV0Api.md#listpool) | **Get** /api/v0/pool/list | 
 
 
 ## Documentation For Models
@@ -56,6 +57,7 @@ Class | Method | HTTP request | Description
  - [ServerpbGetNetworkResponse](docs/ServerpbGetNetworkResponse.md)
  - [ServerpbListIpResponse](docs/ServerpbListIpResponse.md)
  - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
+ - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
 
 
 ## Documentation For Authorization
