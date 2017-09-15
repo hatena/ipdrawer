@@ -611,6 +611,9 @@ const (
           "items": {
             "$ref": "#/definitions/modelTag"
           }
+        },
+        "status": {
+          "$ref": "#/definitions/modelNetworkStatus"
         }
       }
     },

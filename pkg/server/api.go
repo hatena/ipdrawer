@@ -337,7 +337,7 @@ func (api *APIServer) CreateNetwork(
 		Netmask:   netmask.String(),
 		Gateways:  req.DefaultGateways,
 		Tags:      req.Tags,
-		Status:    model.Network_AVAILABLE,
+		Status:    req.Status,
 	}
 
 	if err := api.manager.CreateNetwork(ctx, n); err != nil {
@@ -363,7 +363,7 @@ func (api *APIServer) CreatePool(
 	pool := &model.Pool{
 		Start:  req.Pool.Start,
 		End:    req.Pool.End,
-		Status: model.Pool_AVAILABLE,
+		Status: req.Pool.Status,
 		Tags:   req.Pool.Tags,
 	}
 
