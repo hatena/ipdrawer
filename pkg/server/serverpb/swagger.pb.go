@@ -167,6 +167,22 @@ const (
         ]
       }
     },
+    "/api/v0/network/list": {
+      "get": {
+        "operationId": "ListNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListNetworkResponse"
+            }
+          }
+        },
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
     "/api/v0/network/{ip}/{mask}": {
       "get": {
         "operationId": "GetNetwork",
@@ -462,6 +478,44 @@ const (
         }
       }
     },
+    "modelNetwork": {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "string"
+        },
+        "gateways": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "broadcast": {
+          "type": "string"
+        },
+        "netmask": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/modelNetworkStatus"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelTag"
+          }
+        }
+      }
+    },
+    "modelNetworkStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "AVAILABLE",
+        "RESERVED"
+      ],
+      "default": "UNKNOWN"
+    },
     "modelPool": {
       "type": "object",
       "properties": {
@@ -613,6 +667,17 @@ const (
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelIPAddr"
+          }
+        }
+      }
+    },
+    "serverpbListNetworkResponse": {
+      "type": "object",
+      "properties": {
+        "networks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelNetwork"
           }
         }
       }

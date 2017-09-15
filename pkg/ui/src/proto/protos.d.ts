@@ -464,6 +464,180 @@ export namespace model {
 /** Namespace serverpb. */
 export namespace serverpb {
 
+    /** Properties of a ListNetworkRequest. */
+    interface IListNetworkRequest {
+    }
+
+    /** Represents a ListNetworkRequest. */
+    class ListNetworkRequest {
+
+        /**
+         * Constructs a new ListNetworkRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListNetworkRequest);
+
+        /**
+         * Creates a new ListNetworkRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListNetworkRequest instance
+         */
+        public static create(properties?: serverpb.IListNetworkRequest): serverpb.ListNetworkRequest;
+
+        /**
+         * Encodes the specified ListNetworkRequest message. Does not implicitly {@link serverpb.ListNetworkRequest.verify|verify} messages.
+         * @param message ListNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListNetworkRequest message, length delimited. Does not implicitly {@link serverpb.ListNetworkRequest.verify|verify} messages.
+         * @param message ListNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListNetworkRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListNetworkRequest;
+
+        /**
+         * Decodes a ListNetworkRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListNetworkRequest;
+
+        /**
+         * Verifies a ListNetworkRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListNetworkRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListNetworkRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListNetworkRequest;
+
+        /**
+         * Creates a plain object from a ListNetworkRequest message. Also converts values to other types if specified.
+         * @param message ListNetworkRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListNetworkRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListNetworkRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ListNetworkResponse. */
+    interface IListNetworkResponse {
+
+        /** ListNetworkResponse networks */
+        networks?: model.INetwork[];
+    }
+
+    /** Represents a ListNetworkResponse. */
+    class ListNetworkResponse {
+
+        /**
+         * Constructs a new ListNetworkResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListNetworkResponse);
+
+        /** ListNetworkResponse networks. */
+        public networks: model.INetwork[];
+
+        /**
+         * Creates a new ListNetworkResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListNetworkResponse instance
+         */
+        public static create(properties?: serverpb.IListNetworkResponse): serverpb.ListNetworkResponse;
+
+        /**
+         * Encodes the specified ListNetworkResponse message. Does not implicitly {@link serverpb.ListNetworkResponse.verify|verify} messages.
+         * @param message ListNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListNetworkResponse message, length delimited. Does not implicitly {@link serverpb.ListNetworkResponse.verify|verify} messages.
+         * @param message ListNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListNetworkResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListNetworkResponse;
+
+        /**
+         * Decodes a ListNetworkResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListNetworkResponse;
+
+        /**
+         * Verifies a ListNetworkResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListNetworkResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListNetworkResponse;
+
+        /**
+         * Creates a plain object from a ListNetworkResponse message. Also converts values to other types if specified.
+         * @param message ListNetworkResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListNetworkResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListNetworkResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a DrawIPRequest. */
     interface IDrawIPRequest {
 
@@ -2087,6 +2261,20 @@ export namespace serverpb {
         public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): NetworkServiceV0;
 
         /**
+         * Calls ListNetwork.
+         * @param request ListNetworkRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and ListNetworkResponse
+         */
+        public listNetwork(request: serverpb.IListNetworkRequest, callback: serverpb.NetworkServiceV0.ListNetworkCallback): void;
+
+        /**
+         * Calls ListNetwork.
+         * @param request ListNetworkRequest message or plain object
+         * @returns Promise
+         */
+        public listNetwork(request: serverpb.IListNetworkRequest): Promise<serverpb.ListNetworkResponse>;
+
+        /**
          * Calls GetEstimatedNetwork.
          * @param request GetEstimatedNetworkRequest message or plain object
          * @param callback Node-style callback called with the error, if any, and GetNetworkResponse
@@ -2172,6 +2360,13 @@ export namespace serverpb {
     }
 
     namespace NetworkServiceV0 {
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#listNetwork}.
+         * @param error Error, if any
+         * @param [response] ListNetworkResponse
+         */
+        type ListNetworkCallback = (error: (Error|null), response?: serverpb.ListNetworkResponse) => void;
 
         /**
          * Callback as used by {@link serverpb.NetworkServiceV0#getEstimatedNetwork}.

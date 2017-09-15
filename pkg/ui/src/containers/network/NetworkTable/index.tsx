@@ -3,15 +3,10 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
-import { RouteComponentProps } from "react-router";
-import { connect } from "react-redux";
 
-import { AdminUIState } from "../../reducers/index";
-import * as IPAddrActions from '../../actions/ipaddr';
-import { model } from "../../proto/protos";
-import IPAddr = model.IPAddr;
-import IPStatus = model.IPAddr.IPStatus;
-import {bindActionCreators} from "redux";
+import * as NetworkActions from '../../../actions/network';
+import { model } from "../../../proto/protos";
+import Network = model.Network;
 
 const styleSheet = createStyleSheet('BasicTable', theme => ({
   paper: {
@@ -27,10 +22,10 @@ const styleSheet = createStyleSheet('BasicTable', theme => ({
   }
 }));
 
-namespace IPAddrTable {
-  export interface Props extends RouteComponentProps<void> {
-    ips: IPAddr[]
-    actions: typeof IPAddrActions
+namespace NetworkTable {
+  export interface Props {
+    networks: Network[]
+    actions: typeof NetworkActions
     classes: any
   }
 
@@ -39,37 +34,48 @@ namespace IPAddrTable {
   }
 }
 
-class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> {
+class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.State> {
   componentWillMount() {
-    this.props.actions.fetchIPAddrs();
+    this.props.actions.fetchNetworks();
   }
 
   render() {
-    const { classes } = this.props;
-    const ips = this.props.ips;
+    const { classes, networks } = this.props;
 
     return (
       <Paper className={classes.paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>IP</TableCell>
+              <TableCell>Prefix</TableCell>
+              <TableCell>Gateways</TableCell>
+              <TableCell>Broadcast</TableCell>
+              <TableCell>Netmask</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Tags</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {ips.map(ip => {
+            {networks.map(network => {
               return (
-                <TableRow key={ip.ip}>
+                <TableRow key={network.prefix}>
                   <TableCell>
-                    {ip.ip}
+                    {network.prefix}
                   </TableCell>
                   <TableCell>
-                    {ip.status}
+                    {network.gateways}
+                  </TableCell>
+                  <TableCell>
+                    {network.broadcast}
+                  </TableCell>
+                  <TableCell>
+                    {network.netmask}
+                  </TableCell>
+                  <TableCell>
+                    {network.status}
                   </TableCell>
                   <TableCell className={classes.chip_row}>
-                    {ip.tags.map((tag, i) => {
+                    {network.tags.map((tag, i) => {
                       return (
                         <Chip
                           className={classes.chip}
@@ -89,22 +95,8 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
   }
 }
 
-const styledIPAddrTable = withStyles(styleSheet)(IPAddrTable);
-
-const ipaddrTableConnected = connect(
-  (state: AdminUIState) => {
-    return {
-      ips: state.ipam.ips
-
-    }
-  },
-  (dispatch) =>{
-    return {
-      actions: bindActionCreators(IPAddrActions as any, dispatch)
-    }
-  }
-)(styledIPAddrTable);
+const styledNetworkTable = withStyles(styleSheet)(NetworkTable);
 
 export {
-  ipaddrTableConnected as IPAddrTable
+  styledNetworkTable as NetworkTable
 }

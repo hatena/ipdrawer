@@ -8,7 +8,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Drawer from 'material-ui/Drawer';
 import { Link } from 'react-router-dom';
-import BackupIcon from 'material-ui-icons/Backup';
+import ListIcon from 'material-ui-icons/List';
 
 namespace Header {
   export interface Props {
@@ -57,10 +57,18 @@ class Header extends React.Component<Header.Props, Header.State> {
     const sideList = (
       <div>
         <List className={classes.list} disablePadding>
-          <Link to="/ip">
+          <Link to="/ui/network">
             <ListItem button>
               <ListItemIcon>
-                <BackupIcon />
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText primary="Network" />
+            </ListItem>
+          </Link>
+          <Link to="/ui/ip">
+            <ListItem button>
+              <ListItemIcon>
+                <ListIcon />
               </ListItemIcon>
               <ListItemText primary="IPAddr" />
             </ListItem>

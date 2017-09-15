@@ -24,8 +24,8 @@ SWAGGER_UI_SRC := third_party/swagger-ui/...
 
 ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
 
-PBJS := pbjs
-PBTS := pbts
+PBJS := pkg/ui/node_modules/.bin/pbjs
+PBTS := pkg/ui/node_modules/.bin/pbts
 
 .DEFAULT_GOAL := $(NAME)
 

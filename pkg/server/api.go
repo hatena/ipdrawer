@@ -21,6 +21,24 @@ var (
 	DrawIPActivationSuccessMsg = "success activation"
 )
 
+// ListNetwork is an endpoints returning all networks
+func (api *APIServer) ListNetwork(
+	ctx context.Context,
+	req *serverpb.ListNetworkRequest,
+) (*serverpb.ListNetworkResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	networks, err := api.manager.GetNetworks(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get network list")
+	}
+	return &serverpb.ListNetworkResponse{
+		Networks: networks,
+	}, nil
+}
+
 func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,

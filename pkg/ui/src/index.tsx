@@ -6,7 +6,9 @@ import { createBrowserHistory } from 'history';
 import { configureStore } from './store';
 import { Layout } from './containers/Layout';
 import * as injectTapEventPlugin from 'react-tap-event-plugin';
-import {IPAddrTable} from "./containers/IPAddr/index";
+import { IPAddrView } from "./containers/ipaddr/index";
+import { NetworkView } from './containers/network';
+
 
 // Work tap event
 injectTapEventPlugin();
@@ -19,7 +21,8 @@ ReactDOM.render(
     <Router history={history}>
       <Layout>
         <Switch>
-          <Route path="/ui/ip" component={IPAddrTable} />
+          <Route path="/ui/network" component={NetworkView} />
+          <Route path="/ui/ip" component={IPAddrView} />
           <Redirect from="*" to="/ui/ip" />
         </Switch>
       </Layout>

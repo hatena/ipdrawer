@@ -1209,6 +1209,372 @@ $root.serverpb = (function() {
      */
     var serverpb = {};
 
+    serverpb.ListNetworkRequest = (function() {
+
+        /**
+         * Properties of a ListNetworkRequest.
+         * @memberof serverpb
+         * @interface IListNetworkRequest
+         */
+
+        /**
+         * Constructs a new ListNetworkRequest.
+         * @memberof serverpb
+         * @classdesc Represents a ListNetworkRequest.
+         * @constructor
+         * @param {serverpb.IListNetworkRequest=} [properties] Properties to set
+         */
+        function ListNetworkRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new ListNetworkRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {serverpb.IListNetworkRequest=} [properties] Properties to set
+         * @returns {serverpb.ListNetworkRequest} ListNetworkRequest instance
+         */
+        ListNetworkRequest.create = function create(properties) {
+            return new ListNetworkRequest(properties);
+        };
+
+        /**
+         * Encodes the specified ListNetworkRequest message. Does not implicitly {@link serverpb.ListNetworkRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {serverpb.IListNetworkRequest} message ListNetworkRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListNetworkRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListNetworkRequest message, length delimited. Does not implicitly {@link serverpb.ListNetworkRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {serverpb.IListNetworkRequest} message ListNetworkRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListNetworkRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListNetworkRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListNetworkRequest} ListNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListNetworkRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListNetworkRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListNetworkRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListNetworkRequest} ListNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListNetworkRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListNetworkRequest message.
+         * @function verify
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListNetworkRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListNetworkRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListNetworkRequest} ListNetworkRequest
+         */
+        ListNetworkRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListNetworkRequest)
+                return object;
+            return new $root.serverpb.ListNetworkRequest();
+        };
+
+        /**
+         * Creates a plain object from a ListNetworkRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListNetworkRequest
+         * @static
+         * @param {serverpb.ListNetworkRequest} message ListNetworkRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListNetworkRequest.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this ListNetworkRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListNetworkRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListNetworkRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListNetworkRequest;
+    })();
+
+    serverpb.ListNetworkResponse = (function() {
+
+        /**
+         * Properties of a ListNetworkResponse.
+         * @memberof serverpb
+         * @interface IListNetworkResponse
+         * @property {Array.<model.INetwork>} [networks] ListNetworkResponse networks
+         */
+
+        /**
+         * Constructs a new ListNetworkResponse.
+         * @memberof serverpb
+         * @classdesc Represents a ListNetworkResponse.
+         * @constructor
+         * @param {serverpb.IListNetworkResponse=} [properties] Properties to set
+         */
+        function ListNetworkResponse(properties) {
+            this.networks = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListNetworkResponse networks.
+         * @member {Array.<model.INetwork>}networks
+         * @memberof serverpb.ListNetworkResponse
+         * @instance
+         */
+        ListNetworkResponse.prototype.networks = $util.emptyArray;
+
+        /**
+         * Creates a new ListNetworkResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {serverpb.IListNetworkResponse=} [properties] Properties to set
+         * @returns {serverpb.ListNetworkResponse} ListNetworkResponse instance
+         */
+        ListNetworkResponse.create = function create(properties) {
+            return new ListNetworkResponse(properties);
+        };
+
+        /**
+         * Encodes the specified ListNetworkResponse message. Does not implicitly {@link serverpb.ListNetworkResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {serverpb.IListNetworkResponse} message ListNetworkResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListNetworkResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.networks != null && message.networks.length)
+                for (var i = 0; i < message.networks.length; ++i)
+                    $root.model.Network.encode(message.networks[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListNetworkResponse message, length delimited. Does not implicitly {@link serverpb.ListNetworkResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {serverpb.IListNetworkResponse} message ListNetworkResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListNetworkResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListNetworkResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListNetworkResponse} ListNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListNetworkResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListNetworkResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.networks && message.networks.length))
+                        message.networks = [];
+                    message.networks.push($root.model.Network.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListNetworkResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListNetworkResponse} ListNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListNetworkResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListNetworkResponse message.
+         * @function verify
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListNetworkResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.networks != null && message.hasOwnProperty("networks")) {
+                if (!Array.isArray(message.networks))
+                    return "networks: array expected";
+                for (var i = 0; i < message.networks.length; ++i) {
+                    var error = $root.model.Network.verify(message.networks[i]);
+                    if (error)
+                        return "networks." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a ListNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListNetworkResponse} ListNetworkResponse
+         */
+        ListNetworkResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListNetworkResponse)
+                return object;
+            var message = new $root.serverpb.ListNetworkResponse();
+            if (object.networks) {
+                if (!Array.isArray(object.networks))
+                    throw TypeError(".serverpb.ListNetworkResponse.networks: array expected");
+                message.networks = [];
+                for (var i = 0; i < object.networks.length; ++i) {
+                    if (typeof object.networks[i] !== "object")
+                        throw TypeError(".serverpb.ListNetworkResponse.networks: object expected");
+                    message.networks[i] = $root.model.Network.fromObject(object.networks[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListNetworkResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListNetworkResponse
+         * @static
+         * @param {serverpb.ListNetworkResponse} message ListNetworkResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListNetworkResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.networks = [];
+            if (message.networks && message.networks.length) {
+                object.networks = [];
+                for (var j = 0; j < message.networks.length; ++j)
+                    object.networks[j] = $root.model.Network.toObject(message.networks[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListNetworkResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListNetworkResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListNetworkResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListNetworkResponse;
+    })();
+
     serverpb.DrawIPRequest = (function() {
 
         /**
@@ -4779,6 +5145,39 @@ $root.serverpb = (function() {
         NetworkServiceV0.create = function create(rpcImpl, requestDelimited, responseDelimited) {
             return new this(rpcImpl, requestDelimited, responseDelimited);
         };
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#listNetwork}.
+         * @memberof serverpb.NetworkServiceV0
+         * @typedef ListNetworkCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.ListNetworkResponse} [response] ListNetworkResponse
+         */
+
+        /**
+         * Calls ListNetwork.
+         * @function .listNetwork
+         * @memberof serverpb.NetworkServiceV0
+         * @instance
+         * @param {serverpb.IListNetworkRequest} request ListNetworkRequest message or plain object
+         * @param {serverpb.NetworkServiceV0.ListNetworkCallback} callback Node-style callback called with the error, if any, and ListNetworkResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        NetworkServiceV0.prototype.listNetwork = function listNetwork(request, callback) {
+            return this.rpcCall(listNetwork, $root.serverpb.ListNetworkRequest, $root.serverpb.ListNetworkResponse, request, callback);
+        };
+
+        /**
+         * Calls ListNetwork.
+         * @function listNetwork
+         * @memberof serverpb.NetworkServiceV0
+         * @instance
+         * @param {serverpb.IListNetworkRequest} request ListNetworkRequest message or plain object
+         * @returns {Promise<serverpb.ListNetworkResponse>} Promise
+         * @variation 2
+         */
 
         /**
          * Callback as used by {@link serverpb.NetworkServiceV0#getEstimatedNetwork}.

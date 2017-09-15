@@ -282,3 +282,11 @@ func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
 
 	return addrs, nil
 }
+
+// GetNetworks returns all network
+func (m *IPManager) GetNetworks(ctx context.Context) ([]*model.Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworks")
+	defer span.Finish()
+
+	return getNetworks(m.redis)
+}

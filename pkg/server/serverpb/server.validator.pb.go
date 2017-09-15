@@ -8,6 +8,8 @@ It is generated from these files:
 	server/serverpb/server.proto
 
 It has these top-level messages:
+	ListNetworkRequest
+	ListNetworkResponse
 	DrawIPRequest
 	DrawIPResponse
 	DrawIPEstimatingNetworkRequest
@@ -42,6 +44,20 @@ import _ "github.com/gogo/protobuf/gogoproto"
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+
+func (this *ListNetworkRequest) Validate() error {
+	return nil
+}
+func (this *ListNetworkResponse) Validate() error {
+	for _, item := range this.Networks {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Networks", err)
+			}
+		}
+	}
+	return nil
+}
 
 var _regex_DrawIPRequest_Ip = regexp.MustCompile("|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
