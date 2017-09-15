@@ -32,7 +32,7 @@ func makeIPListPattern() string {
 	return strings.Replace(ipDetails, "%s", "*", 1)
 }
 
-func parseDetailsKey(key string) (net.IP, error) {
+func parseIPDetailsKey(key string) (net.IP, error) {
 	d := strings.Split(key, ":")
 	if len(d) != 3 {
 		return nil, errors.New("Not matched format")
@@ -63,6 +63,30 @@ func makeNetworkPoolKey(ip *net.IPNet) string {
 
 func makePoolDetailsKey(s, e net.IP) string {
 	return fmt.Sprintf(poolDetails, s.String(), e.String())
+}
+
+func makePoolListPattern() string {
+	return strings.Replace(poolDetails, "%s,%s", "*", 1)
+}
+
+func parsePoolDetailsKey(key string) (net.IP, net.IP, error) {
+	d := strings.Split(key, ":")
+	if len(d) != 3 {
+		return nil, nil, errors.New("Not matched format")
+	}
+	se := strings.Split(d[1], ",")
+	if len(se) != 2 {
+		return nil, nil, errors.New("Not matched format")
+	}
+	s := net.ParseIP(se[0])
+	if s == nil {
+		return nil, nil, errors.New("Failed parse IP")
+	}
+	e := net.ParseIP(se[1])
+	if e == nil {
+		return nil, nil, errors.New("Failed parse IP")
+	}
+	return s, e, nil
 }
 
 func makePoolUsedIPZset(s, e net.IP) string {

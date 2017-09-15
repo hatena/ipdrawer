@@ -239,3 +239,24 @@ func TestDrawIPAndActivateImmediately(t *testing.T) {
 		t.Errorf("Got message %s; want %s", resp.Message, DrawIPActivationSuccessMsg)
 	}
 }
+
+func TestListNetworks(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+
+	resp, err := te.api.ListNetwork(te.ctx, &serverpb.ListNetworkRequest{})
+
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+
+	if len(resp.Networks) != 1 {
+		t.Errorf("Got wrong number of networks %d; want 1", len(resp.Networks))
+	}
+
+	if !resp.Networks[0].Equal(testNetwork) {
+		t.Errorf("Got wrong network %v; want %v", resp.Networks[0], testNetwork)
+	}
+}

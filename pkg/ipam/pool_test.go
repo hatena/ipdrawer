@@ -31,7 +31,7 @@ func Test_getPools(t *testing.T) {
 	_ = m.CreateNetwork(ctx, n)
 	_ = m.CreatePool(ctx, n, pool)
 
-	pools, err := getPools(r, n)
+	pools, err := getPoolsInNetwork(r, n)
 	if err != nil {
 		t.Fatalf("Got error: %v", err)
 	}

@@ -199,13 +199,13 @@ func (m *IPManager) GetNetworkIncludingIP(ctx context.Context, ip net.IP) (*mode
 	return nil, errors.New(fmt.Sprintf("Not found network including the IP: %s", ip.String()))
 }
 
-// GetPools gets pools.
-func (m *IPManager) GetPools(ctx context.Context, n *model.Network) ([]*model.Pool, error) {
-	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPools")
+// GetPoolsInNetwork gets pools.
+func (m *IPManager) GetPoolsInNetwork(ctx context.Context, n *model.Network) ([]*model.Pool, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPoolsInNetwork")
 	span.SetTag("network", n.String())
 	defer span.Finish()
 
-	return getPools(m.redis, n)
+	return getPoolsInNetwork(m.redis, n)
 }
 
 // GetNetworkByIP returns network by IP.
@@ -271,7 +271,7 @@ func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
 
 	addrs := make([]*model.IPAddr, len(keys))
 	for i, key := range keys {
-		ip, err := parseDetailsKey(key)
+		ip, err := parseIPDetailsKey(key)
 		if err != nil {
 			return nil, errors.Wrapf(err, "Parse failed: %s", key)
 		}
@@ -281,4 +281,35 @@ func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
 	}
 
 	return addrs, nil
+}
+
+// GetNetworks returns all network.
+func (m *IPManager) GetNetworks(ctx context.Context) ([]*model.Network, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworks")
+	defer span.Finish()
+
+	return getNetworks(m.redis)
+}
+
+// GetPools returns all pools.
+func (m *IPManager) GetPools(ctx context.Context) ([]*model.Pool, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPools")
+	defer span.Finish()
+
+	keys, err := m.redis.Client.Keys(makePoolListPattern()).Result()
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed fetch Pool list keys")
+	}
+
+	pools := make([]*model.Pool, len(keys))
+	for i, key := range keys {
+		s, e, err := parsePoolDetailsKey(key)
+		if err != nil {
+			return nil, errors.Wrapf(err, "Parse failed: %s", key)
+		}
+		if pools[i], err = getPool(m.redis, s, e); err != nil {
+			return nil, err
+		}
+	}
+	return pools, nil
 }

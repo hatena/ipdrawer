@@ -21,6 +21,24 @@ var (
 	DrawIPActivationSuccessMsg = "success activation"
 )
 
+// ListNetwork is an endpoints returning all networks
+func (api *APIServer) ListNetwork(
+	ctx context.Context,
+	req *serverpb.ListNetworkRequest,
+) (*serverpb.ListNetworkResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	networks, err := api.manager.GetNetworks(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get network list")
+	}
+	return &serverpb.ListNetworkResponse{
+		Networks: networks,
+	}, nil
+}
+
 func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,
@@ -45,7 +63,7 @@ func (api *APIServer) DrawIP(
 		return nil, err
 	}
 
-	pools, err := api.manager.GetPools(ctx, n)
+	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
 	if err != nil {
 		return nil, err
 	}
@@ -201,8 +219,9 @@ func (api *APIServer) ActivateIP(
 
 	ip := net.ParseIP(req.Ip)
 	addr := &model.IPAddr{
-		Ip:   req.Ip,
-		Tags: req.Tags,
+		Ip:     req.Ip,
+		Status: model.IPAddr_ACTIVE,
+		Tags:   req.Tags,
 	}
 
 	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
@@ -210,7 +229,7 @@ func (api *APIServer) ActivateIP(
 		return nil, err
 	}
 
-	pools, err := api.manager.GetPools(ctx, n)
+	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -244,7 +263,7 @@ func (api *APIServer) DeactivateIP(
 		return nil, err
 	}
 
-	pools, err := api.manager.GetPools(ctx, n)
+	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -374,5 +393,22 @@ func (api *APIServer) ListIP(
 	}
 	return &serverpb.ListIPResponse{
 		Ips: addrs,
+	}, nil
+}
+
+func (api *APIServer) ListPool(
+	ctx context.Context,
+	req *serverpb.ListPoolRequest,
+) (*serverpb.ListPoolResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	pools, err := api.manager.GetPools(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get pool list")
+	}
+	return &serverpb.ListPoolResponse{
+		Pools: pools,
 	}, nil
 }

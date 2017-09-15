@@ -167,6 +167,22 @@ const (
         ]
       }
     },
+    "/api/v0/network/list": {
+      "get": {
+        "operationId": "ListNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListNetworkResponse"
+            }
+          }
+        },
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
     "/api/v0/network/{ip}/{mask}": {
       "get": {
         "operationId": "GetNetwork",
@@ -364,6 +380,7 @@ const (
           },
           {
             "name": "mask",
+            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -401,6 +418,7 @@ const (
           },
           {
             "name": "mask",
+            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -428,6 +446,22 @@ const (
         ],
         "tags": [
           "NetworkServiceV0"
+        ]
+      }
+    },
+    "/api/v0/pool/list": {
+      "get": {
+        "operationId": "ListPool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListPoolResponse"
+            }
+          }
+        },
+        "tags": [
+          "PoolServiceV0"
         ]
       }
     }
@@ -459,6 +493,44 @@ const (
           }
         }
       }
+    },
+    "modelNetwork": {
+      "type": "object",
+      "properties": {
+        "prefix": {
+          "type": "string"
+        },
+        "gateways": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "broadcast": {
+          "type": "string"
+        },
+        "netmask": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/modelNetworkStatus"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelTag"
+          }
+        }
+      }
+    },
+    "modelNetworkStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "AVAILABLE",
+        "RESERVED"
+      ],
+      "default": "UNKNOWN"
     },
     "modelPool": {
       "type": "object",
@@ -525,7 +597,8 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
         },
         "default_gateways": {
           "type": "array",
@@ -552,7 +625,8 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32"
+          "format": "int32",
+          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
         },
         "pool": {
           "$ref": "#/definitions/modelPool"
@@ -609,6 +683,28 @@ const (
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelIPAddr"
+          }
+        }
+      }
+    },
+    "serverpbListNetworkResponse": {
+      "type": "object",
+      "properties": {
+        "networks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelNetwork"
+          }
+        }
+      }
+    },
+    "serverpbListPoolResponse": {
+      "type": "object",
+      "properties": {
+        "pools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPool"
           }
         }
       }

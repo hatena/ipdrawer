@@ -6,7 +6,8 @@ PKG := github.com/taku-k/ipdrawer
 SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
-PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor)
+PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
+GO_PKGS := $(shell find . -maxdepth 2 -mindepth 2 -type d | grep -v -e "^\.\/\." -e vendor -e ui)
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
@@ -20,6 +21,11 @@ API_SPEC := pkg/server/serverpb/server.swagger.json
 
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
+
+ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
+
+PBJS := pkg/ui/node_modules/.bin/pbjs
+PBTS := pkg/ui/node_modules/.bin/pbts
 
 .DEFAULT_GOAL := $(NAME)
 
@@ -37,26 +43,26 @@ linux:
 
 .PHONY: vet
 vet:
-	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -maxdepth 1 -mindepth 1 -type d | grep -v -e "^\.\/\." -e vendor)
+	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: test
 test:
-	go test -cover -v ./pkg/...
+	go test -cover -v $$(go list ./... | grep -v -e node_modules)
 
 .PHONY: test-race
 test-race:
-	go test -v -race ./pkg/...
+	go test -v -race $$(go list ./... | grep -v -e node_modules)
 
 .PHONY: test-all
 test-all: vet test-race
 
 .PHONY: fmt
 fmt:
-	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e vendor)
+	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: imports
 imports:
-	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor)
+	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: proto
 proto: $(PROTOSRCS)
@@ -71,8 +77,10 @@ proto: $(PROTOSRCS)
 	   --govalidators_out=pkg \
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
-	done
-	go generate ./pkg/...
+	done;
+	$(PBJS) -t static-module -w commonjs --path ./ipdrawer/vendor/github.com/gogo/protobuf --path ./ipdrawer/vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --path ./ipdrawer/vendor/github.com/witkow/go-proto-validators $(PROTOSRCS) > pkg/ui/src/proto/protos.js
+	$(PBTS) pkg/ui/src/proto/protos.js > pkg/ui/src/proto/protos.d.ts
+	go generate ./pkg/server/serverpb
 	make gen-client
 	make fmt imports
 
@@ -96,3 +104,10 @@ gen-client: $(API_SPEC)
 	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
 	@rm -rf $(API_CLIENT_DIR)/git_push.sh \
 	       $(API_CLIENT_DIR)/.travis.yml
+
+.PHONY: admin-ui
+admin-ui:
+	rm -rf pkg/ui/dist
+	(cd pkg/ui && npm run build)
+	go-bindata -nometadata -pkg ui -o $(ADMIN_UI_DATA_PATH) pkg/ui/dist/...
+	make fmt imports

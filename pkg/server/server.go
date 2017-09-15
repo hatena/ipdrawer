@@ -2,7 +2,6 @@ package server
 
 import (
 	ocontext "context"
-	"html/template"
 	"io"
 	"mime"
 	"net"
@@ -15,7 +14,7 @@ import (
 	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/meatballhat/negroni-logrus"
+	negronilogrus "github.com/meatballhat/negroni-logrus"
 	"github.com/opentracing/opentracing-go"
 	"github.com/philips/go-bindata-assetfs"
 	"github.com/sirupsen/logrus"
@@ -27,8 +26,8 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/base"
 	"github.com/taku-k/ipdrawer/pkg/ipam"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
+	"github.com/taku-k/ipdrawer/pkg/ui"
 	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
-	"github.com/taku-k/ipdrawer/pkg/ui/tmpl"
 )
 
 var logrusEntry = logrus.NewEntry(logrus.New())
@@ -54,14 +53,22 @@ func NewServer(cfg *base.Config) *APIServer {
 }
 
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
-	mux := runtime.NewServeMux()
+	mux := runtime.NewServeMux(
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+		runtime.WithProtoErrorHandler(runtime.DefaultHTTPProtoErrorHandler),
+	)
 	addr := api.lis.Addr().String()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
+
 	if err := serverpb.RegisterNetworkServiceV0HandlerFromEndpoint(
 		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
 	if err := serverpb.RegisterIPServiceV0HandlerFromEndpoint(
+		ctx, mux, addr, opts); err != nil {
+		return nil, err
+	}
+	if err := serverpb.RegisterPoolServiceV0HandlerFromEndpoint(
 		ctx, mux, addr, opts); err != nil {
 		return nil, err
 	}
@@ -71,7 +78,7 @@ func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	n.Use(negronilogrus.NewMiddleware())
 	n.UseHandler(mux)
 
-	return n, nil
+	return mux, nil
 }
 
 func serveSwagger(mux *http.ServeMux) {
@@ -92,19 +99,21 @@ func serveSwagger(mux *http.ServeMux) {
 }
 
 func (api *APIServer) serverUI(mux *http.ServeMux) {
-	mux.HandleFunc("/ui/ip", func(w http.ResponseWriter, req *http.Request) {
-		addrs, err := api.manager.ListIP(context.Background())
-		if err != nil {
-			w.Write([]byte("Failed"))
-			return
-		}
-		t, err := template.New("ip-list").Parse(tmpl.IPListTmpl)
-		if err != nil {
-			w.Write([]byte(err.Error()))
-			return
-		}
-		t.Execute(w, addrs)
+	fileServer := http.FileServer(&assetfs.AssetFS{
+		Asset:    ui.Asset,
+		AssetDir: ui.AssetDir,
+		Prefix:   "pkg/ui/dist",
 	})
+
+	mux.Handle("/bundle.js", fileServer)
+	mux.Handle("/index.html", fileServer)
+	mux.Handle("/styles.css", fileServer)
+	mux.Handle("/vendor.bundle.js", fileServer)
+
+	mux.Handle("/ui/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		r.URL.Path = "/"
+		fileServer.ServeHTTP(w, r)
+	}))
 }
 
 func (api *APIServer) Start() error {
@@ -134,8 +143,12 @@ func (api *APIServer) Start() error {
 			grpc_logrus.UnaryServerInterceptor(logrusEntry),
 		)),
 	)
+
+	// Register gRPC server to api
 	serverpb.RegisterNetworkServiceV0Server(api.grpcS, api)
 	serverpb.RegisterIPServiceV0Server(api.grpcS, api)
+	serverpb.RegisterPoolServiceV0Server(api.grpcS, api)
+
 	gw, err := api.newGateway(ctx)
 	if err != nil {
 		return err

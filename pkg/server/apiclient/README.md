@@ -33,12 +33,16 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**GetEstimatedNetwork**](docs/NetworkServiceV0Api.md#getestimatednetwork) | **Get** /api/v0/network | 
 *NetworkServiceV0Api* | [**GetNetwork**](docs/NetworkServiceV0Api.md#getnetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 *NetworkServiceV0Api* | [**GetNetwork_0**](docs/NetworkServiceV0Api.md#getnetwork_0) | **Get** /api/v0/network/{name} | 
+*NetworkServiceV0Api* | [**ListNetwork**](docs/NetworkServiceV0Api.md#listnetwork) | **Get** /api/v0/network/list | 
+*PoolServiceV0Api* | [**ListPool**](docs/PoolServiceV0Api.md#listpool) | **Get** /api/v0/pool/list | 
 
 
 ## Documentation For Models
 
  - [IpAddrIpStatus](docs/IpAddrIpStatus.md)
  - [ModelIpAddr](docs/ModelIpAddr.md)
+ - [ModelNetwork](docs/ModelNetwork.md)
+ - [ModelNetworkStatus](docs/ModelNetworkStatus.md)
  - [ModelPool](docs/ModelPool.md)
  - [ModelPoolStatus](docs/ModelPoolStatus.md)
  - [ModelTag](docs/ModelTag.md)
@@ -52,6 +56,8 @@ Class | Method | HTTP request | Description
  - [ServerpbDrawIpResponse](docs/ServerpbDrawIpResponse.md)
  - [ServerpbGetNetworkResponse](docs/ServerpbGetNetworkResponse.md)
  - [ServerpbListIpResponse](docs/ServerpbListIpResponse.md)
+ - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
+ - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
 
 
 ## Documentation For Authorization

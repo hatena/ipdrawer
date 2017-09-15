@@ -28,6 +28,15 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 
+func request_NetworkServiceV0_ListNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListNetworkRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ListNetwork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
 func request_NetworkServiceV0_GetEstimatedNetwork_0(ctx context.Context, marshaler runtime.Marshaler, client NetworkServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetEstimatedNetworkRequest
 	var metadata runtime.ServerMetadata
@@ -394,6 +403,15 @@ func request_IPServiceV0_ListIP_0(ctx context.Context, marshaler runtime.Marshal
 
 }
 
+func request_PoolServiceV0_ListPool_0(ctx context.Context, marshaler runtime.Marshaler, client PoolServiceV0Client, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq ListPoolRequest
+	var metadata runtime.ServerMetadata
+
+	msg, err := client.ListPool(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
 // RegisterNetworkServiceV0HandlerFromEndpoint is same as RegisterNetworkServiceV0Handler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
 func RegisterNetworkServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
@@ -423,6 +441,35 @@ func RegisterNetworkServiceV0HandlerFromEndpoint(ctx context.Context, mux *runti
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
 	client := NewNetworkServiceV0Client(conn)
+
+	mux.Handle("GET", pattern_NetworkServiceV0_ListNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+		if cn, ok := w.(http.CloseNotifier); ok {
+			go func(done <-chan struct{}, closed <-chan bool) {
+				select {
+				case <-done:
+				case <-closed:
+					cancel()
+				}
+			}(ctx.Done(), cn.CloseNotify())
+		}
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_NetworkServiceV0_ListNetwork_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_NetworkServiceV0_ListNetwork_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
 
 	mux.Handle("GET", pattern_NetworkServiceV0_GetEstimatedNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
@@ -660,6 +707,8 @@ func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
+	pattern_NetworkServiceV0_ListNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v0", "network", "list"}, ""))
+
 	pattern_NetworkServiceV0_GetEstimatedNetwork_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v0", "network"}, ""))
 
 	pattern_NetworkServiceV0_DrawIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"api", "v0", "network", "ip", "mask", "drawip"}, ""))
@@ -678,6 +727,8 @@ var (
 )
 
 var (
+	forward_NetworkServiceV0_ListNetwork_0 = runtime.ForwardResponseMessage
+
 	forward_NetworkServiceV0_GetEstimatedNetwork_0 = runtime.ForwardResponseMessage
 
 	forward_NetworkServiceV0_DrawIP_0 = runtime.ForwardResponseMessage
@@ -862,4 +913,74 @@ var (
 	forward_IPServiceV0_DeactivateIP_0 = runtime.ForwardResponseMessage
 
 	forward_IPServiceV0_ListIP_0 = runtime.ForwardResponseMessage
+)
+
+// RegisterPoolServiceV0HandlerFromEndpoint is same as RegisterPoolServiceV0Handler but
+// automatically dials to "endpoint" and closes the connection when "ctx" gets done.
+func RegisterPoolServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+	conn, err := grpc.Dial(endpoint, opts...)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err != nil {
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Printf("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+			return
+		}
+		go func() {
+			<-ctx.Done()
+			if cerr := conn.Close(); cerr != nil {
+				grpclog.Printf("Failed to close conn to %s: %v", endpoint, cerr)
+			}
+		}()
+	}()
+
+	return RegisterPoolServiceV0Handler(ctx, mux, conn)
+}
+
+// RegisterPoolServiceV0Handler registers the http handlers for service PoolServiceV0 to "mux".
+// The handlers forward requests to the grpc endpoint over "conn".
+func RegisterPoolServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	client := NewPoolServiceV0Client(conn)
+
+	mux.Handle("GET", pattern_PoolServiceV0_ListPool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+		if cn, ok := w.(http.CloseNotifier); ok {
+			go func(done <-chan struct{}, closed <-chan bool) {
+				select {
+				case <-done:
+				case <-closed:
+					cancel()
+				}
+			}(ctx.Done(), cn.CloseNotify())
+		}
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_PoolServiceV0_ListPool_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_PoolServiceV0_ListPool_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	return nil
+}
+
+var (
+	pattern_PoolServiceV0_ListPool_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"api", "v0", "pool", "list"}, ""))
+)
+
+var (
+	forward_PoolServiceV0_ListPool_0 = runtime.ForwardResponseMessage
 )
