@@ -71,6 +71,22 @@ const (
         ]
       }
     },
+    "/api/v0/ip/temporary_reserved/list": {
+      "get": {
+        "operationId": "ListTemporaryReservedIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbListTemporaryReservedIPResponse"
+            }
+          }
+        },
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
     "/api/v0/ip/{ip}/activate": {
       "post": {
         "operationId": "ActivateIP",
@@ -708,6 +724,17 @@ const (
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelPool"
+          }
+        }
+      }
+    },
+    "serverpbListTemporaryReservedIPResponse": {
+      "type": "object",
+      "properties": {
+        "temporary_reserved_ips": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelIPAddr"
           }
         }
       }

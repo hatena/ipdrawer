@@ -2246,6 +2246,180 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a ListTemporaryReservedIPRequest. */
+    interface IListTemporaryReservedIPRequest {
+    }
+
+    /** Represents a ListTemporaryReservedIPRequest. */
+    class ListTemporaryReservedIPRequest {
+
+        /**
+         * Constructs a new ListTemporaryReservedIPRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListTemporaryReservedIPRequest);
+
+        /**
+         * Creates a new ListTemporaryReservedIPRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListTemporaryReservedIPRequest instance
+         */
+        public static create(properties?: serverpb.IListTemporaryReservedIPRequest): serverpb.ListTemporaryReservedIPRequest;
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPRequest message. Does not implicitly {@link serverpb.ListTemporaryReservedIPRequest.verify|verify} messages.
+         * @param message ListTemporaryReservedIPRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListTemporaryReservedIPRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPRequest message, length delimited. Does not implicitly {@link serverpb.ListTemporaryReservedIPRequest.verify|verify} messages.
+         * @param message ListTemporaryReservedIPRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListTemporaryReservedIPRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListTemporaryReservedIPRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListTemporaryReservedIPRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListTemporaryReservedIPRequest;
+
+        /**
+         * Decodes a ListTemporaryReservedIPRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListTemporaryReservedIPRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListTemporaryReservedIPRequest;
+
+        /**
+         * Verifies a ListTemporaryReservedIPRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListTemporaryReservedIPRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListTemporaryReservedIPRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListTemporaryReservedIPRequest;
+
+        /**
+         * Creates a plain object from a ListTemporaryReservedIPRequest message. Also converts values to other types if specified.
+         * @param message ListTemporaryReservedIPRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListTemporaryReservedIPRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListTemporaryReservedIPRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a ListTemporaryReservedIPResponse. */
+    interface IListTemporaryReservedIPResponse {
+
+        /** ListTemporaryReservedIPResponse temporaryReservedIps */
+        temporaryReservedIps?: model.IIPAddr[];
+    }
+
+    /** Represents a ListTemporaryReservedIPResponse. */
+    class ListTemporaryReservedIPResponse {
+
+        /**
+         * Constructs a new ListTemporaryReservedIPResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IListTemporaryReservedIPResponse);
+
+        /** ListTemporaryReservedIPResponse temporaryReservedIps. */
+        public temporaryReservedIps: model.IIPAddr[];
+
+        /**
+         * Creates a new ListTemporaryReservedIPResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns ListTemporaryReservedIPResponse instance
+         */
+        public static create(properties?: serverpb.IListTemporaryReservedIPResponse): serverpb.ListTemporaryReservedIPResponse;
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPResponse message. Does not implicitly {@link serverpb.ListTemporaryReservedIPResponse.verify|verify} messages.
+         * @param message ListTemporaryReservedIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IListTemporaryReservedIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPResponse message, length delimited. Does not implicitly {@link serverpb.ListTemporaryReservedIPResponse.verify|verify} messages.
+         * @param message ListTemporaryReservedIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IListTemporaryReservedIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a ListTemporaryReservedIPResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns ListTemporaryReservedIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ListTemporaryReservedIPResponse;
+
+        /**
+         * Decodes a ListTemporaryReservedIPResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns ListTemporaryReservedIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ListTemporaryReservedIPResponse;
+
+        /**
+         * Verifies a ListTemporaryReservedIPResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a ListTemporaryReservedIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns ListTemporaryReservedIPResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.ListTemporaryReservedIPResponse;
+
+        /**
+         * Creates a plain object from a ListTemporaryReservedIPResponse message. Also converts values to other types if specified.
+         * @param message ListTemporaryReservedIPResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.ListTemporaryReservedIPResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this ListTemporaryReservedIPResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a ListPoolRequest. */
     interface IListPoolRequest {
     }
@@ -2666,6 +2840,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public listIP(request: serverpb.IListIPRequest): Promise<serverpb.ListIPResponse>;
+
+        /**
+         * Calls ListTemporaryReservedIP.
+         * @param request ListTemporaryReservedIPRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and ListTemporaryReservedIPResponse
+         */
+        public listTemporaryReservedIP(request: serverpb.IListTemporaryReservedIPRequest, callback: serverpb.IPServiceV0.ListTemporaryReservedIPCallback): void;
+
+        /**
+         * Calls ListTemporaryReservedIP.
+         * @param request ListTemporaryReservedIPRequest message or plain object
+         * @returns Promise
+         */
+        public listTemporaryReservedIP(request: serverpb.IListTemporaryReservedIPRequest): Promise<serverpb.ListTemporaryReservedIPResponse>;
     }
 
     namespace IPServiceV0 {
@@ -2697,6 +2885,13 @@ export namespace serverpb {
          * @param [response] ListIPResponse
          */
         type ListIPCallback = (error: (Error|null), response?: serverpb.ListIPResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.IPServiceV0#listTemporaryReservedIP}.
+         * @param error Error, if any
+         * @param [response] ListTemporaryReservedIPResponse
+         */
+        type ListTemporaryReservedIPCallback = (error: (Error|null), response?: serverpb.ListTemporaryReservedIPResponse) => void;
     }
 
     /** Represents a PoolServiceV0 */

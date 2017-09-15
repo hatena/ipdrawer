@@ -5154,6 +5154,372 @@ $root.serverpb = (function() {
         return ListIPResponse;
     })();
 
+    serverpb.ListTemporaryReservedIPRequest = (function() {
+
+        /**
+         * Properties of a ListTemporaryReservedIPRequest.
+         * @memberof serverpb
+         * @interface IListTemporaryReservedIPRequest
+         */
+
+        /**
+         * Constructs a new ListTemporaryReservedIPRequest.
+         * @memberof serverpb
+         * @classdesc Represents a ListTemporaryReservedIPRequest.
+         * @constructor
+         * @param {serverpb.IListTemporaryReservedIPRequest=} [properties] Properties to set
+         */
+        function ListTemporaryReservedIPRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new ListTemporaryReservedIPRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPRequest=} [properties] Properties to set
+         * @returns {serverpb.ListTemporaryReservedIPRequest} ListTemporaryReservedIPRequest instance
+         */
+        ListTemporaryReservedIPRequest.create = function create(properties) {
+            return new ListTemporaryReservedIPRequest(properties);
+        };
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPRequest message. Does not implicitly {@link serverpb.ListTemporaryReservedIPRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPRequest} message ListTemporaryReservedIPRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListTemporaryReservedIPRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPRequest message, length delimited. Does not implicitly {@link serverpb.ListTemporaryReservedIPRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPRequest} message ListTemporaryReservedIPRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListTemporaryReservedIPRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListTemporaryReservedIPRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListTemporaryReservedIPRequest} ListTemporaryReservedIPRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListTemporaryReservedIPRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListTemporaryReservedIPRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListTemporaryReservedIPRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListTemporaryReservedIPRequest} ListTemporaryReservedIPRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListTemporaryReservedIPRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListTemporaryReservedIPRequest message.
+         * @function verify
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListTemporaryReservedIPRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a ListTemporaryReservedIPRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListTemporaryReservedIPRequest} ListTemporaryReservedIPRequest
+         */
+        ListTemporaryReservedIPRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListTemporaryReservedIPRequest)
+                return object;
+            return new $root.serverpb.ListTemporaryReservedIPRequest();
+        };
+
+        /**
+         * Creates a plain object from a ListTemporaryReservedIPRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @static
+         * @param {serverpb.ListTemporaryReservedIPRequest} message ListTemporaryReservedIPRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListTemporaryReservedIPRequest.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this ListTemporaryReservedIPRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListTemporaryReservedIPRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListTemporaryReservedIPRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListTemporaryReservedIPRequest;
+    })();
+
+    serverpb.ListTemporaryReservedIPResponse = (function() {
+
+        /**
+         * Properties of a ListTemporaryReservedIPResponse.
+         * @memberof serverpb
+         * @interface IListTemporaryReservedIPResponse
+         * @property {Array.<model.IIPAddr>} [temporaryReservedIps] ListTemporaryReservedIPResponse temporaryReservedIps
+         */
+
+        /**
+         * Constructs a new ListTemporaryReservedIPResponse.
+         * @memberof serverpb
+         * @classdesc Represents a ListTemporaryReservedIPResponse.
+         * @constructor
+         * @param {serverpb.IListTemporaryReservedIPResponse=} [properties] Properties to set
+         */
+        function ListTemporaryReservedIPResponse(properties) {
+            this.temporaryReservedIps = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * ListTemporaryReservedIPResponse temporaryReservedIps.
+         * @member {Array.<model.IIPAddr>}temporaryReservedIps
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @instance
+         */
+        ListTemporaryReservedIPResponse.prototype.temporaryReservedIps = $util.emptyArray;
+
+        /**
+         * Creates a new ListTemporaryReservedIPResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPResponse=} [properties] Properties to set
+         * @returns {serverpb.ListTemporaryReservedIPResponse} ListTemporaryReservedIPResponse instance
+         */
+        ListTemporaryReservedIPResponse.create = function create(properties) {
+            return new ListTemporaryReservedIPResponse(properties);
+        };
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPResponse message. Does not implicitly {@link serverpb.ListTemporaryReservedIPResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPResponse} message ListTemporaryReservedIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListTemporaryReservedIPResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.temporaryReservedIps != null && message.temporaryReservedIps.length)
+                for (var i = 0; i < message.temporaryReservedIps.length; ++i)
+                    $root.model.IPAddr.encode(message.temporaryReservedIps[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified ListTemporaryReservedIPResponse message, length delimited. Does not implicitly {@link serverpb.ListTemporaryReservedIPResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {serverpb.IListTemporaryReservedIPResponse} message ListTemporaryReservedIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        ListTemporaryReservedIPResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a ListTemporaryReservedIPResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.ListTemporaryReservedIPResponse} ListTemporaryReservedIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListTemporaryReservedIPResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ListTemporaryReservedIPResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.temporaryReservedIps && message.temporaryReservedIps.length))
+                        message.temporaryReservedIps = [];
+                    message.temporaryReservedIps.push($root.model.IPAddr.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a ListTemporaryReservedIPResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.ListTemporaryReservedIPResponse} ListTemporaryReservedIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        ListTemporaryReservedIPResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a ListTemporaryReservedIPResponse message.
+         * @function verify
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        ListTemporaryReservedIPResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.temporaryReservedIps != null && message.hasOwnProperty("temporaryReservedIps")) {
+                if (!Array.isArray(message.temporaryReservedIps))
+                    return "temporaryReservedIps: array expected";
+                for (var i = 0; i < message.temporaryReservedIps.length; ++i) {
+                    var error = $root.model.IPAddr.verify(message.temporaryReservedIps[i]);
+                    if (error)
+                        return "temporaryReservedIps." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a ListTemporaryReservedIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.ListTemporaryReservedIPResponse} ListTemporaryReservedIPResponse
+         */
+        ListTemporaryReservedIPResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.ListTemporaryReservedIPResponse)
+                return object;
+            var message = new $root.serverpb.ListTemporaryReservedIPResponse();
+            if (object.temporaryReservedIps) {
+                if (!Array.isArray(object.temporaryReservedIps))
+                    throw TypeError(".serverpb.ListTemporaryReservedIPResponse.temporaryReservedIps: array expected");
+                message.temporaryReservedIps = [];
+                for (var i = 0; i < object.temporaryReservedIps.length; ++i) {
+                    if (typeof object.temporaryReservedIps[i] !== "object")
+                        throw TypeError(".serverpb.ListTemporaryReservedIPResponse.temporaryReservedIps: object expected");
+                    message.temporaryReservedIps[i] = $root.model.IPAddr.fromObject(object.temporaryReservedIps[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a ListTemporaryReservedIPResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @static
+         * @param {serverpb.ListTemporaryReservedIPResponse} message ListTemporaryReservedIPResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        ListTemporaryReservedIPResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.temporaryReservedIps = [];
+            if (message.temporaryReservedIps && message.temporaryReservedIps.length) {
+                object.temporaryReservedIps = [];
+                for (var j = 0; j < message.temporaryReservedIps.length; ++j)
+                    object.temporaryReservedIps[j] = $root.model.IPAddr.toObject(message.temporaryReservedIps[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this ListTemporaryReservedIPResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.ListTemporaryReservedIPResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        ListTemporaryReservedIPResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return ListTemporaryReservedIPResponse;
+    })();
+
     serverpb.ListPoolRequest = (function() {
 
         /**
@@ -5947,6 +6313,39 @@ $root.serverpb = (function() {
          * @instance
          * @param {serverpb.IListIPRequest} request ListIPRequest message or plain object
          * @returns {Promise<serverpb.ListIPResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.IPServiceV0#listTemporaryReservedIP}.
+         * @memberof serverpb.IPServiceV0
+         * @typedef ListTemporaryReservedIPCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.ListTemporaryReservedIPResponse} [response] ListTemporaryReservedIPResponse
+         */
+
+        /**
+         * Calls ListTemporaryReservedIP.
+         * @function .listTemporaryReservedIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {serverpb.IListTemporaryReservedIPRequest} request ListTemporaryReservedIPRequest message or plain object
+         * @param {serverpb.IPServiceV0.ListTemporaryReservedIPCallback} callback Node-style callback called with the error, if any, and ListTemporaryReservedIPResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        IPServiceV0.prototype.listTemporaryReservedIP = function listTemporaryReservedIP(request, callback) {
+            return this.rpcCall(listTemporaryReservedIP, $root.serverpb.ListTemporaryReservedIPRequest, $root.serverpb.ListTemporaryReservedIPResponse, request, callback);
+        };
+
+        /**
+         * Calls ListTemporaryReservedIP.
+         * @function listTemporaryReservedIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {serverpb.IListTemporaryReservedIPRequest} request ListTemporaryReservedIPRequest message or plain object
+         * @returns {Promise<serverpb.ListTemporaryReservedIPResponse>} Promise
          * @variation 2
          */
 

@@ -92,11 +92,18 @@ message ListIPResponse {
   repeated model.IPAddr ips = 1;
 }
 
+message ListTemporaryReservedIPRequest {}
+
+message ListTemporaryReservedIPResponse {
+  repeated model.IPAddr temporary_reserved_ips = 1;
+}
+
 message ListPoolRequest {}
 
 message ListPoolResponse {
   repeated model.Pool pools = 1;
 }
+
 
 service NetworkServiceV0 {
 
@@ -176,6 +183,12 @@ service IPServiceV0 {
   rpc ListIP (ListIPRequest) returns (ListIPResponse) {
     option (google.api.http) = {
       get: "/api/v0/ip/list"
+    };
+  };
+
+  rpc ListTemporaryReservedIP (ListTemporaryReservedIPRequest) returns (ListTemporaryReservedIPResponse) {
+    option (google.api.http) = {
+      get: "/api/v0/ip/temporary_reserved/list"
     };
   };
 

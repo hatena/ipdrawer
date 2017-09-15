@@ -49,6 +49,14 @@ func makeIPTempReserved(ip net.IP) string {
 	return fmt.Sprintf(ipTempReserved, ip.String())
 }
 
+func makeTempReservedIPListPattern() string {
+	return strings.Replace(ipTempReserved, "%s", "*", 1)
+}
+
+func parseTempReservedIPKey(key string) (net.IP, error) {
+	return parseIPDetailsKey(key)
+}
+
 func makeNetworkListKey() string {
 	return networkList
 }

@@ -396,6 +396,23 @@ func (api *APIServer) ListIP(
 	}, nil
 }
 
+func (api *APIServer) ListTemporaryReservedIP(
+	ctx context.Context,
+	req *serverpb.ListTemporaryReservedIPRequest,
+) (*serverpb.ListTemporaryReservedIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	addrs, err := api.manager.GetTemporaryReservedIPs(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get ip list")
+	}
+	return &serverpb.ListTemporaryReservedIPResponse{
+		TemporaryReservedIps: addrs,
+	}, nil
+}
+
 func (api *APIServer) ListPool(
 	ctx context.Context,
 	req *serverpb.ListPoolRequest,

@@ -25,6 +25,7 @@ Class | Method | HTTP request | Description
 *IPServiceV0Api* | [**DeactivateIP**](docs/IPServiceV0Api.md#deactivateip) | **Post** /api/v0/ip/{ip}/deactivate | 
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
 *IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 
+*IPServiceV0Api* | [**ListTemporaryReservedIP**](docs/IPServiceV0Api.md#listtemporaryreservedip) | **Get** /api/v0/ip/temporary_reserved/list | 
 *NetworkServiceV0Api* | [**CreateNetwork**](docs/NetworkServiceV0Api.md#createnetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 *NetworkServiceV0Api* | [**CreatePool**](docs/NetworkServiceV0Api.md#createpool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
@@ -58,6 +59,7 @@ Class | Method | HTTP request | Description
  - [ServerpbListIpResponse](docs/ServerpbListIpResponse.md)
  - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
+ - [ServerpbListTemporaryReservedIpResponse](docs/ServerpbListTemporaryReservedIpResponse.md)
 
 
 ## Documentation For Authorization

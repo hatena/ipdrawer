@@ -283,6 +283,30 @@ func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
 	return addrs, nil
 }
 
+// GetTemporaryReservedIPs returns all temporary reserved ips.
+func (m *IPManager) GetTemporaryReservedIPs(ctx context.Context) ([]*model.IPAddr, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetTemporaryReservedIPs")
+	defer span.Finish()
+
+	keys, err := m.redis.Client.Keys(makeTempReservedIPListPattern()).Result()
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to fetch IP list keys")
+	}
+
+	addrs := make([]*model.IPAddr, len(keys))
+	for i, key := range keys {
+		ip, err := parseTempReservedIPKey(key)
+		if err != nil {
+			return nil, errors.Wrapf(err, "Parse failed: %s", key)
+		}
+		addrs[i] = &model.IPAddr{
+			Ip:     ip.String(),
+			Status: model.IPAddr_TEMPORARY_RESERVED,
+		}
+	}
+	return addrs, nil
+}
+
 // GetNetworks returns all network.
 func (m *IPManager) GetNetworks(ctx context.Context) ([]*model.Network, error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetNetworks")
