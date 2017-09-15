@@ -27,6 +27,8 @@ It has these top-level messages:
 	CreatePoolResponse
 	ListIPRequest
 	ListIPResponse
+	ListTemporaryReservedIPRequest
+	ListTemporaryReservedIPResponse
 	ListPoolRequest
 	ListPoolResponse
 */
@@ -197,6 +199,19 @@ func (this *ListIPResponse) Validate() error {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
 				return github_com_mwitkow_go_proto_validators.FieldError("Ips", err)
+			}
+		}
+	}
+	return nil
+}
+func (this *ListTemporaryReservedIPRequest) Validate() error {
+	return nil
+}
+func (this *ListTemporaryReservedIPResponse) Validate() error {
+	for _, item := range this.TemporaryReservedIps {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("TemporaryReservedIps", err)
 			}
 		}
 	}

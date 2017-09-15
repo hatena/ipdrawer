@@ -34,8 +34,18 @@ const poolReducer = handleActions<Pool[], any>({
   }
 }, []);
 
+const temporaryReservedIPsReducer = handleActions<IPAddr[], any>({
+  [Actions.REQUEST_LIST_TEMP_RESERVED_IPS]: (state, action) => {
+    return state;
+  },
+  [Actions.RECEIVE_LIST_TEMP_RESERVED_IPS]: (state, action) => {
+    return action.payload.temporary_reserved_ips;
+  }
+}, []);
+
 export default combineReducers<IPAMStoreState>({
   ips: ipaddrReducer,
   networks: networkReducer,
   pools: poolReducer,
+  temporaryReservedIPs: temporaryReservedIPsReducer,
 });

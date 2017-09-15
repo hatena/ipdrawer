@@ -25,7 +25,7 @@ const styleSheet = createStyleSheet('BasicTable', theme => ({
 namespace IPAddrTable {
   export interface Props {
     ips: IPAddr[]
-    actions: typeof IPAddrActions
+    fetchIPAction: any
     classes: any
   }
 
@@ -36,7 +36,7 @@ namespace IPAddrTable {
 
 class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> {
   componentWillMount() {
-    this.props.actions.fetchIPAddrs();
+    this.props.fetchIPAction();
   }
 
   render() {

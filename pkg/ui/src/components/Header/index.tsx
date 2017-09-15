@@ -81,6 +81,14 @@ class Header extends React.Component<Header.Props, Header.State> {
               <ListItemText primary="IPAddr" />
             </ListItem>
           </Link>
+          <Link to="/ui/temp_reserved_ip">
+            <ListItem button>
+              <ListItemIcon>
+                <ListIcon />
+              </ListItemIcon>
+              <ListItemText primary="Temporary Reserved IPAddr" />
+            </ListItem>
+          </Link>
         </List>
       </div>
     );

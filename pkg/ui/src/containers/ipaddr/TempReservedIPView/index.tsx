@@ -4,11 +4,11 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 
-import { AdminUIState } from "../../reducers/index";
-import * as IPAddrActions from '../../actions/ipaddr';
-import { model } from "../../proto/protos";
+import { AdminUIState } from "../../../reducers/index";
+import * as IPAddrActions from '../../../actions/ipaddr';
+import { model } from "../../../proto/protos";
 import IPAddr = model.IPAddr;
-import { IPAddrTable } from './IPAddrTable';
+import { IPAddrTable } from '../IPAddrTable';
 
 const styleSheet = createStyleSheet('BasicTable', theme => ({
   paper: {
@@ -24,9 +24,9 @@ const styleSheet = createStyleSheet('BasicTable', theme => ({
   }
 }));
 
-namespace IPAddrView {
+namespace TempReservedIPView {
   export interface Props extends RouteComponentProps<void> {
-    ips: IPAddr[]
+    tempReservedIPs: IPAddr[]
     actions: typeof IPAddrActions
     classes: any
   }
@@ -36,23 +36,22 @@ namespace IPAddrView {
   }
 }
 
-class IPAddrView extends React.Component<IPAddrView.Props, IPAddrView.State> {
+class TempReservedIPView extends React.Component<TempReservedIPView.Props, TempReservedIPView.State> {
   render() {
-    const { classes } = this.props;
-    const ips = this.props.ips;
+    const { classes, tempReservedIPs } = this.props;
 
     return (
-      <IPAddrTable ips={ips} fetchIPAction={this.props.actions.fetchIPAddrs}/>
+      <IPAddrTable ips={tempReservedIPs} fetchIPAction={this.props.actions.fetchTempReservedIPs}/>
     );
   }
 }
 
-const styledIPAddrView = withStyles(styleSheet)(IPAddrView);
+const styledIPAddrView = withStyles(styleSheet)(TempReservedIPView);
 
 const ipaddrViewConnected = connect(
   (state: AdminUIState) => {
     return {
-      ips: state.ipam.ips
+      tempReservedIPs: state.ipam.temporaryReservedIPs
     }
   },
   (dispatch) =>{
@@ -63,5 +62,5 @@ const ipaddrViewConnected = connect(
 )(styledIPAddrView);
 
 export {
-  ipaddrViewConnected as IPAddrView
+  ipaddrViewConnected as TempReservedIPView
 }

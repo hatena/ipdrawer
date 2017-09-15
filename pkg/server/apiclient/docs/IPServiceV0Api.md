@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**DeactivateIP**](IPServiceV0Api.md#DeactivateIP) | **Post** /api/v0/ip/{ip}/deactivate | 
 [**GetNetworkIncludingIP**](IPServiceV0Api.md#GetNetworkIncludingIP) | **Get** /api/v0/ip/{ip}/network | 
 [**ListIP**](IPServiceV0Api.md#ListIP) | **Get** /api/v0/ip/list | 
+[**ListTemporaryReservedIP**](IPServiceV0Api.md#ListTemporaryReservedIP) | **Get** /api/v0/ip/temporary_reserved/list | 
 
 
 # **ActivateIP**
@@ -104,6 +105,30 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ServerpbListIpResponse**](serverpbListIPResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **ListTemporaryReservedIP**
+> ServerpbListTemporaryReservedIpResponse ListTemporaryReservedIP()
+
+
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ServerpbListTemporaryReservedIpResponse**](serverpbListTemporaryReservedIPResponse.md)
 
 ### Authorization
 

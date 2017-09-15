@@ -7,4 +7,5 @@ declare interface IPAMStoreState {
   ips?: IPAddr[];
   networks?: Network[];
   pools?: Pool[];
+  temporaryReservedIPs?: IPAddr[];
 }
