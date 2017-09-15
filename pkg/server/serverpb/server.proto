@@ -72,6 +72,7 @@ message CreateNetworkRequest {
   int32 mask = 2;
   repeated string default_gateways = 3;
   repeated model.Tag tags = 4;
+  model.Network.Status status = 5;
 }
 
 message CreateNetworkResponse {}

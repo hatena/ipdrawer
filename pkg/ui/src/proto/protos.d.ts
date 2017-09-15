@@ -1702,6 +1702,9 @@ export namespace serverpb {
 
         /** CreateNetworkRequest tags */
         tags?: model.ITag[];
+
+        /** CreateNetworkRequest status */
+        status?: model.Network.Status;
     }
 
     /** Represents a CreateNetworkRequest. */
@@ -1724,6 +1727,9 @@ export namespace serverpb {
 
         /** CreateNetworkRequest tags. */
         public tags: model.ITag[];
+
+        /** CreateNetworkRequest status. */
+        public status: model.Network.Status;
 
         /**
          * Creates a new CreateNetworkRequest instance using the specified properties.

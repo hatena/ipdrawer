@@ -3912,6 +3912,7 @@ $root.serverpb = (function() {
          * @property {number} [mask] CreateNetworkRequest mask
          * @property {Array.<string>} [defaultGateways] CreateNetworkRequest defaultGateways
          * @property {Array.<model.ITag>} [tags] CreateNetworkRequest tags
+         * @property {model.Network.Status} [status] CreateNetworkRequest status
          */
 
         /**
@@ -3963,6 +3964,14 @@ $root.serverpb = (function() {
         CreateNetworkRequest.prototype.tags = $util.emptyArray;
 
         /**
+         * CreateNetworkRequest status.
+         * @member {model.Network.Status}status
+         * @memberof serverpb.CreateNetworkRequest
+         * @instance
+         */
+        CreateNetworkRequest.prototype.status = 0;
+
+        /**
          * Creates a new CreateNetworkRequest instance using the specified properties.
          * @function create
          * @memberof serverpb.CreateNetworkRequest
@@ -3996,6 +4005,8 @@ $root.serverpb = (function() {
             if (message.tags != null && message.tags.length)
                 for (var i = 0; i < message.tags.length; ++i)
                     $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.status);
             return writer;
         };
 
@@ -4045,6 +4056,9 @@ $root.serverpb = (function() {
                     if (!(message.tags && message.tags.length))
                         message.tags = [];
                     message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
+                    break;
+                case 5:
+                    message.status = reader.int32();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -4103,6 +4117,15 @@ $root.serverpb = (function() {
                         return "tags." + error;
                 }
             }
+            if (message.status != null && message.hasOwnProperty("status"))
+                switch (message.status) {
+                default:
+                    return "status: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                    break;
+                }
             return null;
         };
 
@@ -4139,6 +4162,20 @@ $root.serverpb = (function() {
                     message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
                 }
             }
+            switch (object.status) {
+            case "UNKNOWN":
+            case 0:
+                message.status = 0;
+                break;
+            case "AVAILABLE":
+            case 1:
+                message.status = 1;
+                break;
+            case "RESERVED":
+            case 2:
+                message.status = 2;
+                break;
+            }
             return message;
         };
 
@@ -4162,6 +4199,7 @@ $root.serverpb = (function() {
             if (options.defaults) {
                 object.ip = "";
                 object.mask = 0;
+                object.status = options.enums === String ? "UNKNOWN" : 0;
             }
             if (message.ip != null && message.hasOwnProperty("ip"))
                 object.ip = message.ip;
@@ -4177,6 +4215,8 @@ $root.serverpb = (function() {
                 for (var j = 0; j < message.tags.length; ++j)
                     object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
             }
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = options.enums === String ? $root.model.Network.Status[message.status] : message.status;
             return object;
         };
 

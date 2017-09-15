@@ -18,4 +18,6 @@ type ServerpbCreateNetworkRequest struct {
 	DefaultGateways []string `json:"default_gateways,omitempty"`
 
 	Tags []ModelTag `json:"tags,omitempty"`
+
+	Status ModelNetworkStatus `json:"status,omitempty"`
 }
