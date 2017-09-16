@@ -337,3 +337,10 @@ func (m *IPManager) GetPools(ctx context.Context) ([]*model.Pool, error) {
 	}
 	return pools, nil
 }
+
+func (m *IPManager) GetPool(ctx context.Context, s net.IP, e net.IP) (*model.Pool, error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.GetPool")
+	defer span.Finish()
+
+	return getPool(m.redis, s, e)
+}

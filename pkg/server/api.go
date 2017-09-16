@@ -429,3 +429,35 @@ func (api *APIServer) ListPool(
 		Pools: pools,
 	}, nil
 }
+
+// GetIPInPool is an endpoint to get IPs in a given pool.
+func (api *APIServer) GetIPInPool(
+	ctx context.Context,
+	req *serverpb.GetIPInPoolRequest,
+) (*serverpb.GetIPInPoolResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	pool, err := api.manager.GetPool(ctx, net.ParseIP(req.RangeStart), net.ParseIP(req.RangeEnd))
+	if err != nil {
+		return nil, status.Error(codes.NotFound, err.Error())
+	}
+
+	addrs, err := api.manager.ListIP(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "Manager can't get ip list")
+	}
+
+	ret := make([]*model.IPAddr, 0)
+	for _, ip := range addrs {
+		if pool.Contains(net.ParseIP(ip.Ip)) {
+			ret = append(ret, ip)
+		}
+	}
+
+	return &serverpb.GetIPInPoolResponse{
+		Pool: pool,
+		Ips:  ret,
+	}, nil
+}

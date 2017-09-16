@@ -260,3 +260,43 @@ func TestListNetworks(t *testing.T) {
 		t.Errorf("Got wrong network %v; want %v", resp.Networks[0], testNetwork)
 	}
 }
+
+func TestGetIPInPool(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	err := te.manager.CreatePool(te.ctx, testNetwork, testPool)
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+
+	ips := []*model.IPAddr{
+		{
+			Ip:     "192.168.0.5",
+			Status: model.IPAddr_ACTIVE,
+		},
+		{
+			Ip:     "10.0.0.5",
+			Status: model.IPAddr_ACTIVE,
+		},
+	}
+	for _, ip := range ips {
+		te.manager.Activate(te.ctx, []*model.Pool{testPool}, ip)
+	}
+
+	resp, err := te.api.GetIPInPool(te.ctx, &serverpb.GetIPInPoolRequest{
+		RangeStart: testPool.Start,
+		RangeEnd:   testPool.End,
+	})
+
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+
+	if len(resp.Ips) != 1 {
+		t.Errorf("Got wrong number of ips %d; want 1", len(resp.Ips))
+	}
+	if !resp.Ips[0].Equal(ips[0]) {
+		t.Errorf("Got wrong ips %v; want %v", resp.Ips[0], ips[0])
+	}
+}
