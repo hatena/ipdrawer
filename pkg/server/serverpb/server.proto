@@ -104,6 +104,16 @@ message ListPoolResponse {
   repeated model.Pool pools = 1;
 }
 
+message GetIPInPoolRequest {
+  string range_start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string range_end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+}
+
+message GetIPInPoolResponse {
+  model.Pool pool = 1;
+  repeated model.IPAddr ips = 2;
+}
+
 
 service NetworkServiceV0 {
 
@@ -199,6 +209,12 @@ service PoolServiceV0 {
   rpc ListPool (ListPoolRequest) returns (ListPoolResponse) {
     option (google.api.http) = {
       get: "/api/v0/pool/list"
+    };
+  };
+
+  rpc GetIPInPool(GetIPInPoolRequest) returns (GetIPInPoolResponse) {
+    option (google.api.http) = {
+      get: "/api/v0/pool/{range_start}/{range_end}/ip"
     };
   };
 

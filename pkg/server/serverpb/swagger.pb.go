@@ -480,6 +480,36 @@ const (
           "PoolServiceV0"
         ]
       }
+    },
+    "/api/v0/pool/{range_start}/{range_end}/ip": {
+      "get": {
+        "operationId": "GetIPInPool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbGetIPInPoolResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "range_start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
     }
   },
   "definitions": {
@@ -666,6 +696,20 @@ const (
         },
         "message": {
           "type": "string"
+        }
+      }
+    },
+    "serverpbGetIPInPoolResponse": {
+      "type": "object",
+      "properties": {
+        "pool": {
+          "$ref": "#/definitions/modelPool"
+        },
+        "ips": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelIPAddr"
+          }
         }
       }
     },

@@ -31,6 +31,8 @@ It has these top-level messages:
 	ListTemporaryReservedIPResponse
 	ListPoolRequest
 	ListPoolResponse
+	GetIPInPoolRequest
+	GetIPInPoolResponse
 */
 package serverpb
 
@@ -225,6 +227,34 @@ func (this *ListPoolResponse) Validate() error {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
 				return github_com_mwitkow_go_proto_validators.FieldError("Pools", err)
+			}
+		}
+	}
+	return nil
+}
+
+var _regex_GetIPInPoolRequest_RangeStart = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_GetIPInPoolRequest_RangeEnd = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
+func (this *GetIPInPoolRequest) Validate() error {
+	if !_regex_GetIPInPoolRequest_RangeStart.MatchString(this.RangeStart) {
+		return github_com_mwitkow_go_proto_validators.FieldError("RangeStart", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.RangeStart))
+	}
+	if !_regex_GetIPInPoolRequest_RangeEnd.MatchString(this.RangeEnd) {
+		return github_com_mwitkow_go_proto_validators.FieldError("RangeEnd", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.RangeEnd))
+	}
+	return nil
+}
+func (this *GetIPInPoolResponse) Validate() error {
+	if this.Pool != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.Pool); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("Pool", err)
+		}
+	}
+	for _, item := range this.Ips {
+		if item != nil {
+			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
+				return github_com_mwitkow_go_proto_validators.FieldError("Ips", err)
 			}
 		}
 	}
