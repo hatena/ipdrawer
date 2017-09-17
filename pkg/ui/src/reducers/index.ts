@@ -1,11 +1,13 @@
 import { combineReducers, Reducer } from 'redux';
-import ipam from './ipam';
-import { IPAMStoreState } from "../../types/ipam";
+
+import apiReducersReducer from './apiReducers';
+import * as apireducers from "./apiReducers";
+
 
 export interface AdminUIState {
-  ipam: IPAMStoreState;
+  cachedData: apireducers.APIReducersState;
 }
 
 export default combineReducers<AdminUIState>({
-  ipam
+  cachedData: apiReducersReducer,
 });

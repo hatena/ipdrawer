@@ -2594,6 +2594,198 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a GetIPInPoolRequest. */
+    interface IGetIPInPoolRequest {
+
+        /** GetIPInPoolRequest rangeStart */
+        rangeStart?: string;
+
+        /** GetIPInPoolRequest rangeEnd */
+        rangeEnd?: string;
+    }
+
+    /** Represents a GetIPInPoolRequest. */
+    class GetIPInPoolRequest {
+
+        /**
+         * Constructs a new GetIPInPoolRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IGetIPInPoolRequest);
+
+        /** GetIPInPoolRequest rangeStart. */
+        public rangeStart: string;
+
+        /** GetIPInPoolRequest rangeEnd. */
+        public rangeEnd: string;
+
+        /**
+         * Creates a new GetIPInPoolRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetIPInPoolRequest instance
+         */
+        public static create(properties?: serverpb.IGetIPInPoolRequest): serverpb.GetIPInPoolRequest;
+
+        /**
+         * Encodes the specified GetIPInPoolRequest message. Does not implicitly {@link serverpb.GetIPInPoolRequest.verify|verify} messages.
+         * @param message GetIPInPoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IGetIPInPoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetIPInPoolRequest message, length delimited. Does not implicitly {@link serverpb.GetIPInPoolRequest.verify|verify} messages.
+         * @param message GetIPInPoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IGetIPInPoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetIPInPoolRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetIPInPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.GetIPInPoolRequest;
+
+        /**
+         * Decodes a GetIPInPoolRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetIPInPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.GetIPInPoolRequest;
+
+        /**
+         * Verifies a GetIPInPoolRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetIPInPoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetIPInPoolRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.GetIPInPoolRequest;
+
+        /**
+         * Creates a plain object from a GetIPInPoolRequest message. Also converts values to other types if specified.
+         * @param message GetIPInPoolRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.GetIPInPoolRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetIPInPoolRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a GetIPInPoolResponse. */
+    interface IGetIPInPoolResponse {
+
+        /** GetIPInPoolResponse pool */
+        pool?: model.IPool;
+
+        /** GetIPInPoolResponse ips */
+        ips?: model.IIPAddr[];
+    }
+
+    /** Represents a GetIPInPoolResponse. */
+    class GetIPInPoolResponse {
+
+        /**
+         * Constructs a new GetIPInPoolResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IGetIPInPoolResponse);
+
+        /** GetIPInPoolResponse pool. */
+        public pool?: (model.IPool|null);
+
+        /** GetIPInPoolResponse ips. */
+        public ips: model.IIPAddr[];
+
+        /**
+         * Creates a new GetIPInPoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetIPInPoolResponse instance
+         */
+        public static create(properties?: serverpb.IGetIPInPoolResponse): serverpb.GetIPInPoolResponse;
+
+        /**
+         * Encodes the specified GetIPInPoolResponse message. Does not implicitly {@link serverpb.GetIPInPoolResponse.verify|verify} messages.
+         * @param message GetIPInPoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IGetIPInPoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetIPInPoolResponse message, length delimited. Does not implicitly {@link serverpb.GetIPInPoolResponse.verify|verify} messages.
+         * @param message GetIPInPoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IGetIPInPoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetIPInPoolResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetIPInPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.GetIPInPoolResponse;
+
+        /**
+         * Decodes a GetIPInPoolResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetIPInPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.GetIPInPoolResponse;
+
+        /**
+         * Verifies a GetIPInPoolResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetIPInPoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetIPInPoolResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.GetIPInPoolResponse;
+
+        /**
+         * Creates a plain object from a GetIPInPoolResponse message. Also converts values to other types if specified.
+         * @param message GetIPInPoolResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.GetIPInPoolResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetIPInPoolResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Represents a NetworkServiceV0 */
     class NetworkServiceV0 extends $protobuf.rpc.Service {
 
@@ -2927,6 +3119,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public listPool(request: serverpb.IListPoolRequest): Promise<serverpb.ListPoolResponse>;
+
+        /**
+         * Calls GetIPInPool.
+         * @param request GetIPInPoolRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and GetIPInPoolResponse
+         */
+        public getIPInPool(request: serverpb.IGetIPInPoolRequest, callback: serverpb.PoolServiceV0.GetIPInPoolCallback): void;
+
+        /**
+         * Calls GetIPInPool.
+         * @param request GetIPInPoolRequest message or plain object
+         * @returns Promise
+         */
+        public getIPInPool(request: serverpb.IGetIPInPoolRequest): Promise<serverpb.GetIPInPoolResponse>;
     }
 
     namespace PoolServiceV0 {
@@ -2937,6 +3143,13 @@ export namespace serverpb {
          * @param [response] ListPoolResponse
          */
         type ListPoolCallback = (error: (Error|null), response?: serverpb.ListPoolResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#getIPInPool}.
+         * @param error Error, if any
+         * @param [response] GetIPInPoolResponse
+         */
+        type GetIPInPoolCallback = (error: (Error|null), response?: serverpb.GetIPInPoolResponse) => void;
     }
 }
 

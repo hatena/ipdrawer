@@ -1,14 +1,14 @@
+import * as _ from 'lodash';
 import * as React from "react";
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
 
-import * as NetworkActions from '../../../actions/network';
 import { model } from "../../../proto/protos";
 import Network = model.Network;
 
-const styleSheet = createStyleSheet('BasicTable', theme => ({
+const styleSheet: StyleRulesCallback = theme => ({
   paper: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
@@ -20,12 +20,11 @@ const styleSheet = createStyleSheet('BasicTable', theme => ({
   chip_row: {
     display: 'flex',
   }
-}));
+});
 
 namespace NetworkTable {
   export interface Props {
     networks: Network[]
-    actions: typeof NetworkActions
     classes: any
   }
 
@@ -35,10 +34,6 @@ namespace NetworkTable {
 }
 
 class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.State> {
-  componentWillMount() {
-    this.props.actions.fetchNetworks();
-  }
-
   render() {
     const { classes, networks } = this.props;
 
@@ -56,7 +51,7 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
             </TableRow>
           </TableHead>
           <TableBody>
-            {networks.map(network => {
+            {_.map(networks, (network) => {
               return (
                 <TableRow key={network.prefix}>
                   <TableCell>
@@ -95,7 +90,7 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
   }
 }
 
-const styledNetworkTable = withStyles(styleSheet)(NetworkTable);
+const styledNetworkTable = withStyles(styleSheet, { withTheme: true })(NetworkTable);
 
 export {
   styledNetworkTable as NetworkTable

@@ -5886,6 +5886,450 @@ $root.serverpb = (function() {
         return ListPoolResponse;
     })();
 
+    serverpb.GetIPInPoolRequest = (function() {
+
+        /**
+         * Properties of a GetIPInPoolRequest.
+         * @memberof serverpb
+         * @interface IGetIPInPoolRequest
+         * @property {string} [rangeStart] GetIPInPoolRequest rangeStart
+         * @property {string} [rangeEnd] GetIPInPoolRequest rangeEnd
+         */
+
+        /**
+         * Constructs a new GetIPInPoolRequest.
+         * @memberof serverpb
+         * @classdesc Represents a GetIPInPoolRequest.
+         * @constructor
+         * @param {serverpb.IGetIPInPoolRequest=} [properties] Properties to set
+         */
+        function GetIPInPoolRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetIPInPoolRequest rangeStart.
+         * @member {string}rangeStart
+         * @memberof serverpb.GetIPInPoolRequest
+         * @instance
+         */
+        GetIPInPoolRequest.prototype.rangeStart = "";
+
+        /**
+         * GetIPInPoolRequest rangeEnd.
+         * @member {string}rangeEnd
+         * @memberof serverpb.GetIPInPoolRequest
+         * @instance
+         */
+        GetIPInPoolRequest.prototype.rangeEnd = "";
+
+        /**
+         * Creates a new GetIPInPoolRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {serverpb.IGetIPInPoolRequest=} [properties] Properties to set
+         * @returns {serverpb.GetIPInPoolRequest} GetIPInPoolRequest instance
+         */
+        GetIPInPoolRequest.create = function create(properties) {
+            return new GetIPInPoolRequest(properties);
+        };
+
+        /**
+         * Encodes the specified GetIPInPoolRequest message. Does not implicitly {@link serverpb.GetIPInPoolRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {serverpb.IGetIPInPoolRequest} message GetIPInPoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetIPInPoolRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.rangeStart);
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.rangeEnd);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetIPInPoolRequest message, length delimited. Does not implicitly {@link serverpb.GetIPInPoolRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {serverpb.IGetIPInPoolRequest} message GetIPInPoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetIPInPoolRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetIPInPoolRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.GetIPInPoolRequest} GetIPInPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetIPInPoolRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.GetIPInPoolRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.rangeStart = reader.string();
+                    break;
+                case 2:
+                    message.rangeEnd = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetIPInPoolRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.GetIPInPoolRequest} GetIPInPoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetIPInPoolRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetIPInPoolRequest message.
+         * @function verify
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetIPInPoolRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                if (!$util.isString(message.rangeStart))
+                    return "rangeStart: string expected";
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                if (!$util.isString(message.rangeEnd))
+                    return "rangeEnd: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetIPInPoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.GetIPInPoolRequest} GetIPInPoolRequest
+         */
+        GetIPInPoolRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.GetIPInPoolRequest)
+                return object;
+            var message = new $root.serverpb.GetIPInPoolRequest();
+            if (object.rangeStart != null)
+                message.rangeStart = String(object.rangeStart);
+            if (object.rangeEnd != null)
+                message.rangeEnd = String(object.rangeEnd);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetIPInPoolRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.GetIPInPoolRequest
+         * @static
+         * @param {serverpb.GetIPInPoolRequest} message GetIPInPoolRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetIPInPoolRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.rangeStart = "";
+                object.rangeEnd = "";
+            }
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                object.rangeStart = message.rangeStart;
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                object.rangeEnd = message.rangeEnd;
+            return object;
+        };
+
+        /**
+         * Converts this GetIPInPoolRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.GetIPInPoolRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetIPInPoolRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetIPInPoolRequest;
+    })();
+
+    serverpb.GetIPInPoolResponse = (function() {
+
+        /**
+         * Properties of a GetIPInPoolResponse.
+         * @memberof serverpb
+         * @interface IGetIPInPoolResponse
+         * @property {model.IPool} [pool] GetIPInPoolResponse pool
+         * @property {Array.<model.IIPAddr>} [ips] GetIPInPoolResponse ips
+         */
+
+        /**
+         * Constructs a new GetIPInPoolResponse.
+         * @memberof serverpb
+         * @classdesc Represents a GetIPInPoolResponse.
+         * @constructor
+         * @param {serverpb.IGetIPInPoolResponse=} [properties] Properties to set
+         */
+        function GetIPInPoolResponse(properties) {
+            this.ips = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetIPInPoolResponse pool.
+         * @member {(model.IPool|null|undefined)}pool
+         * @memberof serverpb.GetIPInPoolResponse
+         * @instance
+         */
+        GetIPInPoolResponse.prototype.pool = null;
+
+        /**
+         * GetIPInPoolResponse ips.
+         * @member {Array.<model.IIPAddr>}ips
+         * @memberof serverpb.GetIPInPoolResponse
+         * @instance
+         */
+        GetIPInPoolResponse.prototype.ips = $util.emptyArray;
+
+        /**
+         * Creates a new GetIPInPoolResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {serverpb.IGetIPInPoolResponse=} [properties] Properties to set
+         * @returns {serverpb.GetIPInPoolResponse} GetIPInPoolResponse instance
+         */
+        GetIPInPoolResponse.create = function create(properties) {
+            return new GetIPInPoolResponse(properties);
+        };
+
+        /**
+         * Encodes the specified GetIPInPoolResponse message. Does not implicitly {@link serverpb.GetIPInPoolResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {serverpb.IGetIPInPoolResponse} message GetIPInPoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetIPInPoolResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pool != null && message.hasOwnProperty("pool"))
+                $root.model.Pool.encode(message.pool, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.ips != null && message.ips.length)
+                for (var i = 0; i < message.ips.length; ++i)
+                    $root.model.IPAddr.encode(message.ips[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetIPInPoolResponse message, length delimited. Does not implicitly {@link serverpb.GetIPInPoolResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {serverpb.IGetIPInPoolResponse} message GetIPInPoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetIPInPoolResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetIPInPoolResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.GetIPInPoolResponse} GetIPInPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetIPInPoolResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.GetIPInPoolResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.pool = $root.model.Pool.decode(reader, reader.uint32());
+                    break;
+                case 2:
+                    if (!(message.ips && message.ips.length))
+                        message.ips = [];
+                    message.ips.push($root.model.IPAddr.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetIPInPoolResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.GetIPInPoolResponse} GetIPInPoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetIPInPoolResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetIPInPoolResponse message.
+         * @function verify
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetIPInPoolResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pool != null && message.hasOwnProperty("pool")) {
+                var error = $root.model.Pool.verify(message.pool);
+                if (error)
+                    return "pool." + error;
+            }
+            if (message.ips != null && message.hasOwnProperty("ips")) {
+                if (!Array.isArray(message.ips))
+                    return "ips: array expected";
+                for (var i = 0; i < message.ips.length; ++i) {
+                    error = $root.model.IPAddr.verify(message.ips[i]);
+                    if (error)
+                        return "ips." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GetIPInPoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.GetIPInPoolResponse} GetIPInPoolResponse
+         */
+        GetIPInPoolResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.GetIPInPoolResponse)
+                return object;
+            var message = new $root.serverpb.GetIPInPoolResponse();
+            if (object.pool != null) {
+                if (typeof object.pool !== "object")
+                    throw TypeError(".serverpb.GetIPInPoolResponse.pool: object expected");
+                message.pool = $root.model.Pool.fromObject(object.pool);
+            }
+            if (object.ips) {
+                if (!Array.isArray(object.ips))
+                    throw TypeError(".serverpb.GetIPInPoolResponse.ips: array expected");
+                message.ips = [];
+                for (var i = 0; i < object.ips.length; ++i) {
+                    if (typeof object.ips[i] !== "object")
+                        throw TypeError(".serverpb.GetIPInPoolResponse.ips: object expected");
+                    message.ips[i] = $root.model.IPAddr.fromObject(object.ips[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetIPInPoolResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.GetIPInPoolResponse
+         * @static
+         * @param {serverpb.GetIPInPoolResponse} message GetIPInPoolResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetIPInPoolResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.ips = [];
+            if (options.defaults)
+                object.pool = null;
+            if (message.pool != null && message.hasOwnProperty("pool"))
+                object.pool = $root.model.Pool.toObject(message.pool, options);
+            if (message.ips && message.ips.length) {
+                object.ips = [];
+                for (var j = 0; j < message.ips.length; ++j)
+                    object.ips[j] = $root.model.IPAddr.toObject(message.ips[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GetIPInPoolResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.GetIPInPoolResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetIPInPoolResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetIPInPoolResponse;
+    })();
+
     serverpb.NetworkServiceV0 = (function() {
 
         /**
@@ -6414,6 +6858,39 @@ $root.serverpb = (function() {
          * @instance
          * @param {serverpb.IListPoolRequest} request ListPoolRequest message or plain object
          * @returns {Promise<serverpb.ListPoolResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#getIPInPool}.
+         * @memberof serverpb.PoolServiceV0
+         * @typedef GetIPInPoolCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.GetIPInPoolResponse} [response] GetIPInPoolResponse
+         */
+
+        /**
+         * Calls GetIPInPool.
+         * @function .getIPInPool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IGetIPInPoolRequest} request GetIPInPoolRequest message or plain object
+         * @param {serverpb.PoolServiceV0.GetIPInPoolCallback} callback Node-style callback called with the error, if any, and GetIPInPoolResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        PoolServiceV0.prototype.getIPInPool = function getIPInPool(request, callback) {
+            return this.rpcCall(getIPInPool, $root.serverpb.GetIPInPoolRequest, $root.serverpb.GetIPInPoolResponse, request, callback);
+        };
+
+        /**
+         * Calls GetIPInPool.
+         * @function getIPInPool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IGetIPInPoolRequest} request GetIPInPoolRequest message or plain object
+         * @returns {Promise<serverpb.GetIPInPoolResponse>} Promise
          * @variation 2
          */
 

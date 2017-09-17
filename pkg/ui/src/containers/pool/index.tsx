@@ -1,23 +1,30 @@
 import * as React from "react";
 import { bindActionCreators } from "redux";
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
+import Grid from 'material-ui/Grid';
 
 import { AdminUIState } from "../../reducers/index";
-import * as PoolActions from '../../actions/pool';
 import { model } from "../../proto/protos";
 import Pool = model.Pool;
 import { PoolTable } from './PoolTable';
+import { refreshPools } from '../../reducers/apiReducers';
 
-const styleSheet = createStyleSheet('PoolView', theme => ({
-}));
+const styleSheet = theme => ({
+  grid: {
+    marginTop: '15px',
+    marginBottom: '15px',
+    marginLeft: '10px',
+    marginRight: '10px'
+  }
+});
 
 namespace PoolView {
   export interface Props extends RouteComponentProps<void> {
-    pools: Pool[]
-    actions: typeof PoolActions
-    classes: any
+    pools: Pool[];
+    refreshPools: typeof refreshPools;
+    classes: any;
   }
 
   export interface State {
@@ -26,11 +33,19 @@ namespace PoolView {
 }
 
 class PoolView extends React.Component<PoolView.Props, PoolView.State> {
+  componentWillMount() {
+    this.props.refreshPools();
+  }
+
   render() {
     const { classes, pools } = this.props;
 
     return (
-      <PoolTable pools={pools} actions={this.props.actions}/>
+      <Grid container spacing={24}>
+        <Grid item xs className={classes.grid}>
+          <PoolTable pools={pools} classes={{}}/>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -40,13 +55,11 @@ const styledPoolView = withStyles(styleSheet)(PoolView);
 const poolViewConnected = connect(
   (state: AdminUIState) => {
     return {
-      pools: state.ipam.pools
+      pools: (state.cachedData.pools.data && state.cachedData.pools.data.pools),
     }
   },
-  (dispatch) =>{
-    return {
-      actions: bindActionCreators(PoolActions as any, dispatch)
-    }
+  {
+    refreshPools,
   }
 )(styledPoolView);
 

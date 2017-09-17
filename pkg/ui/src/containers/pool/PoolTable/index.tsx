@@ -1,14 +1,16 @@
+import * as _ from 'lodash';
 import * as React from "react";
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Chip from 'material-ui/Chip';
+import {StyledComponentProps} from "material-ui";
 
-import * as PoolActions from '../../../actions/pool';
 import { model } from "../../../proto/protos";
 import Pool = model.Pool;
 
-const styleSheet = createStyleSheet('PoolTable', theme => ({
+
+const styleSheet: StyleRulesCallback = theme => ({
   paper: {
     width: '100%',
     marginTop: theme.spacing.unit * 3,
@@ -20,13 +22,12 @@ const styleSheet = createStyleSheet('PoolTable', theme => ({
   chip_row: {
     // display: 'flex',
   }
-}));
+});
 
 namespace PoolTable {
   export interface Props {
-    pools: Pool[]
-    actions: typeof PoolActions
-    classes: any
+    pools: Pool[];
+    classes: any;
   }
 
   export interface State {
@@ -35,10 +36,6 @@ namespace PoolTable {
 }
 
 class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
-  componentWillMount() {
-    this.props.actions.fetchPools();
-  }
-
   render() {
     const { classes, pools } = this.props;
 
@@ -54,7 +51,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pools.map(pool => {
+            {_.map(pools, pool => {
               return (
                 <TableRow key={pool.start + "," + pool.end}>
                   <TableCell>
@@ -66,7 +63,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
                   <TableCell>
                     {pool.status}
                   </TableCell>
-                  <TableCell className={classes.chip_row}>
+                  <TableCell>
                     {pool.tags.map((tag, i) => {
                       return (
                         <Chip
@@ -87,7 +84,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
   }
 }
 
-const styledPoolTable = withStyles(styleSheet)(PoolTable);
+const styledPoolTable = withStyles(styleSheet, { withTheme: true })(PoolTable);
 
 export {
   styledPoolTable as PoolTable
