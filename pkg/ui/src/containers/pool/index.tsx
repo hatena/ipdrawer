@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import Grid from 'material-ui/Grid';
 
 import { AdminUIState } from "../../reducers/index";
-import * as PoolActions from '../../actions/pool';
 import { model } from "../../proto/protos";
 import Pool = model.Pool;
 import { PoolTable } from './PoolTable';
