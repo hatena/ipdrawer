@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
@@ -20,7 +20,7 @@ namespace Header {
   }
 }
 
-const styleSheet = createStyleSheet('UndockedDrawer', {
+const styleSheet = {
   list: {
     width: 250,
     flex: 'initial',
@@ -29,7 +29,7 @@ const styleSheet = createStyleSheet('UndockedDrawer', {
     width: 'auto',
     flex: 'initial',
   },
-});
+};
 
 class Header extends React.Component<Header.Props, Header.State> {
 
@@ -109,6 +109,7 @@ class Header extends React.Component<Header.Props, Header.State> {
           open={this.state.open}
           onRequestClose={this.handleDrawerClose}
           onClick={this.handleDrawerClose}
+          type="temporary"
         >
           {sideList}
         </Drawer>
