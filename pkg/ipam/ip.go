@@ -45,3 +45,9 @@ func getIPAddr(r *storage.Redis, ip net.IP) (*model.IPAddr, error) {
 
 	return ipaddr, nil
 }
+
+func existsIP(r *storage.Redis, addr *model.IPAddr) bool {
+	ip := net.ParseIP(addr.Ip)
+	check, _ := r.Client.Exists(makeIPDetailsKey(ip)).Result()
+	return check != 0
+}

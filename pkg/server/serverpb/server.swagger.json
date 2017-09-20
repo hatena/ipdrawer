@@ -164,6 +164,38 @@
         ]
       }
     },
+    "/api/v0/ip/{ip}/update": {
+      "post": {
+        "operationId": "UpdateIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbUpdateIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelIPAddr"
+            }
+          }
+        ],
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
     "/api/v0/network": {
       "get": {
         "operationId": "GetEstimatedNetwork",
@@ -510,16 +542,6 @@
     }
   },
   "definitions": {
-    "IPAddrIPStatus": {
-      "type": "string",
-      "enum": [
-        "UNKNOWN",
-        "ACTIVE",
-        "TEMPORARY_RESERVED",
-        "RESERVED"
-      ],
-      "default": "UNKNOWN"
-    },
     "modelIPAddr": {
       "type": "object",
       "properties": {
@@ -527,7 +549,7 @@
           "type": "string"
         },
         "status": {
-          "$ref": "#/definitions/IPAddrIPStatus"
+          "$ref": "#/definitions/modelIPAddrStatus"
         },
         "tags": {
           "type": "array",
@@ -536,6 +558,16 @@
           }
         }
       }
+    },
+    "modelIPAddrStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "ACTIVE",
+        "TEMPORARY_RESERVED",
+        "RESERVED"
+      ],
+      "default": "UNKNOWN"
     },
     "modelNetwork": {
       "type": "object",
@@ -779,6 +811,9 @@
           }
         }
       }
+    },
+    "serverpbUpdateIPResponse": {
+      "type": "object"
     }
   }
 }

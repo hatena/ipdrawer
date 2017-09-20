@@ -10,10 +10,5 @@
 
 package apiclient
 
-type ModelIpAddr struct {
-	Ip string `json:"ip,omitempty"`
-
-	Status ModelIpAddrStatus `json:"status,omitempty"`
-
-	Tags []ModelTag `json:"tags,omitempty"`
+type ModelIpAddrStatus struct {
 }

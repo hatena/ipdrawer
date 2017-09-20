@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**GetNetworkIncludingIP**](IPServiceV0Api.md#GetNetworkIncludingIP) | **Get** /api/v0/ip/{ip}/network | 
 [**ListIP**](IPServiceV0Api.md#ListIP) | **Get** /api/v0/ip/list | 
 [**ListTemporaryReservedIP**](IPServiceV0Api.md#ListTemporaryReservedIP) | **Get** /api/v0/ip/temporary_reserved/list | 
+[**UpdateIP**](IPServiceV0Api.md#UpdateIP) | **Post** /api/v0/ip/{ip}/update | 
 
 
 # **ActivateIP**
@@ -129,6 +130,34 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ServerpbListTemporaryReservedIpResponse**](serverpbListTemporaryReservedIPResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **UpdateIP**
+> ServerpbUpdateIpResponse UpdateIP($ip, $body)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**|  | 
+ **body** | [**ModelIpAddr**](ModelIpAddr.md)|  | 
+
+### Return type
+
+[**ServerpbUpdateIpResponse**](serverpbUpdateIPResponse.md)
 
 ### Authorization
 

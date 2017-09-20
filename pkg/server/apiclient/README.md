@@ -26,6 +26,7 @@ Class | Method | HTTP request | Description
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
 *IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 
 *IPServiceV0Api* | [**ListTemporaryReservedIP**](docs/IPServiceV0Api.md#listtemporaryreservedip) | **Get** /api/v0/ip/temporary_reserved/list | 
+*IPServiceV0Api* | [**UpdateIP**](docs/IPServiceV0Api.md#updateip) | **Post** /api/v0/ip/{ip}/update | 
 *NetworkServiceV0Api* | [**CreateNetwork**](docs/NetworkServiceV0Api.md#createnetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 *NetworkServiceV0Api* | [**CreatePool**](docs/NetworkServiceV0Api.md#createpool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
@@ -41,8 +42,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [IpAddrIpStatus](docs/IpAddrIpStatus.md)
  - [ModelIpAddr](docs/ModelIpAddr.md)
+ - [ModelIpAddrStatus](docs/ModelIpAddrStatus.md)
  - [ModelNetwork](docs/ModelNetwork.md)
  - [ModelNetworkStatus](docs/ModelNetworkStatus.md)
  - [ModelPool](docs/ModelPool.md)
@@ -62,6 +63,7 @@ Class | Method | HTTP request | Description
  - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
  - [ServerpbListTemporaryReservedIpResponse](docs/ServerpbListTemporaryReservedIpResponse.md)
+ - [ServerpbUpdateIpResponse](docs/ServerpbUpdateIpResponse.md)
 
 
 ## Documentation For Authorization

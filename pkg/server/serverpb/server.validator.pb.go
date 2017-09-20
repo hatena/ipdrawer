@@ -18,6 +18,7 @@ It has these top-level messages:
 	ActivateIPResponse
 	DeactivateIPRequest
 	DeactivateIPResponse
+	UpdateIPResponse
 	GetNetworkRequest
 	GetEstimatedNetworkRequest
 	GetNetworkResponse
@@ -127,6 +128,9 @@ func (this *DeactivateIPRequest) Validate() error {
 	return nil
 }
 func (this *DeactivateIPResponse) Validate() error {
+	return nil
+}
+func (this *UpdateIPResponse) Validate() error {
 	return nil
 }
 

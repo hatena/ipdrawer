@@ -166,6 +166,24 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*model.Pool, addr *mode
 	return nil
 }
 
+func (m *IPManager) UpdateIP(ctx context.Context, addr *model.IPAddr) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
+	span.SetTag("ip", addr.Ip)
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	if !existsIP(m.redis, addr) {
+		return errors.New("Not found IP")
+	}
+
+	return setIPAddr(m.redis, addr)
+}
+
 // Reserve makes the status of given IP reserved.
 func (m *IPManager) Reserve(p *model.Pool, ip net.IP) error {
 	return nil

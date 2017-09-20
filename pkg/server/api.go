@@ -279,6 +279,21 @@ func (api *APIServer) DeactivateIP(
 	return &serverpb.DeactivateIPResponse{}, nil
 }
 
+func (api *APIServer) UpdateIP(
+	ctx context.Context,
+	addr *model.IPAddr,
+) (*serverpb.UpdateIPResponse, error) {
+	if err := addr.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.UpdateIP(ctx, addr); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.UpdateIPResponse{}, nil
+}
+
 func (api *APIServer) GetNetwork(
 	ctx context.Context,
 	req *serverpb.GetNetworkRequest,
