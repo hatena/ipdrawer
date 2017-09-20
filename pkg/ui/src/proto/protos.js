@@ -542,7 +542,7 @@ $root.model = (function() {
          * @memberof model
          * @interface IIPAddr
          * @property {string} [ip] IPAddr ip
-         * @property {model.IPAddr.IPStatus} [status] IPAddr status
+         * @property {model.IPAddr.Status} [status] IPAddr status
          * @property {Array.<model.ITag>} [tags] IPAddr tags
          */
 
@@ -571,7 +571,7 @@ $root.model = (function() {
 
         /**
          * IPAddr status.
-         * @member {model.IPAddr.IPStatus}status
+         * @member {model.IPAddr.Status}status
          * @memberof model.IPAddr
          * @instance
          */
@@ -788,7 +788,7 @@ $root.model = (function() {
             if (message.ip != null && message.hasOwnProperty("ip"))
                 object.ip = message.ip;
             if (message.status != null && message.hasOwnProperty("status"))
-                object.status = options.enums === String ? $root.model.IPAddr.IPStatus[message.status] : message.status;
+                object.status = options.enums === String ? $root.model.IPAddr.Status[message.status] : message.status;
             if (message.tags && message.tags.length) {
                 object.tags = [];
                 for (var j = 0; j < message.tags.length; ++j)
@@ -809,14 +809,14 @@ $root.model = (function() {
         };
 
         /**
-         * IPStatus enum.
+         * Status enum.
          * @enum {string}
          * @property {number} UNKNOWN=0 UNKNOWN value
          * @property {number} ACTIVE=1 ACTIVE value
          * @property {number} TEMPORARY_RESERVED=2 TEMPORARY_RESERVED value
          * @property {number} RESERVED=3 RESERVED value
          */
-        IPAddr.IPStatus = (function() {
+        IPAddr.Status = (function() {
             var valuesById = {}, values = Object.create(valuesById);
             values[valuesById[0] = "UNKNOWN"] = 0;
             values[valuesById[1] = "ACTIVE"] = 1;
@@ -3196,6 +3196,165 @@ $root.serverpb = (function() {
         };
 
         return DeactivateIPResponse;
+    })();
+
+    serverpb.UpdateIPResponse = (function() {
+
+        /**
+         * Properties of an UpdateIPResponse.
+         * @memberof serverpb
+         * @interface IUpdateIPResponse
+         */
+
+        /**
+         * Constructs a new UpdateIPResponse.
+         * @memberof serverpb
+         * @classdesc Represents an UpdateIPResponse.
+         * @constructor
+         * @param {serverpb.IUpdateIPResponse=} [properties] Properties to set
+         */
+        function UpdateIPResponse(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new UpdateIPResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {serverpb.IUpdateIPResponse=} [properties] Properties to set
+         * @returns {serverpb.UpdateIPResponse} UpdateIPResponse instance
+         */
+        UpdateIPResponse.create = function create(properties) {
+            return new UpdateIPResponse(properties);
+        };
+
+        /**
+         * Encodes the specified UpdateIPResponse message. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {serverpb.IUpdateIPResponse} message UpdateIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdateIPResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UpdateIPResponse message, length delimited. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {serverpb.IUpdateIPResponse} message UpdateIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdateIPResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.UpdateIPResponse} UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdateIPResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.UpdateIPResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.UpdateIPResponse} UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdateIPResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an UpdateIPResponse message.
+         * @function verify
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UpdateIPResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates an UpdateIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.UpdateIPResponse} UpdateIPResponse
+         */
+        UpdateIPResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.UpdateIPResponse)
+                return object;
+            return new $root.serverpb.UpdateIPResponse();
+        };
+
+        /**
+         * Creates a plain object from an UpdateIPResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.UpdateIPResponse
+         * @static
+         * @param {serverpb.UpdateIPResponse} message UpdateIPResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UpdateIPResponse.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this UpdateIPResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.UpdateIPResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UpdateIPResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UpdateIPResponse;
     })();
 
     serverpb.GetNetworkRequest = (function() {
@@ -6724,6 +6883,39 @@ $root.serverpb = (function() {
          * @instance
          * @param {serverpb.IDeactivateIPRequest} request DeactivateIPRequest message or plain object
          * @returns {Promise<serverpb.DeactivateIPResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.IPServiceV0#updateIP}.
+         * @memberof serverpb.IPServiceV0
+         * @typedef UpdateIPCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.UpdateIPResponse} [response] UpdateIPResponse
+         */
+
+        /**
+         * Calls UpdateIP.
+         * @function .updateIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {model.IIPAddr} request IPAddr message or plain object
+         * @param {serverpb.IPServiceV0.UpdateIPCallback} callback Node-style callback called with the error, if any, and UpdateIPResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        IPServiceV0.prototype.updateIP = function updateIP(request, callback) {
+            return this.rpcCall(updateIP, $root.model.IPAddr, $root.serverpb.UpdateIPResponse, request, callback);
+        };
+
+        /**
+         * Calls UpdateIP.
+         * @function updateIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {model.IIPAddr} request IPAddr message or plain object
+         * @returns {Promise<serverpb.UpdateIPResponse>} Promise
          * @variation 2
          */
 

@@ -224,7 +224,7 @@ export namespace model {
         ip?: string;
 
         /** IPAddr status */
-        status?: model.IPAddr.IPStatus;
+        status?: model.IPAddr.Status;
 
         /** IPAddr tags */
         tags?: model.ITag[];
@@ -243,7 +243,7 @@ export namespace model {
         public ip: string;
 
         /** IPAddr status. */
-        public status: model.IPAddr.IPStatus;
+        public status: model.IPAddr.Status;
 
         /** IPAddr tags. */
         public tags: model.ITag[];
@@ -321,8 +321,8 @@ export namespace model {
 
     namespace IPAddr {
 
-        /** IPStatus enum. */
-        enum IPStatus {
+        /** Status enum. */
+        enum Status {
             UNKNOWN = 0,
             ACTIVE = 1,
             TEMPORARY_RESERVED = 2,
@@ -1383,6 +1383,90 @@ export namespace serverpb {
 
         /**
          * Converts this DeactivateIPResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of an UpdateIPResponse. */
+    interface IUpdateIPResponse {
+    }
+
+    /** Represents an UpdateIPResponse. */
+    class UpdateIPResponse {
+
+        /**
+         * Constructs a new UpdateIPResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IUpdateIPResponse);
+
+        /**
+         * Creates a new UpdateIPResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UpdateIPResponse instance
+         */
+        public static create(properties?: serverpb.IUpdateIPResponse): serverpb.UpdateIPResponse;
+
+        /**
+         * Encodes the specified UpdateIPResponse message. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @param message UpdateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IUpdateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UpdateIPResponse message, length delimited. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @param message UpdateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IUpdateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.UpdateIPResponse;
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.UpdateIPResponse;
+
+        /**
+         * Verifies an UpdateIPResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an UpdateIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UpdateIPResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.UpdateIPResponse;
+
+        /**
+         * Creates a plain object from an UpdateIPResponse message. Also converts values to other types if specified.
+         * @param message UpdateIPResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.UpdateIPResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UpdateIPResponse to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -3020,6 +3104,20 @@ export namespace serverpb {
         public deactivateIP(request: serverpb.IDeactivateIPRequest): Promise<serverpb.DeactivateIPResponse>;
 
         /**
+         * Calls UpdateIP.
+         * @param request IPAddr message or plain object
+         * @param callback Node-style callback called with the error, if any, and UpdateIPResponse
+         */
+        public updateIP(request: model.IIPAddr, callback: serverpb.IPServiceV0.UpdateIPCallback): void;
+
+        /**
+         * Calls UpdateIP.
+         * @param request IPAddr message or plain object
+         * @returns Promise
+         */
+        public updateIP(request: model.IIPAddr): Promise<serverpb.UpdateIPResponse>;
+
+        /**
          * Calls ListIP.
          * @param request ListIPRequest message or plain object
          * @param callback Node-style callback called with the error, if any, and ListIPResponse
@@ -3070,6 +3168,13 @@ export namespace serverpb {
          * @param [response] DeactivateIPResponse
          */
         type DeactivateIPCallback = (error: (Error|null), response?: serverpb.DeactivateIPResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.IPServiceV0#updateIP}.
+         * @param error Error, if any
+         * @param [response] UpdateIPResponse
+         */
+        type UpdateIPCallback = (error: (Error|null), response?: serverpb.UpdateIPResponse) => void;
 
         /**
          * Callback as used by {@link serverpb.IPServiceV0#listIP}.

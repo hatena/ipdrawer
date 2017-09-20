@@ -6,9 +6,9 @@ import { createBrowserHistory } from 'history';
 import { configureStore } from './store';
 import { Layout } from './containers/Layout';
 import * as injectTapEventPlugin from 'react-tap-event-plugin';
-import { IPAddrView } from "./containers/ipaddr";
-import { NetworkView } from './containers/network';
-import { PoolView } from './containers/pool';
+import { IPAddrView } from "./containers/ipaddr/IPAddrView";
+import { NetworkView } from './containers/network/NetworkView';
+import { PoolView } from './containers/pool/PoolView';
 import { TempReservedIPView } from './containers/ipaddr/TempReservedIPView';
 
 

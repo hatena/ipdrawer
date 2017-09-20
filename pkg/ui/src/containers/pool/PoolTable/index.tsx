@@ -2,9 +2,12 @@ import * as _ from 'lodash';
 import * as React from "react";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import {
+  Grid,
+  TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow, TableRowDetail,
+  GroupingPanel, PagingPanel, DragDropContext,
+} from '@devexpress/dx-react-grid-material-ui';
 import Chip from 'material-ui/Chip';
-import {StyledComponentProps} from "material-ui";
 
 import { model } from "../../../proto/protos";
 import Pool = model.Pool;
@@ -36,49 +39,44 @@ namespace PoolTable {
 }
 
 class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
+  static columns = [
+    { name: 'start', label: 'Start' },
+    { name: 'end', label: 'End' },
+    { name: 'status', label: 'Status', },
+    { name: 'tags', label: 'Tags' },
+  ]
+
+  convertToRows(pools: Pool[]) {
+    return _.map(pools, (pool: Pool) => {
+      return {
+        start: pool.start,
+        end: pool.end,
+        status: Pool.Status[pool.status],
+        tags: (
+          <div>{pool.tags.map((tag, i) =>
+            <Chip
+              key={i}
+              label={tag.key + ": " + tag.value}
+            />)}
+          </div>
+        )
+      }
+    })
+  }
+
   render() {
     const { classes, pools } = this.props;
+    const rows = this.convertToRows(pools)
 
     return (
       <Paper className={classes.paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Start</TableCell>
-              <TableCell>End</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Tags</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {_.map(pools, pool => {
-              return (
-                <TableRow key={pool.start + "," + pool.end}>
-                  <TableCell>
-                    {pool.start}
-                  </TableCell>
-                  <TableCell>
-                    {pool.end}
-                  </TableCell>
-                  <TableCell>
-                    {pool.status}
-                  </TableCell>
-                  <TableCell>
-                    {pool.tags.map((tag, i) => {
-                      return (
-                        <Chip
-                          className={classes.chip}
-                          label={tag.key + ": " + tag.value}
-                          key={i}
-                        />
-                      )
-                    })}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Grid
+          rows={rows}
+          columns={PoolTable.columns}
+        >
+          <TableView />
+          <TableHeaderRow />
+        </Grid>
       </Paper>
     );
   }

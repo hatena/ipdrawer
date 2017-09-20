@@ -7,7 +7,7 @@ interface PayloadAction<T> extends Action {
   payload: T;
 }
 
-interface WithReuqest<T, R> {
+interface WithRequest<T, R> {
   data?: T;
   request: R;
 }
@@ -16,6 +16,10 @@ export class CachedDataReducerState<TResponseMessage> {
   data: TResponseMessage;
   inFlight = false;
   lastError: Error;
+}
+
+export class KeyedCachedDataReducerState<TResponseMessage> {
+  [id: string]: CachedDataReducerState<TResponseMessage>;
 }
 
 export class CachedDataReducer<TRequest, TResponseMessage> {
@@ -47,14 +51,14 @@ export class CachedDataReducer<TRequest, TResponseMessage> {
         state.inFlight = true;
         return state;
       case this.RECEIVE:
-        const { payload } = action as PayloadAction<WithReuqest<TResponseMessage, TRequest>>;
+        const { payload } = action as PayloadAction<WithRequest<TResponseMessage, TRequest>>;
         state = _.clone(state);
         state.inFlight = false;
         state.data = payload.data;
         state.lastError = null;
         return state;
       case this.ERROR:
-        const { payload: error } = action as PayloadAction<WithReuqest<Error, TRequest>>;
+        const { payload: error } = action as PayloadAction<WithRequest<Error, TRequest>>;
         state = _.clone(state);
         state.inFlight = false;
         state.lastError = error.data;
@@ -64,21 +68,21 @@ export class CachedDataReducer<TRequest, TResponseMessage> {
     }
   }
 
-  requestData = (request?: TRequest): PayloadAction<WithReuqest<void, TRequest>> => {
+  requestData = (request?: TRequest): PayloadAction<WithRequest<void, TRequest>> => {
     return {
       type: this.REQUEST,
       payload: { request },
     };
   }
 
-  receiveData = (data: TResponseMessage, request?: TRequest): PayloadAction<WithReuqest<TResponseMessage, TRequest>> => {
+  receiveData = (data: TResponseMessage, request?: TRequest): PayloadAction<WithRequest<TResponseMessage, TRequest>> => {
     return {
       type: this.RECEIVE,
       payload: { request, data },
     };
   }
 
-  errorData = (error: Error, request?: TRequest): PayloadAction<WithReuqest<Error, TRequest>> => {
+  errorData = (error: Error, request?: TRequest): PayloadAction<WithRequest<Error, TRequest>> => {
     return {
       type: this.ERROR,
       payload: { request, data: error },
@@ -100,5 +104,38 @@ export class CachedDataReducer<TRequest, TResponseMessage> {
         setTimeout(() => dispatch(this.errorData(error, req)), 1000);
       });
     };
+  }
+}
+
+export class KeyedCachedDataReducer<TRequest, TResponseMessage> {
+  cachedDataReducer: CachedDataReducer<TRequest, TResponseMessage>;
+
+  constructor(
+    protected apiEndpoint: (req: TRequest) => Promise<TResponseMessage>,
+    public actionNamespace: string,
+    private requestToID: (req: TRequest) => string
+  ) {
+    this.cachedDataReducer = new CachedDataReducer<TRequest, TResponseMessage>(apiEndpoint, actionNamespace);
+  }
+
+  refresh = (req?: TRequest, stateAccessor = (state: any, r: TRequest) => state.cachedData[this.cachedDataReducer.actionNamespace][this.requestToID(r)]) => this.cachedDataReducer.refresh(req, stateAccessor);
+
+  reducer = (state = new KeyedCachedDataReducerState<TResponseMessage>(), action: Action): KeyedCachedDataReducerState<TResponseMessage> => {
+    if (_.isNil(action)) {
+      return state;
+    }
+
+    switch (action.type) {
+      case this.cachedDataReducer.REQUEST:
+      case this.cachedDataReducer.RECEIVE:
+      case this.cachedDataReducer.ERROR:
+        const { request } = (action as PayloadAction<WithRequest<TResponseMessage | Error | void, TRequest>>).payload;
+        const id = this.requestToID(request);
+        state = _.clone(state);
+        state[id] = this.cachedDataReducer.reducer(state[id], action);
+        return state;
+      default:
+        return state;
+    }
   }
 }

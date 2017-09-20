@@ -3,24 +3,21 @@ import { bindActionCreators } from "redux";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
+import Grid from 'material-ui/Grid';
 
-import { AdminUIState } from "../../reducers/index";
-import { model } from "../../proto/protos";
+import { AdminUIState } from "../../../reducers/index";
+import { model } from "../../../proto/protos";
 import IPAddr = model.IPAddr;
-import { IPAddrTable } from './IPAddrTable';
-import { refreshIPs } from '../../reducers/apiReducers';
+import { IPAddrTable } from '../IPAddrTable';
+import { refreshIPs, activateIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
+
 
 const styleSheet: StyleRulesCallback = theme => ({
-  paper: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  chip: {
-    margin: theme.spacing.unit,
-  },
-  chip_row: {
-    display: 'flex',
+  grid: {
+    marginTop: '15px',
+    marginBottom: '15px',
+    marginLeft: '10px',
+    marginRight: '10px'
   }
 });
 
@@ -29,6 +26,9 @@ namespace IPAddrView {
     ips: IPAddr[];
     classes: any;
     refreshIPs: typeof refreshIPs;
+    activateIP: typeof activateIP;
+    deactivateIP: typeof deactivateIP;
+    updateIP: typeof updateIP;
   }
 
   export interface State {
@@ -45,7 +45,18 @@ class IPAddrView extends React.Component<IPAddrView.Props, IPAddrView.State> {
     const { classes, ips } = this.props;
 
     return (
-      <IPAddrTable ips={ips} classes={{}}/>
+      <Grid container spacing={24}>
+        <Grid item xs className={classes.grid}>
+          <IPAddrTable
+            ips={ips}
+            classes={{}}
+            refreshIPs={this.props.refreshIPs}
+            activateIP={this.props.activateIP}
+            deactivateIP={this.props.deactivateIP}
+            updateIP={this.props.updateIP}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -58,10 +69,11 @@ const ipaddrViewConnected = connect(
       ips: (state.cachedData.ips.data && state.cachedData.ips.data.ips)
     }
   },
-  (dispatch) =>{
-    return {
-      refreshIPs: bindActionCreators(refreshIPs as any, dispatch),
-    }
+  {
+    refreshIPs,
+    activateIP,
+    deactivateIP,
+    updateIP,
   }
 )(styledIPAddrView);
 

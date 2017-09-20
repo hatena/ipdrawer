@@ -2,7 +2,12 @@ import * as _ from 'lodash';
 import * as React from "react";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import {
+  Grid,
+  TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow, TableRowDetail,
+  GroupingPanel, PagingPanel, DragDropContext,
+} from '@devexpress/dx-react-grid-material-ui';
+
 import Chip from 'material-ui/Chip';
 
 import { model } from "../../../proto/protos";
@@ -34,57 +39,46 @@ namespace NetworkTable {
 }
 
 class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.State> {
+  static columns = [
+    { name: 'prefix', label: 'Prefix' },
+    { name: 'gateways', label: 'Gateways' },
+    { name: 'broadcast', label: 'Broadcast' },
+    { name: 'status', label: 'Status' },
+    { name: 'tags', label: 'Tags' }
+  ]
+
+  convertToRows(networks: Network[]) {
+    return _.map(networks, (network: Network) => {
+      return {
+        prefix: network.prefix,
+        gateways: network.gateways,
+        broadcast: network.broadcast,
+        status: Network.Status[network.status],
+        tags: (
+          <div>{network.tags.map((tag, i) =>
+            <Chip
+              key={i}
+              label={tag.key + ": " + tag.value}
+            />)}
+          </div>
+        )
+      };
+    })
+  }
+
   render() {
     const { classes, networks } = this.props;
+    const rows = this.convertToRows(networks);
 
     return (
       <Paper className={classes.paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Prefix</TableCell>
-              <TableCell>Gateways</TableCell>
-              <TableCell>Broadcast</TableCell>
-              <TableCell>Netmask</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Tags</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {_.map(networks, (network) => {
-              return (
-                <TableRow key={network.prefix}>
-                  <TableCell>
-                    {network.prefix}
-                  </TableCell>
-                  <TableCell>
-                    {network.gateways}
-                  </TableCell>
-                  <TableCell>
-                    {network.broadcast}
-                  </TableCell>
-                  <TableCell>
-                    {network.netmask}
-                  </TableCell>
-                  <TableCell>
-                    {network.status}
-                  </TableCell>
-                  <TableCell className={classes.chip_row}>
-                    {network.tags.map((tag, i) => {
-                      return (
-                        <Chip
-                          className={classes.chip}
-                          label={tag.key + ": " + tag.value}
-                          key={i}
-                        />
-                      )
-                    })}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+        <Grid
+          rows={rows}
+          columns={NetworkTable.columns}
+        >
+          <TableView />
+          <TableHeaderRow />
+        </Grid>
       </Paper>
     );
   }

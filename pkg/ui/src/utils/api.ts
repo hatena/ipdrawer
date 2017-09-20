@@ -49,7 +49,7 @@ function timeoutFetch<TResponse$Properties, TResponse, TResponseBuilder extends 
     // const encodedRequest = req.constructor.encode(req).finish()
     params.method = "POST";
     // params.body = toArrayBuffer(encodedRequest);
-    params.body = req.toObject();
+    params.body = JSON.stringify(req.toJSON())
   }
 
   return withTimeout(fetch(url, params), timeout).then((res) => {
@@ -82,4 +82,20 @@ export function getPoolList(_req: protos.serverpb.ListPoolRequest, timeout?: mom
 
 export function getTemporaryReservedIPList(_req: protos.serverpb.ListTemporaryReservedIPRequest, timeout?: moment.Duration): Promise<protos.serverpb.ListTemporaryReservedIPResponse> {
   return timeoutFetch(protos.serverpb.ListTemporaryReservedIPResponse, `${API_PREFIX}/ip/temporary_reserved/list`, null, timeout);
+}
+
+export function getIPInPool(req: protos.serverpb.GetIPInPoolRequest, timeout?: moment.Duration): Promise<protos.serverpb.GetIPInPoolResponse> {
+  return timeoutFetch(protos.serverpb.GetIPInPoolResponse, `${API_PREFIX}/pool/${req.rangeStart}/${req.rangeEnd}/ip`, null, timeout);
+}
+
+export function activateIP(req: protos.serverpb.ActivateIPRequest, timeout?: moment.Duration): Promise<protos.serverpb.ActivateIPResponse> {
+  return timeoutFetch(protos.serverpb.ActivateIPResponse, `${API_PREFIX}/ip/${req.ip}/activate`, req as any, timeout);
+}
+
+export function deactivateIP(req: protos.serverpb.DeactivateIPRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeactivateIPResponse> {
+  return timeoutFetch(protos.serverpb.DeactivateIPResponse, `${API_PREFIX}/ip/${req.ip}/deactivate`, req as any, timeout);
+}
+
+export function updateIP(req: protos.model.IPAddr, timeout?: moment.Duration): Promise<protos.serverpb.UpdateIPResponse> {
+  return timeoutFetch(protos.serverpb.UpdateIPResponse, `${API_PREFIX}/ip/${req.ip}/update`, req as any, timeout);
 }

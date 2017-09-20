@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
+import Grid from 'material-ui/Grid';
 
 import { AdminUIState } from "../../../reducers/index";
 import { model } from "../../../proto/protos";
@@ -10,17 +11,13 @@ import IPAddr = model.IPAddr;
 import { IPAddrTable } from '../IPAddrTable';
 import { refreshTempReservedIPs } from '../../../reducers/apiReducers';
 
+
 const styleSheet: StyleRulesCallback = theme => ({
-  paper: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
-  },
-  chip: {
-    margin: theme.spacing.unit,
-  },
-  chip_row: {
-    display: 'flex',
+  grid: {
+    marginTop: '15px',
+    marginBottom: '15px',
+    marginLeft: '10px',
+    marginRight: '10px'
   }
 });
 
@@ -45,10 +42,14 @@ class TempReservedIPView extends React.Component<TempReservedIPView.Props, TempR
     const { classes, tempReservedIPs } = this.props;
 
     return (
-      <IPAddrTable
-        ips={tempReservedIPs}
-        classes={{}}
-      />
+      <Grid container spacing={24}>
+        <Grid item xs className={classes.grid}>
+          <IPAddrTable
+            ips={tempReservedIPs}
+            classes={{}}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }
