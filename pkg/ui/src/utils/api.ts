@@ -88,8 +88,8 @@ export function getIPInPool(req: protos.serverpb.GetIPInPoolRequest, timeout?: m
   return timeoutFetch(protos.serverpb.GetIPInPoolResponse, `${API_PREFIX}/pool/${req.rangeStart}/${req.rangeEnd}/ip`, null, timeout);
 }
 
-export function activateIP(req: protos.serverpb.ActivateIPRequest, timeout?: moment.Duration): Promise<protos.serverpb.ActivateIPResponse> {
-  return timeoutFetch(protos.serverpb.ActivateIPResponse, `${API_PREFIX}/ip/${req.ip}/activate`, req as any, timeout);
+export function createIP(req: protos.model.IPAddr, timeout?: moment.Duration): Promise<protos.serverpb.CreateIPResponse> {
+  return timeoutFetch(protos.serverpb.CreateIPResponse, `${API_PREFIX}/ip/${req.ip}/create`, req as any, timeout);
 }
 
 export function deactivateIP(req: protos.serverpb.DeactivateIPRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeactivateIPResponse> {

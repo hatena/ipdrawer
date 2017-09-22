@@ -11,5 +11,5 @@
 package apiclient
 
 type ServerpbListTemporaryReservedIpResponse struct {
-	TemporaryReservedIps []ModelIpAddr `json:"temporary_reserved_ips,omitempty"`
+	Ips []ModelIpAddr `json:"ips,omitempty"`
 }

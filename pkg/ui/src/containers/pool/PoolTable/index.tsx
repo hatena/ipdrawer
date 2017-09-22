@@ -7,10 +7,14 @@ import {
   TableView, TableHeaderRow, TableFilterRow, TableSelection, TableGroupRow, TableRowDetail,
   GroupingPanel, PagingPanel, DragDropContext,
 } from '@devexpress/dx-react-grid-material-ui';
+import {
+  SortingState, LocalSorting
+} from '@devexpress/dx-react-grid'
 import Chip from 'material-ui/Chip';
 
 import { model } from "../../../proto/protos";
 import Pool = model.Pool;
+import { ChipCell } from '../../../components/table/ChipCell';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -39,43 +43,41 @@ namespace PoolTable {
 }
 
 class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
-  static columns = [
-    { name: 'start', label: 'Start' },
-    { name: 'end', label: 'End' },
-    { name: 'status', label: 'Status', },
-    { name: 'tags', label: 'Tags' },
-  ]
+  columns: Object[]
 
-  convertToRows(pools: Pool[]) {
-    return _.map(pools, (pool: Pool) => {
-      return {
-        start: pool.start,
-        end: pool.end,
-        status: Pool.Status[pool.status],
-        tags: (
-          <div>{pool.tags.map((tag, i) =>
-            <Chip
-              key={i}
-              label={tag.key + ": " + tag.value}
-            />)}
-          </div>
-        )
-      }
-    })
+  constructor(props?: PoolTable.Props, context?: any) {
+    super(props, context);
+
+    this.columns = [
+      {
+        name: 'range',
+        getCellData: (row: Pool) => row.start + " ~ " + row.end
+      },
+      {
+        name: 'status',
+        getCellData: (row: Pool) => Pool.Status[row.status]
+      },
+      {
+        name: 'tags',
+        getCellData: (row: Pool) => <ChipCell tags={row.tags} classes={{}} />
+      },
+    ]
   }
 
   render() {
     const { classes, pools } = this.props;
-    const rows = this.convertToRows(pools)
 
     return (
       <Paper className={classes.paper}>
         <Grid
-          rows={rows}
-          columns={PoolTable.columns}
+          rows={_.isNil(pools) ? [] : pools}
+          columns={this.columns}
         >
+          <SortingState />
+          <LocalSorting />
+
           <TableView />
-          <TableHeaderRow />
+          <TableHeaderRow allowSorting />
         </Grid>
       </Paper>
     );

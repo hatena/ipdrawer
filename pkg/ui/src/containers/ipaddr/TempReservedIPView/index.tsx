@@ -1,9 +1,13 @@
+import * as _ from 'lodash';
 import * as React from "react";
 import { bindActionCreators } from "redux";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
-import Grid from 'material-ui/Grid';
+import {
+  Grid,
+  TableView, TableHeaderRow
+} from '@devexpress/dx-react-grid-material-ui';
 
 import { AdminUIState } from "../../../reducers/index";
 import { model } from "../../../proto/protos";
@@ -42,14 +46,15 @@ class TempReservedIPView extends React.Component<TempReservedIPView.Props, TempR
     const { classes, tempReservedIPs } = this.props;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs className={classes.grid}>
-          <IPAddrTable
-            ips={tempReservedIPs}
-            classes={{}}
-          />
+      <div className={classes.grid}>
+        <Grid
+          rows={_.isNil(tempReservedIPs) ? [] : tempReservedIPs}
+          columns={IPAddrTable.columns}
+        >
+          <TableView />
+          <TableHeaderRow />
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }
@@ -59,7 +64,7 @@ const styledIPAddrView = withStyles(styleSheet)(TempReservedIPView);
 const ipaddrViewConnected = connect(
   (state: AdminUIState) => {
     return {
-      tempReservedIPs: (state.cachedData.temporaryReservedIPs.data && state.cachedData.temporaryReservedIPs.data.temporaryReservedIps)
+      tempReservedIPs: (state.cachedData.temporaryReservedIPs.data && state.cachedData.temporaryReservedIPs.data.ips)
     }
   },
   {

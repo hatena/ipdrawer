@@ -26,8 +26,8 @@ export const ipInPoolRequestToID = (req: protos.serverpb.GetIPInPoolRequest): st
 const ipsInPoolReducerObj = new KeyedCachedDataReducer(api.getIPInPool, 'ipsInPool', ipInPoolRequestToID);
 export const refreshIPsInPool = ipsInPoolReducerObj.refresh;
 
-const activateIPReducerObj = new CachedDataReducer(api.activateIP, 'activateip');
-export const activateIP = activateIPReducerObj.refresh;
+const createIPReducerObj = new CachedDataReducer(api.createIP, 'createip');
+export const createIP = createIPReducerObj.refresh;
 
 const deactivateIPReducerbj = new CachedDataReducer(api.deactivateIP, 'deactivateip');
 export const deactivateIP = deactivateIPReducerbj.refresh;
@@ -49,7 +49,7 @@ export default combineReducers<APIReducersState>({
   [ipListReducerObj.actionNamespace]: ipListReducerObj.reducer,
   [tempReservedIPListReducerObj.actionNamespace]: tempReservedIPListReducerObj.reducer,
   [ipsInPoolReducerObj.actionNamespace]: ipsInPoolReducerObj.reducer,
-  [activateIPReducerObj.actionNamespace]: activateIPReducerObj.reducer,
+  [createIPReducerObj.actionNamespace]: createIPReducerObj.reducer,
   [deactivateIPReducerbj.actionNamespace]: deactivateIPReducerbj.reducer,
   [updateIPReducerObj.actionNamespace]: updateIPReducerObj.reducer,
 });

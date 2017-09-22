@@ -1095,7 +1095,7 @@ func RegisterIPServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn
 var (
 	pattern_IPServiceV0_GetNetworkIncludingIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v0", "ip", "network"}, ""))
 
-	pattern_IPServiceV0_CreateIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2}, []string{"api", "v0", "ip"}, ""))
+	pattern_IPServiceV0_CreateIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v0", "ip", "create"}, ""))
 
 	pattern_IPServiceV0_ActivateIP_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"api", "v0", "ip", "activate"}, ""))
 

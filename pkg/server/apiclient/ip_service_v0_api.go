@@ -111,7 +111,7 @@ func (a IPServiceV0Api) CreateIP(ip string, body ModelIpAddr) (*ServerpbCreateIp
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/api/v0/ip/{ip}"
+	localVarPath := a.Configuration.BasePath + "/api/v0/ip/{ip}/create"
 	localVarPath = strings.Replace(localVarPath, "{"+"ip"+"}", fmt.Sprintf("%v", ip), -1)
 
 	localVarHeaderParams := make(map[string]string)

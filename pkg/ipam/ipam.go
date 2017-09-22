@@ -336,17 +336,7 @@ func (m *IPManager) GetPools(ctx context.Context) ([]*model.Pool, error) {
 		return nil, errors.Wrap(err, "Failed fetch Pool list keys")
 	}
 
-	pools := make([]*model.Pool, len(keys))
-	for i, key := range keys {
-		s, e, err := parsePoolDetailsKey(key)
-		if err != nil {
-			return nil, errors.Wrapf(err, "Parse failed: %s", key)
-		}
-		if pools[i], err = getPool(m.redis, s, e); err != nil {
-			return nil, err
-		}
-	}
-	return pools, nil
+	return getPools(m.redis, keys)
 }
 
 func (m *IPManager) GetPool(ctx context.Context, s net.IP, e net.IP) (*model.Pool, error) {

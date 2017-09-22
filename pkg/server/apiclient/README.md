@@ -22,7 +22,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *IPServiceV0Api* | [**ActivateIP**](docs/IPServiceV0Api.md#activateip) | **Post** /api/v0/ip/{ip}/activate | 
-*IPServiceV0Api* | [**CreateIP**](docs/IPServiceV0Api.md#createip) | **Post** /api/v0/ip/{ip} | 
+*IPServiceV0Api* | [**CreateIP**](docs/IPServiceV0Api.md#createip) | **Post** /api/v0/ip/{ip}/create | 
 *IPServiceV0Api* | [**DeactivateIP**](docs/IPServiceV0Api.md#deactivateip) | **Post** /api/v0/ip/{ip}/deactivate | 
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
 *IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 

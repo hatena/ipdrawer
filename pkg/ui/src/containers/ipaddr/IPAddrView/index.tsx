@@ -9,7 +9,7 @@ import { AdminUIState } from "../../../reducers/index";
 import { model } from "../../../proto/protos";
 import IPAddr = model.IPAddr;
 import { IPAddrTable } from '../IPAddrTable';
-import { refreshIPs, activateIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
+import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -26,7 +26,7 @@ namespace IPAddrView {
     ips: IPAddr[];
     classes: any;
     refreshIPs: typeof refreshIPs;
-    activateIP: typeof activateIP;
+    createIP: typeof createIP;
     deactivateIP: typeof deactivateIP;
     updateIP: typeof updateIP;
   }
@@ -51,7 +51,7 @@ class IPAddrView extends React.Component<IPAddrView.Props, IPAddrView.State> {
             ips={ips}
             classes={{}}
             refreshIPs={this.props.refreshIPs}
-            activateIP={this.props.activateIP}
+            createIP={this.props.createIP}
             deactivateIP={this.props.deactivateIP}
             updateIP={this.props.updateIP}
           />
@@ -71,7 +71,7 @@ const ipaddrViewConnected = connect(
   },
   {
     refreshIPs,
-    activateIP,
+    createIP,
     deactivateIP,
     updateIP,
   }

@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ActivateIP**](IPServiceV0Api.md#ActivateIP) | **Post** /api/v0/ip/{ip}/activate | 
-[**CreateIP**](IPServiceV0Api.md#CreateIP) | **Post** /api/v0/ip/{ip} | 
+[**CreateIP**](IPServiceV0Api.md#CreateIP) | **Post** /api/v0/ip/{ip}/create | 
 [**DeactivateIP**](IPServiceV0Api.md#DeactivateIP) | **Post** /api/v0/ip/{ip}/deactivate | 
 [**GetNetworkIncludingIP**](IPServiceV0Api.md#GetNetworkIncludingIP) | **Get** /api/v0/ip/{ip}/network | 
 [**ListIP**](IPServiceV0Api.md#ListIP) | **Get** /api/v0/ip/list | 

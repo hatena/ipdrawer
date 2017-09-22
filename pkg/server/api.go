@@ -440,7 +440,7 @@ func (api *APIServer) ListTemporaryReservedIP(
 		return nil, errors.Wrap(err, "Manager can't get ip list")
 	}
 	return &serverpb.ListTemporaryReservedIPResponse{
-		TemporaryReservedIps: addrs,
+		Ips: addrs,
 	}, nil
 }
 

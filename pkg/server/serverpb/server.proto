@@ -97,7 +97,7 @@ message ListIPResponse {
 message ListTemporaryReservedIPRequest {}
 
 message ListTemporaryReservedIPResponse {
-  repeated model.IPAddr temporary_reserved_ips = 1;
+  repeated model.IPAddr ips = 1;
 }
 
 message ListPoolRequest {}
@@ -181,7 +181,7 @@ service IPServiceV0 {
 
   rpc CreateIP (model.IPAddr) returns (CreateIPResponse) {
     option (google.api.http) = {
-      post: "/api/v0/ip/{ip}"
+      post: "/api/v0/ip/{ip}/create"
       body: "*"
     };
   };

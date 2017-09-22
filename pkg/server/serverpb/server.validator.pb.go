@@ -214,10 +214,10 @@ func (this *ListTemporaryReservedIPRequest) Validate() error {
 	return nil
 }
 func (this *ListTemporaryReservedIPResponse) Validate() error {
-	for _, item := range this.TemporaryReservedIps {
+	for _, item := range this.Ips {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("TemporaryReservedIps", err)
+				return github_com_mwitkow_go_proto_validators.FieldError("Ips", err)
 			}
 		}
 	}

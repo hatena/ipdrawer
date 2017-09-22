@@ -34,8 +34,9 @@ import {
 
 import { model } from "../../../proto/protos";
 import IPAddr = model.IPAddr;
-import { refreshIPs, activateIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
+import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
 import * as protos from '../../../proto/protos';
+import { ChipCell } from '../../../components/table/ChipCell';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -82,15 +83,12 @@ namespace IPAddrTable {
     ips: IPAddr[];
     classes: any;
     refreshIPs: typeof refreshIPs;
-    activateIP: typeof activateIP;
+    createIP: typeof createIP;
     deactivateIP: typeof deactivateIP;
     updateIP: typeof updateIP;
   }
 
   export interface State {
-    editingRows: any;
-    changedRows: any;
-    addedRows: any;
     editOpen: boolean;
     editNew: boolean;
     editingIP: string;
@@ -115,14 +113,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     {
       name: "tags",
       title: "Tags",
-      getCellData: (row: IPAddr) => (
-        <div>{_.map(row.tags, (tag, i) =>
-          <Chip
-            key={i}
-            label={tag.key + ": " + tag.value}
-          />)}
-        </div>
-      )
+      getCellData: (row: IPAddr) => <ChipCell tags={row.tags} classes={{}} />
     },
   ];
 
@@ -130,10 +121,6 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     super(props, context);
 
     this.state = {
-      editingRows: [],
-      changedRows: {},
-      addedRows: [],
-
       editOpen: false,
       editNew: false,
       editingIP: "",
@@ -162,13 +149,8 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     return tags.map((tag) => `${tag.key}=${tag.value}`).join(",")
   }
 
-  commitChanges = (added, changed, deleted) => {
-    console.log(added, changed, deleted);
-  };
-
-  changeAddedRows = (addedRows) => {
-    this.clickNew(null);
-  }
+  // Unused but required by EditingState
+  commitChanges = (added, changed, deleted) => {};
 
   clickEdit = (addr: IPAddr) => (event) => {
     this.setState({
@@ -211,9 +193,10 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
 
-  clickActivate = (event) => {
-    this.props.activateIP(new protos.serverpb.ActivateIPRequest({
+  clickCreate = (event) => {
+    this.props.createIP(new protos.model.IPAddr({
       ip: this.state.editingIP,
+      status: this.state.editingStatus,
       tags: this.parseTags(this.state.editingTags),
     }));
     this.setState({ editOpen: false });
@@ -232,7 +215,15 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
 
   render() {
     const { classes, ips } = this.props;
-    const { editingRows, changedRows, addedRows } = this.state;
+    const {
+      editOpen,
+      editNew,
+      editingIP,
+      editingStatus,
+      editingTags,
+      deleteOpen,
+      deletingRow
+    } = this.state;
 
     return (
       <div>
@@ -243,18 +234,34 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           <SortingState />
           <FilteringState defaultFilters={[]} />
           <EditingState
-            addedRows={addedRows}
-            onAddedRowsChange={this.changeAddedRows}
+            onAddedRowsChange={this.clickNew}
             onCommitChanges={this.commitChanges}
+          />
+          <PagingState
+            defaultCurrentPage={0}
+            defaultPageSize={50}
           />
 
           <LocalSorting />
-          <LocalFiltering />
+          <LocalFiltering
+            filterFn={(row, filter) => {
+              if (filter.columnName == 'ip') {
+                return row.ip.indexOf(filter.value) >= 0;
+              }
+              if (filter.columnName == 'tags') {
+                return this.convertTagsStr(row.tags).indexOf(filter.value) >= 0;
+              }
+            }}
+          />
+          <LocalPaging />
 
           <TableView />
           <TableHeaderRow allowSorting />
 
           <TableFilterRow />
+          <PagingPanel
+            allowedPageSizes={[10,50,100]}
+          />
 
           <TableEditColumn
             cellTemplate={(args) => {
@@ -285,11 +292,11 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
 
         <Dialog
           ignoreBackdropClick
-          open={this.state.editOpen}
+          open={editOpen}
           onRequestClose={() => {this.setState({editOpen: false})}}
           classes={{ paper: classes.dialog }}
         >
-          <DialogTitle>{this.state.editNew ? "New" : "Edit"}</DialogTitle>
+          <DialogTitle>{editNew ? "New" : "Edit"}</DialogTitle>
           <DialogContent>
             <FormGroup>
               <FormControl
@@ -298,21 +305,20 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
                 <TextField
                   id="ip"
                   label="IP"
-                  value={this.state.editingIP}
+                  value={editingIP}
                   margin="normal"
                   onChange={this.changeEdit('editingIP')}
-                  disabled={!this.state.editNew}
+                  disabled={!editNew}
                 />
               </FormControl>
-              <FormControl disabled={this.state.editNew}>
+              <FormControl>
                 <InputLabel htmlFor="status-select">Status</InputLabel>
                 <Select
-                  value={this.state.editingStatus}
+                  value={editingStatus}
                   onChange={this.changeEdit('editingStatus')}
                   input={<Input id="status-select" />}
                 >
                   <MenuItem value={IPAddr.Status.ACTIVE}>ACTIVE</MenuItem>
-                  <MenuItem value={IPAddr.Status.TEMPORARY_RESERVED}>TEMPORARY RESERVED</MenuItem>
                   <MenuItem value={IPAddr.Status.RESERVED}>RESERVED</MenuItem>
                 </Select>
               </FormControl>
@@ -320,7 +326,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
                 <TextField
                   id="tags"
                   label="Tags"
-                  value={this.state.editingTags}
+                  value={editingTags}
                   margin="normal"
                   onChange={this.changeEdit('editingTags')}
                 />
@@ -336,16 +342,16 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
             </Button>
             <Button
               color="accent"
-              onClick={this.state.editNew ? this.clickActivate : this.clickUpdate}
+              onClick={editNew ? this.clickCreate : this.clickUpdate}
             >
-              {this.state.editNew ? "Activate" : "Update"}
+              {editNew ? "Create" : "Update"}
             </Button>
           </DialogActions>
         </Dialog>
 
         <Dialog
           ignoreBackdropClick
-          open={this.state.deleteOpen}
+          open={deleteOpen}
           onRequestClose={() => {this.setState({deleteOpen: false})}}
         >
           <DialogTitle>Delete IP</DialogTitle>
@@ -354,7 +360,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
               Are you sure to delete the following IP?
             </DialogContentText>
             <Grid
-              rows={this.state.deletingRow}
+              rows={deletingRow}
               columns={IPAddrTable.columns}
             >
               <TableView />

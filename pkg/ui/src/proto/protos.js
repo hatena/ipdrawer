@@ -2464,6 +2464,165 @@ $root.serverpb = (function() {
         return GetNetworkIncludingIPRequest;
     })();
 
+    serverpb.CreateIPResponse = (function() {
+
+        /**
+         * Properties of a CreateIPResponse.
+         * @memberof serverpb
+         * @interface ICreateIPResponse
+         */
+
+        /**
+         * Constructs a new CreateIPResponse.
+         * @memberof serverpb
+         * @classdesc Represents a CreateIPResponse.
+         * @constructor
+         * @param {serverpb.ICreateIPResponse=} [properties] Properties to set
+         */
+        function CreateIPResponse(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new CreateIPResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {serverpb.ICreateIPResponse=} [properties] Properties to set
+         * @returns {serverpb.CreateIPResponse} CreateIPResponse instance
+         */
+        CreateIPResponse.create = function create(properties) {
+            return new CreateIPResponse(properties);
+        };
+
+        /**
+         * Encodes the specified CreateIPResponse message. Does not implicitly {@link serverpb.CreateIPResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {serverpb.ICreateIPResponse} message CreateIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CreateIPResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified CreateIPResponse message, length delimited. Does not implicitly {@link serverpb.CreateIPResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {serverpb.ICreateIPResponse} message CreateIPResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        CreateIPResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a CreateIPResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.CreateIPResponse} CreateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CreateIPResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.CreateIPResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a CreateIPResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.CreateIPResponse} CreateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        CreateIPResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a CreateIPResponse message.
+         * @function verify
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        CreateIPResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a CreateIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.CreateIPResponse} CreateIPResponse
+         */
+        CreateIPResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.CreateIPResponse)
+                return object;
+            return new $root.serverpb.CreateIPResponse();
+        };
+
+        /**
+         * Creates a plain object from a CreateIPResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.CreateIPResponse
+         * @static
+         * @param {serverpb.CreateIPResponse} message CreateIPResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        CreateIPResponse.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this CreateIPResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.CreateIPResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        CreateIPResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return CreateIPResponse;
+    })();
+
     serverpb.ActivateIPRequest = (function() {
 
         /**
@@ -2692,165 +2851,6 @@ $root.serverpb = (function() {
         };
 
         return ActivateIPRequest;
-    })();
-
-    serverpb.ActivateIPResponse = (function() {
-
-        /**
-         * Properties of an ActivateIPResponse.
-         * @memberof serverpb
-         * @interface IActivateIPResponse
-         */
-
-        /**
-         * Constructs a new ActivateIPResponse.
-         * @memberof serverpb
-         * @classdesc Represents an ActivateIPResponse.
-         * @constructor
-         * @param {serverpb.IActivateIPResponse=} [properties] Properties to set
-         */
-        function ActivateIPResponse(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Creates a new ActivateIPResponse instance using the specified properties.
-         * @function create
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {serverpb.IActivateIPResponse=} [properties] Properties to set
-         * @returns {serverpb.ActivateIPResponse} ActivateIPResponse instance
-         */
-        ActivateIPResponse.create = function create(properties) {
-            return new ActivateIPResponse(properties);
-        };
-
-        /**
-         * Encodes the specified ActivateIPResponse message. Does not implicitly {@link serverpb.ActivateIPResponse.verify|verify} messages.
-         * @function encode
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {serverpb.IActivateIPResponse} message ActivateIPResponse message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        ActivateIPResponse.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified ActivateIPResponse message, length delimited. Does not implicitly {@link serverpb.ActivateIPResponse.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {serverpb.IActivateIPResponse} message ActivateIPResponse message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        ActivateIPResponse.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes an ActivateIPResponse message from the specified reader or buffer.
-         * @function decode
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {serverpb.ActivateIPResponse} ActivateIPResponse
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        ActivateIPResponse.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.ActivateIPResponse();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes an ActivateIPResponse message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {serverpb.ActivateIPResponse} ActivateIPResponse
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        ActivateIPResponse.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies an ActivateIPResponse message.
-         * @function verify
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        ActivateIPResponse.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            return null;
-        };
-
-        /**
-         * Creates an ActivateIPResponse message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {serverpb.ActivateIPResponse} ActivateIPResponse
-         */
-        ActivateIPResponse.fromObject = function fromObject(object) {
-            if (object instanceof $root.serverpb.ActivateIPResponse)
-                return object;
-            return new $root.serverpb.ActivateIPResponse();
-        };
-
-        /**
-         * Creates a plain object from an ActivateIPResponse message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof serverpb.ActivateIPResponse
-         * @static
-         * @param {serverpb.ActivateIPResponse} message ActivateIPResponse
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        ActivateIPResponse.toObject = function toObject() {
-            return {};
-        };
-
-        /**
-         * Converts this ActivateIPResponse to JSON.
-         * @function toJSON
-         * @memberof serverpb.ActivateIPResponse
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        ActivateIPResponse.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return ActivateIPResponse;
     })();
 
     serverpb.DeactivateIPRequest = (function() {
@@ -5478,7 +5478,7 @@ $root.serverpb = (function() {
          * Properties of a ListTemporaryReservedIPResponse.
          * @memberof serverpb
          * @interface IListTemporaryReservedIPResponse
-         * @property {Array.<model.IIPAddr>} [temporaryReservedIps] ListTemporaryReservedIPResponse temporaryReservedIps
+         * @property {Array.<model.IIPAddr>} [ips] ListTemporaryReservedIPResponse ips
          */
 
         /**
@@ -5489,7 +5489,7 @@ $root.serverpb = (function() {
          * @param {serverpb.IListTemporaryReservedIPResponse=} [properties] Properties to set
          */
         function ListTemporaryReservedIPResponse(properties) {
-            this.temporaryReservedIps = [];
+            this.ips = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -5497,12 +5497,12 @@ $root.serverpb = (function() {
         }
 
         /**
-         * ListTemporaryReservedIPResponse temporaryReservedIps.
-         * @member {Array.<model.IIPAddr>}temporaryReservedIps
+         * ListTemporaryReservedIPResponse ips.
+         * @member {Array.<model.IIPAddr>}ips
          * @memberof serverpb.ListTemporaryReservedIPResponse
          * @instance
          */
-        ListTemporaryReservedIPResponse.prototype.temporaryReservedIps = $util.emptyArray;
+        ListTemporaryReservedIPResponse.prototype.ips = $util.emptyArray;
 
         /**
          * Creates a new ListTemporaryReservedIPResponse instance using the specified properties.
@@ -5528,9 +5528,9 @@ $root.serverpb = (function() {
         ListTemporaryReservedIPResponse.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.temporaryReservedIps != null && message.temporaryReservedIps.length)
-                for (var i = 0; i < message.temporaryReservedIps.length; ++i)
-                    $root.model.IPAddr.encode(message.temporaryReservedIps[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            if (message.ips != null && message.ips.length)
+                for (var i = 0; i < message.ips.length; ++i)
+                    $root.model.IPAddr.encode(message.ips[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
             return writer;
         };
 
@@ -5566,9 +5566,9 @@ $root.serverpb = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    if (!(message.temporaryReservedIps && message.temporaryReservedIps.length))
-                        message.temporaryReservedIps = [];
-                    message.temporaryReservedIps.push($root.model.IPAddr.decode(reader, reader.uint32()));
+                    if (!(message.ips && message.ips.length))
+                        message.ips = [];
+                    message.ips.push($root.model.IPAddr.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -5605,13 +5605,13 @@ $root.serverpb = (function() {
         ListTemporaryReservedIPResponse.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.temporaryReservedIps != null && message.hasOwnProperty("temporaryReservedIps")) {
-                if (!Array.isArray(message.temporaryReservedIps))
-                    return "temporaryReservedIps: array expected";
-                for (var i = 0; i < message.temporaryReservedIps.length; ++i) {
-                    var error = $root.model.IPAddr.verify(message.temporaryReservedIps[i]);
+            if (message.ips != null && message.hasOwnProperty("ips")) {
+                if (!Array.isArray(message.ips))
+                    return "ips: array expected";
+                for (var i = 0; i < message.ips.length; ++i) {
+                    var error = $root.model.IPAddr.verify(message.ips[i]);
                     if (error)
-                        return "temporaryReservedIps." + error;
+                        return "ips." + error;
                 }
             }
             return null;
@@ -5629,14 +5629,14 @@ $root.serverpb = (function() {
             if (object instanceof $root.serverpb.ListTemporaryReservedIPResponse)
                 return object;
             var message = new $root.serverpb.ListTemporaryReservedIPResponse();
-            if (object.temporaryReservedIps) {
-                if (!Array.isArray(object.temporaryReservedIps))
-                    throw TypeError(".serverpb.ListTemporaryReservedIPResponse.temporaryReservedIps: array expected");
-                message.temporaryReservedIps = [];
-                for (var i = 0; i < object.temporaryReservedIps.length; ++i) {
-                    if (typeof object.temporaryReservedIps[i] !== "object")
-                        throw TypeError(".serverpb.ListTemporaryReservedIPResponse.temporaryReservedIps: object expected");
-                    message.temporaryReservedIps[i] = $root.model.IPAddr.fromObject(object.temporaryReservedIps[i]);
+            if (object.ips) {
+                if (!Array.isArray(object.ips))
+                    throw TypeError(".serverpb.ListTemporaryReservedIPResponse.ips: array expected");
+                message.ips = [];
+                for (var i = 0; i < object.ips.length; ++i) {
+                    if (typeof object.ips[i] !== "object")
+                        throw TypeError(".serverpb.ListTemporaryReservedIPResponse.ips: object expected");
+                    message.ips[i] = $root.model.IPAddr.fromObject(object.ips[i]);
                 }
             }
             return message;
@@ -5656,11 +5656,11 @@ $root.serverpb = (function() {
                 options = {};
             var object = {};
             if (options.arrays || options.defaults)
-                object.temporaryReservedIps = [];
-            if (message.temporaryReservedIps && message.temporaryReservedIps.length) {
-                object.temporaryReservedIps = [];
-                for (var j = 0; j < message.temporaryReservedIps.length; ++j)
-                    object.temporaryReservedIps[j] = $root.model.IPAddr.toObject(message.temporaryReservedIps[j], options);
+                object.ips = [];
+            if (message.ips && message.ips.length) {
+                object.ips = [];
+                for (var j = 0; j < message.ips.length; ++j)
+                    object.ips[j] = $root.model.IPAddr.toObject(message.ips[j], options);
             }
             return object;
         };
@@ -6821,12 +6821,45 @@ $root.serverpb = (function() {
          */
 
         /**
+         * Callback as used by {@link serverpb.IPServiceV0#createIP}.
+         * @memberof serverpb.IPServiceV0
+         * @typedef CreateIPCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.CreateIPResponse} [response] CreateIPResponse
+         */
+
+        /**
+         * Calls CreateIP.
+         * @function .createIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {model.IIPAddr} request IPAddr message or plain object
+         * @param {serverpb.IPServiceV0.CreateIPCallback} callback Node-style callback called with the error, if any, and CreateIPResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        IPServiceV0.prototype.createIP = function createIP(request, callback) {
+            return this.rpcCall(createIP, $root.model.IPAddr, $root.serverpb.CreateIPResponse, request, callback);
+        };
+
+        /**
+         * Calls CreateIP.
+         * @function createIP
+         * @memberof serverpb.IPServiceV0
+         * @instance
+         * @param {model.IIPAddr} request IPAddr message or plain object
+         * @returns {Promise<serverpb.CreateIPResponse>} Promise
+         * @variation 2
+         */
+
+        /**
          * Callback as used by {@link serverpb.IPServiceV0#activateIP}.
          * @memberof serverpb.IPServiceV0
          * @typedef ActivateIPCallback
          * @type {function}
          * @param {Error|null} error Error, if any
-         * @param {serverpb.ActivateIPResponse} [response] ActivateIPResponse
+         * @param {serverpb.CreateIPResponse} [response] CreateIPResponse
          */
 
         /**
@@ -6835,12 +6868,12 @@ $root.serverpb = (function() {
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IActivateIPRequest} request ActivateIPRequest message or plain object
-         * @param {serverpb.IPServiceV0.ActivateIPCallback} callback Node-style callback called with the error, if any, and ActivateIPResponse
+         * @param {serverpb.IPServiceV0.ActivateIPCallback} callback Node-style callback called with the error, if any, and CreateIPResponse
          * @returns {undefined}
          * @variation 1
          */
         IPServiceV0.prototype.activateIP = function activateIP(request, callback) {
-            return this.rpcCall(activateIP, $root.serverpb.ActivateIPRequest, $root.serverpb.ActivateIPResponse, request, callback);
+            return this.rpcCall(activateIP, $root.serverpb.ActivateIPRequest, $root.serverpb.CreateIPResponse, request, callback);
         };
 
         /**
@@ -6849,7 +6882,7 @@ $root.serverpb = (function() {
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IActivateIPRequest} request ActivateIPRequest message or plain object
-         * @returns {Promise<serverpb.ActivateIPResponse>} Promise
+         * @returns {Promise<serverpb.CreateIPResponse>} Promise
          * @variation 2
          */
 

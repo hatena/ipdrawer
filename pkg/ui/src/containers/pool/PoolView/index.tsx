@@ -44,7 +44,6 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
     const { classes, pools } = this.props;
 
     if (!_.isNil(pools)) {
-      console.log(pools);
       this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
         rangeStart: pools[0].start,
         rangeEnd: pools[0].end,
