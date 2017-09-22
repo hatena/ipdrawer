@@ -74,7 +74,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP**
-> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name, $activateImmediately)
+> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name, $temporaryReserved)
 
 
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
  **name** | **string**|  | [optional] 
- **activateImmediately** | **bool**|  | [optional] 
+ **temporaryReserved** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -106,7 +106,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIPEstimatingNetwork**
-> ServerpbDrawIpResponse DrawIPEstimatingNetwork($poolTagKey, $poolTagValue, $activateImmediately)
+> ServerpbDrawIpResponse DrawIPEstimatingNetwork($poolTagKey, $poolTagValue, $temporaryReserved)
 
 
 
@@ -117,7 +117,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
- **activateImmediately** | **bool**|  | [optional] 
+ **temporaryReserved** | **bool**|  | [optional] 
 
 ### Return type
 
@@ -135,7 +135,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP_0**
-> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue, $activateImmediately)
+> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue, $temporaryReserved)
 
 
 
@@ -149,7 +149,7 @@ Name | Type | Description  | Notes
  **mask** | **int32**| int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];. | [optional] 
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
- **activateImmediately** | **bool**|  | [optional] 
+ **temporaryReserved** | **bool**|  | [optional] 
 
 ### Return type
 

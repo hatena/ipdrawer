@@ -1585,7 +1585,7 @@ $root.serverpb = (function() {
          * @property {number} [mask] DrawIPRequest mask
          * @property {model.ITag} [poolTag] DrawIPRequest poolTag
          * @property {string} [name] DrawIPRequest name
-         * @property {boolean} [activateImmediately] DrawIPRequest activateImmediately
+         * @property {boolean} [temporaryReserved] DrawIPRequest temporaryReserved
          */
 
         /**
@@ -1635,12 +1635,12 @@ $root.serverpb = (function() {
         DrawIPRequest.prototype.name = "";
 
         /**
-         * DrawIPRequest activateImmediately.
-         * @member {boolean}activateImmediately
+         * DrawIPRequest temporaryReserved.
+         * @member {boolean}temporaryReserved
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
-        DrawIPRequest.prototype.activateImmediately = false;
+        DrawIPRequest.prototype.temporaryReserved = false;
 
         /**
          * Creates a new DrawIPRequest instance using the specified properties.
@@ -1674,8 +1674,8 @@ $root.serverpb = (function() {
                 $root.model.Tag.encode(message.poolTag, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             if (message.name != null && message.hasOwnProperty("name"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.name);
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                writer.uint32(/* id 5, wireType 0 =*/40).bool(message.activateImmediately);
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                writer.uint32(/* id 5, wireType 0 =*/40).bool(message.temporaryReserved);
             return writer;
         };
 
@@ -1723,7 +1723,7 @@ $root.serverpb = (function() {
                     message.name = reader.string();
                     break;
                 case 5:
-                    message.activateImmediately = reader.bool();
+                    message.temporaryReserved = reader.bool();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1774,9 +1774,9 @@ $root.serverpb = (function() {
             if (message.name != null && message.hasOwnProperty("name"))
                 if (!$util.isString(message.name))
                     return "name: string expected";
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                if (typeof message.activateImmediately !== "boolean")
-                    return "activateImmediately: boolean expected";
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                if (typeof message.temporaryReserved !== "boolean")
+                    return "temporaryReserved: boolean expected";
             return null;
         };
 
@@ -1803,8 +1803,8 @@ $root.serverpb = (function() {
             }
             if (object.name != null)
                 message.name = String(object.name);
-            if (object.activateImmediately != null)
-                message.activateImmediately = Boolean(object.activateImmediately);
+            if (object.temporaryReserved != null)
+                message.temporaryReserved = Boolean(object.temporaryReserved);
             return message;
         };
 
@@ -1826,7 +1826,7 @@ $root.serverpb = (function() {
                 object.mask = 0;
                 object.poolTag = null;
                 object.name = "";
-                object.activateImmediately = false;
+                object.temporaryReserved = false;
             }
             if (message.ip != null && message.hasOwnProperty("ip"))
                 object.ip = message.ip;
@@ -1836,8 +1836,8 @@ $root.serverpb = (function() {
                 object.poolTag = $root.model.Tag.toObject(message.poolTag, options);
             if (message.name != null && message.hasOwnProperty("name"))
                 object.name = message.name;
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                object.activateImmediately = message.activateImmediately;
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                object.temporaryReserved = message.temporaryReserved;
             return object;
         };
 
@@ -2071,7 +2071,7 @@ $root.serverpb = (function() {
          * @memberof serverpb
          * @interface IDrawIPEstimatingNetworkRequest
          * @property {model.ITag} [poolTag] DrawIPEstimatingNetworkRequest poolTag
-         * @property {boolean} [activateImmediately] DrawIPEstimatingNetworkRequest activateImmediately
+         * @property {boolean} [temporaryReserved] DrawIPEstimatingNetworkRequest temporaryReserved
          */
 
         /**
@@ -2097,12 +2097,12 @@ $root.serverpb = (function() {
         DrawIPEstimatingNetworkRequest.prototype.poolTag = null;
 
         /**
-         * DrawIPEstimatingNetworkRequest activateImmediately.
-         * @member {boolean}activateImmediately
+         * DrawIPEstimatingNetworkRequest temporaryReserved.
+         * @member {boolean}temporaryReserved
          * @memberof serverpb.DrawIPEstimatingNetworkRequest
          * @instance
          */
-        DrawIPEstimatingNetworkRequest.prototype.activateImmediately = false;
+        DrawIPEstimatingNetworkRequest.prototype.temporaryReserved = false;
 
         /**
          * Creates a new DrawIPEstimatingNetworkRequest instance using the specified properties.
@@ -2130,8 +2130,8 @@ $root.serverpb = (function() {
                 writer = $Writer.create();
             if (message.poolTag != null && message.hasOwnProperty("poolTag"))
                 $root.model.Tag.encode(message.poolTag, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.activateImmediately);
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                writer.uint32(/* id 2, wireType 0 =*/16).bool(message.temporaryReserved);
             return writer;
         };
 
@@ -2170,7 +2170,7 @@ $root.serverpb = (function() {
                     message.poolTag = $root.model.Tag.decode(reader, reader.uint32());
                     break;
                 case 2:
-                    message.activateImmediately = reader.bool();
+                    message.temporaryReserved = reader.bool();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2212,9 +2212,9 @@ $root.serverpb = (function() {
                 if (error)
                     return "poolTag." + error;
             }
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                if (typeof message.activateImmediately !== "boolean")
-                    return "activateImmediately: boolean expected";
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                if (typeof message.temporaryReserved !== "boolean")
+                    return "temporaryReserved: boolean expected";
             return null;
         };
 
@@ -2235,8 +2235,8 @@ $root.serverpb = (function() {
                     throw TypeError(".serverpb.DrawIPEstimatingNetworkRequest.poolTag: object expected");
                 message.poolTag = $root.model.Tag.fromObject(object.poolTag);
             }
-            if (object.activateImmediately != null)
-                message.activateImmediately = Boolean(object.activateImmediately);
+            if (object.temporaryReserved != null)
+                message.temporaryReserved = Boolean(object.temporaryReserved);
             return message;
         };
 
@@ -2255,12 +2255,12 @@ $root.serverpb = (function() {
             var object = {};
             if (options.defaults) {
                 object.poolTag = null;
-                object.activateImmediately = false;
+                object.temporaryReserved = false;
             }
             if (message.poolTag != null && message.hasOwnProperty("poolTag"))
                 object.poolTag = $root.model.Tag.toObject(message.poolTag, options);
-            if (message.activateImmediately != null && message.hasOwnProperty("activateImmediately"))
-                object.activateImmediately = message.activateImmediately;
+            if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
+                object.temporaryReserved = message.temporaryReserved;
             return object;
         };
 

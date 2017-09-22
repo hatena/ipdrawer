@@ -43,7 +43,7 @@ const (
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -383,7 +383,7 @@ const (
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -517,7 +517,7 @@ const (
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",
