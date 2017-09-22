@@ -88,8 +88,8 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *model.Pool, reserve bool, 
 	return nil, errors.New("Nothing IP to serve")
 }
 
-// Activate activates IP.
-func (m *IPManager) Activate(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
+// CreateIP activates IP.
+func (m *IPManager) CreateIP(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
 	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", addr.Ip)
@@ -103,10 +103,6 @@ func (m *IPManager) Activate(ctx context.Context, ps []*model.Pool, addr *model.
 
 	ip := net.ParseIP(addr.Ip)
 
-	if check, _ := m.redis.Client.Exists(makeIPDetailsKey(ip)).Result(); check != 0 {
-		return errors.New(fmt.Sprintf("%s has been already activated", ip.String()))
-	}
-
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))
@@ -116,7 +112,6 @@ func (m *IPManager) Activate(ctx context.Context, ps []*model.Pool, addr *model.
 		return err
 	}
 	pipe.Set(makeIPDetailsKey(ip), string(data), 0)
-	//pipe.HSet(makeIPDetailsKey(ip), "status", int(model.IPAddr_ACTIVE))
 	// Add IP to used IP zset
 	score := float64(netutil.IP2Uint(ip))
 	z := redis.Z{
@@ -287,18 +282,16 @@ func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
 		return nil, errors.Wrap(err, "Failed to fetch IP list keys")
 	}
 
-	addrs := make([]*model.IPAddr, len(keys))
+	ips := make([]net.IP, len(keys))
 	for i, key := range keys {
 		ip, err := parseIPDetailsKey(key)
 		if err != nil {
 			return nil, errors.Wrapf(err, "Parse failed: %s", key)
 		}
-		if addrs[i], err = getIPAddr(m.redis, ip); err != nil {
-			return nil, err
-		}
+		ips[i] = ip
 	}
 
-	return addrs, nil
+	return getIPAddrs(m.redis, ips)
 }
 
 // GetTemporaryReservedIPs returns all temporary reserved ips.

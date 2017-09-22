@@ -2,6 +2,7 @@ package ipam
 
 import (
 	"net"
+	"reflect"
 	"testing"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
@@ -54,6 +55,40 @@ func TestGetIPAddr(t *testing.T) {
 	}
 	if !resp.Equal(testIPAddr) {
 		t.Errorf("Got wrong IPAddr %v; want %v", resp, testIPAddr)
+	}
+}
+
+func TestGetIPAddrs(t *testing.T) {
+	r, def := storage.NewTestRedis()
+	defer def()
+
+	addrs := []*model.IPAddr{
+		{
+			Ip:     "10.0.0.1",
+			Status: model.IPAddr_ACTIVE,
+		},
+		{
+			Ip:     "10.0.0.2",
+			Status: model.IPAddr_ACTIVE,
+		},
+	}
+
+	for _, ip := range addrs {
+		err := setIPAddr(r, ip)
+		if err != nil {
+			t.Fatalf("Got error %v; want success", err)
+		}
+	}
+
+	resp, err := getIPAddrs(r, []net.IP{
+		net.ParseIP("10.0.0.1"),
+		net.ParseIP("10.0.0.2"),
+	})
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
+	}
+	if !reflect.DeepEqual(addrs, resp) {
+		t.Errorf("Got wrong IPAddrs %v; want %v", resp, addrs)
 	}
 }
 

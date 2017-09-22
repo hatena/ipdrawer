@@ -11,6 +11,8 @@ import (
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
+	"sort"
+
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
@@ -209,20 +211,15 @@ func (api *APIServer) GetEstimatedNetwork(
 	})
 }
 
-func (api *APIServer) ActivateIP(
+func (api *APIServer) CreateIP(
 	ctx context.Context,
-	req *serverpb.ActivateIPRequest,
-) (*serverpb.ActivateIPResponse, error) {
-	if err := req.Validate(); err != nil {
+	addr *model.IPAddr,
+) (*serverpb.CreateIPResponse, error) {
+	if err := addr.Validate(); err != nil {
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	ip := net.ParseIP(req.Ip)
-	addr := &model.IPAddr{
-		Ip:     req.Ip,
-		Status: model.IPAddr_ACTIVE,
-		Tags:   req.Tags,
-	}
+	ip := net.ParseIP(addr.Ip)
 
 	n, err := api.manager.GetNetworkIncludingIP(ctx, ip)
 	if err != nil {
@@ -231,18 +228,31 @@ func (api *APIServer) ActivateIP(
 
 	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
 	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	if len(pools) == 0 {
-		return nil, status.Errorf(
-			codes.NotFound, "Not found pool: %s: %#+v", ip.String(), err)
+		return nil, err
 	}
 
-	if err := api.manager.Activate(ctx, pools, addr); err != nil {
+	if err := api.manager.CreateIP(ctx, pools, addr); err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	return &serverpb.ActivateIPResponse{}, nil
+	return &serverpb.CreateIPResponse{}, nil
+}
+
+func (api *APIServer) ActivateIP(
+	ctx context.Context,
+	req *serverpb.ActivateIPRequest,
+) (*serverpb.CreateIPResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	addr := &model.IPAddr{
+		Ip:     req.Ip,
+		Status: model.IPAddr_ACTIVE,
+		Tags:   req.Tags,
+	}
+
+	return api.CreateIP(ctx, addr)
 }
 
 func (api *APIServer) DeactivateIP(
@@ -406,6 +416,12 @@ func (api *APIServer) ListIP(
 	if err != nil {
 		return nil, errors.Wrap(err, "Manager can't get ip list")
 	}
+
+	// Sort by IP
+	sort.Slice(addrs, func(i, j int) bool {
+		return addrs[i].Ip < addrs[j].Ip
+	})
+
 	return &serverpb.ListIPResponse{
 		Ips: addrs,
 	}, nil

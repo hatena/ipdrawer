@@ -14,8 +14,8 @@ It has these top-level messages:
 	DrawIPResponse
 	DrawIPEstimatingNetworkRequest
 	GetNetworkIncludingIPRequest
+	CreateIPResponse
 	ActivateIPRequest
-	ActivateIPResponse
 	DeactivateIPRequest
 	DeactivateIPResponse
 	UpdateIPResponse
@@ -99,6 +99,9 @@ func (this *GetNetworkIncludingIPRequest) Validate() error {
 	}
 	return nil
 }
+func (this *CreateIPResponse) Validate() error {
+	return nil
+}
 
 var _regex_ActivateIPRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
@@ -113,9 +116,6 @@ func (this *ActivateIPRequest) Validate() error {
 			}
 		}
 	}
-	return nil
-}
-func (this *ActivateIPResponse) Validate() error {
 	return nil
 }
 

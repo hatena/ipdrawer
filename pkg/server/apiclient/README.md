@@ -22,6 +22,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *IPServiceV0Api* | [**ActivateIP**](docs/IPServiceV0Api.md#activateip) | **Post** /api/v0/ip/{ip}/activate | 
+*IPServiceV0Api* | [**CreateIP**](docs/IPServiceV0Api.md#createip) | **Post** /api/v0/ip/{ip} | 
 *IPServiceV0Api* | [**DeactivateIP**](docs/IPServiceV0Api.md#deactivateip) | **Post** /api/v0/ip/{ip}/deactivate | 
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
 *IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 
@@ -50,7 +51,7 @@ Class | Method | HTTP request | Description
  - [ModelPoolStatus](docs/ModelPoolStatus.md)
  - [ModelTag](docs/ModelTag.md)
  - [ServerpbActivateIpRequest](docs/ServerpbActivateIpRequest.md)
- - [ServerpbActivateIpResponse](docs/ServerpbActivateIpResponse.md)
+ - [ServerpbCreateIpResponse](docs/ServerpbCreateIpResponse.md)
  - [ServerpbCreateNetworkRequest](docs/ServerpbCreateNetworkRequest.md)
  - [ServerpbCreateNetworkResponse](docs/ServerpbCreateNetworkResponse.md)
  - [ServerpbCreatePoolRequest](docs/ServerpbCreatePoolRequest.md)

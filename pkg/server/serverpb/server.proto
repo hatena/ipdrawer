@@ -36,12 +36,12 @@ message GetNetworkIncludingIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
+message CreateIPResponse {}
+
 message ActivateIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   repeated model.Tag tags = 2;
 }
-
-message ActivateIPResponse {}
 
 message DeactivateIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
@@ -186,7 +186,7 @@ service IPServiceV0 {
     };
   };
 
-  rpc ActivateIP (ActivateIPRequest) returns (ActivateIPResponse) {
+  rpc ActivateIP (ActivateIPRequest) returns (CreateIPResponse) {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/activate"
       body: "*"

@@ -5,6 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ActivateIP**](IPServiceV0Api.md#ActivateIP) | **Post** /api/v0/ip/{ip}/activate | 
+[**CreateIP**](IPServiceV0Api.md#CreateIP) | **Post** /api/v0/ip/{ip} | 
 [**DeactivateIP**](IPServiceV0Api.md#DeactivateIP) | **Post** /api/v0/ip/{ip}/deactivate | 
 [**GetNetworkIncludingIP**](IPServiceV0Api.md#GetNetworkIncludingIP) | **Get** /api/v0/ip/{ip}/network | 
 [**ListIP**](IPServiceV0Api.md#ListIP) | **Get** /api/v0/ip/list | 
@@ -13,7 +14,7 @@ Method | HTTP request | Description
 
 
 # **ActivateIP**
-> ServerpbActivateIpResponse ActivateIP($ip, $body)
+> ServerpbCreateIpResponse ActivateIP($ip, $body)
 
 
 
@@ -27,7 +28,35 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ServerpbActivateIpResponse**](serverpbActivateIPResponse.md)
+[**ServerpbCreateIpResponse**](serverpbCreateIPResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **CreateIP**
+> ServerpbCreateIpResponse CreateIP($ip, $body)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**|  | 
+ **body** | [**ModelIpAddr**](ModelIpAddr.md)|  | 
+
+### Return type
+
+[**ServerpbCreateIpResponse**](serverpbCreateIPResponse.md)
 
 ### Authorization
 

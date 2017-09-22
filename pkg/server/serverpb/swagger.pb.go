@@ -87,6 +87,38 @@ const (
         ]
       }
     },
+    "/api/v0/ip/{ip}": {
+      "post": {
+        "operationId": "CreateIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbCreateIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelIPAddr"
+            }
+          }
+        ],
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
     "/api/v0/ip/{ip}/activate": {
       "post": {
         "operationId": "ActivateIP",
@@ -94,7 +126,7 @@ const (
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbActivateIPResponse"
+              "$ref": "#/definitions/serverpbCreateIPResponse"
             }
           }
         },
@@ -664,7 +696,7 @@ const (
         }
       }
     },
-    "serverpbActivateIPResponse": {
+    "serverpbCreateIPResponse": {
       "type": "object"
     },
     "serverpbCreateNetworkRequest": {
