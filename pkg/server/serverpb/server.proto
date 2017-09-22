@@ -179,6 +179,13 @@ service IPServiceV0 {
     };
   };
 
+  rpc CreateIP (model.IPAddr) returns (CreateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/ip/{ip}"
+      body: "*"
+    };
+  };
+
   rpc ActivateIP (ActivateIPRequest) returns (ActivateIPResponse) {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/activate"

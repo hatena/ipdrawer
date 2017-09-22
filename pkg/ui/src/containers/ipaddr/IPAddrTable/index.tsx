@@ -304,14 +304,13 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
                   disabled={!this.state.editNew}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl disabled={this.state.editNew}>
                 <InputLabel htmlFor="status-select">Status</InputLabel>
                 <Select
                   value={this.state.editingStatus}
                   onChange={this.changeEdit('editingStatus')}
                   input={<Input id="status-select" />}
                 >
-                  <MenuItem value={IPAddr.Status.UNKNOWN}>UNKNOWN</MenuItem>
                   <MenuItem value={IPAddr.Status.ACTIVE}>ACTIVE</MenuItem>
                   <MenuItem value={IPAddr.Status.TEMPORARY_RESERVED}>TEMPORARY RESERVED</MenuItem>
                   <MenuItem value={IPAddr.Status.RESERVED}>RESERVED</MenuItem>
