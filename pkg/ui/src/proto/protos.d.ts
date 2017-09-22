@@ -653,8 +653,8 @@ export namespace serverpb {
         /** DrawIPRequest name */
         name?: string;
 
-        /** DrawIPRequest activateImmediately */
-        activateImmediately?: boolean;
+        /** DrawIPRequest temporaryReserved */
+        temporaryReserved?: boolean;
     }
 
     /** Represents a DrawIPRequest. */
@@ -678,8 +678,8 @@ export namespace serverpb {
         /** DrawIPRequest name. */
         public name: string;
 
-        /** DrawIPRequest activateImmediately. */
-        public activateImmediately: boolean;
+        /** DrawIPRequest temporaryReserved. */
+        public temporaryReserved: boolean;
 
         /**
          * Creates a new DrawIPRequest instance using the specified properties.
@@ -854,8 +854,8 @@ export namespace serverpb {
         /** DrawIPEstimatingNetworkRequest poolTag */
         poolTag?: model.ITag;
 
-        /** DrawIPEstimatingNetworkRequest activateImmediately */
-        activateImmediately?: boolean;
+        /** DrawIPEstimatingNetworkRequest temporaryReserved */
+        temporaryReserved?: boolean;
     }
 
     /** Represents a DrawIPEstimatingNetworkRequest. */
@@ -870,8 +870,8 @@ export namespace serverpb {
         /** DrawIPEstimatingNetworkRequest poolTag. */
         public poolTag?: (model.ITag|null);
 
-        /** DrawIPEstimatingNetworkRequest activateImmediately. */
-        public activateImmediately: boolean;
+        /** DrawIPEstimatingNetworkRequest temporaryReserved. */
+        public temporaryReserved: boolean;
 
         /**
          * Creates a new DrawIPEstimatingNetworkRequest instance using the specified properties.

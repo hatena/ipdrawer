@@ -40,7 +40,7 @@
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -380,7 +380,7 @@
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",
@@ -514,7 +514,7 @@
             "type": "string"
           },
           {
-            "name": "activate_immediately",
+            "name": "temporary_reserved",
             "in": "query",
             "required": false,
             "type": "boolean",

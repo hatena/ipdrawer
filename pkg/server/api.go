@@ -92,7 +92,7 @@ func (api *APIServer) DrawIP(
 				Ip:      ret.String(),
 				Message: DrawIPSuccessMsg,
 			}
-			if req.ActivateImmediately {
+			if !req.TemporaryReserved {
 				_, err := api.ActivateIP(ctx, &serverpb.ActivateIPRequest{
 					Ip: ret.String(),
 				})
@@ -145,10 +145,10 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 	}
 	ones, _ := pre.Mask.Size()
 	return api.DrawIP(ctx, &serverpb.DrawIPRequest{
-		Ip:                  pre.IP.String(),
-		Mask:                int32(ones),
-		PoolTag:             req.PoolTag,
-		ActivateImmediately: req.ActivateImmediately,
+		Ip:                pre.IP.String(),
+		Mask:              int32(ones),
+		PoolTag:           req.PoolTag,
+		TemporaryReserved: req.TemporaryReserved,
 	})
 }
 

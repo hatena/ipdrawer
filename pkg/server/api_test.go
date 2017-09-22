@@ -228,7 +228,7 @@ func TestDrawIPAndActivateImmediately(t *testing.T) {
 			Key:   "Role",
 			Value: "test",
 		},
-		ActivateImmediately: true,
+		TemporaryReserved: false,
 	})
 
 	if err != nil {
