@@ -16,8 +16,9 @@ type Redis struct {
 func NewRedis(cfg *base.Config) (*Redis, error) {
 	addr := cfg.RedisHost + ":" + cfg.RedisPort
 	client := redis.NewClient(&redis.Options{
-		Addr: addr,
-		DB:   0,
+		Addr:       addr,
+		DB:         0,
+		MaxRetries: 4,
 	})
 	_, err := client.Ping().Result()
 	if err != nil {
