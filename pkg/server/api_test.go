@@ -209,8 +209,8 @@ func TestActivateIPWhenAlreadyActivated(t *testing.T) {
 	}
 
 	_, err = te.api.ActivateIP(te.ctx, req)
-	if err == nil {
-		t.Fatalf("Got nil; want error")
+	if err != nil {
+		t.Fatalf("Got error %v; want success", err)
 	}
 }
 
@@ -281,7 +281,7 @@ func TestGetIPInPool(t *testing.T) {
 		},
 	}
 	for _, ip := range ips {
-		te.manager.Activate(te.ctx, []*model.Pool{testPool}, ip)
+		te.manager.CreateIP(te.ctx, []*model.Pool{testPool}, ip)
 	}
 
 	resp, err := te.api.GetIPInPool(te.ctx, &serverpb.GetIPInPoolRequest{

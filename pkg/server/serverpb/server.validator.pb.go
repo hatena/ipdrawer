@@ -14,10 +14,11 @@ It has these top-level messages:
 	DrawIPResponse
 	DrawIPEstimatingNetworkRequest
 	GetNetworkIncludingIPRequest
+	CreateIPResponse
 	ActivateIPRequest
-	ActivateIPResponse
 	DeactivateIPRequest
 	DeactivateIPResponse
+	UpdateIPResponse
 	GetNetworkRequest
 	GetEstimatedNetworkRequest
 	GetNetworkResponse
@@ -98,6 +99,9 @@ func (this *GetNetworkIncludingIPRequest) Validate() error {
 	}
 	return nil
 }
+func (this *CreateIPResponse) Validate() error {
+	return nil
+}
 
 var _regex_ActivateIPRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
@@ -114,9 +118,6 @@ func (this *ActivateIPRequest) Validate() error {
 	}
 	return nil
 }
-func (this *ActivateIPResponse) Validate() error {
-	return nil
-}
 
 var _regex_DeactivateIPRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
 
@@ -127,6 +128,9 @@ func (this *DeactivateIPRequest) Validate() error {
 	return nil
 }
 func (this *DeactivateIPResponse) Validate() error {
+	return nil
+}
+func (this *UpdateIPResponse) Validate() error {
 	return nil
 }
 
@@ -210,10 +214,10 @@ func (this *ListTemporaryReservedIPRequest) Validate() error {
 	return nil
 }
 func (this *ListTemporaryReservedIPResponse) Validate() error {
-	for _, item := range this.TemporaryReservedIps {
+	for _, item := range this.Ips {
 		if item != nil {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
-				return github_com_mwitkow_go_proto_validators.FieldError("TemporaryReservedIps", err)
+				return github_com_mwitkow_go_proto_validators.FieldError("Ips", err)
 			}
 		}
 	}

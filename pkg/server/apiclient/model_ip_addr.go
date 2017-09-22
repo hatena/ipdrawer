@@ -13,7 +13,7 @@ package apiclient
 type ModelIpAddr struct {
 	Ip string `json:"ip,omitempty"`
 
-	Status IpAddrIpStatus `json:"status,omitempty"`
+	Status ModelIpAddrStatus `json:"status,omitempty"`
 
 	Tags []ModelTag `json:"tags,omitempty"`
 }

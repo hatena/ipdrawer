@@ -45,3 +45,30 @@ func getIPAddr(r *storage.Redis, ip net.IP) (*model.IPAddr, error) {
 
 	return ipaddr, nil
 }
+
+func getIPAddrs(r *storage.Redis, ips []net.IP) ([]*model.IPAddr, error) {
+	dkeys := make([]string, len(ips))
+	for i, ip := range ips {
+		dkeys[i] = makeIPDetailsKey(ip)
+	}
+	data, err := r.Client.MGet(dkeys...).Result()
+	if err != nil {
+		return nil, err
+	}
+	addrs := make([]*model.IPAddr, len(ips))
+	for i, d := range data {
+		if s, ok := d.(string); ok {
+			addrs[i] = &model.IPAddr{}
+			if err := addrs[i].Unmarshal([]byte(s)); err != nil {
+				return nil, err
+			}
+		}
+	}
+	return addrs, nil
+}
+
+func existsIP(r *storage.Redis, addr *model.IPAddr) bool {
+	ip := net.ParseIP(addr.Ip)
+	check, _ := r.Client.Exists(makeIPDetailsKey(ip)).Result()
+	return check != 0
+}

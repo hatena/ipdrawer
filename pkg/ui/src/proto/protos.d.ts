@@ -224,7 +224,7 @@ export namespace model {
         ip?: string;
 
         /** IPAddr status */
-        status?: model.IPAddr.IPStatus;
+        status?: model.IPAddr.Status;
 
         /** IPAddr tags */
         tags?: model.ITag[];
@@ -243,7 +243,7 @@ export namespace model {
         public ip: string;
 
         /** IPAddr status. */
-        public status: model.IPAddr.IPStatus;
+        public status: model.IPAddr.Status;
 
         /** IPAddr tags. */
         public tags: model.ITag[];
@@ -321,8 +321,8 @@ export namespace model {
 
     namespace IPAddr {
 
-        /** IPStatus enum. */
-        enum IPStatus {
+        /** Status enum. */
+        enum Status {
             UNKNOWN = 0,
             ACTIVE = 1,
             TEMPORARY_RESERVED = 2,
@@ -1034,6 +1034,90 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a CreateIPResponse. */
+    interface ICreateIPResponse {
+    }
+
+    /** Represents a CreateIPResponse. */
+    class CreateIPResponse {
+
+        /**
+         * Constructs a new CreateIPResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.ICreateIPResponse);
+
+        /**
+         * Creates a new CreateIPResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns CreateIPResponse instance
+         */
+        public static create(properties?: serverpb.ICreateIPResponse): serverpb.CreateIPResponse;
+
+        /**
+         * Encodes the specified CreateIPResponse message. Does not implicitly {@link serverpb.CreateIPResponse.verify|verify} messages.
+         * @param message CreateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.ICreateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified CreateIPResponse message, length delimited. Does not implicitly {@link serverpb.CreateIPResponse.verify|verify} messages.
+         * @param message CreateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.ICreateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a CreateIPResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns CreateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.CreateIPResponse;
+
+        /**
+         * Decodes a CreateIPResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns CreateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.CreateIPResponse;
+
+        /**
+         * Verifies a CreateIPResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a CreateIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns CreateIPResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.CreateIPResponse;
+
+        /**
+         * Creates a plain object from a CreateIPResponse message. Also converts values to other types if specified.
+         * @param message CreateIPResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.CreateIPResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this CreateIPResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of an ActivateIPRequest. */
     interface IActivateIPRequest {
 
@@ -1125,90 +1209,6 @@ export namespace serverpb {
 
         /**
          * Converts this ActivateIPRequest to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of an ActivateIPResponse. */
-    interface IActivateIPResponse {
-    }
-
-    /** Represents an ActivateIPResponse. */
-    class ActivateIPResponse {
-
-        /**
-         * Constructs a new ActivateIPResponse.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: serverpb.IActivateIPResponse);
-
-        /**
-         * Creates a new ActivateIPResponse instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns ActivateIPResponse instance
-         */
-        public static create(properties?: serverpb.IActivateIPResponse): serverpb.ActivateIPResponse;
-
-        /**
-         * Encodes the specified ActivateIPResponse message. Does not implicitly {@link serverpb.ActivateIPResponse.verify|verify} messages.
-         * @param message ActivateIPResponse message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: serverpb.IActivateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified ActivateIPResponse message, length delimited. Does not implicitly {@link serverpb.ActivateIPResponse.verify|verify} messages.
-         * @param message ActivateIPResponse message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: serverpb.IActivateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes an ActivateIPResponse message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns ActivateIPResponse
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.ActivateIPResponse;
-
-        /**
-         * Decodes an ActivateIPResponse message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns ActivateIPResponse
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.ActivateIPResponse;
-
-        /**
-         * Verifies an ActivateIPResponse message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates an ActivateIPResponse message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns ActivateIPResponse
-         */
-        public static fromObject(object: { [k: string]: any }): serverpb.ActivateIPResponse;
-
-        /**
-         * Creates a plain object from an ActivateIPResponse message. Also converts values to other types if specified.
-         * @param message ActivateIPResponse
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: serverpb.ActivateIPResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this ActivateIPResponse to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -1383,6 +1383,90 @@ export namespace serverpb {
 
         /**
          * Converts this DeactivateIPResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of an UpdateIPResponse. */
+    interface IUpdateIPResponse {
+    }
+
+    /** Represents an UpdateIPResponse. */
+    class UpdateIPResponse {
+
+        /**
+         * Constructs a new UpdateIPResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IUpdateIPResponse);
+
+        /**
+         * Creates a new UpdateIPResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UpdateIPResponse instance
+         */
+        public static create(properties?: serverpb.IUpdateIPResponse): serverpb.UpdateIPResponse;
+
+        /**
+         * Encodes the specified UpdateIPResponse message. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @param message UpdateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IUpdateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UpdateIPResponse message, length delimited. Does not implicitly {@link serverpb.UpdateIPResponse.verify|verify} messages.
+         * @param message UpdateIPResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IUpdateIPResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.UpdateIPResponse;
+
+        /**
+         * Decodes an UpdateIPResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UpdateIPResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.UpdateIPResponse;
+
+        /**
+         * Verifies an UpdateIPResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an UpdateIPResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UpdateIPResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.UpdateIPResponse;
+
+        /**
+         * Creates a plain object from an UpdateIPResponse message. Also converts values to other types if specified.
+         * @param message UpdateIPResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.UpdateIPResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UpdateIPResponse to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -2333,8 +2417,8 @@ export namespace serverpb {
     /** Properties of a ListTemporaryReservedIPResponse. */
     interface IListTemporaryReservedIPResponse {
 
-        /** ListTemporaryReservedIPResponse temporaryReservedIps */
-        temporaryReservedIps?: model.IIPAddr[];
+        /** ListTemporaryReservedIPResponse ips */
+        ips?: model.IIPAddr[];
     }
 
     /** Represents a ListTemporaryReservedIPResponse. */
@@ -2346,8 +2430,8 @@ export namespace serverpb {
          */
         constructor(properties?: serverpb.IListTemporaryReservedIPResponse);
 
-        /** ListTemporaryReservedIPResponse temporaryReservedIps. */
-        public temporaryReservedIps: model.IIPAddr[];
+        /** ListTemporaryReservedIPResponse ips. */
+        public ips: model.IIPAddr[];
 
         /**
          * Creates a new ListTemporaryReservedIPResponse instance using the specified properties.
@@ -2992,9 +3076,23 @@ export namespace serverpb {
         public getNetworkIncludingIP(request: serverpb.IGetNetworkIncludingIPRequest): Promise<serverpb.GetNetworkResponse>;
 
         /**
+         * Calls CreateIP.
+         * @param request IPAddr message or plain object
+         * @param callback Node-style callback called with the error, if any, and CreateIPResponse
+         */
+        public createIP(request: model.IIPAddr, callback: serverpb.IPServiceV0.CreateIPCallback): void;
+
+        /**
+         * Calls CreateIP.
+         * @param request IPAddr message or plain object
+         * @returns Promise
+         */
+        public createIP(request: model.IIPAddr): Promise<serverpb.CreateIPResponse>;
+
+        /**
          * Calls ActivateIP.
          * @param request ActivateIPRequest message or plain object
-         * @param callback Node-style callback called with the error, if any, and ActivateIPResponse
+         * @param callback Node-style callback called with the error, if any, and CreateIPResponse
          */
         public activateIP(request: serverpb.IActivateIPRequest, callback: serverpb.IPServiceV0.ActivateIPCallback): void;
 
@@ -3003,7 +3101,7 @@ export namespace serverpb {
          * @param request ActivateIPRequest message or plain object
          * @returns Promise
          */
-        public activateIP(request: serverpb.IActivateIPRequest): Promise<serverpb.ActivateIPResponse>;
+        public activateIP(request: serverpb.IActivateIPRequest): Promise<serverpb.CreateIPResponse>;
 
         /**
          * Calls DeactivateIP.
@@ -3018,6 +3116,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public deactivateIP(request: serverpb.IDeactivateIPRequest): Promise<serverpb.DeactivateIPResponse>;
+
+        /**
+         * Calls UpdateIP.
+         * @param request IPAddr message or plain object
+         * @param callback Node-style callback called with the error, if any, and UpdateIPResponse
+         */
+        public updateIP(request: model.IIPAddr, callback: serverpb.IPServiceV0.UpdateIPCallback): void;
+
+        /**
+         * Calls UpdateIP.
+         * @param request IPAddr message or plain object
+         * @returns Promise
+         */
+        public updateIP(request: model.IIPAddr): Promise<serverpb.UpdateIPResponse>;
 
         /**
          * Calls ListIP.
@@ -3058,11 +3170,18 @@ export namespace serverpb {
         type GetNetworkIncludingIPCallback = (error: (Error|null), response?: serverpb.GetNetworkResponse) => void;
 
         /**
+         * Callback as used by {@link serverpb.IPServiceV0#createIP}.
+         * @param error Error, if any
+         * @param [response] CreateIPResponse
+         */
+        type CreateIPCallback = (error: (Error|null), response?: serverpb.CreateIPResponse) => void;
+
+        /**
          * Callback as used by {@link serverpb.IPServiceV0#activateIP}.
          * @param error Error, if any
-         * @param [response] ActivateIPResponse
+         * @param [response] CreateIPResponse
          */
-        type ActivateIPCallback = (error: (Error|null), response?: serverpb.ActivateIPResponse) => void;
+        type ActivateIPCallback = (error: (Error|null), response?: serverpb.CreateIPResponse) => void;
 
         /**
          * Callback as used by {@link serverpb.IPServiceV0#deactivateIP}.
@@ -3070,6 +3189,13 @@ export namespace serverpb {
          * @param [response] DeactivateIPResponse
          */
         type DeactivateIPCallback = (error: (Error|null), response?: serverpb.DeactivateIPResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.IPServiceV0#updateIP}.
+         * @param error Error, if any
+         * @param [response] UpdateIPResponse
+         */
+        type UpdateIPCallback = (error: (Error|null), response?: serverpb.UpdateIPResponse) => void;
 
         /**
          * Callback as used by {@link serverpb.IPServiceV0#listIP}.

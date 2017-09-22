@@ -94,7 +94,7 @@ const (
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/serverpbActivateIPResponse"
+              "$ref": "#/definitions/serverpbCreateIPResponse"
             }
           }
         },
@@ -111,6 +111,38 @@ const (
             "required": true,
             "schema": {
               "$ref": "#/definitions/serverpbActivateIPRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
+    "/api/v0/ip/{ip}/create": {
+      "post": {
+        "operationId": "CreateIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbCreateIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelIPAddr"
             }
           }
         ],
@@ -160,6 +192,38 @@ const (
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "tags": [
+          "IPServiceV0"
+        ]
+      }
+    },
+    "/api/v0/ip/{ip}/update": {
+      "post": {
+        "operationId": "UpdateIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbUpdateIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelIPAddr"
+            }
           }
         ],
         "tags": [
@@ -513,16 +577,6 @@ const (
     }
   },
   "definitions": {
-    "IPAddrIPStatus": {
-      "type": "string",
-      "enum": [
-        "UNKNOWN",
-        "ACTIVE",
-        "TEMPORARY_RESERVED",
-        "RESERVED"
-      ],
-      "default": "UNKNOWN"
-    },
     "modelIPAddr": {
       "type": "object",
       "properties": {
@@ -530,7 +584,7 @@ const (
           "type": "string"
         },
         "status": {
-          "$ref": "#/definitions/IPAddrIPStatus"
+          "$ref": "#/definitions/modelIPAddrStatus"
         },
         "tags": {
           "type": "array",
@@ -539,6 +593,16 @@ const (
           }
         }
       }
+    },
+    "modelIPAddrStatus": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "ACTIVE",
+        "TEMPORARY_RESERVED",
+        "RESERVED"
+      ],
+      "default": "UNKNOWN"
     },
     "modelNetwork": {
       "type": "object",
@@ -632,7 +696,7 @@ const (
         }
       }
     },
-    "serverpbActivateIPResponse": {
+    "serverpbCreateIPResponse": {
       "type": "object"
     },
     "serverpbCreateNetworkRequest": {
@@ -775,13 +839,16 @@ const (
     "serverpbListTemporaryReservedIPResponse": {
       "type": "object",
       "properties": {
-        "temporary_reserved_ips": {
+        "ips": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/modelIPAddr"
           }
         }
       }
+    },
+    "serverpbUpdateIPResponse": {
+      "type": "object"
     }
   }
 }

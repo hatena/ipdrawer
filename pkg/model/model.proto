@@ -25,13 +25,13 @@ message Pool {
 
 message IPAddr {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
-  enum IPStatus {
+  enum Status {
     UNKNOWN = 0;
     ACTIVE = 1;
     TEMPORARY_RESERVED = 2;
     RESERVED = 3;
   }
-  IPStatus status = 2;
+  Status status = 2;
   repeated Tag tags = 3;
 }
 

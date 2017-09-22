@@ -22,10 +22,12 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *IPServiceV0Api* | [**ActivateIP**](docs/IPServiceV0Api.md#activateip) | **Post** /api/v0/ip/{ip}/activate | 
+*IPServiceV0Api* | [**CreateIP**](docs/IPServiceV0Api.md#createip) | **Post** /api/v0/ip/{ip}/create | 
 *IPServiceV0Api* | [**DeactivateIP**](docs/IPServiceV0Api.md#deactivateip) | **Post** /api/v0/ip/{ip}/deactivate | 
 *IPServiceV0Api* | [**GetNetworkIncludingIP**](docs/IPServiceV0Api.md#getnetworkincludingip) | **Get** /api/v0/ip/{ip}/network | 
 *IPServiceV0Api* | [**ListIP**](docs/IPServiceV0Api.md#listip) | **Get** /api/v0/ip/list | 
 *IPServiceV0Api* | [**ListTemporaryReservedIP**](docs/IPServiceV0Api.md#listtemporaryreservedip) | **Get** /api/v0/ip/temporary_reserved/list | 
+*IPServiceV0Api* | [**UpdateIP**](docs/IPServiceV0Api.md#updateip) | **Post** /api/v0/ip/{ip}/update | 
 *NetworkServiceV0Api* | [**CreateNetwork**](docs/NetworkServiceV0Api.md#createnetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 *NetworkServiceV0Api* | [**CreatePool**](docs/NetworkServiceV0Api.md#createpool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
@@ -41,15 +43,15 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
- - [IpAddrIpStatus](docs/IpAddrIpStatus.md)
  - [ModelIpAddr](docs/ModelIpAddr.md)
+ - [ModelIpAddrStatus](docs/ModelIpAddrStatus.md)
  - [ModelNetwork](docs/ModelNetwork.md)
  - [ModelNetworkStatus](docs/ModelNetworkStatus.md)
  - [ModelPool](docs/ModelPool.md)
  - [ModelPoolStatus](docs/ModelPoolStatus.md)
  - [ModelTag](docs/ModelTag.md)
  - [ServerpbActivateIpRequest](docs/ServerpbActivateIpRequest.md)
- - [ServerpbActivateIpResponse](docs/ServerpbActivateIpResponse.md)
+ - [ServerpbCreateIpResponse](docs/ServerpbCreateIpResponse.md)
  - [ServerpbCreateNetworkRequest](docs/ServerpbCreateNetworkRequest.md)
  - [ServerpbCreateNetworkResponse](docs/ServerpbCreateNetworkResponse.md)
  - [ServerpbCreatePoolRequest](docs/ServerpbCreatePoolRequest.md)
@@ -62,6 +64,7 @@ Class | Method | HTTP request | Description
  - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
  - [ServerpbListTemporaryReservedIpResponse](docs/ServerpbListTemporaryReservedIpResponse.md)
+ - [ServerpbUpdateIpResponse](docs/ServerpbUpdateIpResponse.md)
 
 
 ## Documentation For Authorization

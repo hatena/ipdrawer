@@ -36,18 +36,20 @@ message GetNetworkIncludingIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
+message CreateIPResponse {}
+
 message ActivateIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
   repeated model.Tag tags = 2;
 }
-
-message ActivateIPResponse {}
 
 message DeactivateIPRequest {
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
 message DeactivateIPResponse {}
+
+message UpdateIPResponse {}
 
 message GetNetworkRequest {
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
@@ -95,7 +97,7 @@ message ListIPResponse {
 message ListTemporaryReservedIPRequest {}
 
 message ListTemporaryReservedIPResponse {
-  repeated model.IPAddr temporary_reserved_ips = 1;
+  repeated model.IPAddr ips = 1;
 }
 
 message ListPoolRequest {}
@@ -177,7 +179,14 @@ service IPServiceV0 {
     };
   };
 
-  rpc ActivateIP (ActivateIPRequest) returns (ActivateIPResponse) {
+  rpc CreateIP (model.IPAddr) returns (CreateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/ip/{ip}/create"
+      body: "*"
+    };
+  };
+
+  rpc ActivateIP (ActivateIPRequest) returns (CreateIPResponse) {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/activate"
       body: "*"
@@ -187,6 +196,13 @@ service IPServiceV0 {
   rpc DeactivateIP (DeactivateIPRequest) returns (DeactivateIPResponse) {
     option (google.api.http) = {
       post: "/api/v0/ip/{ip}/deactivate"
+    };
+  };
+
+  rpc UpdateIP (model.IPAddr) returns (UpdateIPResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/ip/{ip}/update"
+      body: "*"
     };
   };
 
