@@ -37,6 +37,7 @@ import IPAddr = model.IPAddr;
 import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
 import * as protos from '../../../proto/protos';
 import { ChipCell } from '../../../components/table/ChipCell';
+import { CreateDialog } from '../../../components/table/CreateDialog';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -91,9 +92,7 @@ namespace IPAddrTable {
   export interface State {
     editOpen: boolean;
     editNew: boolean;
-    editingIP: string;
-    editingStatus: IPAddr.Status;
-    editingTags: string;
+    editing: {[key: string]: any};
     deleteOpen: boolean;
     deletingRow: any;
   }
@@ -123,9 +122,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.state = {
       editOpen: false,
       editNew: false,
-      editingIP: "",
-      editingStatus: IPAddr.Status.UNKNOWN,
-      editingTags: "",
+      editing: {},
 
       deleteOpen: false,
       deletingRow: null,
@@ -156,9 +153,11 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.setState({
       editOpen: true,
       editNew: false,
-      editingIP: addr.ip,
-      editingStatus: addr.status,
-      editingTags: this.convertTagsStr(addr.tags),
+      editing: {
+        ip: addr.ip,
+        status: addr.status,
+        tags: this.convertTagsStr(addr.tags),
+      }
     });
   }
 
@@ -166,15 +165,11 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.setState({
       editOpen: true,
       editNew: true,
-      editingIP: "",
-      editingStatus: IPAddr.Status.UNKNOWN,
-      editingTags: "",
-    })
-  }
-
-  changeEdit = (name) => (event) => {
-    this.setState({
-      [name]: event.target.value
+      editing: {
+        ip: "",
+        status: IPAddr.Status.UNKNOWN,
+        tags: "",
+      }
     })
   }
 
@@ -193,24 +188,32 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
 
-  clickCreate = (event) => {
+  clickCreate = (editing) => (event) => {
     this.props.createIP(new protos.model.IPAddr({
-      ip: this.state.editingIP,
-      status: this.state.editingStatus,
-      tags: this.parseTags(this.state.editingTags),
+      ip: editing['ip'],
+      status: editing['statue'],
+      tags: this.parseTags(editing['tags']),
     }));
     this.setState({ editOpen: false });
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
 
-  clickUpdate = (event) => {
+  clickUpdate = (editing) => (event) => {
     this.props.updateIP(new protos.model.IPAddr({
-      ip: this.state.editingIP,
-      status: this.state.editingStatus,
-      tags: this.parseTags(this.state.editingTags)
+      ip: editing['ip'],
+      status: editing['status'],
+      tags: this.parseTags(editing['tags'])
     }));
     this.setState({ editOpen: false });
     setTimeout(() => {this.props.refreshIPs()}, 1000);
+  }
+
+  changeEdit = (name) => (event) => {
+    const editing = _.clone(this.state.editing)
+    editing[name] = event.target.value;
+    this.setState({
+      editing: editing
+    })
   }
 
   render() {
@@ -218,9 +221,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     const {
       editOpen,
       editNew,
-      editingIP,
-      editingStatus,
-      editingTags,
+      editing,
       deleteOpen,
       deletingRow
     } = this.state;
@@ -290,64 +291,16 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           />
         </Grid>
 
-        <Dialog
-          ignoreBackdropClick
+        <CreateDialog
           open={editOpen}
-          onRequestClose={() => {this.setState({editOpen: false})}}
-          classes={{ paper: classes.dialog }}
-        >
-          <DialogTitle>{editNew ? "New" : "Edit"}</DialogTitle>
-          <DialogContent>
-            <FormGroup>
-              <FormControl
-                className={classes.formControl}
-              >
-                <TextField
-                  id="ip"
-                  label="IP"
-                  value={editingIP}
-                  margin="normal"
-                  onChange={this.changeEdit('editingIP')}
-                  disabled={!editNew}
-                />
-              </FormControl>
-              <FormControl>
-                <InputLabel htmlFor="status-select">Status</InputLabel>
-                <Select
-                  value={editingStatus}
-                  onChange={this.changeEdit('editingStatus')}
-                  input={<Input id="status-select" />}
-                >
-                  <MenuItem value={IPAddr.Status.ACTIVE}>ACTIVE</MenuItem>
-                  <MenuItem value={IPAddr.Status.RESERVED}>RESERVED</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <TextField
-                  id="tags"
-                  label="Tags"
-                  value={editingTags}
-                  margin="normal"
-                  onChange={this.changeEdit('editingTags')}
-                />
-              </FormControl>
-            </FormGroup>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {this.setState({editOpen: false})}}
-              color="primary"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="accent"
-              onClick={editNew ? this.clickCreate : this.clickUpdate}
-            >
-              {editNew ? "Create" : "Update"}
-            </Button>
-          </DialogActions>
-        </Dialog>
+          clickCancel={() => {this.setState({editOpen: false})}}
+          isNew={editNew}
+          clickCreate={this.clickCreate}
+          clickUpdate={this.clickUpdate}
+          changeEdit={this.changeEdit}
+          editing={editing}
+          classes={{}}
+        />
 
         <Dialog
           ignoreBackdropClick
