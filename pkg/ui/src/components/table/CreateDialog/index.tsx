@@ -19,6 +19,7 @@ import {
 
 import { model } from "../../../proto/protos";
 import IPAddr = model.IPAddr;
+import Pool = model.Pool;
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -38,6 +39,7 @@ namespace CreateDialog {
     changeEdit: any;
     classes: any;
     editing?: {[key: string]: any};
+    dialogType: DialogType;
   }
 
   export interface State {
@@ -95,6 +97,55 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
     );
   }
 
+  poolFormGroup() {
+    const { classes, isNew, editing, changeEdit } = this.props;
+
+    return (
+      <FormGroup>
+        <FormControl>
+          <TextField
+            id="start"
+            label="start"
+            value={editing['start']}
+            margin="normal"
+            onChange={changeEdit('start')}
+            disabled={!isNew}
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="end"
+            label="end"
+            value={editing['end']}
+            margin="normal"
+            onChange={changeEdit('end')}
+            disabled={!isNew}
+          />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="status-select">Status</InputLabel>
+          <Select
+            value={editing['status']}
+            onChange={changeEdit('status')}
+            input={<Input id="status-select" />}
+          >
+            <MenuItem value={Pool.Status.AVAILABLE}>AVAILABLE</MenuItem>
+            <MenuItem value={Pool.Status.RESERVED}>RESERVED</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="tags"
+            label="Tags"
+            value={editing['tags']}
+            margin="normal"
+            onChange={changeEdit('tags')}
+          />
+        </FormControl>
+      </FormGroup>
+    )
+  }
+
   render() {
     const {
       classes,
@@ -103,7 +154,8 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
       clickCancel,
       clickCreate,
       clickUpdate,
-      editing
+      editing,
+      dialogType,
     } = this.props;
 
     return <Dialog
@@ -114,7 +166,13 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
     >
       <DialogTitle>{isNew ? "New" : "Edit"}</DialogTitle>
       <DialogContent>
-        {this.ipaddrFormGroup()}
+        { (() => {
+          if (dialogType == CreateDialog.DialogType.IPAddr) {
+              return this.ipaddrFormGroup();
+          } else if (dialogType == CreateDialog.DialogType.Pool) {
+              return this.poolFormGroup();
+          }
+        })()}
       </DialogContent>
       <DialogActions>
         <Button
@@ -131,6 +189,13 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
         </Button>
       </DialogActions>
     </Dialog>
+  }
+}
+
+module CreateDialog {
+  export enum DialogType {
+    IPAddr = 1,
+    Pool
   }
 }
 

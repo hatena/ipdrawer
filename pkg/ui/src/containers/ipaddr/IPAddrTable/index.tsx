@@ -299,6 +299,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           clickUpdate={this.clickUpdate}
           changeEdit={this.changeEdit}
           editing={editing}
+          dialogType={CreateDialog.DialogType.IPAddr}
           classes={{}}
         />
 
