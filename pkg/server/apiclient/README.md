@@ -36,6 +36,7 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**GetEstimatedNetwork**](docs/NetworkServiceV0Api.md#getestimatednetwork) | **Get** /api/v0/network | 
 *NetworkServiceV0Api* | [**GetNetwork**](docs/NetworkServiceV0Api.md#getnetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 *NetworkServiceV0Api* | [**GetNetwork_0**](docs/NetworkServiceV0Api.md#getnetwork_0) | **Get** /api/v0/network/{name} | 
+*NetworkServiceV0Api* | [**GetPoolsInNetwork**](docs/NetworkServiceV0Api.md#getpoolsinnetwork) | **Get** /api/v0/network/{ip}/{mask}/pools | 
 *NetworkServiceV0Api* | [**ListNetwork**](docs/NetworkServiceV0Api.md#listnetwork) | **Get** /api/v0/network/list | 
 *PoolServiceV0Api* | [**GetIPInPool**](docs/PoolServiceV0Api.md#getipinpool) | **Get** /api/v0/pool/{range_start}/{range_end}/ip | 
 *PoolServiceV0Api* | [**ListPool**](docs/PoolServiceV0Api.md#listpool) | **Get** /api/v0/pool/list | 
@@ -61,6 +62,7 @@ Class | Method | HTTP request | Description
  - [ServerpbDrawIpResponse](docs/ServerpbDrawIpResponse.md)
  - [ServerpbGetIpInPoolResponse](docs/ServerpbGetIpInPoolResponse.md)
  - [ServerpbGetNetworkResponse](docs/ServerpbGetNetworkResponse.md)
+ - [ServerpbGetPoolsInNetworkResponse](docs/ServerpbGetPoolsInNetworkResponse.md)
  - [ServerpbListIpResponse](docs/ServerpbListIpResponse.md)
  - [ServerpbListNetworkResponse](docs/ServerpbListNetworkResponse.md)
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
