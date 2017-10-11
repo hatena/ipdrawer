@@ -39,6 +39,7 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**ListNetwork**](docs/NetworkServiceV0Api.md#listnetwork) | **Get** /api/v0/network/list | 
 *PoolServiceV0Api* | [**GetIPInPool**](docs/PoolServiceV0Api.md#getipinpool) | **Get** /api/v0/pool/{range_start}/{range_end}/ip | 
 *PoolServiceV0Api* | [**ListPool**](docs/PoolServiceV0Api.md#listpool) | **Get** /api/v0/pool/list | 
+*PoolServiceV0Api* | [**UpdatePool**](docs/PoolServiceV0Api.md#updatepool) | **Post** /api/v0/pool/{start}/{end}/update | 
 
 
 ## Documentation For Models
@@ -65,6 +66,7 @@ Class | Method | HTTP request | Description
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
  - [ServerpbListTemporaryReservedIpResponse](docs/ServerpbListTemporaryReservedIpResponse.md)
  - [ServerpbUpdateIpResponse](docs/ServerpbUpdateIpResponse.md)
+ - [ServerpbUpdatePoolResponse](docs/ServerpbUpdatePoolResponse.md)
 
 
 ## Documentation For Authorization

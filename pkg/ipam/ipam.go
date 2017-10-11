@@ -162,7 +162,7 @@ func (m *IPManager) Deactivate(ctx context.Context, ps []*model.Pool, addr *mode
 }
 
 func (m *IPManager) UpdateIP(ctx context.Context, addr *model.IPAddr) error {
-	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Deactivate")
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.UpdateIP")
 	span.SetTag("ip", addr.Ip)
 	defer span.Finish()
 
@@ -270,7 +270,10 @@ func (m *IPManager) CreatePool(ctx context.Context, n *model.Network, pool *mode
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
 
-	return setPool(m.redis, n, pool)
+	if err := takePoolInNetwork(m.redis, n, pool); err != nil {
+		return err
+	}
+	return setPool(m.redis, pool)
 }
 
 func (m *IPManager) ListIP(ctx context.Context) ([]*model.IPAddr, error) {
@@ -344,4 +347,24 @@ func (m *IPManager) GetPool(ctx context.Context, s net.IP, e net.IP) (*model.Poo
 	defer span.Finish()
 
 	return getPool(m.redis, s, e)
+}
+
+func (m *IPManager) UpdatePool(ctx context.Context, pool *model.Pool) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.UpdatePool")
+	span.SetTag("pool", pool.Key())
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	if !existsPool(m.redis, pool) {
+		return errors.New("Not found Pool")
+	}
+
+	defer span.Finish()
+
+	return setPool(m.redis, pool)
 }

@@ -574,6 +574,44 @@ const (
           "PoolServiceV0"
         ]
       }
+    },
+    "/api/v0/pool/{start}/{end}/update": {
+      "post": {
+        "operationId": "UpdatePool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbUpdatePoolResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelPool"
+            }
+          }
+        ],
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
     }
   },
   "definitions": {
@@ -848,6 +886,9 @@ const (
       }
     },
     "serverpbUpdateIPResponse": {
+      "type": "object"
+    },
+    "serverpbUpdatePoolResponse": {
       "type": "object"
     }
   }

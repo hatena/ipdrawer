@@ -47,16 +47,12 @@ func TestSetPool(t *testing.T) {
 	r, def := storage.NewTestRedis()
 	defer def()
 
-	network := &model.Network{
-		Prefix: "10.0.0.0/24",
-	}
-
 	pool := &model.Pool{
 		Start: "10.0.0.1",
 		End:   "10.0.0.254",
 	}
 
-	if err := setPool(r, network, pool); err != nil {
+	if err := setPool(r, pool); err != nil {
 		t.Fatalf("Got error %v; want success", err)
 	}
 }

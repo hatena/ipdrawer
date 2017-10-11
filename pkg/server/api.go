@@ -492,3 +492,19 @@ func (api *APIServer) GetIPInPool(
 		Ips:  ret,
 	}, nil
 }
+
+// UpdatePool updates a given pool.
+func (api *APIServer) UpdatePool(
+	ctx context.Context,
+	pool *model.Pool,
+) (*serverpb.UpdatePoolResponse, error) {
+	if err := pool.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.UpdatePool(ctx, pool); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.UpdatePoolResponse{}, nil
+}

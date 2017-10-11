@@ -116,6 +116,8 @@ message GetIPInPoolResponse {
   repeated model.IPAddr ips = 2;
 }
 
+message UpdatePoolResponse {}
+
 
 service NetworkServiceV0 {
 
@@ -231,6 +233,13 @@ service PoolServiceV0 {
   rpc GetIPInPool(GetIPInPoolRequest) returns (GetIPInPoolResponse) {
     option (google.api.http) = {
       get: "/api/v0/pool/{range_start}/{range_end}/ip"
+    };
+  };
+
+  rpc UpdatePool (model.Pool) returns (UpdatePoolResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/pool/{start}/{end}/update"
+      body: "*"
     };
   };
 

@@ -34,6 +34,7 @@ It has these top-level messages:
 	ListPoolResponse
 	GetIPInPoolRequest
 	GetIPInPoolResponse
+	UpdatePoolResponse
 */
 package serverpb
 
@@ -262,5 +263,8 @@ func (this *GetIPInPoolResponse) Validate() error {
 			}
 		}
 	}
+	return nil
+}
+func (this *UpdatePoolResponse) Validate() error {
 	return nil
 }
