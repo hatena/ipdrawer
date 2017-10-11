@@ -7,7 +7,7 @@ import {
   GroupingPanel, PagingPanel, DragDropContext, TableEditColumn, TableEditRow
 } from '@devexpress/dx-react-grid-material-ui';
 import {
-  SortingState, LocalSorting, EditingState
+  SortingState, LocalSorting, EditingState, RowDetailState
 } from '@devexpress/dx-react-grid'
 import {
   Chip,
@@ -17,9 +17,14 @@ import {
 } from 'material-ui';
 
 import { model } from "../../../proto/protos";
+import * as protos from "../../../proto/protos";
 import Pool = model.Pool;
+import Network = model.Network;
 import { ChipCell } from '../../../components/table/ChipCell';
 import { CreateDialog } from '../../../components/table/CreateDialog';
+import { createPool, updatePool, refreshPools, refreshIPsInPool } from '../../../reducers/apiReducers';
+import { convertTagsStr, parseTags } from '../../../utils/model';
+import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -43,6 +48,12 @@ const styleSheet: StyleRulesCallback = theme => ({
 namespace PoolTable {
   export interface Props {
     pools: Pool[];
+    networks: Network[];
+    ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
+    createPool: typeof createPool;
+    updatePool: typeof updatePool;
+    refreshPools: typeof refreshPools;
+    refreshIPsInPool: typeof refreshIPsInPool;
     classes: any;
   }
 
@@ -52,6 +63,7 @@ namespace PoolTable {
     editing: {[key: string]: any};
     deleteDialogOpen: boolean;
     deletingRow: any;
+    expandedRows: any;
   }
 }
 
@@ -82,6 +94,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
       editing: {},
       deleteDialogOpen: false,
       deletingRow: [],
+      expandedRows: [],
     }
   }
 
@@ -100,7 +113,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
         start: pool.start,
         end: pool.end,
         status: pool.status,
-        tags: this.convertTagsStr(pool.tags),
+        tags: convertTagsStr(pool.tags),
       }
     });
   }
@@ -110,6 +123,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
       dialogOpen: true,
       isNew: true,
       editing: {
+        network: "",
         start: "",
         end: "",
         status: Pool.Status.UNKNOWN,
@@ -126,11 +140,29 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
   }
 
   clickCreate = (editing) => (event) => {
-
+    this.props.createPool(new protos.serverpb.CreatePoolRequest({
+      ip: _.split(editing['network'], '/')[0],
+      mask: _.toInteger(_.split(editing['network'], '/')[1]),
+      pool: {
+        start: editing['start'],
+        end: editing['end'],
+        status: editing['status'],
+        tags: parseTags(editing['tags']),
+      }
+    }))
+    this.setState({ dialogOpen: false });
+    setTimeout(() => {this.props.refreshPools()}, 1000);
   }
 
   clickUpdate = (editing) => (event) => {
-
+    this.props.updatePool(new protos.model.Pool({
+      start: editing['start'],
+      end: editing['end'],
+      status: editing['status'],
+      tags: parseTags(editing['tags']),
+    }))
+    this.setState({ dialogOpen: false });
+    setTimeout(() => {this.props.refreshPools()}, 1000);
   }
 
   changeEdit = (name) => (event) => {
@@ -141,12 +173,27 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
     })
   }
 
+  onExpandedRowsChange = (rows) => {
+    const { pools } = this.props;
+    _.map(rows, (row) => {
+      const pool = pools[row];
+      const req = new protos.serverpb.GetIPInPoolRequest({
+        rangeStart: pool.start,
+        rangeEnd: pool.end,
+      });
+    })
+    this.setState({
+      expandedRows: rows,
+    })
+  }
+
   render() {
-    const { classes, pools } = this.props;
+    const { classes, pools, networks } = this.props;
     const {
       dialogOpen,
       editing,
       isNew,
+      expandedRows,
     } = this.state;
 
     return (
@@ -159,6 +206,10 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
           <EditingState
             onAddedRowsChange={this.clickNew}
             onCommitChanges={this.commitChanges}
+          />
+          <RowDetailState
+            expandedRows={expandedRows}
+            onExpandedRowsChange={this.onExpandedRowsChange}
           />
 
           <LocalSorting />
@@ -191,6 +242,13 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
             }}
             allowAdding
           />
+          <TableRowDetail
+            template={({ row }) => (
+              <div>
+                {row.start}
+              </div>
+            )}
+          />
         </Grid>
 
         <CreateDialog
@@ -202,6 +260,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
           changeEdit={this.changeEdit}
           editing={editing}
           dialogType={CreateDialog.DialogType.Pool}
+          networks={networks}
           classes={{}}
         />
       </Paper>

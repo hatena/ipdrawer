@@ -1970,6 +1970,192 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a GetPoolsInNetworkRequest. */
+    interface IGetPoolsInNetworkRequest {
+
+        /** GetPoolsInNetworkRequest ip */
+        ip?: string;
+
+        /** GetPoolsInNetworkRequest mask */
+        mask?: number;
+    }
+
+    /** Represents a GetPoolsInNetworkRequest. */
+    class GetPoolsInNetworkRequest {
+
+        /**
+         * Constructs a new GetPoolsInNetworkRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IGetPoolsInNetworkRequest);
+
+        /** GetPoolsInNetworkRequest ip. */
+        public ip: string;
+
+        /** GetPoolsInNetworkRequest mask. */
+        public mask: number;
+
+        /**
+         * Creates a new GetPoolsInNetworkRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetPoolsInNetworkRequest instance
+         */
+        public static create(properties?: serverpb.IGetPoolsInNetworkRequest): serverpb.GetPoolsInNetworkRequest;
+
+        /**
+         * Encodes the specified GetPoolsInNetworkRequest message. Does not implicitly {@link serverpb.GetPoolsInNetworkRequest.verify|verify} messages.
+         * @param message GetPoolsInNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IGetPoolsInNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetPoolsInNetworkRequest message, length delimited. Does not implicitly {@link serverpb.GetPoolsInNetworkRequest.verify|verify} messages.
+         * @param message GetPoolsInNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IGetPoolsInNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetPoolsInNetworkRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetPoolsInNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.GetPoolsInNetworkRequest;
+
+        /**
+         * Decodes a GetPoolsInNetworkRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetPoolsInNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.GetPoolsInNetworkRequest;
+
+        /**
+         * Verifies a GetPoolsInNetworkRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetPoolsInNetworkRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetPoolsInNetworkRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.GetPoolsInNetworkRequest;
+
+        /**
+         * Creates a plain object from a GetPoolsInNetworkRequest message. Also converts values to other types if specified.
+         * @param message GetPoolsInNetworkRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.GetPoolsInNetworkRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetPoolsInNetworkRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a GetPoolsInNetworkResponse. */
+    interface IGetPoolsInNetworkResponse {
+
+        /** GetPoolsInNetworkResponse pools */
+        pools?: model.IPool[];
+    }
+
+    /** Represents a GetPoolsInNetworkResponse. */
+    class GetPoolsInNetworkResponse {
+
+        /**
+         * Constructs a new GetPoolsInNetworkResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IGetPoolsInNetworkResponse);
+
+        /** GetPoolsInNetworkResponse pools. */
+        public pools: model.IPool[];
+
+        /**
+         * Creates a new GetPoolsInNetworkResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns GetPoolsInNetworkResponse instance
+         */
+        public static create(properties?: serverpb.IGetPoolsInNetworkResponse): serverpb.GetPoolsInNetworkResponse;
+
+        /**
+         * Encodes the specified GetPoolsInNetworkResponse message. Does not implicitly {@link serverpb.GetPoolsInNetworkResponse.verify|verify} messages.
+         * @param message GetPoolsInNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IGetPoolsInNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified GetPoolsInNetworkResponse message, length delimited. Does not implicitly {@link serverpb.GetPoolsInNetworkResponse.verify|verify} messages.
+         * @param message GetPoolsInNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IGetPoolsInNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a GetPoolsInNetworkResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns GetPoolsInNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.GetPoolsInNetworkResponse;
+
+        /**
+         * Decodes a GetPoolsInNetworkResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns GetPoolsInNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.GetPoolsInNetworkResponse;
+
+        /**
+         * Verifies a GetPoolsInNetworkResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a GetPoolsInNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns GetPoolsInNetworkResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.GetPoolsInNetworkResponse;
+
+        /**
+         * Creates a plain object from a GetPoolsInNetworkResponse message. Also converts values to other types if specified.
+         * @param message GetPoolsInNetworkResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.GetPoolsInNetworkResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this GetPoolsInNetworkResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a CreatePoolRequest. */
     interface ICreatePoolRequest {
 
@@ -2870,6 +3056,90 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of an UpdatePoolResponse. */
+    interface IUpdatePoolResponse {
+    }
+
+    /** Represents an UpdatePoolResponse. */
+    class UpdatePoolResponse {
+
+        /**
+         * Constructs a new UpdatePoolResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IUpdatePoolResponse);
+
+        /**
+         * Creates a new UpdatePoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UpdatePoolResponse instance
+         */
+        public static create(properties?: serverpb.IUpdatePoolResponse): serverpb.UpdatePoolResponse;
+
+        /**
+         * Encodes the specified UpdatePoolResponse message. Does not implicitly {@link serverpb.UpdatePoolResponse.verify|verify} messages.
+         * @param message UpdatePoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IUpdatePoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UpdatePoolResponse message, length delimited. Does not implicitly {@link serverpb.UpdatePoolResponse.verify|verify} messages.
+         * @param message UpdatePoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IUpdatePoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an UpdatePoolResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UpdatePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.UpdatePoolResponse;
+
+        /**
+         * Decodes an UpdatePoolResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UpdatePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.UpdatePoolResponse;
+
+        /**
+         * Verifies an UpdatePoolResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an UpdatePoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UpdatePoolResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.UpdatePoolResponse;
+
+        /**
+         * Creates a plain object from an UpdatePoolResponse message. Also converts values to other types if specified.
+         * @param message UpdatePoolResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.UpdatePoolResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UpdatePoolResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Represents a NetworkServiceV0 */
     class NetworkServiceV0 extends $protobuf.rpc.Service {
 
@@ -2987,6 +3257,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public createPool(request: serverpb.ICreatePoolRequest): Promise<serverpb.CreatePoolResponse>;
+
+        /**
+         * Calls GetPoolsInNetwork.
+         * @param request GetPoolsInNetworkRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and GetPoolsInNetworkResponse
+         */
+        public getPoolsInNetwork(request: serverpb.IGetPoolsInNetworkRequest, callback: serverpb.NetworkServiceV0.GetPoolsInNetworkCallback): void;
+
+        /**
+         * Calls GetPoolsInNetwork.
+         * @param request GetPoolsInNetworkRequest message or plain object
+         * @returns Promise
+         */
+        public getPoolsInNetwork(request: serverpb.IGetPoolsInNetworkRequest): Promise<serverpb.GetPoolsInNetworkResponse>;
     }
 
     namespace NetworkServiceV0 {
@@ -3039,6 +3323,13 @@ export namespace serverpb {
          * @param [response] CreatePoolResponse
          */
         type CreatePoolCallback = (error: (Error|null), response?: serverpb.CreatePoolResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#getPoolsInNetwork}.
+         * @param error Error, if any
+         * @param [response] GetPoolsInNetworkResponse
+         */
+        type GetPoolsInNetworkCallback = (error: (Error|null), response?: serverpb.GetPoolsInNetworkResponse) => void;
     }
 
     /** Represents a IPServiceV0 */
@@ -3259,6 +3550,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public getIPInPool(request: serverpb.IGetIPInPoolRequest): Promise<serverpb.GetIPInPoolResponse>;
+
+        /**
+         * Calls UpdatePool.
+         * @param request Pool message or plain object
+         * @param callback Node-style callback called with the error, if any, and UpdatePoolResponse
+         */
+        public updatePool(request: model.IPool, callback: serverpb.PoolServiceV0.UpdatePoolCallback): void;
+
+        /**
+         * Calls UpdatePool.
+         * @param request Pool message or plain object
+         * @returns Promise
+         */
+        public updatePool(request: model.IPool): Promise<serverpb.UpdatePoolResponse>;
     }
 
     namespace PoolServiceV0 {
@@ -3276,6 +3581,13 @@ export namespace serverpb {
          * @param [response] GetIPInPoolResponse
          */
         type GetIPInPoolCallback = (error: (Error|null), response?: serverpb.GetIPInPoolResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#updatePool}.
+         * @param error Error, if any
+         * @param [response] UpdatePoolResponse
+         */
+        type UpdatePoolCallback = (error: (Error|null), response?: serverpb.UpdatePoolResponse) => void;
     }
 }
 

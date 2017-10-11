@@ -18,6 +18,7 @@ import {
 } from 'material-ui';
 
 import { model } from "../../../proto/protos";
+import * as protos from '../../../proto/protos';
 import IPAddr = model.IPAddr;
 import Pool = model.Pool;
 
@@ -40,6 +41,7 @@ namespace CreateDialog {
     classes: any;
     editing?: {[key: string]: any};
     dialogType: DialogType;
+    networks?: protos.model.Network[];
   }
 
   export interface State {
@@ -98,10 +100,24 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
   }
 
   poolFormGroup() {
-    const { classes, isNew, editing, changeEdit } = this.props;
+    const { classes, isNew, editing, changeEdit, networks } = this.props;
 
     return (
       <FormGroup>
+        {isNew ?
+          <FormControl>
+            <InputLabel htmlFor="network-select">Network</InputLabel>
+            <Select
+              value={editing['network']}
+              onChange={changeEdit('network')}
+              input={<Input id="network-select" />}
+            >
+              {_.map(networks, (network, i) => {
+                return <MenuItem value={network.prefix} key={i}>{network.prefix} ({_.find(network.tags, (tag) => tag.key == 'Name').value})</MenuItem>
+              })}
+            </Select>
+          </FormControl>
+          : null}
         <FormControl>
           <TextField
             id="start"
