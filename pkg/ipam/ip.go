@@ -47,6 +47,12 @@ func getIPAddr(r *storage.Redis, ip net.IP) (*model.IPAddr, error) {
 }
 
 func getIPAddrs(r *storage.Redis, ips []net.IP) ([]*model.IPAddr, error) {
+	addrs := make([]*model.IPAddr, len(ips))
+
+	if len(ips) == 0 {
+		return addrs, nil
+	}
+
 	dkeys := make([]string, len(ips))
 	for i, ip := range ips {
 		dkeys[i] = makeIPDetailsKey(ip)
@@ -55,7 +61,7 @@ func getIPAddrs(r *storage.Redis, ips []net.IP) ([]*model.IPAddr, error) {
 	if err != nil {
 		return nil, err
 	}
-	addrs := make([]*model.IPAddr, len(ips))
+
 	for i, d := range data {
 		if s, ok := d.(string); ok {
 			addrs[i] = &model.IPAddr{}

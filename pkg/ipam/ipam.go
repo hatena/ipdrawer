@@ -91,7 +91,6 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *model.Pool, reserve bool, 
 // CreateIP activates IP.
 func (m *IPManager) CreateIP(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
-	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", addr.Ip)
 	defer span.Finish()
 
@@ -270,9 +269,40 @@ func (m *IPManager) CreatePool(ctx context.Context, n *model.Network, pool *mode
 	span.SetTag("pool", pool.Key())
 	defer span.Finish()
 
-	if err := takePoolInNetwork(m.redis, n, pool); err != nil {
+	if err := addPoolToNetwork(m.redis, n, pool); err != nil {
 		return err
 	}
+
+	// Get IPs in this pool to add these to a used zset.
+	addrs, err := m.ListIP(ctx)
+	if err != nil {
+		return err
+	}
+
+	s := net.ParseIP(pool.Start)
+	e := net.ParseIP(pool.End)
+	usedkey := makePoolUsedIPZset(s, e)
+	members := make([]redis.Z, 0, len(addrs))
+	for _, _ip := range addrs {
+		ip := net.ParseIP(_ip.Ip)
+		if !pool.Contains(ip) {
+			continue
+		}
+
+		score := float64(netutil.IP2Uint(ip))
+		z := redis.Z{
+			Score:  score,
+			Member: ip.String(),
+		}
+		members = append(members, z)
+	}
+	if len(members) != 0 {
+		_, err = m.redis.Client.ZAdd(usedkey, members...).Result()
+		if err != nil {
+			return err
+		}
+	}
+
 	return setPool(m.redis, pool)
 }
 

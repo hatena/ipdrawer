@@ -80,7 +80,7 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*model.Network, error) {
 	return n, nil
 }
 
-func takePoolInNetwork(r *storage.Redis, network *model.Network, pool *model.Pool) error {
+func addPoolToNetwork(r *storage.Redis, network *model.Network, pool *model.Pool) error {
 	if err := pool.Validate(); err != nil {
 		return err
 	}
