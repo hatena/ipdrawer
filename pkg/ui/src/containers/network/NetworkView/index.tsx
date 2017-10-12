@@ -9,7 +9,10 @@ import { AdminUIState } from "../../../reducers/index";
 import { model } from "../../../proto/protos";
 import Network = model.Network;
 import { NetworkTable } from '../NetworkTable';
-import { refreshNetworks } from '../../../reducers/apiReducers';
+import {
+  refreshNetworks, createNetwork, updateNetwork,
+  deleteNetwork,
+} from '../../../reducers/apiReducers';
 
 
 const styleSheet = theme => ({
@@ -25,11 +28,13 @@ namespace NetworkView {
   export interface Props extends RouteComponentProps<void> {
     networks: Network[];
     refreshNetworks: typeof refreshNetworks;
+    createNetwork: typeof createNetwork;
+    updateNetwork: typeof updateNetwork;
+    deleteNetwork: typeof deleteNetwork;
     classes: any;
   }
 
   export interface State {
-
   }
 }
 
@@ -39,11 +44,21 @@ class NetworkView extends React.Component<NetworkView.Props, NetworkView.State> 
   }
 
   render() {
-    const { classes, networks } = this.props;
+    const {
+      classes, networks, createNetwork,
+      updateNetwork, deleteNetwork, refreshNetworks,
+    } = this.props;
 
     return (
       <Grid item xs className={classes.grid}>
-        <NetworkTable networks={networks} classes={{}}/>
+        <NetworkTable
+          networks={networks}
+          refreshNetworks={refreshNetworks}
+          createNetwork={createNetwork}
+          updateNetwork={updateNetwork}
+          deleteNetwork={deleteNetwork}
+          classes={{}}
+        />
       </Grid>
     );
   }
@@ -58,7 +73,10 @@ const networkViewConnected = connect(
     }
   },
   {
-    refreshNetworks
+    refreshNetworks,
+    createNetwork,
+    updateNetwork,
+    deleteNetwork,
   }
 )(styledNetworkView);
 

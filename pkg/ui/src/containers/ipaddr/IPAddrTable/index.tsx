@@ -37,7 +37,7 @@ import IPAddr = model.IPAddr;
 import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
 import * as protos from '../../../proto/protos';
 import { ChipCell } from '../../../components/table/ChipCell';
-import { CreateDialog } from '../../../components/table/CreateDialog';
+import { CreateDialog, CreateDialogType } from '../../../components/table/CreateDialog';
 import { DeleteDialog } from '../../../components/table/DeleteDialog';
 
 
@@ -313,7 +313,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           clickUpdate={this.clickUpdate}
           changeEdit={this.changeEdit}
           editing={editing}
-          dialogType={CreateDialog.DialogType.IPAddr}
+          dialogType={CreateDialogType.IPAddr}
           classes={{}}
         />
 

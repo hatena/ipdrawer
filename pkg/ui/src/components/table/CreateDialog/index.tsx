@@ -21,6 +21,7 @@ import { model } from "../../../proto/protos";
 import * as protos from '../../../proto/protos';
 import IPAddr = model.IPAddr;
 import Pool = model.Pool;
+import Network = model.Network;
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -40,7 +41,7 @@ namespace CreateDialog {
     changeEdit: any;
     classes: any;
     editing?: {[key: string]: any};
-    dialogType: DialogType;
+    dialogType: CreateDialogType;
     networks?: protos.model.Network[];
   }
 
@@ -53,6 +54,70 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
 
   constructor(props?: CreateDialog.Props, context?: any) {
     super(props, context);
+  }
+
+  networkFormGroup() {
+    const {
+      classes,
+      isNew,
+      editing,
+      changeEdit
+    } = this.props;
+
+    return (
+      <FormGroup>
+        <FormControl>
+          <TextField
+            id="ip"
+            label="IP"
+            value={editing['ip']}
+            margin="normal"
+            onChange={changeEdit('ip')}
+            disabled={!isNew}
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="mask"
+            label="Mask"
+            value={editing['mask']}
+            margin="normal"
+            onChange={changeEdit('mask')}
+            disabled={!isNew}
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="gateways"
+            label="Gateways"
+            value={editing['gateways']}
+            margin="normal"
+            onChange={changeEdit('gateways')}
+          />
+        </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="status-select">Status</InputLabel>
+          <Select
+            value={editing['status']}
+            onChange={changeEdit('status')}
+            input={<Input id="status-select" />}
+          >
+            <MenuItem value={Network.Status.UNKNOWN}>UNKNOWN</MenuItem>
+            <MenuItem value={Network.Status.AVAILABLE}>AVAILABLE</MenuItem>
+            <MenuItem value={Network.Status.RESERVED}>RESERVED</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl>
+          <TextField
+            id="tags"
+            label="Tags"
+            value={editing['tags']}
+            margin="normal"
+            onChange={changeEdit('tags')}
+          />
+        </FormControl>
+      </FormGroup>
+    );
   }
 
   ipaddrFormGroup() {
@@ -114,7 +179,8 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
               input={<Input id="network-select" />}
             >
               {_.map(networks, (network, i) => {
-                return <MenuItem value={network.prefix} key={i}>{network.prefix} ({_.find(network.tags, (tag) => tag.key == 'Name').value})</MenuItem>
+                const name = _.find(network.tags, (tag) => tag.key == 'Name')
+                return <MenuItem value={network.prefix} key={i}>{network.prefix} {_.isNil(name) ? '' : ` (${name.value})`}</MenuItem>
               })}
             </Select>
           </FormControl>
@@ -185,10 +251,16 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
       <DialogTitle>{isNew ? "New" : "Edit"}</DialogTitle>
       <DialogContent>
         { (() => {
-          if (dialogType == CreateDialog.DialogType.IPAddr) {
+          switch(dialogType) {
+            case CreateDialogType.IPAddr: {
               return this.ipaddrFormGroup();
-          } else if (dialogType == CreateDialog.DialogType.Pool) {
+            }
+            case CreateDialogType.Pool: {
               return this.poolFormGroup();
+            }
+            case CreateDialogType.Network: {
+              return this.networkFormGroup();
+            }
           }
         })()}
       </DialogContent>
@@ -210,11 +282,11 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
   }
 }
 
-module CreateDialog {
-  export enum DialogType {
-    IPAddr = 1,
-    Pool
-  }
+
+export enum CreateDialogType {
+  IPAddr = 1,
+  Pool,
+  Network,
 }
 
 const styledCreateDialog = withStyles(styleSheet, { withTheme: true })(CreateDialog);

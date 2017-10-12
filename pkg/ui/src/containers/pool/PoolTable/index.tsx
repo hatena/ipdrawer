@@ -22,7 +22,7 @@ import * as protos from "../../../proto/protos";
 import Pool = model.Pool;
 import Network = model.Network;
 import { ChipCell } from '../../../components/table/ChipCell';
-import { CreateDialog } from '../../../components/table/CreateDialog';
+import { CreateDialog, CreateDialogType } from '../../../components/table/CreateDialog';
 import { DeleteDialog } from '../../../components/table/DeleteDialog';
 import {
   createPool, updatePool, deletePool, refreshPools,
@@ -30,6 +30,7 @@ import {
 import { convertTagsStr, parseTags } from '../../../utils/model';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 import { IPAddrTable } from '../../ipaddr/IPAddrTable';
+import { TableEditCell } from '../../../components/table/TableEditCell';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -267,26 +268,13 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
 
           <TableEditColumn
             cellTemplate={(args) => {
-              return <TableCell className={classes.cell}>
-                <span>
-                  <Button
-                    color="primary"
-                    onClick={this.clickEdit(args.row)}
-                    className={classes.button}
-                  >
-                    Edit
-                  </Button>
-                </span>
-                <span>
-                  <Button
-                    color="primary"
-                    onClick={this.clickDelete(args.row)}
-                    className={classes.button}
-                  >
-                    Delete
-                  </Button>
-                </span>
-              </TableCell>
+              return (
+                <TableEditCell
+                  onClickEdit={this.clickEdit(args.row)}
+                  onClickDelete={this.clickDelete(args.row)}
+                  classes={{}}
+                />
+              );
             }}
             allowAdding
           />
@@ -322,7 +310,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
           clickUpdate={this.clickUpdate}
           changeEdit={this.changeEdit}
           editing={editing}
-          dialogType={CreateDialog.DialogType.Pool}
+          dialogType={CreateDialogType.Pool}
           networks={networks}
           classes={{}}
         />
