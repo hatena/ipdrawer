@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
@@ -314,4 +315,45 @@ func TestCorrectDrawIPFromInclusivePools(t *testing.T) {
 	if !actual.Equal(net.ParseIP("10.0.0.2")) {
 		t.Errorf("DrawIP returns incorrect IP(%v); want 10.0.0.2", actual.String())
 	}
+}
+
+func TestCreatePoolWhenExistingActivatedIP(t *testing.T) {
+	r, def := storage.NewTestRedis()
+	defer def()
+
+	m := NewTestIPManager(r)
+	ctx := context.Background()
+
+	ips := []*model.IPAddr{
+		{
+			Ip:     "192.168.0.1",
+			Status: model.IPAddr_ACTIVE,
+		},
+		{
+			Ip:     "192.168.0.11",
+			Status: model.IPAddr_ACTIVE,
+		},
+	}
+	for _, ip := range ips {
+		if err := m.CreateIP(ctx, nil, ip); err != nil {
+			t.Fatalf("CreateIP retusn error %v; want success", err)
+		}
+	}
+
+	network := &model.Network{
+		Prefix: "192.168.0.0/24",
+	}
+	pool := &model.Pool{
+		Start: "192.168.0.1",
+		End:   "192.168.0.10",
+	}
+	if err := m.CreatePool(ctx, network, pool); err != nil {
+		t.Fatalf("CreatePool returns error %v; want success", err)
+	}
+
+	num, err := r.Client.ZCard(makePoolUsedIPZset(net.ParseIP(pool.Start), net.ParseIP(pool.End))).Result()
+	if err != nil {
+		t.Errorf("ZCard returns error %v; want success", err)
+	}
+	assert.Equal(t, int64(1), num, "number of used zset should be one")
 }

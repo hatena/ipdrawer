@@ -28,8 +28,12 @@ func Test_getPools(t *testing.T) {
 		Status: model.Network_AVAILABLE,
 	}
 
-	_ = m.CreateNetwork(ctx, n)
-	_ = m.CreatePool(ctx, n, pool)
+	if err := m.CreateNetwork(ctx, n); err != nil {
+		t.Fatalf("CreateNetwork returns error %v; want success", err)
+	}
+	if err := m.CreatePool(ctx, n, pool); err != nil {
+		t.Fatalf("CreatePool returns error %v; want success", err)
+	}
 
 	pools, err := getPoolsInNetwork(r, n)
 	if err != nil {
