@@ -91,7 +91,6 @@ func (m *IPManager) DrawIP(ctx context.Context, pool *model.Pool, reserve bool, 
 // CreateIP activates IP.
 func (m *IPManager) CreateIP(ctx context.Context, ps []*model.Pool, addr *model.IPAddr) error {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.Activate")
-	span.SetTag("pool", ps[0].Key())
 	span.SetTag("ip", addr.Ip)
 	defer span.Finish()
 
