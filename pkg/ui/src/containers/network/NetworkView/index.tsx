@@ -42,10 +42,8 @@ class NetworkView extends React.Component<NetworkView.Props, NetworkView.State> 
     const { classes, networks } = this.props;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs className={classes.grid}>
-          <NetworkTable networks={networks} classes={{}}/>
-        </Grid>
+      <Grid item xs className={classes.grid}>
+        <NetworkTable networks={networks} classes={{}}/>
       </Grid>
     );
   }
