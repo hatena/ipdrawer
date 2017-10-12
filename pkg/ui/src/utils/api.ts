@@ -107,3 +107,7 @@ export function createPool(req: protos.serverpb.CreatePoolRequest, timeout?: mom
 export function updatePool(req: protos.model.Pool, timeout?: moment.Duration): Promise<protos.serverpb.UpdatePoolResponse> {
   return timeoutFetch(protos.serverpb.UpdatePoolResponse, `${API_PREFIX}/pool/${req.start}/${req.end}/update`, req as any, timeout)
 }
+
+export function deletePool(req: protos.serverpb.IDeletePoolRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeletePoolResponse> {
+  return timeoutFetch(protos.serverpb.DeletePoolResponse, `${API_PREFIX}/pool/${req.rangeStart}/${req.rangeEnd}/delete`, req as any, timeout);
+}

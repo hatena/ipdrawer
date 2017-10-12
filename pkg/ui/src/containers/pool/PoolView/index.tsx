@@ -9,7 +9,8 @@ import Grid from 'material-ui/Grid';
 import { AdminUIState } from "../../../reducers/index";
 import * as protos from '../../../proto/protos'
 import { PoolTable } from '../PoolTable';
-import { refreshPools, refreshIPsInPool, refreshNetworks, createPool, updatePool } from '../../../reducers/apiReducers';
+import { refreshPools, refreshIPsInPool, refreshNetworks,
+  createPool, updatePool, deletePool } from '../../../reducers/apiReducers';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 
 type Pool = protos.model.Pool;
@@ -34,6 +35,7 @@ namespace PoolView {
     refreshNetworks: typeof refreshNetworks;
     createPool: typeof createPool;
     updatePool: typeof updatePool;
+    deletePool: typeof deletePool;
     classes: any;
   }
 
@@ -57,7 +59,8 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
   render() {
     const {
       classes, pools, networks, ipsInPool,
-      createPool, refreshPools, updatePool, refreshIPsInPool } = this.props;
+      createPool, refreshPools, updatePool, deletePool,
+      refreshIPsInPool } = this.props;
 
 
 
@@ -70,6 +73,7 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
             ipsInPool={ipsInPool}
             createPool={createPool}
             updatePool={updatePool}
+            deletePool={deletePool}
             refreshPools={refreshPools}
             refreshIPsInPool={refreshIPsInPool}
             classes={{}}
@@ -96,6 +100,7 @@ const poolViewConnected = connect(
     refreshNetworks,
     createPool,
     updatePool,
+    deletePool,
   }
 )(styledPoolView);
 

@@ -22,8 +22,9 @@ import Pool = model.Pool;
 import Network = model.Network;
 import { ChipCell } from '../../../components/table/ChipCell';
 import { CreateDialog } from '../../../components/table/CreateDialog';
+import { DeleteDialog } from '../../../components/table/DeleteDialog';
 import {
-  createPool, updatePool, refreshPools,
+  createPool, updatePool, deletePool, refreshPools,
   refreshIPsInPool, ipInPoolRequestToID } from '../../../reducers/apiReducers';
 import { convertTagsStr, parseTags } from '../../../utils/model';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
@@ -58,6 +59,7 @@ namespace PoolTable {
     ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
     createPool: typeof createPool;
     updatePool: typeof updatePool;
+    deletePool: typeof deletePool;
     refreshPools: typeof refreshPools;
     refreshIPsInPool: typeof refreshIPsInPool;
     classes: any;
@@ -68,48 +70,42 @@ namespace PoolTable {
     isNew: boolean;
     editing: {[key: string]: any};
     deleteDialogOpen: boolean;
-    deletingRow: any;
+    deletingRows: any;
     expandedRows: any;
   }
 }
 
 class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
-  columns: Object[]
+  static columns = [
+    {
+      name: 'range',
+      getCellData: (row: Pool) => row.start + " ~ " + row.end
+    },
+    {
+      name: 'status',
+      getCellData: (row: Pool) => Pool.Status[row.status]
+    },
+    {
+      name: 'tags',
+      getCellData: (row: Pool) => <ChipCell tags={row.tags} classes={{}} />
+    },
+  ]
 
   constructor(props?: PoolTable.Props, context?: any) {
     super(props, context);
-
-    this.columns = [
-      {
-        name: 'range',
-        getCellData: (row: Pool) => row.start + " ~ " + row.end
-      },
-      {
-        name: 'status',
-        getCellData: (row: Pool) => Pool.Status[row.status]
-      },
-      {
-        name: 'tags',
-        getCellData: (row: Pool) => <ChipCell tags={row.tags} classes={{}} />
-      },
-    ]
 
     this.state = {
       dialogOpen: false,
       isNew: false,
       editing: {},
       deleteDialogOpen: false,
-      deletingRow: [],
+      deletingRows: [],
       expandedRows: [],
     }
   }
 
   // Unused but required by EditingState
   commitChanges = (added, changed, deleted) => {};
-
-  convertTagsStr = (tags: model.ITag[]): string => {
-    return tags.map((tag) => `${tag.key}=${tag.value}`).join(",")
-  }
 
   clickEdit = (pool: Pool) => (event) => {
     this.setState({
@@ -141,7 +137,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
   clickDelete = (pool: Pool) => (event) => {
     this.setState({
       deleteDialogOpen: true,
-      deletingRow: [pool],
+      deletingRows: [pool],
     })
   }
 
@@ -193,6 +189,21 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
     })
   }
 
+  onClickConfirmDelete = (event) => {
+    _.map(this.state.deletingRows, (row: Pool) => {
+      this.props.deletePool(new protos.serverpb.DeletePoolRequest({
+        rangeStart: row.start,
+        rangeEnd: row.end,
+      }));
+    });
+    this.setState({ deleteDialogOpen: false });
+    setTimeout(() => { this.props.refreshPools() }, 1000);
+  }
+
+  onClickCancel = (event) => {
+    this.setState({deleteDialogOpen: false });
+  }
+
   render() {
     const { classes, pools, networks } = this.props;
     const {
@@ -200,13 +211,15 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
       editing,
       isNew,
       expandedRows,
+      deleteDialogOpen,
+      deletingRows,
     } = this.state;
 
     return (
       <Paper className={classes.paper}>
         <Grid
           rows={_.isNil(pools) ? [] : pools}
-          columns={this.columns}
+          columns={PoolTable.columns}
         >
           <SortingState />
           <EditingState
@@ -283,6 +296,13 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
           dialogType={CreateDialog.DialogType.Pool}
           networks={networks}
           classes={{}}
+        />
+        <DeleteDialog
+          deleteOpen={deleteDialogOpen}
+          deletingRows={deletingRows}
+          columns={PoolTable.columns}
+          clickCancel={this.onClickCancel}
+          clickConfirmDelete={this.onClickConfirmDelete}
         />
       </Paper>
     );

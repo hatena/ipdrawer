@@ -82,6 +82,7 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
             onChange={changeEdit('status')}
             input={<Input id="status-select" />}
           >
+            <MenuItem value={IPAddr.Status.UNKNOWN}>UNKNOWN</MenuItem>
             <MenuItem value={IPAddr.Status.ACTIVE}>ACTIVE</MenuItem>
             <MenuItem value={IPAddr.Status.RESERVED}>RESERVED</MenuItem>
           </Select>
@@ -145,6 +146,7 @@ class CreateDialog extends React.Component<CreateDialog.Props, CreateDialog.Stat
             onChange={changeEdit('status')}
             input={<Input id="status-select" />}
           >
+            <MenuItem value={Pool.Status.UNKNOWN}>UNKNOWN</MenuItem>
             <MenuItem value={Pool.Status.AVAILABLE}>AVAILABLE</MenuItem>
             <MenuItem value={Pool.Status.RESERVED}>RESERVED</MenuItem>
           </Select>

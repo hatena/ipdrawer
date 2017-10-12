@@ -38,6 +38,7 @@ import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/
 import * as protos from '../../../proto/protos';
 import { ChipCell } from '../../../components/table/ChipCell';
 import { CreateDialog } from '../../../components/table/CreateDialog';
+import { DeleteDialog } from '../../../components/table/DeleteDialog';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -93,7 +94,7 @@ namespace IPAddrTable {
     editOpen: boolean;
     editNew: boolean;
     editing: {[key: string]: any};
-    deleteOpen: boolean;
+    deleteDialogOpen: boolean;
     deletingRow: any;
   }
 }
@@ -124,7 +125,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
       editNew: false,
       editing: {},
 
-      deleteOpen: false,
+      deleteDialogOpen: false,
       deletingRow: null,
     };
   }
@@ -175,18 +176,12 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
 
   clickDelete = (addr: IPAddr) => (event) => {
     this.setState({
-      deleteOpen: true,
+      deleteDialogOpen: true,
       deletingRow: [addr],
     })
   }
 
-  clickConfirmDelete = (event) => {
-    this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
-      ip: this.state.deletingRow[0].ip
-    }));
-    this.setState({ deleteOpen: false });
-    setTimeout(() => {this.props.refreshIPs()}, 1000);
-  }
+
 
   clickCreate = (editing) => (event) => {
     this.props.createIP(new protos.model.IPAddr({
@@ -216,13 +211,25 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     })
   }
 
+  onClickCancel = (event) => {
+    this.setState({deleteDialogOpen: false });
+  }
+
+  onClickConfirmDelete = (event) => {
+    this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
+      ip: this.state.deletingRow[0].ip
+    }));
+    this.setState({ deleteDialogOpen: false });
+    setTimeout(() => {this.props.refreshIPs()}, 1000);
+  }
+
   render() {
     const { classes, ips } = this.props;
     const {
       editOpen,
       editNew,
       editing,
-      deleteOpen,
+      deleteDialogOpen,
       deletingRow
     } = this.state;
 
@@ -303,29 +310,13 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           classes={{}}
         />
 
-        <Dialog
-          ignoreBackdropClick
-          open={deleteOpen}
-          onRequestClose={() => {this.setState({deleteOpen: false})}}
-        >
-          <DialogTitle>Delete IP</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure to delete the following IP?
-            </DialogContentText>
-            <Grid
-              rows={deletingRow}
-              columns={IPAddrTable.columns}
-            >
-              <TableView />
-              <TableHeaderRow />
-            </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => {this.setState({deleteOpen: false})}} color="primary">Cancel</Button>
-            <Button onClick={this.clickConfirmDelete} color="accent">Delete</Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteDialog
+          deleteOpen={deleteDialogOpen}
+          deletingRows={deletingRow}
+          columns={IPAddrTable.columns}
+          clickCancel={this.onClickCancel}
+          clickConfirmDelete={this.onClickConfirmDelete}
+        />
       </div>
     );
   }

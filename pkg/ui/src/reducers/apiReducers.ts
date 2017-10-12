@@ -41,6 +41,9 @@ export const createPool = createPoolReducerObj.refresh;
 const updatePoolReducerObj = new CachedDataReducer(api.updatePool, 'updatepool');
 export const updatePool = updatePoolReducerObj.refresh;
 
+const deletePoolReducerObj = new CachedDataReducer(api.deletePool, `deletePool`);
+export const deletePool = deletePoolReducerObj.refresh;
+
 export interface APIReducersState {
   networks: CachedDataReducerState<protos.serverpb.ListNetworkResponse>;
   pools: CachedDataReducerState<protos.serverpb.ListPoolResponse>;
@@ -60,6 +63,7 @@ export default combineReducers<APIReducersState>({
   [updateIPReducerObj.actionNamespace]: updateIPReducerObj.reducer,
   [createPoolReducerObj.actionNamespace]: createPoolReducerObj.reducer,
   [updatePoolReducerObj.actionNamespace]: updatePoolReducerObj.reducer,
+  [deletePoolReducerObj.actionNamespace]: deletePoolReducerObj.reducer,
 });
 
 export {
