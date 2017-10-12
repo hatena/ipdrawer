@@ -2,6 +2,7 @@ package server
 
 import (
 	"net"
+	"sort"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -10,8 +11,6 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
-
-	"sort"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
@@ -36,6 +35,12 @@ func (api *APIServer) ListNetwork(
 	if err != nil {
 		return nil, errors.Wrap(err, "Manager can't get network list")
 	}
+
+	// Sort network by prefix
+	sort.Slice(networks, func(i, j int) bool {
+		return networks[i].Prefix < networks[j].Prefix
+	})
+
 	return &serverpb.ListNetworkResponse{
 		Networks: networks,
 	}, nil
@@ -439,6 +444,12 @@ func (api *APIServer) ListTemporaryReservedIP(
 	if err != nil {
 		return nil, errors.Wrap(err, "Manager can't get ip list")
 	}
+
+	// Sort IP
+	sort.Slice(addrs, func(i, j int) bool {
+		return addrs[i].Ip < addrs[j].Ip
+	})
+
 	return &serverpb.ListTemporaryReservedIPResponse{
 		Ips: addrs,
 	}, nil
@@ -456,6 +467,15 @@ func (api *APIServer) ListPool(
 	if err != nil {
 		return nil, errors.Wrap(err, "Manager can't get pool list")
 	}
+
+	// Sort pool by an IP range
+	sort.Slice(pools, func(i, j int) bool {
+		if pools[i].Start == pools[j].Start {
+			return pools[i].End < pools[j].End
+		}
+		return pools[i].Start < pools[j].End
+	})
+
 	return &serverpb.ListPoolResponse{
 		Pools: pools,
 	}, nil
@@ -486,6 +506,11 @@ func (api *APIServer) GetIPInPool(
 			ret = append(ret, ip)
 		}
 	}
+
+	// Sort by IP
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].Ip < ret[j].Ip
+	})
 
 	return &serverpb.GetIPInPoolResponse{
 		Pool: pool,
