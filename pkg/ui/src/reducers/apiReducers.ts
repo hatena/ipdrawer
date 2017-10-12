@@ -21,7 +21,7 @@ export const refreshIPs = ipListReducerObj.refresh;
 const tempReservedIPListReducerObj = new CachedDataReducer(api.getTemporaryReservedIPList, 'temporaryReservedIPs');
 export const refreshTempReservedIPs = tempReservedIPListReducerObj.refresh;
 
-export const ipInPoolRequestToID = (req: protos.serverpb.GetIPInPoolRequest): string => "${req.rangeStart}/${req.rangeEnd}"
+export const ipInPoolRequestToID = (req: protos.serverpb.GetIPInPoolRequest): string => `${req.rangeStart}/${req.rangeEnd}`
 
 const ipsInPoolReducerObj = new KeyedCachedDataReducer(api.getIPInPool, 'ipsInPool', ipInPoolRequestToID);
 export const refreshIPsInPool = ipsInPoolReducerObj.refresh;
@@ -34,6 +34,15 @@ export const deactivateIP = deactivateIPReducerbj.refresh;
 
 const updateIPReducerObj = new CachedDataReducer(api.updateIP, 'updateip');
 export const updateIP = updateIPReducerObj.refresh;
+
+const createPoolReducerObj = new CachedDataReducer(api.createPool, 'createPool');
+export const createPool = createPoolReducerObj.refresh;
+
+const updatePoolReducerObj = new CachedDataReducer(api.updatePool, 'updatepool');
+export const updatePool = updatePoolReducerObj.refresh;
+
+const deletePoolReducerObj = new CachedDataReducer(api.deletePool, `deletePool`);
+export const deletePool = deletePoolReducerObj.refresh;
 
 export interface APIReducersState {
   networks: CachedDataReducerState<protos.serverpb.ListNetworkResponse>;
@@ -52,6 +61,9 @@ export default combineReducers<APIReducersState>({
   [createIPReducerObj.actionNamespace]: createIPReducerObj.reducer,
   [deactivateIPReducerbj.actionNamespace]: deactivateIPReducerbj.reducer,
   [updateIPReducerObj.actionNamespace]: updateIPReducerObj.reducer,
+  [createPoolReducerObj.actionNamespace]: createPoolReducerObj.reducer,
+  [updatePoolReducerObj.actionNamespace]: updatePoolReducerObj.reducer,
+  [deletePoolReducerObj.actionNamespace]: deletePoolReducerObj.reducer,
 });
 
 export {

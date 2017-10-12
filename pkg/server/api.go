@@ -377,6 +377,32 @@ func (api *APIServer) CreateNetwork(
 	return &serverpb.CreateNetworkResponse{}, nil
 }
 
+// GetPoolsInNetwork returns all pools in a given network.
+func (api *APIServer) GetPoolsInNetwork(
+	ctx context.Context,
+	req *serverpb.GetPoolsInNetworkRequest,
+) (*serverpb.GetPoolsInNetworkResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	n, err := api.manager.GetNetworkByIP(ctx, &net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	})
+	if err != nil {
+		return nil, err
+	}
+	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
+	if err != nil {
+		return nil, err
+	}
+
+	return &serverpb.GetPoolsInNetworkResponse{
+		Pools: pools,
+	}, nil
+}
+
 func (api *APIServer) CreatePool(
 	ctx context.Context,
 	req *serverpb.CreatePoolRequest,
@@ -516,4 +542,35 @@ func (api *APIServer) GetIPInPool(
 		Pool: pool,
 		Ips:  ret,
 	}, nil
+}
+
+// UpdatePool updates a given pool.
+func (api *APIServer) UpdatePool(
+	ctx context.Context,
+	pool *model.Pool,
+) (*serverpb.UpdatePoolResponse, error) {
+	if err := pool.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.UpdatePool(ctx, pool); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.UpdatePoolResponse{}, nil
+}
+
+func (api *APIServer) DeletePool(
+	ctx context.Context,
+	req *serverpb.DeletePoolRequest,
+) (*serverpb.DeletePoolResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.DeletePool(ctx, net.ParseIP(req.RangeStart), net.ParseIP(req.RangeEnd)); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.DeletePoolResponse{}, nil
 }

@@ -4552,6 +4552,422 @@ $root.serverpb = (function() {
         return CreateNetworkResponse;
     })();
 
+    serverpb.GetPoolsInNetworkRequest = (function() {
+
+        /**
+         * Properties of a GetPoolsInNetworkRequest.
+         * @memberof serverpb
+         * @interface IGetPoolsInNetworkRequest
+         * @property {string} [ip] GetPoolsInNetworkRequest ip
+         * @property {number} [mask] GetPoolsInNetworkRequest mask
+         */
+
+        /**
+         * Constructs a new GetPoolsInNetworkRequest.
+         * @memberof serverpb
+         * @classdesc Represents a GetPoolsInNetworkRequest.
+         * @constructor
+         * @param {serverpb.IGetPoolsInNetworkRequest=} [properties] Properties to set
+         */
+        function GetPoolsInNetworkRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetPoolsInNetworkRequest ip.
+         * @member {string}ip
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @instance
+         */
+        GetPoolsInNetworkRequest.prototype.ip = "";
+
+        /**
+         * GetPoolsInNetworkRequest mask.
+         * @member {number}mask
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @instance
+         */
+        GetPoolsInNetworkRequest.prototype.mask = 0;
+
+        /**
+         * Creates a new GetPoolsInNetworkRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkRequest=} [properties] Properties to set
+         * @returns {serverpb.GetPoolsInNetworkRequest} GetPoolsInNetworkRequest instance
+         */
+        GetPoolsInNetworkRequest.create = function create(properties) {
+            return new GetPoolsInNetworkRequest(properties);
+        };
+
+        /**
+         * Encodes the specified GetPoolsInNetworkRequest message. Does not implicitly {@link serverpb.GetPoolsInNetworkRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkRequest} message GetPoolsInNetworkRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPoolsInNetworkRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.ip);
+            if (message.mask != null && message.hasOwnProperty("mask"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.mask);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetPoolsInNetworkRequest message, length delimited. Does not implicitly {@link serverpb.GetPoolsInNetworkRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkRequest} message GetPoolsInNetworkRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPoolsInNetworkRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetPoolsInNetworkRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.GetPoolsInNetworkRequest} GetPoolsInNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPoolsInNetworkRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.GetPoolsInNetworkRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.ip = reader.string();
+                    break;
+                case 2:
+                    message.mask = reader.int32();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetPoolsInNetworkRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.GetPoolsInNetworkRequest} GetPoolsInNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPoolsInNetworkRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetPoolsInNetworkRequest message.
+         * @function verify
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetPoolsInNetworkRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                if (!$util.isString(message.ip))
+                    return "ip: string expected";
+            if (message.mask != null && message.hasOwnProperty("mask"))
+                if (!$util.isInteger(message.mask))
+                    return "mask: integer expected";
+            return null;
+        };
+
+        /**
+         * Creates a GetPoolsInNetworkRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.GetPoolsInNetworkRequest} GetPoolsInNetworkRequest
+         */
+        GetPoolsInNetworkRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.GetPoolsInNetworkRequest)
+                return object;
+            var message = new $root.serverpb.GetPoolsInNetworkRequest();
+            if (object.ip != null)
+                message.ip = String(object.ip);
+            if (object.mask != null)
+                message.mask = object.mask | 0;
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetPoolsInNetworkRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @static
+         * @param {serverpb.GetPoolsInNetworkRequest} message GetPoolsInNetworkRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetPoolsInNetworkRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.ip = "";
+                object.mask = 0;
+            }
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                object.ip = message.ip;
+            if (message.mask != null && message.hasOwnProperty("mask"))
+                object.mask = message.mask;
+            return object;
+        };
+
+        /**
+         * Converts this GetPoolsInNetworkRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.GetPoolsInNetworkRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetPoolsInNetworkRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetPoolsInNetworkRequest;
+    })();
+
+    serverpb.GetPoolsInNetworkResponse = (function() {
+
+        /**
+         * Properties of a GetPoolsInNetworkResponse.
+         * @memberof serverpb
+         * @interface IGetPoolsInNetworkResponse
+         * @property {Array.<model.IPool>} [pools] GetPoolsInNetworkResponse pools
+         */
+
+        /**
+         * Constructs a new GetPoolsInNetworkResponse.
+         * @memberof serverpb
+         * @classdesc Represents a GetPoolsInNetworkResponse.
+         * @constructor
+         * @param {serverpb.IGetPoolsInNetworkResponse=} [properties] Properties to set
+         */
+        function GetPoolsInNetworkResponse(properties) {
+            this.pools = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * GetPoolsInNetworkResponse pools.
+         * @member {Array.<model.IPool>}pools
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @instance
+         */
+        GetPoolsInNetworkResponse.prototype.pools = $util.emptyArray;
+
+        /**
+         * Creates a new GetPoolsInNetworkResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkResponse=} [properties] Properties to set
+         * @returns {serverpb.GetPoolsInNetworkResponse} GetPoolsInNetworkResponse instance
+         */
+        GetPoolsInNetworkResponse.create = function create(properties) {
+            return new GetPoolsInNetworkResponse(properties);
+        };
+
+        /**
+         * Encodes the specified GetPoolsInNetworkResponse message. Does not implicitly {@link serverpb.GetPoolsInNetworkResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkResponse} message GetPoolsInNetworkResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPoolsInNetworkResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pools != null && message.pools.length)
+                for (var i = 0; i < message.pools.length; ++i)
+                    $root.model.Pool.encode(message.pools[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified GetPoolsInNetworkResponse message, length delimited. Does not implicitly {@link serverpb.GetPoolsInNetworkResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {serverpb.IGetPoolsInNetworkResponse} message GetPoolsInNetworkResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        GetPoolsInNetworkResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a GetPoolsInNetworkResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.GetPoolsInNetworkResponse} GetPoolsInNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPoolsInNetworkResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.GetPoolsInNetworkResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    if (!(message.pools && message.pools.length))
+                        message.pools = [];
+                    message.pools.push($root.model.Pool.decode(reader, reader.uint32()));
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a GetPoolsInNetworkResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.GetPoolsInNetworkResponse} GetPoolsInNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        GetPoolsInNetworkResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a GetPoolsInNetworkResponse message.
+         * @function verify
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        GetPoolsInNetworkResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pools != null && message.hasOwnProperty("pools")) {
+                if (!Array.isArray(message.pools))
+                    return "pools: array expected";
+                for (var i = 0; i < message.pools.length; ++i) {
+                    var error = $root.model.Pool.verify(message.pools[i]);
+                    if (error)
+                        return "pools." + error;
+                }
+            }
+            return null;
+        };
+
+        /**
+         * Creates a GetPoolsInNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.GetPoolsInNetworkResponse} GetPoolsInNetworkResponse
+         */
+        GetPoolsInNetworkResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.GetPoolsInNetworkResponse)
+                return object;
+            var message = new $root.serverpb.GetPoolsInNetworkResponse();
+            if (object.pools) {
+                if (!Array.isArray(object.pools))
+                    throw TypeError(".serverpb.GetPoolsInNetworkResponse.pools: array expected");
+                message.pools = [];
+                for (var i = 0; i < object.pools.length; ++i) {
+                    if (typeof object.pools[i] !== "object")
+                        throw TypeError(".serverpb.GetPoolsInNetworkResponse.pools: object expected");
+                    message.pools[i] = $root.model.Pool.fromObject(object.pools[i]);
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a GetPoolsInNetworkResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @static
+         * @param {serverpb.GetPoolsInNetworkResponse} message GetPoolsInNetworkResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        GetPoolsInNetworkResponse.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.pools = [];
+            if (message.pools && message.pools.length) {
+                object.pools = [];
+                for (var j = 0; j < message.pools.length; ++j)
+                    object.pools[j] = $root.model.Pool.toObject(message.pools[j], options);
+            }
+            return object;
+        };
+
+        /**
+         * Converts this GetPoolsInNetworkResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.GetPoolsInNetworkResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        GetPoolsInNetworkResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return GetPoolsInNetworkResponse;
+    })();
+
     serverpb.CreatePoolRequest = (function() {
 
         /**
@@ -6489,6 +6905,533 @@ $root.serverpb = (function() {
         return GetIPInPoolResponse;
     })();
 
+    serverpb.UpdatePoolResponse = (function() {
+
+        /**
+         * Properties of an UpdatePoolResponse.
+         * @memberof serverpb
+         * @interface IUpdatePoolResponse
+         */
+
+        /**
+         * Constructs a new UpdatePoolResponse.
+         * @memberof serverpb
+         * @classdesc Represents an UpdatePoolResponse.
+         * @constructor
+         * @param {serverpb.IUpdatePoolResponse=} [properties] Properties to set
+         */
+        function UpdatePoolResponse(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new UpdatePoolResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {serverpb.IUpdatePoolResponse=} [properties] Properties to set
+         * @returns {serverpb.UpdatePoolResponse} UpdatePoolResponse instance
+         */
+        UpdatePoolResponse.create = function create(properties) {
+            return new UpdatePoolResponse(properties);
+        };
+
+        /**
+         * Encodes the specified UpdatePoolResponse message. Does not implicitly {@link serverpb.UpdatePoolResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {serverpb.IUpdatePoolResponse} message UpdatePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdatePoolResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UpdatePoolResponse message, length delimited. Does not implicitly {@link serverpb.UpdatePoolResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {serverpb.IUpdatePoolResponse} message UpdatePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdatePoolResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an UpdatePoolResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.UpdatePoolResponse} UpdatePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdatePoolResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.UpdatePoolResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an UpdatePoolResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.UpdatePoolResponse} UpdatePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdatePoolResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an UpdatePoolResponse message.
+         * @function verify
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UpdatePoolResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates an UpdatePoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.UpdatePoolResponse} UpdatePoolResponse
+         */
+        UpdatePoolResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.UpdatePoolResponse)
+                return object;
+            return new $root.serverpb.UpdatePoolResponse();
+        };
+
+        /**
+         * Creates a plain object from an UpdatePoolResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.UpdatePoolResponse
+         * @static
+         * @param {serverpb.UpdatePoolResponse} message UpdatePoolResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UpdatePoolResponse.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this UpdatePoolResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.UpdatePoolResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UpdatePoolResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UpdatePoolResponse;
+    })();
+
+    serverpb.DeletePoolRequest = (function() {
+
+        /**
+         * Properties of a DeletePoolRequest.
+         * @memberof serverpb
+         * @interface IDeletePoolRequest
+         * @property {string} [rangeStart] DeletePoolRequest rangeStart
+         * @property {string} [rangeEnd] DeletePoolRequest rangeEnd
+         */
+
+        /**
+         * Constructs a new DeletePoolRequest.
+         * @memberof serverpb
+         * @classdesc Represents a DeletePoolRequest.
+         * @constructor
+         * @param {serverpb.IDeletePoolRequest=} [properties] Properties to set
+         */
+        function DeletePoolRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DeletePoolRequest rangeStart.
+         * @member {string}rangeStart
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         */
+        DeletePoolRequest.prototype.rangeStart = "";
+
+        /**
+         * DeletePoolRequest rangeEnd.
+         * @member {string}rangeEnd
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         */
+        DeletePoolRequest.prototype.rangeEnd = "";
+
+        /**
+         * Creates a new DeletePoolRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest=} [properties] Properties to set
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest instance
+         */
+        DeletePoolRequest.create = function create(properties) {
+            return new DeletePoolRequest(properties);
+        };
+
+        /**
+         * Encodes the specified DeletePoolRequest message. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest} message DeletePoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.rangeStart);
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.rangeEnd);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DeletePoolRequest message, length delimited. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest} message DeletePoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.DeletePoolRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.rangeStart = reader.string();
+                    break;
+                case 2:
+                    message.rangeEnd = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DeletePoolRequest message.
+         * @function verify
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DeletePoolRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                if (!$util.isString(message.rangeStart))
+                    return "rangeStart: string expected";
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                if (!$util.isString(message.rangeEnd))
+                    return "rangeEnd: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DeletePoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         */
+        DeletePoolRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.DeletePoolRequest)
+                return object;
+            var message = new $root.serverpb.DeletePoolRequest();
+            if (object.rangeStart != null)
+                message.rangeStart = String(object.rangeStart);
+            if (object.rangeEnd != null)
+                message.rangeEnd = String(object.rangeEnd);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DeletePoolRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.DeletePoolRequest} message DeletePoolRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DeletePoolRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.rangeStart = "";
+                object.rangeEnd = "";
+            }
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                object.rangeStart = message.rangeStart;
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                object.rangeEnd = message.rangeEnd;
+            return object;
+        };
+
+        /**
+         * Converts this DeletePoolRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DeletePoolRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DeletePoolRequest;
+    })();
+
+    serverpb.DeletePoolResponse = (function() {
+
+        /**
+         * Properties of a DeletePoolResponse.
+         * @memberof serverpb
+         * @interface IDeletePoolResponse
+         */
+
+        /**
+         * Constructs a new DeletePoolResponse.
+         * @memberof serverpb
+         * @classdesc Represents a DeletePoolResponse.
+         * @constructor
+         * @param {serverpb.IDeletePoolResponse=} [properties] Properties to set
+         */
+        function DeletePoolResponse(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new DeletePoolResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse=} [properties] Properties to set
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse instance
+         */
+        DeletePoolResponse.create = function create(properties) {
+            return new DeletePoolResponse(properties);
+        };
+
+        /**
+         * Encodes the specified DeletePoolResponse message. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse} message DeletePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DeletePoolResponse message, length delimited. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse} message DeletePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.DeletePoolResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DeletePoolResponse message.
+         * @function verify
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DeletePoolResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a DeletePoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         */
+        DeletePoolResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.DeletePoolResponse)
+                return object;
+            return new $root.serverpb.DeletePoolResponse();
+        };
+
+        /**
+         * Creates a plain object from a DeletePoolResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.DeletePoolResponse} message DeletePoolResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DeletePoolResponse.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this DeletePoolResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.DeletePoolResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DeletePoolResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DeletePoolResponse;
+    })();
+
     serverpb.NetworkServiceV0 = (function() {
 
         /**
@@ -6749,6 +7692,39 @@ $root.serverpb = (function() {
          * @instance
          * @param {serverpb.ICreatePoolRequest} request CreatePoolRequest message or plain object
          * @returns {Promise<serverpb.CreatePoolResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#getPoolsInNetwork}.
+         * @memberof serverpb.NetworkServiceV0
+         * @typedef GetPoolsInNetworkCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.GetPoolsInNetworkResponse} [response] GetPoolsInNetworkResponse
+         */
+
+        /**
+         * Calls GetPoolsInNetwork.
+         * @function .getPoolsInNetwork
+         * @memberof serverpb.NetworkServiceV0
+         * @instance
+         * @param {serverpb.IGetPoolsInNetworkRequest} request GetPoolsInNetworkRequest message or plain object
+         * @param {serverpb.NetworkServiceV0.GetPoolsInNetworkCallback} callback Node-style callback called with the error, if any, and GetPoolsInNetworkResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        NetworkServiceV0.prototype.getPoolsInNetwork = function getPoolsInNetwork(request, callback) {
+            return this.rpcCall(getPoolsInNetwork, $root.serverpb.GetPoolsInNetworkRequest, $root.serverpb.GetPoolsInNetworkResponse, request, callback);
+        };
+
+        /**
+         * Calls GetPoolsInNetwork.
+         * @function getPoolsInNetwork
+         * @memberof serverpb.NetworkServiceV0
+         * @instance
+         * @param {serverpb.IGetPoolsInNetworkRequest} request GetPoolsInNetworkRequest message or plain object
+         * @returns {Promise<serverpb.GetPoolsInNetworkResponse>} Promise
          * @variation 2
          */
 
@@ -7116,6 +8092,72 @@ $root.serverpb = (function() {
          * @instance
          * @param {serverpb.IGetIPInPoolRequest} request GetIPInPoolRequest message or plain object
          * @returns {Promise<serverpb.GetIPInPoolResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#updatePool}.
+         * @memberof serverpb.PoolServiceV0
+         * @typedef UpdatePoolCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.UpdatePoolResponse} [response] UpdatePoolResponse
+         */
+
+        /**
+         * Calls UpdatePool.
+         * @function .updatePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {model.IPool} request Pool message or plain object
+         * @param {serverpb.PoolServiceV0.UpdatePoolCallback} callback Node-style callback called with the error, if any, and UpdatePoolResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        PoolServiceV0.prototype.updatePool = function updatePool(request, callback) {
+            return this.rpcCall(updatePool, $root.model.Pool, $root.serverpb.UpdatePoolResponse, request, callback);
+        };
+
+        /**
+         * Calls UpdatePool.
+         * @function updatePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {model.IPool} request Pool message or plain object
+         * @returns {Promise<serverpb.UpdatePoolResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#deletePool}.
+         * @memberof serverpb.PoolServiceV0
+         * @typedef DeletePoolCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.DeletePoolResponse} [response] DeletePoolResponse
+         */
+
+        /**
+         * Calls DeletePool.
+         * @function .deletePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IDeletePoolRequest} request DeletePoolRequest message or plain object
+         * @param {serverpb.PoolServiceV0.DeletePoolCallback} callback Node-style callback called with the error, if any, and DeletePoolResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        PoolServiceV0.prototype.deletePool = function deletePool(request, callback) {
+            return this.rpcCall(deletePool, $root.serverpb.DeletePoolRequest, $root.serverpb.DeletePoolResponse, request, callback);
+        };
+
+        /**
+         * Calls DeletePool.
+         * @function deletePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IDeletePoolRequest} request DeletePoolRequest message or plain object
+         * @returns {Promise<serverpb.DeletePoolResponse>} Promise
          * @variation 2
          */
 

@@ -99,3 +99,15 @@ export function deactivateIP(req: protos.serverpb.DeactivateIPRequest, timeout?:
 export function updateIP(req: protos.model.IPAddr, timeout?: moment.Duration): Promise<protos.serverpb.UpdateIPResponse> {
   return timeoutFetch(protos.serverpb.UpdateIPResponse, `${API_PREFIX}/ip/${req.ip}/update`, req as any, timeout);
 }
+
+export function createPool(req: protos.serverpb.CreatePoolRequest, timeout?: moment.Duration): Promise<protos.serverpb.CreatePoolResponse> {
+  return timeoutFetch(protos.serverpb.CreatePoolResponse, `${API_PREFIX}/network/${req.ip}/${req.mask}/pool/create`, req as any, timeout);
+}
+
+export function updatePool(req: protos.model.Pool, timeout?: moment.Duration): Promise<protos.serverpb.UpdatePoolResponse> {
+  return timeoutFetch(protos.serverpb.UpdatePoolResponse, `${API_PREFIX}/pool/${req.start}/${req.end}/update`, req as any, timeout)
+}
+
+export function deletePool(req: protos.serverpb.IDeletePoolRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeletePoolResponse> {
+  return timeoutFetch(protos.serverpb.DeletePoolResponse, `${API_PREFIX}/pool/${req.rangeStart}/${req.rangeEnd}/delete`, req as any, timeout);
+}

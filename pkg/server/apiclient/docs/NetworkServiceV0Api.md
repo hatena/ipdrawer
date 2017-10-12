@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**GetEstimatedNetwork**](NetworkServiceV0Api.md#GetEstimatedNetwork) | **Get** /api/v0/network | 
 [**GetNetwork**](NetworkServiceV0Api.md#GetNetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 [**GetNetwork_0**](NetworkServiceV0Api.md#GetNetwork_0) | **Get** /api/v0/network/{name} | 
+[**GetPoolsInNetwork**](NetworkServiceV0Api.md#GetPoolsInNetwork) | **Get** /api/v0/network/{ip}/{mask}/pools | 
 [**ListNetwork**](NetworkServiceV0Api.md#ListNetwork) | **Get** /api/v0/network/list | 
 
 
@@ -146,7 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **ip** | **string**|  | [optional] 
- **mask** | **int32**| int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];. | [optional] 
+ **mask** | **int32**|  | [optional] 
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
  **temporaryReserved** | **bool**|  | [optional] 
@@ -231,11 +232,39 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **ip** | **string**|  | [optional] 
- **mask** | **int32**| int32 mask &#x3D; 2 [(validator.field) &#x3D; {int_gt: -1, int_lt: 33}];. | [optional] 
+ **mask** | **int32**|  | [optional] 
 
 ### Return type
 
 [**ServerpbGetNetworkResponse**](serverpbGetNetworkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **GetPoolsInNetwork**
+> ServerpbGetPoolsInNetworkResponse GetPoolsInNetwork($ip, $mask)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**|  | 
+ **mask** | **int32**|  | 
+
+### Return type
+
+[**ServerpbGetPoolsInNetworkResponse**](serverpbGetPoolsInNetworkResponse.md)
 
 ### Authorization
 

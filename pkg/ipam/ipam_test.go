@@ -357,3 +357,32 @@ func TestCreatePoolWhenExistingActivatedIP(t *testing.T) {
 	}
 	assert.Equal(t, int64(1), num, "number of used zset should be one")
 }
+
+func TestDeletePool(t *testing.T) {
+	r, def := storage.NewTestRedis()
+	defer def()
+
+	m := NewTestIPManager(r)
+	ctx := context.Background()
+
+	network := &model.Network{
+		Prefix: "192.168.0.0/24",
+	}
+	pool := &model.Pool{
+		Start: "192.168.0.1",
+		End:   "192.168.0.10",
+	}
+	if err := m.CreatePool(ctx, network, pool); err != nil {
+		t.Fatalf("CreatePool returns error `%v`; want success", err)
+	}
+
+	if err := m.DeletePool(ctx, net.ParseIP(pool.Start), net.ParseIP(pool.End)); err != nil {
+		t.Fatalf("DeletePool returns error `%v`; want success", err)
+	}
+
+	pools, err := m.GetPools(ctx)
+	if err != nil {
+		t.Fatalf("GetPools returns error `%v`; want success", err)
+	}
+	assert.Equal(t, 0, len(pools), "there should be no pools")
+}

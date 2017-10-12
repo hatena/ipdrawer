@@ -80,6 +80,19 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*model.Network, error) {
 	return n, nil
 }
 
+func addPoolToNetwork(r *storage.Redis, network *model.Network, pool *model.Pool) error {
+	if err := pool.Validate(); err != nil {
+		return err
+	}
+	_, pre, err := net.ParseCIDR(network.Prefix)
+	if err != nil {
+		return err
+	}
+	poolKey := makeNetworkPoolKey(pre)
+	_, err = r.Client.SAdd(poolKey, pool.Key()).Result()
+	return err
+}
+
 func parseMask32(s string) (net.IP, error) {
 	ip, ipnet, err := net.ParseCIDR(s)
 	if err != nil {

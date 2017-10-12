@@ -37,6 +37,8 @@ import IPAddr = model.IPAddr;
 import { refreshIPs, createIP, deactivateIP, updateIP } from '../../../reducers/apiReducers';
 import * as protos from '../../../proto/protos';
 import { ChipCell } from '../../../components/table/ChipCell';
+import { CreateDialog } from '../../../components/table/CreateDialog';
+import { DeleteDialog } from '../../../components/table/DeleteDialog';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -91,10 +93,8 @@ namespace IPAddrTable {
   export interface State {
     editOpen: boolean;
     editNew: boolean;
-    editingIP: string;
-    editingStatus: IPAddr.Status;
-    editingTags: string;
-    deleteOpen: boolean;
+    editing: {[key: string]: any};
+    deleteDialogOpen: boolean;
     deletingRow: any;
   }
 }
@@ -123,11 +123,9 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.state = {
       editOpen: false,
       editNew: false,
-      editingIP: "",
-      editingStatus: IPAddr.Status.UNKNOWN,
-      editingTags: "",
+      editing: {},
 
-      deleteOpen: false,
+      deleteDialogOpen: false,
       deletingRow: null,
     };
   }
@@ -156,9 +154,11 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.setState({
       editOpen: true,
       editNew: false,
-      editingIP: addr.ip,
-      editingStatus: addr.status,
-      editingTags: this.convertTagsStr(addr.tags),
+      editing: {
+        ip: addr.ip,
+        status: addr.status,
+        tags: this.convertTagsStr(addr.tags),
+      }
     });
   }
 
@@ -166,51 +166,75 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     this.setState({
       editOpen: true,
       editNew: true,
-      editingIP: "",
-      editingStatus: IPAddr.Status.UNKNOWN,
-      editingTags: "",
-    })
-  }
-
-  changeEdit = (name) => (event) => {
-    this.setState({
-      [name]: event.target.value
+      editing: {
+        ip: "",
+        status: IPAddr.Status.UNKNOWN,
+        tags: "",
+      }
     })
   }
 
   clickDelete = (addr: IPAddr) => (event) => {
     this.setState({
-      deleteOpen: true,
+      deleteDialogOpen: true,
       deletingRow: [addr],
     })
   }
 
-  clickConfirmDelete = (event) => {
-    this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
-      ip: this.state.deletingRow[0].ip
-    }));
-    this.setState({ deleteOpen: false });
-    setTimeout(() => {this.props.refreshIPs()}, 1000);
-  }
 
-  clickCreate = (event) => {
+
+  clickCreate = (editing) => (event) => {
     this.props.createIP(new protos.model.IPAddr({
-      ip: this.state.editingIP,
-      status: this.state.editingStatus,
-      tags: this.parseTags(this.state.editingTags),
+      ip: editing['ip'],
+      status: editing['statue'],
+      tags: this.parseTags(editing['tags']),
     }));
     this.setState({ editOpen: false });
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
 
-  clickUpdate = (event) => {
+  clickUpdate = (editing) => (event) => {
     this.props.updateIP(new protos.model.IPAddr({
-      ip: this.state.editingIP,
-      status: this.state.editingStatus,
-      tags: this.parseTags(this.state.editingTags)
+      ip: editing['ip'],
+      status: editing['status'],
+      tags: this.parseTags(editing['tags'])
     }));
     this.setState({ editOpen: false });
     setTimeout(() => {this.props.refreshIPs()}, 1000);
+  }
+
+  changeEdit = (name) => (event) => {
+    const editing = _.clone(this.state.editing)
+    editing[name] = event.target.value;
+    this.setState({
+      editing: editing
+    })
+  }
+
+  onClickCancel = (event) => {
+    this.setState({deleteDialogOpen: false });
+  }
+
+  onClickConfirmDelete = (event) => {
+    _.map(this.state.deletingRow, (row: IPAddr) => {
+      this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
+        ip: row.ip
+      }));
+    });
+    this.setState({ deleteDialogOpen: false });
+    setTimeout(() => {this.props.refreshIPs()}, 1000);
+  }
+
+  filter = (row, filter) => {
+    if (filter.columnName == 'ip') {
+      return row.ip.indexOf(filter.value) >= 0;
+    }
+    if (filter.columnName == 'status') {
+      return IPAddr.Status[row.status].indexOf(_.toUpper(filter.value)) >= 0;
+    }
+    if (filter.columnName == 'tags') {
+      return this.convertTagsStr(row.tags).indexOf(filter.value) >= 0;
+    }
   }
 
   render() {
@@ -218,10 +242,8 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     const {
       editOpen,
       editNew,
-      editingIP,
-      editingStatus,
-      editingTags,
-      deleteOpen,
+      editing,
+      deleteDialogOpen,
       deletingRow
     } = this.state;
 
@@ -244,14 +266,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
 
           <LocalSorting />
           <LocalFiltering
-            filterFn={(row, filter) => {
-              if (filter.columnName == 'ip') {
-                return row.ip.indexOf(filter.value) >= 0;
-              }
-              if (filter.columnName == 'tags') {
-                return this.convertTagsStr(row.tags).indexOf(filter.value) >= 0;
-              }
-            }}
+            filterFn={this.filter}
           />
           <LocalPaging />
 
@@ -290,88 +305,25 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
           />
         </Grid>
 
-        <Dialog
-          ignoreBackdropClick
+        <CreateDialog
           open={editOpen}
-          onRequestClose={() => {this.setState({editOpen: false})}}
-          classes={{ paper: classes.dialog }}
-        >
-          <DialogTitle>{editNew ? "New" : "Edit"}</DialogTitle>
-          <DialogContent>
-            <FormGroup>
-              <FormControl
-                className={classes.formControl}
-              >
-                <TextField
-                  id="ip"
-                  label="IP"
-                  value={editingIP}
-                  margin="normal"
-                  onChange={this.changeEdit('editingIP')}
-                  disabled={!editNew}
-                />
-              </FormControl>
-              <FormControl>
-                <InputLabel htmlFor="status-select">Status</InputLabel>
-                <Select
-                  value={editingStatus}
-                  onChange={this.changeEdit('editingStatus')}
-                  input={<Input id="status-select" />}
-                >
-                  <MenuItem value={IPAddr.Status.ACTIVE}>ACTIVE</MenuItem>
-                  <MenuItem value={IPAddr.Status.RESERVED}>RESERVED</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl>
-                <TextField
-                  id="tags"
-                  label="Tags"
-                  value={editingTags}
-                  margin="normal"
-                  onChange={this.changeEdit('editingTags')}
-                />
-              </FormControl>
-            </FormGroup>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {this.setState({editOpen: false})}}
-              color="primary"
-            >
-              Cancel
-            </Button>
-            <Button
-              color="accent"
-              onClick={editNew ? this.clickCreate : this.clickUpdate}
-            >
-              {editNew ? "Create" : "Update"}
-            </Button>
-          </DialogActions>
-        </Dialog>
+          clickCancel={() => {this.setState({editOpen: false})}}
+          isNew={editNew}
+          clickCreate={this.clickCreate}
+          clickUpdate={this.clickUpdate}
+          changeEdit={this.changeEdit}
+          editing={editing}
+          dialogType={CreateDialog.DialogType.IPAddr}
+          classes={{}}
+        />
 
-        <Dialog
-          ignoreBackdropClick
-          open={deleteOpen}
-          onRequestClose={() => {this.setState({deleteOpen: false})}}
-        >
-          <DialogTitle>Delete IP</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure to delete the following IP?
-            </DialogContentText>
-            <Grid
-              rows={deletingRow}
-              columns={IPAddrTable.columns}
-            >
-              <TableView />
-              <TableHeaderRow />
-            </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => {this.setState({deleteOpen: false})}} color="primary">Cancel</Button>
-            <Button onClick={this.clickConfirmDelete} color="accent">Delete</Button>
-          </DialogActions>
-        </Dialog>
+        <DeleteDialog
+          deleteOpen={deleteDialogOpen}
+          deletingRows={deletingRow}
+          columns={IPAddrTable.columns}
+          clickCancel={this.onClickCancel}
+          clickConfirmDelete={this.onClickConfirmDelete}
+        />
       </div>
     );
   }

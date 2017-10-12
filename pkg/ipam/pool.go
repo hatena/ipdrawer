@@ -10,7 +10,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
-func setPool(r *storage.Redis, prefix *model.Network, pool *model.Pool) error {
+func setPool(r *storage.Redis, pool *model.Pool) error {
 	if err := pool.Validate(); err != nil {
 		return err
 	}
@@ -19,21 +19,12 @@ func setPool(r *storage.Redis, prefix *model.Network, pool *model.Pool) error {
 	s := net.ParseIP(pool.Start)
 	e := net.ParseIP(pool.End)
 
-	// Set
 	dkey := makePoolDetailsKey(s, e)
 	data, err := pool.Marshal()
 	if err != nil {
 		return err
 	}
 	pipe.Set(dkey, string(data), 0)
-
-	// Add pools
-	_, pre, err := net.ParseCIDR(prefix.Prefix)
-	if err != nil {
-		return err
-	}
-	poolKey := makeNetworkPoolKey(pre)
-	pipe.SAdd(poolKey, pool.Key())
 
 	_, err = pipe.Exec()
 
@@ -62,11 +53,17 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*model.Pool, error) {
 }
 
 func getPools(r *storage.Redis, keys []string) ([]*model.Pool, error) {
+	pools := make([]*model.Pool, len(keys))
+
+	if len(keys) == 0 {
+		return pools, nil
+	}
+
 	data, err := r.Client.MGet(keys...).Result()
 	if err != nil {
 		return nil, err
 	}
-	pools := make([]*model.Pool, len(keys))
+
 	for i, d := range data {
 		if s, ok := d.(string); ok {
 			pools[i] = &model.Pool{}
@@ -99,4 +96,13 @@ func getPoolsInNetwork(r *storage.Redis, prefix *model.Network) ([]*model.Pool, 
 		pools[i] = pool
 	}
 	return pools, nil
+}
+
+func existsPool(r *storage.Redis, pool *model.Pool) bool {
+	s := net.ParseIP(pool.Start)
+	e := net.ParseIP(pool.End)
+
+	dkey := makePoolDetailsKey(s, e)
+	check, _ := r.Client.Exists(dkey).Result()
+	return check != 0
 }

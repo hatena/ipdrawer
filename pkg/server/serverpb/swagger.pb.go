@@ -434,6 +434,37 @@ const (
         ]
       }
     },
+    "/api/v0/network/{ip}/{mask}/pools": {
+      "get": {
+        "operationId": "GetPoolsInNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbGetPoolsInNetworkResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mask",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
     "/api/v0/network/{name}": {
       "get": {
         "operationId": "GetNetwork",
@@ -460,7 +491,6 @@ const (
           },
           {
             "name": "mask",
-            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -498,7 +528,6 @@ const (
           },
           {
             "name": "mask",
-            "description": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];.",
             "in": "query",
             "required": false,
             "type": "integer",
@@ -545,6 +574,36 @@ const (
         ]
       }
     },
+    "/api/v0/pool/{range_start}/{range_end}/delete": {
+      "post": {
+        "operationId": "DeletePool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDeletePoolResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "range_start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
+    },
     "/api/v0/pool/{range_start}/{range_end}/ip": {
       "get": {
         "operationId": "GetIPInPool",
@@ -568,6 +627,44 @@ const (
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
+    },
+    "/api/v0/pool/{start}/{end}/update": {
+      "post": {
+        "operationId": "UpdatePool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbUpdatePoolResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelPool"
+            }
           }
         ],
         "tags": [
@@ -707,8 +804,7 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32",
-          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
+          "format": "int32"
         },
         "default_gateways": {
           "type": "array",
@@ -738,8 +834,7 @@ const (
         },
         "mask": {
           "type": "integer",
-          "format": "int32",
-          "title": "int32 mask = 2 [(validator.field) = {int_gt: -1, int_lt: 33}];"
+          "format": "int32"
         },
         "pool": {
           "$ref": "#/definitions/modelPool"
@@ -750,6 +845,9 @@ const (
       "type": "object"
     },
     "serverpbDeactivateIPResponse": {
+      "type": "object"
+    },
+    "serverpbDeletePoolResponse": {
       "type": "object"
     },
     "serverpbDrawIPResponse": {
@@ -803,6 +901,17 @@ const (
         }
       }
     },
+    "serverpbGetPoolsInNetworkResponse": {
+      "type": "object",
+      "properties": {
+        "pools": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPool"
+          }
+        }
+      }
+    },
     "serverpbListIPResponse": {
       "type": "object",
       "properties": {
@@ -848,6 +957,9 @@ const (
       }
     },
     "serverpbUpdateIPResponse": {
+      "type": "object"
+    },
+    "serverpbUpdatePoolResponse": {
       "type": "object"
     }
   }

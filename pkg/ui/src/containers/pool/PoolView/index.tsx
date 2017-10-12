@@ -9,9 +9,12 @@ import Grid from 'material-ui/Grid';
 import { AdminUIState } from "../../../reducers/index";
 import * as protos from '../../../proto/protos'
 import { PoolTable } from '../PoolTable';
-import { refreshPools, refreshIPsInPool } from '../../../reducers/apiReducers';
+import { refreshPools, refreshIPsInPool, refreshNetworks,
+  createPool, updatePool, deletePool } from '../../../reducers/apiReducers';
+import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 
 type Pool = protos.model.Pool;
+type Network = protos.model.Network;
 
 const styleSheet = theme => ({
   grid: {
@@ -25,8 +28,14 @@ const styleSheet = theme => ({
 namespace PoolView {
   export interface Props extends RouteComponentProps<void> {
     pools: Pool[];
+    networks: Network[];
+    ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
     refreshPools: typeof refreshPools;
     refreshIPsInPool: typeof refreshIPsInPool;
+    refreshNetworks: typeof refreshNetworks;
+    createPool: typeof createPool;
+    updatePool: typeof updatePool;
+    deletePool: typeof deletePool;
     classes: any;
   }
 
@@ -38,22 +47,37 @@ namespace PoolView {
 class PoolView extends React.Component<PoolView.Props, PoolView.State> {
   componentWillMount() {
     this.props.refreshPools();
+    this.props.refreshNetworks();
+    //     if (!_.isNil(this.props.pools)) {
+    //   this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
+    //     rangeStart: this.props.pools[0].start,
+    //     rangeEnd: this.props.pools[0].end,
+    //   }));
+    // }
   }
 
   render() {
-    const { classes, pools } = this.props;
+    const {
+      classes, pools, networks, ipsInPool,
+      createPool, refreshPools, updatePool, deletePool,
+      refreshIPsInPool } = this.props;
 
-    if (!_.isNil(pools)) {
-      this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
-        rangeStart: pools[0].start,
-        rangeEnd: pools[0].end,
-      }));
-    }
+
 
     return (
       <Grid container spacing={24}>
         <Grid item xs className={classes.grid}>
-          <PoolTable pools={pools} classes={{}}/>
+          <PoolTable
+            pools={pools}
+            networks={networks}
+            ipsInPool={ipsInPool}
+            createPool={createPool}
+            updatePool={updatePool}
+            deletePool={deletePool}
+            refreshPools={refreshPools}
+            refreshIPsInPool={refreshIPsInPool}
+            classes={{}}
+          />
         </Grid>
       </Grid>
     );
@@ -66,11 +90,17 @@ const poolViewConnected = connect(
   (state: AdminUIState) => {
     return {
       pools: (state.cachedData.pools.data && state.cachedData.pools.data.pools),
+      networks: (state.cachedData.networks.data && state.cachedData.networks.data.networks),
+      ipsInPool: state.cachedData.ipsInPool
     }
   },
   {
     refreshPools,
     refreshIPsInPool,
+    refreshNetworks,
+    createPool,
+    updatePool,
+    deletePool,
   }
 )(styledPoolView);
 
