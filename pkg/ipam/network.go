@@ -60,6 +60,18 @@ func setNetwork(r *storage.Redis, n *model.Network) error {
 	return err
 }
 
+func deleteNetwork(r *storage.Redis, n *model.Network) error {
+	if err := n.Validate(); err != nil {
+		return err
+	}
+	_, pre, _ := net.ParseCIDR(n.Prefix)
+	pipe := r.Client.TxPipeline()
+	pipe.Del(makeNetworkDetailsKey(pre))
+	pipe.SRem(makeNetworkListKey(), pre.String())
+	_, err := pipe.Exec()
+	return err
+}
+
 func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*model.Network, error) {
 	dkey := makeNetworkDetailsKey(ipnet)
 
@@ -107,4 +119,13 @@ func parseMask32(s string) (net.IP, error) {
 		return ip, nil
 	}
 	return nil, errors.New("Only accepts /32 mask")
+}
+
+func existsNetwork(r *storage.Redis, network *model.Network) bool {
+	if err := network.Validate(); err != nil {
+		return false
+	}
+	_, pre, _ := net.ParseCIDR(network.Prefix)
+	check, _ := r.Client.Exists(makeNetworkDetailsKey(pre)).Result()
+	return check != 0
 }

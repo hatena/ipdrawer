@@ -259,6 +259,46 @@ func (m *IPManager) CreateNetwork(ctx context.Context, n *model.Network) error {
 	span.SetTag("network", n.String())
 	defer span.Finish()
 
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	return setNetwork(m.redis, n)
+}
+
+// DeleteNetwork deletes the network
+func (m *IPManager) DeleteNetwork(ctx context.Context, n *model.Network) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DeleteNetwork")
+	span.SetTag("network", n.String())
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	return deleteNetwork(m.redis, n)
+}
+
+// UpdateNetwork updates the network
+func (m *IPManager) UpdateNetwork(ctx context.Context, n *model.Network) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.UpdateNetwork")
+	span.SetTag("network", n.String())
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	if !existsNetwork(m.redis, n) {
+		return errors.New("Not found Network")
+	}
+
 	return setNetwork(m.redis, n)
 }
 
@@ -393,8 +433,6 @@ func (m *IPManager) UpdatePool(ctx context.Context, pool *model.Pool) error {
 	if !existsPool(m.redis, pool) {
 		return errors.New("Not found Pool")
 	}
-
-	defer span.Finish()
 
 	return setPool(m.redis, pool)
 }

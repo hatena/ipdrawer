@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateNetwork**](NetworkServiceV0Api.md#CreateNetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 [**CreatePool**](NetworkServiceV0Api.md#CreatePool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
+[**DeleteNetwork**](NetworkServiceV0Api.md#DeleteNetwork) | **Post** /api/v0/network/{ip}/{mask}/delete | 
 [**DrawIP**](NetworkServiceV0Api.md#DrawIP) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
 [**DrawIPEstimatingNetwork**](NetworkServiceV0Api.md#DrawIPEstimatingNetwork) | **Get** /api/v0/drawip | 
 [**DrawIP_0**](NetworkServiceV0Api.md#DrawIP_0) | **Get** /api/v0/network/{name}/drawip | 
@@ -14,6 +15,7 @@ Method | HTTP request | Description
 [**GetNetwork_0**](NetworkServiceV0Api.md#GetNetwork_0) | **Get** /api/v0/network/{name} | 
 [**GetPoolsInNetwork**](NetworkServiceV0Api.md#GetPoolsInNetwork) | **Get** /api/v0/network/{ip}/{mask}/pools | 
 [**ListNetwork**](NetworkServiceV0Api.md#ListNetwork) | **Get** /api/v0/network/list | 
+[**UpdateNetwork**](NetworkServiceV0Api.md#UpdateNetwork) | **Post** /api/v0/network/update | 
 
 
 # **CreateNetwork**
@@ -62,6 +64,34 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**ServerpbCreatePoolResponse**](serverpbCreatePoolResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DeleteNetwork**
+> ServerpbDeleteNetworkResponse DeleteNetwork($ip, $mask)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ip** | **string**|  | 
+ **mask** | **int32**|  | 
+
+### Return type
+
+[**ServerpbDeleteNetworkResponse**](serverpbDeleteNetworkResponse.md)
 
 ### Authorization
 
@@ -289,6 +319,33 @@ This endpoint does not need any parameter.
 ### Return type
 
 [**ServerpbListNetworkResponse**](serverpbListNetworkResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **UpdateNetwork**
+> ServerpbUpdateNetworkResponse UpdateNetwork($body)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ModelNetwork**](ModelNetwork.md)|  | 
+
+### Return type
+
+[**ServerpbUpdateNetworkResponse**](serverpbUpdateNetworkResponse.md)
 
 ### Authorization
 

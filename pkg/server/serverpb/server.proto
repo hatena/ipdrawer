@@ -93,6 +93,17 @@ message CreatePoolRequest {
 
 message CreatePoolResponse {}
 
+message DeleteNetworkRequest {
+  string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
+}
+
+message DeleteNetworkResponse {}
+
+message UpdateNetworkResponse {}
+
+// IPService
+//
 message ListIPRequest {}
 
 message ListIPResponse {
@@ -186,6 +197,19 @@ service NetworkServiceV0 {
   rpc GetPoolsInNetwork (GetPoolsInNetworkRequest) returns (GetPoolsInNetworkResponse) {
     option (google.api.http) = {
       get: "/api/v0/network/{ip}/{mask}/pools"
+    };
+  };
+
+  rpc DeleteNetwork (DeleteNetworkRequest) returns (DeleteNetworkResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/network/{ip}/{mask}/delete"
+    };
+  };
+
+  rpc UpdateNetwork (model.Network) returns (UpdateNetworkResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/network/update"
+      body: "*"
     };
   };
 

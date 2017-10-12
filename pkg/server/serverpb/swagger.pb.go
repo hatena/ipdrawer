@@ -263,6 +263,32 @@ const (
         ]
       }
     },
+    "/api/v0/network/update": {
+      "post": {
+        "operationId": "UpdateNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbUpdateNetworkResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/modelNetwork"
+            }
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
     "/api/v0/network/{ip}/{mask}": {
       "get": {
         "operationId": "GetNetwork",
@@ -332,6 +358,37 @@ const (
             "schema": {
               "$ref": "#/definitions/serverpbCreateNetworkRequest"
             }
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
+        ]
+      }
+    },
+    "/api/v0/network/{ip}/{mask}/delete": {
+      "post": {
+        "operationId": "DeleteNetwork",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDeleteNetworkResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ip",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "mask",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
           }
         ],
         "tags": [
@@ -847,6 +904,9 @@ const (
     "serverpbDeactivateIPResponse": {
       "type": "object"
     },
+    "serverpbDeleteNetworkResponse": {
+      "type": "object"
+    },
     "serverpbDeletePoolResponse": {
       "type": "object"
     },
@@ -957,6 +1017,9 @@ const (
       }
     },
     "serverpbUpdateIPResponse": {
+      "type": "object"
+    },
+    "serverpbUpdateNetworkResponse": {
       "type": "object"
     },
     "serverpbUpdatePoolResponse": {
