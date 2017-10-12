@@ -216,9 +216,11 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
   }
 
   onClickConfirmDelete = (event) => {
-    this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
-      ip: this.state.deletingRow[0].ip
-    }));
+    _.map(this.state.deletingRow, (row: IPAddr) => {
+      this.props.deactivateIP(new protos.serverpb.DeactivateIPRequest({
+        ip: row.ip
+      }));
+    });
     this.setState({ deleteDialogOpen: false });
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
