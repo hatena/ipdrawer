@@ -292,9 +292,11 @@ func (m *IPManager) CreatePool(ctx context.Context, n *model.Network, pool *mode
 		}
 		members = append(members, z)
 	}
-	_, err = m.redis.Client.ZAdd(usedkey, members...).Result()
-	if err != nil {
-		return err
+	if len(members) != 0 {
+		_, err = m.redis.Client.ZAdd(usedkey, members...).Result()
+		if err != nil {
+			return err
+		}
 	}
 
 	return setPool(m.redis, n, pool)
