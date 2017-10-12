@@ -8,10 +8,10 @@ import {
   GroupingPanel, PagingPanel, DragDropContext,
 } from '@devexpress/dx-react-grid-material-ui';
 
-import Chip from 'material-ui/Chip';
-
 import { model } from "../../../proto/protos";
 import Network = model.Network;
+import { ChipCell } from '../../../components/table/ChipCell';
+
 
 const styleSheet: StyleRulesCallback = theme => ({
   paper: {
@@ -40,40 +40,37 @@ namespace NetworkTable {
 
 class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.State> {
   static columns = [
-    { name: 'prefix', label: 'Prefix' },
-    { name: 'gateways', label: 'Gateways' },
-    { name: 'broadcast', label: 'Broadcast' },
-    { name: 'status', label: 'Status' },
-    { name: 'tags', label: 'Tags' }
+    {
+      name: 'prefix',
+      title: "Prefix",
+    },
+    {
+      name: 'gateways',
+      title: 'Gateways'
+    },
+    {
+      name: 'broadcast',
+      title: 'Broadcast',
+    },
+    {
+      name: 'status',
+      title: 'Status',
+      getCellData: (row: Network) => Network.Status[row.status],
+    },
+    {
+      name: 'tags',
+      title: 'Tags',
+      getCellData: (row: Network) => <ChipCell tags={row.tags} classes={{}} />
+    },
   ]
-
-  convertToRows(networks: Network[]) {
-    return _.map(networks, (network: Network) => {
-      return {
-        prefix: network.prefix,
-        gateways: network.gateways,
-        broadcast: network.broadcast,
-        status: Network.Status[network.status],
-        tags: (
-          <div>{network.tags.map((tag, i) =>
-            <Chip
-              key={i}
-              label={tag.key + ": " + tag.value}
-            />)}
-          </div>
-        )
-      };
-    })
-  }
 
   render() {
     const { classes, networks } = this.props;
-    const rows = this.convertToRows(networks);
 
     return (
       <Paper className={classes.paper}>
         <Grid
-          rows={rows}
+          rows={_.isNil(networks) ? [] : networks}
           columns={NetworkTable.columns}
         >
           <TableView />
