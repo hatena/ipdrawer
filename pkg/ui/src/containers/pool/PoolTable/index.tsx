@@ -181,7 +181,7 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
 
   onExpandedRowsChange = (rows) => {
     const { pools, ipsInPool } = this.props;
-    _.map(rows, (row) => {
+    _.map(_.difference(rows, this.state.expandedRows), (row) => {
       const pool = pools[row];
       this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
         rangeStart: pool.start,
