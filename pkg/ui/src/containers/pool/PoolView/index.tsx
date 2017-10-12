@@ -48,12 +48,6 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
   componentWillMount() {
     this.props.refreshPools();
     this.props.refreshNetworks();
-    //     if (!_.isNil(this.props.pools)) {
-    //   this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
-    //     rangeStart: this.props.pools[0].start,
-    //     rangeEnd: this.props.pools[0].end,
-    //   }));
-    // }
   }
 
   render() {
