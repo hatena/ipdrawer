@@ -111,3 +111,15 @@ export function updatePool(req: protos.model.Pool, timeout?: moment.Duration): P
 export function deletePool(req: protos.serverpb.IDeletePoolRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeletePoolResponse> {
   return timeoutFetch(protos.serverpb.DeletePoolResponse, `${API_PREFIX}/pool/${req.rangeStart}/${req.rangeEnd}/delete`, req as any, timeout);
 }
+
+export function createNetwork(req: protos.serverpb.CreateNetworkRequest, timeout?: moment.Duration): Promise<protos.serverpb.CreateNetworkResponse> {
+  return timeoutFetch(protos.serverpb.CreateNetworkResponse, `${API_PREFIX}/network/${req.ip}/${req.mask}/create`, req as any, timeout);
+}
+
+export function updateNetwork(req: protos.model.Network, timeout?: moment.Duration): Promise<protos.serverpb.CreateNetworkResponse> {
+  return timeoutFetch(protos.serverpb.CreateNetworkResponse, `${API_PREFIX}/network/update`, req as any, timeout);
+}
+
+export function deleteNetwork(req: protos.serverpb.DeleteNetworkRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeleteNetworkResponse> {
+  return timeoutFetch(protos.serverpb.DeleteNetworkResponse, `${API_PREFIX}/network/${req.ip}/${req.mask}/delete`, req as any, timeout);
+}

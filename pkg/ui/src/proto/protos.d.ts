@@ -1,466 +1,5 @@
 import * as $protobuf from "protobufjs";
 
-/** Namespace model. */
-export namespace model {
-
-    /** Properties of a Tag. */
-    interface ITag {
-
-        /** Tag key */
-        key?: string;
-
-        /** Tag value */
-        value?: string;
-    }
-
-    /** Represents a Tag. */
-    class Tag {
-
-        /**
-         * Constructs a new Tag.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: model.ITag);
-
-        /** Tag key. */
-        public key: string;
-
-        /** Tag value. */
-        public value: string;
-
-        /**
-         * Creates a new Tag instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Tag instance
-         */
-        public static create(properties?: model.ITag): model.Tag;
-
-        /**
-         * Encodes the specified Tag message. Does not implicitly {@link model.Tag.verify|verify} messages.
-         * @param message Tag message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: model.ITag, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified Tag message, length delimited. Does not implicitly {@link model.Tag.verify|verify} messages.
-         * @param message Tag message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: model.ITag, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Tag message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns Tag
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Tag;
-
-        /**
-         * Decodes a Tag message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns Tag
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Tag;
-
-        /**
-         * Verifies a Tag message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a Tag message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns Tag
-         */
-        public static fromObject(object: { [k: string]: any }): model.Tag;
-
-        /**
-         * Creates a plain object from a Tag message. Also converts values to other types if specified.
-         * @param message Tag
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: model.Tag, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this Tag to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a Pool. */
-    interface IPool {
-
-        /** Pool start */
-        start?: string;
-
-        /** Pool end */
-        end?: string;
-
-        /** Pool status */
-        status?: model.Pool.Status;
-
-        /** Pool tags */
-        tags?: model.ITag[];
-    }
-
-    /** Represents a Pool. */
-    class Pool {
-
-        /**
-         * Constructs a new Pool.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: model.IPool);
-
-        /** Pool start. */
-        public start: string;
-
-        /** Pool end. */
-        public end: string;
-
-        /** Pool status. */
-        public status: model.Pool.Status;
-
-        /** Pool tags. */
-        public tags: model.ITag[];
-
-        /**
-         * Creates a new Pool instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Pool instance
-         */
-        public static create(properties?: model.IPool): model.Pool;
-
-        /**
-         * Encodes the specified Pool message. Does not implicitly {@link model.Pool.verify|verify} messages.
-         * @param message Pool message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: model.IPool, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified Pool message, length delimited. Does not implicitly {@link model.Pool.verify|verify} messages.
-         * @param message Pool message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: model.IPool, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Pool message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns Pool
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Pool;
-
-        /**
-         * Decodes a Pool message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns Pool
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Pool;
-
-        /**
-         * Verifies a Pool message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a Pool message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns Pool
-         */
-        public static fromObject(object: { [k: string]: any }): model.Pool;
-
-        /**
-         * Creates a plain object from a Pool message. Also converts values to other types if specified.
-         * @param message Pool
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: model.Pool, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this Pool to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    namespace Pool {
-
-        /** Status enum. */
-        enum Status {
-            UNKNOWN = 0,
-            AVAILABLE = 1,
-            RESERVED = 2
-        }
-    }
-
-    /** Properties of a IPAddr. */
-    interface IIPAddr {
-
-        /** IPAddr ip */
-        ip?: string;
-
-        /** IPAddr status */
-        status?: model.IPAddr.Status;
-
-        /** IPAddr tags */
-        tags?: model.ITag[];
-    }
-
-    /** Represents a IPAddr. */
-    class IPAddr {
-
-        /**
-         * Constructs a new IPAddr.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: model.IIPAddr);
-
-        /** IPAddr ip. */
-        public ip: string;
-
-        /** IPAddr status. */
-        public status: model.IPAddr.Status;
-
-        /** IPAddr tags. */
-        public tags: model.ITag[];
-
-        /**
-         * Creates a new IPAddr instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns IPAddr instance
-         */
-        public static create(properties?: model.IIPAddr): model.IPAddr;
-
-        /**
-         * Encodes the specified IPAddr message. Does not implicitly {@link model.IPAddr.verify|verify} messages.
-         * @param message IPAddr message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: model.IIPAddr, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified IPAddr message, length delimited. Does not implicitly {@link model.IPAddr.verify|verify} messages.
-         * @param message IPAddr message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: model.IIPAddr, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a IPAddr message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns IPAddr
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.IPAddr;
-
-        /**
-         * Decodes a IPAddr message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns IPAddr
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.IPAddr;
-
-        /**
-         * Verifies a IPAddr message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a IPAddr message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns IPAddr
-         */
-        public static fromObject(object: { [k: string]: any }): model.IPAddr;
-
-        /**
-         * Creates a plain object from a IPAddr message. Also converts values to other types if specified.
-         * @param message IPAddr
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: model.IPAddr, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this IPAddr to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    namespace IPAddr {
-
-        /** Status enum. */
-        enum Status {
-            UNKNOWN = 0,
-            ACTIVE = 1,
-            TEMPORARY_RESERVED = 2,
-            RESERVED = 3
-        }
-    }
-
-    /** Properties of a Network. */
-    interface INetwork {
-
-        /** Network prefix */
-        prefix?: string;
-
-        /** Network gateways */
-        gateways?: string[];
-
-        /** Network broadcast */
-        broadcast?: string;
-
-        /** Network netmask */
-        netmask?: string;
-
-        /** Network status */
-        status?: model.Network.Status;
-
-        /** Network tags */
-        tags?: model.ITag[];
-    }
-
-    /** Represents a Network. */
-    class Network {
-
-        /**
-         * Constructs a new Network.
-         * @param [properties] Properties to set
-         */
-        constructor(properties?: model.INetwork);
-
-        /** Network prefix. */
-        public prefix: string;
-
-        /** Network gateways. */
-        public gateways: string[];
-
-        /** Network broadcast. */
-        public broadcast: string;
-
-        /** Network netmask. */
-        public netmask: string;
-
-        /** Network status. */
-        public status: model.Network.Status;
-
-        /** Network tags. */
-        public tags: model.ITag[];
-
-        /**
-         * Creates a new Network instance using the specified properties.
-         * @param [properties] Properties to set
-         * @returns Network instance
-         */
-        public static create(properties?: model.INetwork): model.Network;
-
-        /**
-         * Encodes the specified Network message. Does not implicitly {@link model.Network.verify|verify} messages.
-         * @param message Network message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encode(message: model.INetwork, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Encodes the specified Network message, length delimited. Does not implicitly {@link model.Network.verify|verify} messages.
-         * @param message Network message or plain object to encode
-         * @param [writer] Writer to encode to
-         * @returns Writer
-         */
-        public static encodeDelimited(message: model.INetwork, writer?: $protobuf.Writer): $protobuf.Writer;
-
-        /**
-         * Decodes a Network message from the specified reader or buffer.
-         * @param reader Reader or buffer to decode from
-         * @param [length] Message length if known beforehand
-         * @returns Network
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Network;
-
-        /**
-         * Decodes a Network message from the specified reader or buffer, length delimited.
-         * @param reader Reader or buffer to decode from
-         * @returns Network
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Network;
-
-        /**
-         * Verifies a Network message.
-         * @param message Plain object to verify
-         * @returns `null` if valid, otherwise the reason why it is not
-         */
-        public static verify(message: { [k: string]: any }): (string|null);
-
-        /**
-         * Creates a Network message from a plain object. Also converts values to their respective internal types.
-         * @param object Plain object
-         * @returns Network
-         */
-        public static fromObject(object: { [k: string]: any }): model.Network;
-
-        /**
-         * Creates a plain object from a Network message. Also converts values to other types if specified.
-         * @param message Network
-         * @param [options] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(message: model.Network, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this Network to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    namespace Network {
-
-        /** Status enum. */
-        enum Status {
-            UNKNOWN = 0,
-            AVAILABLE = 1,
-            RESERVED = 2
-        }
-    }
-}
-
 /** Namespace serverpb. */
 export namespace serverpb {
 
@@ -2342,6 +1881,270 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a DeleteNetworkRequest. */
+    interface IDeleteNetworkRequest {
+
+        /** DeleteNetworkRequest ip */
+        ip?: string;
+
+        /** DeleteNetworkRequest mask */
+        mask?: number;
+    }
+
+    /** Represents a DeleteNetworkRequest. */
+    class DeleteNetworkRequest {
+
+        /**
+         * Constructs a new DeleteNetworkRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IDeleteNetworkRequest);
+
+        /** DeleteNetworkRequest ip. */
+        public ip: string;
+
+        /** DeleteNetworkRequest mask. */
+        public mask: number;
+
+        /**
+         * Creates a new DeleteNetworkRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DeleteNetworkRequest instance
+         */
+        public static create(properties?: serverpb.IDeleteNetworkRequest): serverpb.DeleteNetworkRequest;
+
+        /**
+         * Encodes the specified DeleteNetworkRequest message. Does not implicitly {@link serverpb.DeleteNetworkRequest.verify|verify} messages.
+         * @param message DeleteNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IDeleteNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DeleteNetworkRequest message, length delimited. Does not implicitly {@link serverpb.DeleteNetworkRequest.verify|verify} messages.
+         * @param message DeleteNetworkRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IDeleteNetworkRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DeleteNetworkRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DeleteNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.DeleteNetworkRequest;
+
+        /**
+         * Decodes a DeleteNetworkRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DeleteNetworkRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.DeleteNetworkRequest;
+
+        /**
+         * Verifies a DeleteNetworkRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DeleteNetworkRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DeleteNetworkRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.DeleteNetworkRequest;
+
+        /**
+         * Creates a plain object from a DeleteNetworkRequest message. Also converts values to other types if specified.
+         * @param message DeleteNetworkRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.DeleteNetworkRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DeleteNetworkRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a DeleteNetworkResponse. */
+    interface IDeleteNetworkResponse {
+    }
+
+    /** Represents a DeleteNetworkResponse. */
+    class DeleteNetworkResponse {
+
+        /**
+         * Constructs a new DeleteNetworkResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IDeleteNetworkResponse);
+
+        /**
+         * Creates a new DeleteNetworkResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DeleteNetworkResponse instance
+         */
+        public static create(properties?: serverpb.IDeleteNetworkResponse): serverpb.DeleteNetworkResponse;
+
+        /**
+         * Encodes the specified DeleteNetworkResponse message. Does not implicitly {@link serverpb.DeleteNetworkResponse.verify|verify} messages.
+         * @param message DeleteNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IDeleteNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DeleteNetworkResponse message, length delimited. Does not implicitly {@link serverpb.DeleteNetworkResponse.verify|verify} messages.
+         * @param message DeleteNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IDeleteNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DeleteNetworkResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DeleteNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.DeleteNetworkResponse;
+
+        /**
+         * Decodes a DeleteNetworkResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DeleteNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.DeleteNetworkResponse;
+
+        /**
+         * Verifies a DeleteNetworkResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DeleteNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DeleteNetworkResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.DeleteNetworkResponse;
+
+        /**
+         * Creates a plain object from a DeleteNetworkResponse message. Also converts values to other types if specified.
+         * @param message DeleteNetworkResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.DeleteNetworkResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DeleteNetworkResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of an UpdateNetworkResponse. */
+    interface IUpdateNetworkResponse {
+    }
+
+    /** Represents an UpdateNetworkResponse. */
+    class UpdateNetworkResponse {
+
+        /**
+         * Constructs a new UpdateNetworkResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IUpdateNetworkResponse);
+
+        /**
+         * Creates a new UpdateNetworkResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns UpdateNetworkResponse instance
+         */
+        public static create(properties?: serverpb.IUpdateNetworkResponse): serverpb.UpdateNetworkResponse;
+
+        /**
+         * Encodes the specified UpdateNetworkResponse message. Does not implicitly {@link serverpb.UpdateNetworkResponse.verify|verify} messages.
+         * @param message UpdateNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IUpdateNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified UpdateNetworkResponse message, length delimited. Does not implicitly {@link serverpb.UpdateNetworkResponse.verify|verify} messages.
+         * @param message UpdateNetworkResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IUpdateNetworkResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes an UpdateNetworkResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns UpdateNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.UpdateNetworkResponse;
+
+        /**
+         * Decodes an UpdateNetworkResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns UpdateNetworkResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.UpdateNetworkResponse;
+
+        /**
+         * Verifies an UpdateNetworkResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates an UpdateNetworkResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns UpdateNetworkResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.UpdateNetworkResponse;
+
+        /**
+         * Creates a plain object from an UpdateNetworkResponse message. Also converts values to other types if specified.
+         * @param message UpdateNetworkResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.UpdateNetworkResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this UpdateNetworkResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Properties of a ListIPRequest. */
     interface IListIPRequest {
     }
@@ -3451,6 +3254,34 @@ export namespace serverpb {
          * @returns Promise
          */
         public getPoolsInNetwork(request: serverpb.IGetPoolsInNetworkRequest): Promise<serverpb.GetPoolsInNetworkResponse>;
+
+        /**
+         * Calls DeleteNetwork.
+         * @param request DeleteNetworkRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and DeleteNetworkResponse
+         */
+        public deleteNetwork(request: serverpb.IDeleteNetworkRequest, callback: serverpb.NetworkServiceV0.DeleteNetworkCallback): void;
+
+        /**
+         * Calls DeleteNetwork.
+         * @param request DeleteNetworkRequest message or plain object
+         * @returns Promise
+         */
+        public deleteNetwork(request: serverpb.IDeleteNetworkRequest): Promise<serverpb.DeleteNetworkResponse>;
+
+        /**
+         * Calls UpdateNetwork.
+         * @param request Network message or plain object
+         * @param callback Node-style callback called with the error, if any, and UpdateNetworkResponse
+         */
+        public updateNetwork(request: model.INetwork, callback: serverpb.NetworkServiceV0.UpdateNetworkCallback): void;
+
+        /**
+         * Calls UpdateNetwork.
+         * @param request Network message or plain object
+         * @returns Promise
+         */
+        public updateNetwork(request: model.INetwork): Promise<serverpb.UpdateNetworkResponse>;
     }
 
     namespace NetworkServiceV0 {
@@ -3510,6 +3341,20 @@ export namespace serverpb {
          * @param [response] GetPoolsInNetworkResponse
          */
         type GetPoolsInNetworkCallback = (error: (Error|null), response?: serverpb.GetPoolsInNetworkResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#deleteNetwork}.
+         * @param error Error, if any
+         * @param [response] DeleteNetworkResponse
+         */
+        type DeleteNetworkCallback = (error: (Error|null), response?: serverpb.DeleteNetworkResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.NetworkServiceV0#updateNetwork}.
+         * @param error Error, if any
+         * @param [response] UpdateNetworkResponse
+         */
+        type UpdateNetworkCallback = (error: (Error|null), response?: serverpb.UpdateNetworkResponse) => void;
     }
 
     /** Represents a IPServiceV0 */
@@ -6967,6 +6812,467 @@ export namespace google {
                  */
                 public toJSON(): { [k: string]: any };
             }
+        }
+    }
+}
+
+/** Namespace model. */
+export namespace model {
+
+    /** Properties of a Tag. */
+    interface ITag {
+
+        /** Tag key */
+        key?: string;
+
+        /** Tag value */
+        value?: string;
+    }
+
+    /** Represents a Tag. */
+    class Tag {
+
+        /**
+         * Constructs a new Tag.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.ITag);
+
+        /** Tag key. */
+        public key: string;
+
+        /** Tag value. */
+        public value: string;
+
+        /**
+         * Creates a new Tag instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Tag instance
+         */
+        public static create(properties?: model.ITag): model.Tag;
+
+        /**
+         * Encodes the specified Tag message. Does not implicitly {@link model.Tag.verify|verify} messages.
+         * @param message Tag message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.ITag, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Tag message, length delimited. Does not implicitly {@link model.Tag.verify|verify} messages.
+         * @param message Tag message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.ITag, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Tag message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Tag
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Tag;
+
+        /**
+         * Decodes a Tag message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Tag
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Tag;
+
+        /**
+         * Verifies a Tag message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Tag message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Tag
+         */
+        public static fromObject(object: { [k: string]: any }): model.Tag;
+
+        /**
+         * Creates a plain object from a Tag message. Also converts values to other types if specified.
+         * @param message Tag
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.Tag, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Tag to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a Pool. */
+    interface IPool {
+
+        /** Pool start */
+        start?: string;
+
+        /** Pool end */
+        end?: string;
+
+        /** Pool status */
+        status?: model.Pool.Status;
+
+        /** Pool tags */
+        tags?: model.ITag[];
+    }
+
+    /** Represents a Pool. */
+    class Pool {
+
+        /**
+         * Constructs a new Pool.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.IPool);
+
+        /** Pool start. */
+        public start: string;
+
+        /** Pool end. */
+        public end: string;
+
+        /** Pool status. */
+        public status: model.Pool.Status;
+
+        /** Pool tags. */
+        public tags: model.ITag[];
+
+        /**
+         * Creates a new Pool instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Pool instance
+         */
+        public static create(properties?: model.IPool): model.Pool;
+
+        /**
+         * Encodes the specified Pool message. Does not implicitly {@link model.Pool.verify|verify} messages.
+         * @param message Pool message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.IPool, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Pool message, length delimited. Does not implicitly {@link model.Pool.verify|verify} messages.
+         * @param message Pool message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.IPool, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Pool message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Pool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Pool;
+
+        /**
+         * Decodes a Pool message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Pool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Pool;
+
+        /**
+         * Verifies a Pool message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Pool message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Pool
+         */
+        public static fromObject(object: { [k: string]: any }): model.Pool;
+
+        /**
+         * Creates a plain object from a Pool message. Also converts values to other types if specified.
+         * @param message Pool
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.Pool, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Pool to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    namespace Pool {
+
+        /** Status enum. */
+        enum Status {
+            UNKNOWN = 0,
+            AVAILABLE = 1,
+            RESERVED = 2
+        }
+    }
+
+    /** Properties of a IPAddr. */
+    interface IIPAddr {
+
+        /** IPAddr ip */
+        ip?: string;
+
+        /** IPAddr status */
+        status?: model.IPAddr.Status;
+
+        /** IPAddr tags */
+        tags?: model.ITag[];
+    }
+
+    /** Represents a IPAddr. */
+    class IPAddr {
+
+        /**
+         * Constructs a new IPAddr.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.IIPAddr);
+
+        /** IPAddr ip. */
+        public ip: string;
+
+        /** IPAddr status. */
+        public status: model.IPAddr.Status;
+
+        /** IPAddr tags. */
+        public tags: model.ITag[];
+
+        /**
+         * Creates a new IPAddr instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns IPAddr instance
+         */
+        public static create(properties?: model.IIPAddr): model.IPAddr;
+
+        /**
+         * Encodes the specified IPAddr message. Does not implicitly {@link model.IPAddr.verify|verify} messages.
+         * @param message IPAddr message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.IIPAddr, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified IPAddr message, length delimited. Does not implicitly {@link model.IPAddr.verify|verify} messages.
+         * @param message IPAddr message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.IIPAddr, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a IPAddr message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns IPAddr
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.IPAddr;
+
+        /**
+         * Decodes a IPAddr message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns IPAddr
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.IPAddr;
+
+        /**
+         * Verifies a IPAddr message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a IPAddr message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns IPAddr
+         */
+        public static fromObject(object: { [k: string]: any }): model.IPAddr;
+
+        /**
+         * Creates a plain object from a IPAddr message. Also converts values to other types if specified.
+         * @param message IPAddr
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.IPAddr, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this IPAddr to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    namespace IPAddr {
+
+        /** Status enum. */
+        enum Status {
+            UNKNOWN = 0,
+            ACTIVE = 1,
+            TEMPORARY_RESERVED = 2,
+            RESERVED = 3
+        }
+    }
+
+    /** Properties of a Network. */
+    interface INetwork {
+
+        /** Network prefix */
+        prefix?: string;
+
+        /** Network gateways */
+        gateways?: string[];
+
+        /** Network broadcast */
+        broadcast?: string;
+
+        /** Network netmask */
+        netmask?: string;
+
+        /** Network status */
+        status?: model.Network.Status;
+
+        /** Network tags */
+        tags?: model.ITag[];
+    }
+
+    /** Represents a Network. */
+    class Network {
+
+        /**
+         * Constructs a new Network.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: model.INetwork);
+
+        /** Network prefix. */
+        public prefix: string;
+
+        /** Network gateways. */
+        public gateways: string[];
+
+        /** Network broadcast. */
+        public broadcast: string;
+
+        /** Network netmask. */
+        public netmask: string;
+
+        /** Network status. */
+        public status: model.Network.Status;
+
+        /** Network tags. */
+        public tags: model.ITag[];
+
+        /**
+         * Creates a new Network instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns Network instance
+         */
+        public static create(properties?: model.INetwork): model.Network;
+
+        /**
+         * Encodes the specified Network message. Does not implicitly {@link model.Network.verify|verify} messages.
+         * @param message Network message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: model.INetwork, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified Network message, length delimited. Does not implicitly {@link model.Network.verify|verify} messages.
+         * @param message Network message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: model.INetwork, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a Network message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns Network
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): model.Network;
+
+        /**
+         * Decodes a Network message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns Network
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): model.Network;
+
+        /**
+         * Verifies a Network message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a Network message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns Network
+         */
+        public static fromObject(object: { [k: string]: any }): model.Network;
+
+        /**
+         * Creates a plain object from a Network message. Also converts values to other types if specified.
+         * @param message Network
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: model.Network, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this Network to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    namespace Network {
+
+        /** Status enum. */
+        enum Status {
+            UNKNOWN = 0,
+            AVAILABLE = 1,
+            RESERVED = 2
         }
     }
 }
