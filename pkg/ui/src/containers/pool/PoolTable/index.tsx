@@ -45,6 +45,9 @@ const styleSheet: StyleRulesCallback = theme => ({
   button: {
     padding: theme.spacing.unit,
     minWidth: 40,
+  },
+  details: {
+    margin: 20,
   }
 });
 
@@ -256,14 +259,13 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
                 return <div></div>
               }
               return (
-                <div>
+                <div className={classes.details}>
                   <Grid
                     rows={_.isNil(ips) ? [] : ips}
                     columns={IPAddrTable.columns}
                   >
                     <TableView />
                     <TableHeaderRow />
-
                   </Grid>
                 </div>
               )}}
