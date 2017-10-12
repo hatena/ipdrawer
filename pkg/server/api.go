@@ -559,3 +559,18 @@ func (api *APIServer) UpdatePool(
 
 	return &serverpb.UpdatePoolResponse{}, nil
 }
+
+func (api *APIServer) DeletePool(
+	ctx context.Context,
+	req *serverpb.DeletePoolRequest,
+) (*serverpb.DeletePoolResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.DeletePool(ctx, net.ParseIP(req.RangeStart), net.ParseIP(req.RangeEnd)); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.DeletePoolResponse{}, nil
+}

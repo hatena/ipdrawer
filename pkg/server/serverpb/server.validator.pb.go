@@ -37,6 +37,8 @@ It has these top-level messages:
 	GetIPInPoolRequest
 	GetIPInPoolResponse
 	UpdatePoolResponse
+	DeletePoolRequest
+	DeletePoolResponse
 */
 package serverpb
 
@@ -317,5 +319,21 @@ func (this *GetIPInPoolResponse) Validate() error {
 	return nil
 }
 func (this *UpdatePoolResponse) Validate() error {
+	return nil
+}
+
+var _regex_DeletePoolRequest_RangeStart = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+var _regex_DeletePoolRequest_RangeEnd = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
+func (this *DeletePoolRequest) Validate() error {
+	if !_regex_DeletePoolRequest_RangeStart.MatchString(this.RangeStart) {
+		return github_com_mwitkow_go_proto_validators.FieldError("RangeStart", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.RangeStart))
+	}
+	if !_regex_DeletePoolRequest_RangeEnd.MatchString(this.RangeEnd) {
+		return github_com_mwitkow_go_proto_validators.FieldError("RangeEnd", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.RangeEnd))
+	}
+	return nil
+}
+func (this *DeletePoolResponse) Validate() error {
 	return nil
 }

@@ -123,6 +123,13 @@ message GetIPInPoolResponse {
 
 message UpdatePoolResponse {}
 
+message DeletePoolRequest {
+  string range_start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+  string range_end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+}
+
+message DeletePoolResponse {}
+
 
 service NetworkServiceV0 {
 
@@ -251,6 +258,12 @@ service PoolServiceV0 {
     option (google.api.http) = {
       post: "/api/v0/pool/{start}/{end}/update"
       body: "*"
+    };
+  };
+
+  rpc DeletePool (DeletePoolRequest) returns (DeletePoolResponse) {
+    option (google.api.http) = {
+      post: "/api/v0/pool/{range_start}/{range_end}/delete"
     };
   };
 

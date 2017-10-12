@@ -3140,6 +3140,186 @@ export namespace serverpb {
         public toJSON(): { [k: string]: any };
     }
 
+    /** Properties of a DeletePoolRequest. */
+    interface IDeletePoolRequest {
+
+        /** DeletePoolRequest rangeStart */
+        rangeStart?: string;
+
+        /** DeletePoolRequest rangeEnd */
+        rangeEnd?: string;
+    }
+
+    /** Represents a DeletePoolRequest. */
+    class DeletePoolRequest {
+
+        /**
+         * Constructs a new DeletePoolRequest.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IDeletePoolRequest);
+
+        /** DeletePoolRequest rangeStart. */
+        public rangeStart: string;
+
+        /** DeletePoolRequest rangeEnd. */
+        public rangeEnd: string;
+
+        /**
+         * Creates a new DeletePoolRequest instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DeletePoolRequest instance
+         */
+        public static create(properties?: serverpb.IDeletePoolRequest): serverpb.DeletePoolRequest;
+
+        /**
+         * Encodes the specified DeletePoolRequest message. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @param message DeletePoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IDeletePoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DeletePoolRequest message, length delimited. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @param message DeletePoolRequest message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IDeletePoolRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.DeletePoolRequest;
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.DeletePoolRequest;
+
+        /**
+         * Verifies a DeletePoolRequest message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DeletePoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DeletePoolRequest
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.DeletePoolRequest;
+
+        /**
+         * Creates a plain object from a DeletePoolRequest message. Also converts values to other types if specified.
+         * @param message DeletePoolRequest
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.DeletePoolRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DeletePoolRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a DeletePoolResponse. */
+    interface IDeletePoolResponse {
+    }
+
+    /** Represents a DeletePoolResponse. */
+    class DeletePoolResponse {
+
+        /**
+         * Constructs a new DeletePoolResponse.
+         * @param [properties] Properties to set
+         */
+        constructor(properties?: serverpb.IDeletePoolResponse);
+
+        /**
+         * Creates a new DeletePoolResponse instance using the specified properties.
+         * @param [properties] Properties to set
+         * @returns DeletePoolResponse instance
+         */
+        public static create(properties?: serverpb.IDeletePoolResponse): serverpb.DeletePoolResponse;
+
+        /**
+         * Encodes the specified DeletePoolResponse message. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @param message DeletePoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encode(message: serverpb.IDeletePoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Encodes the specified DeletePoolResponse message, length delimited. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @param message DeletePoolResponse message or plain object to encode
+         * @param [writer] Writer to encode to
+         * @returns Writer
+         */
+        public static encodeDelimited(message: serverpb.IDeletePoolResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer.
+         * @param reader Reader or buffer to decode from
+         * @param [length] Message length if known beforehand
+         * @returns DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): serverpb.DeletePoolResponse;
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer, length delimited.
+         * @param reader Reader or buffer to decode from
+         * @returns DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): serverpb.DeletePoolResponse;
+
+        /**
+         * Verifies a DeletePoolResponse message.
+         * @param message Plain object to verify
+         * @returns `null` if valid, otherwise the reason why it is not
+         */
+        public static verify(message: { [k: string]: any }): (string|null);
+
+        /**
+         * Creates a DeletePoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @param object Plain object
+         * @returns DeletePoolResponse
+         */
+        public static fromObject(object: { [k: string]: any }): serverpb.DeletePoolResponse;
+
+        /**
+         * Creates a plain object from a DeletePoolResponse message. Also converts values to other types if specified.
+         * @param message DeletePoolResponse
+         * @param [options] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(message: serverpb.DeletePoolResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this DeletePoolResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
     /** Represents a NetworkServiceV0 */
     class NetworkServiceV0 extends $protobuf.rpc.Service {
 
@@ -3564,6 +3744,20 @@ export namespace serverpb {
          * @returns Promise
          */
         public updatePool(request: model.IPool): Promise<serverpb.UpdatePoolResponse>;
+
+        /**
+         * Calls DeletePool.
+         * @param request DeletePoolRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and DeletePoolResponse
+         */
+        public deletePool(request: serverpb.IDeletePoolRequest, callback: serverpb.PoolServiceV0.DeletePoolCallback): void;
+
+        /**
+         * Calls DeletePool.
+         * @param request DeletePoolRequest message or plain object
+         * @returns Promise
+         */
+        public deletePool(request: serverpb.IDeletePoolRequest): Promise<serverpb.DeletePoolResponse>;
     }
 
     namespace PoolServiceV0 {
@@ -3588,6 +3782,13 @@ export namespace serverpb {
          * @param [response] UpdatePoolResponse
          */
         type UpdatePoolCallback = (error: (Error|null), response?: serverpb.UpdatePoolResponse) => void;
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#deletePool}.
+         * @param error Error, if any
+         * @param [response] DeletePoolResponse
+         */
+        type DeletePoolCallback = (error: (Error|null), response?: serverpb.DeletePoolResponse) => void;
     }
 }
 

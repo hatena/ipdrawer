@@ -398,3 +398,21 @@ func (m *IPManager) UpdatePool(ctx context.Context, pool *model.Pool) error {
 
 	return setPool(m.redis, pool)
 }
+
+func (m *IPManager) DeletePool(ctx context.Context, start, end net.IP) error {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "IPManager.DeletePool")
+	defer span.Finish()
+
+	token, err := m.locker.Lock(ctx, makeGlobalLock())
+	if err != nil {
+		return err
+	}
+	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
+
+	pipe := m.redis.Client.TxPipeline()
+	pipe.Del(makePoolDetailsKey(start, end))
+	pipe.Del(makePoolUsedIPZset(start, end))
+	_, err = pipe.Exec()
+
+	return err
+}

@@ -53,11 +53,17 @@ func getPool(r *storage.Redis, start net.IP, end net.IP) (*model.Pool, error) {
 }
 
 func getPools(r *storage.Redis, keys []string) ([]*model.Pool, error) {
+	pools := make([]*model.Pool, len(keys))
+
+	if len(keys) == 0 {
+		return pools, nil
+	}
+
 	data, err := r.Client.MGet(keys...).Result()
 	if err != nil {
 		return nil, err
 	}
-	pools := make([]*model.Pool, len(keys))
+
 	for i, d := range data {
 		if s, ok := d.(string); ok {
 			pools[i] = &model.Pool{}

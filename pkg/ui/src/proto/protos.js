@@ -7064,6 +7064,374 @@ $root.serverpb = (function() {
         return UpdatePoolResponse;
     })();
 
+    serverpb.DeletePoolRequest = (function() {
+
+        /**
+         * Properties of a DeletePoolRequest.
+         * @memberof serverpb
+         * @interface IDeletePoolRequest
+         * @property {string} [rangeStart] DeletePoolRequest rangeStart
+         * @property {string} [rangeEnd] DeletePoolRequest rangeEnd
+         */
+
+        /**
+         * Constructs a new DeletePoolRequest.
+         * @memberof serverpb
+         * @classdesc Represents a DeletePoolRequest.
+         * @constructor
+         * @param {serverpb.IDeletePoolRequest=} [properties] Properties to set
+         */
+        function DeletePoolRequest(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * DeletePoolRequest rangeStart.
+         * @member {string}rangeStart
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         */
+        DeletePoolRequest.prototype.rangeStart = "";
+
+        /**
+         * DeletePoolRequest rangeEnd.
+         * @member {string}rangeEnd
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         */
+        DeletePoolRequest.prototype.rangeEnd = "";
+
+        /**
+         * Creates a new DeletePoolRequest instance using the specified properties.
+         * @function create
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest=} [properties] Properties to set
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest instance
+         */
+        DeletePoolRequest.create = function create(properties) {
+            return new DeletePoolRequest(properties);
+        };
+
+        /**
+         * Encodes the specified DeletePoolRequest message. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest} message DeletePoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolRequest.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.rangeStart);
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.rangeEnd);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DeletePoolRequest message, length delimited. Does not implicitly {@link serverpb.DeletePoolRequest.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.IDeletePoolRequest} message DeletePoolRequest message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolRequest.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolRequest.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.DeletePoolRequest();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.rangeStart = reader.string();
+                    break;
+                case 2:
+                    message.rangeEnd = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DeletePoolRequest message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolRequest.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DeletePoolRequest message.
+         * @function verify
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DeletePoolRequest.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                if (!$util.isString(message.rangeStart))
+                    return "rangeStart: string expected";
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                if (!$util.isString(message.rangeEnd))
+                    return "rangeEnd: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a DeletePoolRequest message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.DeletePoolRequest} DeletePoolRequest
+         */
+        DeletePoolRequest.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.DeletePoolRequest)
+                return object;
+            var message = new $root.serverpb.DeletePoolRequest();
+            if (object.rangeStart != null)
+                message.rangeStart = String(object.rangeStart);
+            if (object.rangeEnd != null)
+                message.rangeEnd = String(object.rangeEnd);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a DeletePoolRequest message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.DeletePoolRequest
+         * @static
+         * @param {serverpb.DeletePoolRequest} message DeletePoolRequest
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DeletePoolRequest.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.rangeStart = "";
+                object.rangeEnd = "";
+            }
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                object.rangeStart = message.rangeStart;
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                object.rangeEnd = message.rangeEnd;
+            return object;
+        };
+
+        /**
+         * Converts this DeletePoolRequest to JSON.
+         * @function toJSON
+         * @memberof serverpb.DeletePoolRequest
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DeletePoolRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DeletePoolRequest;
+    })();
+
+    serverpb.DeletePoolResponse = (function() {
+
+        /**
+         * Properties of a DeletePoolResponse.
+         * @memberof serverpb
+         * @interface IDeletePoolResponse
+         */
+
+        /**
+         * Constructs a new DeletePoolResponse.
+         * @memberof serverpb
+         * @classdesc Represents a DeletePoolResponse.
+         * @constructor
+         * @param {serverpb.IDeletePoolResponse=} [properties] Properties to set
+         */
+        function DeletePoolResponse(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Creates a new DeletePoolResponse instance using the specified properties.
+         * @function create
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse=} [properties] Properties to set
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse instance
+         */
+        DeletePoolResponse.create = function create(properties) {
+            return new DeletePoolResponse(properties);
+        };
+
+        /**
+         * Encodes the specified DeletePoolResponse message. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @function encode
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse} message DeletePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolResponse.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified DeletePoolResponse message, length delimited. Does not implicitly {@link serverpb.DeletePoolResponse.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.IDeletePoolResponse} message DeletePoolResponse message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        DeletePoolResponse.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer.
+         * @function decode
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolResponse.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.serverpb.DeletePoolResponse();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a DeletePoolResponse message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        DeletePoolResponse.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a DeletePoolResponse message.
+         * @function verify
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        DeletePoolResponse.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            return null;
+        };
+
+        /**
+         * Creates a DeletePoolResponse message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {serverpb.DeletePoolResponse} DeletePoolResponse
+         */
+        DeletePoolResponse.fromObject = function fromObject(object) {
+            if (object instanceof $root.serverpb.DeletePoolResponse)
+                return object;
+            return new $root.serverpb.DeletePoolResponse();
+        };
+
+        /**
+         * Creates a plain object from a DeletePoolResponse message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof serverpb.DeletePoolResponse
+         * @static
+         * @param {serverpb.DeletePoolResponse} message DeletePoolResponse
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        DeletePoolResponse.toObject = function toObject() {
+            return {};
+        };
+
+        /**
+         * Converts this DeletePoolResponse to JSON.
+         * @function toJSON
+         * @memberof serverpb.DeletePoolResponse
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        DeletePoolResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return DeletePoolResponse;
+    })();
+
     serverpb.NetworkServiceV0 = (function() {
 
         /**
@@ -7757,6 +8125,39 @@ $root.serverpb = (function() {
          * @instance
          * @param {model.IPool} request Pool message or plain object
          * @returns {Promise<serverpb.UpdatePoolResponse>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link serverpb.PoolServiceV0#deletePool}.
+         * @memberof serverpb.PoolServiceV0
+         * @typedef DeletePoolCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {serverpb.DeletePoolResponse} [response] DeletePoolResponse
+         */
+
+        /**
+         * Calls DeletePool.
+         * @function .deletePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IDeletePoolRequest} request DeletePoolRequest message or plain object
+         * @param {serverpb.PoolServiceV0.DeletePoolCallback} callback Node-style callback called with the error, if any, and DeletePoolResponse
+         * @returns {undefined}
+         * @variation 1
+         */
+        PoolServiceV0.prototype.deletePool = function deletePool(request, callback) {
+            return this.rpcCall(deletePool, $root.serverpb.DeletePoolRequest, $root.serverpb.DeletePoolResponse, request, callback);
+        };
+
+        /**
+         * Calls DeletePool.
+         * @function deletePool
+         * @memberof serverpb.PoolServiceV0
+         * @instance
+         * @param {serverpb.IDeletePoolRequest} request DeletePoolRequest message or plain object
+         * @returns {Promise<serverpb.DeletePoolResponse>} Promise
          * @variation 2
          */
 

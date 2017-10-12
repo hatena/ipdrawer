@@ -574,6 +574,36 @@ const (
         ]
       }
     },
+    "/api/v0/pool/{range_start}/{range_end}/delete": {
+      "post": {
+        "operationId": "DeletePool",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDeletePoolResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "range_start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PoolServiceV0"
+        ]
+      }
+    },
     "/api/v0/pool/{range_start}/{range_end}/ip": {
       "get": {
         "operationId": "GetIPInPool",
@@ -815,6 +845,9 @@ const (
       "type": "object"
     },
     "serverpbDeactivateIPResponse": {
+      "type": "object"
+    },
+    "serverpbDeletePoolResponse": {
       "type": "object"
     },
     "serverpbDrawIPResponse": {
