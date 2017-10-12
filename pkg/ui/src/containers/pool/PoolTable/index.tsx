@@ -290,6 +290,9 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
               }
               return (
                 <div className={classes.details}>
+                  <div>
+                    <h3>IPAddr</h3>
+                  </div>
                   <Grid
                     rows={_.isNil(ips) ? [] : ips}
                     columns={IPAddrTable.columns}

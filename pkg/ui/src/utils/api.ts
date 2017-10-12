@@ -123,3 +123,7 @@ export function updateNetwork(req: protos.model.Network, timeout?: moment.Durati
 export function deleteNetwork(req: protos.serverpb.DeleteNetworkRequest, timeout?: moment.Duration): Promise<protos.serverpb.DeleteNetworkResponse> {
   return timeoutFetch(protos.serverpb.DeleteNetworkResponse, `${API_PREFIX}/network/${req.ip}/${req.mask}/delete`, req as any, timeout);
 }
+
+export function getPoolsInNetwork(req: protos.serverpb.GetPoolsInNetworkRequest, timeout?: moment.Duration): Promise<protos.serverpb.GetPoolsInNetworkResponse> {
+  return timeoutFetch(protos.serverpb.GetPoolsInNetworkResponse, `${API_PREFIX}/network/${req.ip}/${req.mask}/pools`, null, timeout);
+}

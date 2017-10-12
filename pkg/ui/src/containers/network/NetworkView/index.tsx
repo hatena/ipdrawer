@@ -11,7 +11,7 @@ import Network = model.Network;
 import { NetworkTable } from '../NetworkTable';
 import {
   refreshNetworks, createNetwork, updateNetwork,
-  deleteNetwork,
+  deleteNetwork, refreshPoolsInNetwork,
 } from '../../../reducers/apiReducers';
 
 
@@ -27,10 +27,12 @@ const styleSheet = theme => ({
 namespace NetworkView {
   export interface Props extends RouteComponentProps<void> {
     networks: Network[];
+    poolsInNetwork: any;
     refreshNetworks: typeof refreshNetworks;
     createNetwork: typeof createNetwork;
     updateNetwork: typeof updateNetwork;
     deleteNetwork: typeof deleteNetwork;
+    refreshPoolsInNetwork: typeof refreshPoolsInNetwork;
     classes: any;
   }
 
@@ -45,18 +47,20 @@ class NetworkView extends React.Component<NetworkView.Props, NetworkView.State> 
 
   render() {
     const {
-      classes, networks, createNetwork,
-      updateNetwork, deleteNetwork, refreshNetworks,
+      classes, networks, createNetwork, poolsInNetwork,
+      updateNetwork, deleteNetwork, refreshNetworks, refreshPoolsInNetwork,
     } = this.props;
 
     return (
       <Grid item xs className={classes.grid}>
         <NetworkTable
           networks={networks}
+          poolsInNetwork={poolsInNetwork}
           refreshNetworks={refreshNetworks}
           createNetwork={createNetwork}
           updateNetwork={updateNetwork}
           deleteNetwork={deleteNetwork}
+          refreshPoolsInNetwork={refreshPoolsInNetwork}
           classes={{}}
         />
       </Grid>
@@ -70,6 +74,7 @@ const networkViewConnected = connect(
   (state: AdminUIState) => {
     return {
       networks: (state.cachedData.networks.data && state.cachedData.networks.data.networks),
+      poolsInNetwork: state.cachedData.poolsInNetwork,
     }
   },
   {
@@ -77,6 +82,7 @@ const networkViewConnected = connect(
     createNetwork,
     updateNetwork,
     deleteNetwork,
+    refreshPoolsInNetwork,
   }
 )(styledNetworkView);
 

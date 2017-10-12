@@ -17,12 +17,14 @@ import { model } from '../../../proto/protos';
 import Network = model.Network;
 import { ChipCell } from '../../../components/table/ChipCell';
 import {
-  refreshNetworks, createNetwork, updateNetwork, deleteNetwork
+  refreshNetworks, createNetwork, updateNetwork, deleteNetwork,
+  refreshPoolsInNetwork, poolsInNetworkReqToID,
 } from '../../../reducers/apiReducers';
 import { convertTagsStr, parseTags } from '../../../utils/model';
 import { TableEditCell } from '../../../components/table/TableEditCell';
 import { CreateDialog, CreateDialogType } from '../../../components/table/CreateDialog';
 import { DeleteDialog } from '../../../components/table/DeleteDialog';
+import { PoolTable } from '../../pool/PoolTable';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -36,16 +38,21 @@ const styleSheet: StyleRulesCallback = theme => ({
   },
   chip_row: {
     display: 'flex',
-  }
+  },
+  details: {
+    margin: 20,
+  },
 });
 
 namespace NetworkTable {
   export interface Props {
-    networks: Network[]
+    networks: Network[];
+    poolsInNetwork: any;
     refreshNetworks: typeof refreshNetworks;
     createNetwork: typeof createNetwork;
     updateNetwork: typeof updateNetwork;
     deleteNetwork: typeof deleteNetwork;
+    refreshPoolsInNetwork: typeof refreshPoolsInNetwork;
     classes: any
   }
 
@@ -175,19 +182,19 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
     })
   }
 
-  // onExpandedRowsChange = (rows) => {
-  //   const { networks } = this.props;
-  //   _.map(_.difference(rows, this.state.expandedRows), (row) => {
-  //     const pool = pools[row];
-  //     this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
-  //       rangeStart: pool.start,
-  //       rangeEnd: pool.end,
-  //     }));
-  //   })
-  //   this.setState({
-  //     expandedRows: rows,
-  //   })
-  // }
+  onExpandedRowsChange = (rows) => {
+    const { networks } = this.props;
+    _.map(_.difference(rows, this.state.expandedRows), (row) => {
+      const network = networks[row];
+      this.props.refreshPoolsInNetwork(new protos.serverpb.GetPoolsInNetworkRequest({
+        ip: _.split(network.prefix, '/')[0],
+        mask: _.toInteger(_.split(network.prefix, '/')[1]),
+      }));
+    })
+    this.setState({
+      expandedRows: rows,
+    })
+  }
 
   onClickConfirmDelete = (event) => {
     _.map(this.state.deletingRows, (row: Network) => {
@@ -245,6 +252,10 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
             onAddedRowsChange={this.onClickNew}
             onCommitChanges={this.commitChanges}
           />
+          <RowDetailState
+            expandedRows={expandedRows}
+            onExpandedRowsChange={this.onExpandedRowsChange}
+          />
           <PagingState
             defaultCurrentPage={0}
             defaultPageSize={25}
@@ -275,6 +286,31 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
               );
             }}
             allowAdding
+          />
+          <TableRowDetail
+            template={({ row }) => {
+              const data = this.props.poolsInNetwork[poolsInNetworkReqToID(new protos.serverpb.GetPoolsInNetworkRequest({
+                ip: _.split(row.prefix, '/')[0],
+                mask: _.toInteger(_.split(row.prefix, '/')[1]),
+              }))].data;
+              const pools = data && data.pools;
+              if (_.isNil(pools)) {
+                return <div></div>
+              }
+              return (
+                <div className={classes.details}>
+                  <div>
+                    <h3>Pools</h3>
+                  </div>
+                  <Grid
+                    rows={_.isNil(pools) ? [] : pools}
+                    columns={PoolTable.columns}
+                  >
+                    <TableView />
+                    <TableHeaderRow />
+                  </Grid>
+                </div>
+              )}}
           />
         </Grid>
 
