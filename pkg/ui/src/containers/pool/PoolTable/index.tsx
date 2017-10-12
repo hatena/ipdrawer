@@ -7,7 +7,8 @@ import {
   GroupingPanel, PagingPanel, DragDropContext, TableEditColumn, TableEditRow
 } from '@devexpress/dx-react-grid-material-ui';
 import {
-  SortingState, LocalSorting, EditingState, RowDetailState
+  SortingState, LocalSorting, EditingState, RowDetailState, PagingState,
+  LocalPaging, FilteringState, LocalFiltering,
 } from '@devexpress/dx-react-grid'
 import {
   Chip,
@@ -204,6 +205,21 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
     this.setState({deleteDialogOpen: false });
   }
 
+  filter = (row, filter) => {
+    if (filter.columnName == 'range') {
+      if (row.start.indexOf(filter.value) == -1) {
+        return row.end.indexOf(filter.value) >= 0;
+      }
+      return row.start.indexOf(filter.value) >= 0;
+    }
+    if (filter.columnName == 'status') {
+      return Pool.Status[row.status].indexOf(_.toUpper(filter.value)) >= 0;
+    }
+    if (filter.columnName == 'tags') {
+      return convertTagsStr(row.tags).indexOf(filter.value) >= 0;
+    }
+  }
+
   render() {
     const { classes, pools, networks } = this.props;
     const {
@@ -230,11 +246,24 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
             expandedRows={expandedRows}
             onExpandedRowsChange={this.onExpandedRowsChange}
           />
+          <PagingState
+            defaultCurrentPage={0}
+            defaultPageSize={25}
+          />
+          <FilteringState defaultFilters={[]} />
 
           <LocalSorting />
+          <LocalFiltering
+            filterFn={this.filter}
+          />
+          <LocalPaging />
 
           <TableView />
           <TableHeaderRow allowSorting />
+          <TableFilterRow />
+          <PagingPanel
+            allowedPageSizes={[25,50,100]}
+          />
 
           <TableEditColumn
             cellTemplate={(args) => {

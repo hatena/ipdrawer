@@ -225,6 +225,18 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     setTimeout(() => {this.props.refreshIPs()}, 1000);
   }
 
+  filter = (row, filter) => {
+    if (filter.columnName == 'ip') {
+      return row.ip.indexOf(filter.value) >= 0;
+    }
+    if (filter.columnName == 'status') {
+      return IPAddr.Status[row.status].indexOf(_.toUpper(filter.value)) >= 0;
+    }
+    if (filter.columnName == 'tags') {
+      return this.convertTagsStr(row.tags).indexOf(filter.value) >= 0;
+    }
+  }
+
   render() {
     const { classes, ips } = this.props;
     const {
@@ -254,14 +266,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
 
           <LocalSorting />
           <LocalFiltering
-            filterFn={(row, filter) => {
-              if (filter.columnName == 'ip') {
-                return row.ip.indexOf(filter.value) >= 0;
-              }
-              if (filter.columnName == 'tags') {
-                return this.convertTagsStr(row.tags).indexOf(filter.value) >= 0;
-              }
-            }}
+            filterFn={this.filter}
           />
           <LocalPaging />
 
