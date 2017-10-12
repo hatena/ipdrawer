@@ -21,7 +21,7 @@ export const refreshIPs = ipListReducerObj.refresh;
 const tempReservedIPListReducerObj = new CachedDataReducer(api.getTemporaryReservedIPList, 'temporaryReservedIPs');
 export const refreshTempReservedIPs = tempReservedIPListReducerObj.refresh;
 
-export const ipInPoolRequestToID = (req: protos.serverpb.GetIPInPoolRequest): string => "${req.rangeStart}/${req.rangeEnd}"
+export const ipInPoolRequestToID = (req: protos.serverpb.GetIPInPoolRequest): string => `${req.rangeStart}/${req.rangeEnd}`
 
 const ipsInPoolReducerObj = new KeyedCachedDataReducer(api.getIPInPool, 'ipsInPool', ipInPoolRequestToID);
 export const refreshIPsInPool = ipsInPoolReducerObj.refresh;

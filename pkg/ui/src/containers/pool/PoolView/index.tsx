@@ -46,19 +46,20 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
   componentWillMount() {
     this.props.refreshPools();
     this.props.refreshNetworks();
+    //     if (!_.isNil(this.props.pools)) {
+    //   this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
+    //     rangeStart: this.props.pools[0].start,
+    //     rangeEnd: this.props.pools[0].end,
+    //   }));
+    // }
   }
 
   render() {
     const {
       classes, pools, networks, ipsInPool,
-      createPool, refreshPools, updatePool } = this.props;
+      createPool, refreshPools, updatePool, refreshIPsInPool } = this.props;
 
-    // if (!_.isNil(pools)) {
-    //   this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
-    //     rangeStart: pools[0].start,
-    //     rangeEnd: pools[0].end,
-    //   }));
-    // }
+
 
     return (
       <Grid container spacing={24}>

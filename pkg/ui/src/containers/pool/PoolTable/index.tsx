@@ -22,9 +22,12 @@ import Pool = model.Pool;
 import Network = model.Network;
 import { ChipCell } from '../../../components/table/ChipCell';
 import { CreateDialog } from '../../../components/table/CreateDialog';
-import { createPool, updatePool, refreshPools, refreshIPsInPool } from '../../../reducers/apiReducers';
+import {
+  createPool, updatePool, refreshPools,
+  refreshIPsInPool, ipInPoolRequestToID } from '../../../reducers/apiReducers';
 import { convertTagsStr, parseTags } from '../../../utils/model';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
+import { IPAddrTable } from '../../ipaddr/IPAddrTable';
 
 
 const styleSheet: StyleRulesCallback = theme => ({
@@ -174,13 +177,13 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
   }
 
   onExpandedRowsChange = (rows) => {
-    const { pools } = this.props;
+    const { pools, ipsInPool } = this.props;
     _.map(rows, (row) => {
       const pool = pools[row];
-      const req = new protos.serverpb.GetIPInPoolRequest({
+      this.props.refreshIPsInPool(new protos.serverpb.GetIPInPoolRequest({
         rangeStart: pool.start,
         rangeEnd: pool.end,
-      });
+      }));
     })
     this.setState({
       expandedRows: rows,
@@ -243,11 +246,27 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
             allowAdding
           />
           <TableRowDetail
-            template={({ row }) => (
-              <div>
-                {row.start}
-              </div>
-            )}
+            template={({ row }) => {
+              const data = this.props.ipsInPool[ipInPoolRequestToID(new protos.serverpb.GetIPInPoolRequest({
+                rangeStart: row.start,
+                rangeEnd: row.end,
+              }))].data;
+              const ips = data && data.ips;
+              if (_.isNil(ips)) {
+                return <div></div>
+              }
+              return (
+                <div>
+                  <Grid
+                    rows={_.isNil(ips) ? [] : ips}
+                    columns={IPAddrTable.columns}
+                  >
+                    <TableView />
+                    <TableHeaderRow />
+
+                  </Grid>
+                </div>
+              )}}
           />
         </Grid>
 
