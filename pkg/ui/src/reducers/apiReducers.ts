@@ -44,12 +44,27 @@ export const updatePool = updatePoolReducerObj.refresh;
 const deletePoolReducerObj = new CachedDataReducer(api.deletePool, `deletePool`);
 export const deletePool = deletePoolReducerObj.refresh;
 
+const createNetworkReducerObj = new CachedDataReducer(api.createNetwork, 'createNetwork');
+export const createNetwork = createNetworkReducerObj.refresh;
+
+const updateNetworkReducerObj = new CachedDataReducer(api.updateNetwork, 'updateNetwork');
+export const updateNetwork = updateNetworkReducerObj.refresh;
+
+const deleteNetworkReducerObj = new CachedDataReducer(api.deleteNetwork, 'deleteNetwork');
+export const deleteNetwork = deleteNetworkReducerObj.refresh;
+
+export const poolsInNetworkReqToID = (req: protos.serverpb.GetPoolsInNetworkRequest): string => `${req.ip}/${req.mask}`
+
+const poolsInNetworkReducerObj = new KeyedCachedDataReducer(api.getPoolsInNetwork, 'poolsInNetwork', poolsInNetworkReqToID);
+export const refreshPoolsInNetwork = poolsInNetworkReducerObj.refresh;
+
 export interface APIReducersState {
   networks: CachedDataReducerState<protos.serverpb.ListNetworkResponse>;
   pools: CachedDataReducerState<protos.serverpb.ListPoolResponse>;
   ips: CachedDataReducerState<protos.serverpb.ListIPResponse>;
   temporaryReservedIPs: CachedDataReducerState<protos.serverpb.ListTemporaryReservedIPResponse>;
   ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
+  poolsInNetwork: KeyedCachedDataReducerState<protos.serverpb.GetPoolsInNetworkResponse>;
 }
 
 export default combineReducers<APIReducersState>({
@@ -64,6 +79,10 @@ export default combineReducers<APIReducersState>({
   [createPoolReducerObj.actionNamespace]: createPoolReducerObj.reducer,
   [updatePoolReducerObj.actionNamespace]: updatePoolReducerObj.reducer,
   [deletePoolReducerObj.actionNamespace]: deletePoolReducerObj.reducer,
+  [createNetworkReducerObj.actionNamespace]: createNetworkReducerObj.reducer,
+  [updateNetworkReducerObj.actionNamespace]: updateNetworkReducerObj.reducer,
+  [deleteNetworkReducerObj.actionNamespace]: deleteNetworkReducerObj.reducer,
+  [poolsInNetworkReducerObj.actionNamespace]: poolsInNetworkReducerObj.reducer,
 });
 
 export {

@@ -377,6 +377,46 @@ func (api *APIServer) CreateNetwork(
 	return &serverpb.CreateNetworkResponse{}, nil
 }
 
+// DeleteNetwork deletes the network.
+func (api *APIServer) DeleteNetwork(
+	ctx context.Context,
+	req *serverpb.DeleteNetworkRequest,
+) (*serverpb.DeleteNetworkResponse, error) {
+	if err := req.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	network, err := api.manager.GetNetworkByIP(ctx, &net.IPNet{
+		IP:   net.ParseIP(req.Ip),
+		Mask: net.CIDRMask(int(req.Mask), 32),
+	})
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	if err := api.manager.DeleteNetwork(ctx, network); err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &serverpb.DeleteNetworkResponse{}, nil
+}
+
+// UpdateNetwork updates the network.
+func (api *APIServer) UpdateNetwork(
+	ctx context.Context,
+	network *model.Network,
+) (*serverpb.UpdateNetworkResponse, error) {
+	if err := network.Validate(); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	if err := api.manager.UpdateNetwork(ctx, network); err != nil {
+		return nil, status.Error(codes.InvalidArgument, err.Error())
+	}
+
+	return &serverpb.UpdateNetworkResponse{}, nil
+}
+
 // GetPoolsInNetwork returns all pools in a given network.
 func (api *APIServer) GetPoolsInNetwork(
 	ctx context.Context,

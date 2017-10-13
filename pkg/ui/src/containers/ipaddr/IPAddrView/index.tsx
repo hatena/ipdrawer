@@ -45,17 +45,15 @@ class IPAddrView extends React.Component<IPAddrView.Props, IPAddrView.State> {
     const { classes, ips } = this.props;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs className={classes.grid}>
-          <IPAddrTable
-            ips={ips}
-            classes={{}}
-            refreshIPs={this.props.refreshIPs}
-            createIP={this.props.createIP}
-            deactivateIP={this.props.deactivateIP}
-            updateIP={this.props.updateIP}
-          />
-        </Grid>
+      <Grid item xs className={classes.grid}>
+        <IPAddrTable
+          ips={ips}
+          classes={{}}
+          refreshIPs={this.props.refreshIPs}
+          createIP={this.props.createIP}
+          deactivateIP={this.props.deactivateIP}
+          updateIP={this.props.updateIP}
+        />
       </Grid>
     );
   }

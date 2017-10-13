@@ -30,6 +30,7 @@ Class | Method | HTTP request | Description
 *IPServiceV0Api* | [**UpdateIP**](docs/IPServiceV0Api.md#updateip) | **Post** /api/v0/ip/{ip}/update | 
 *NetworkServiceV0Api* | [**CreateNetwork**](docs/NetworkServiceV0Api.md#createnetwork) | **Post** /api/v0/network/{ip}/{mask}/create | 
 *NetworkServiceV0Api* | [**CreatePool**](docs/NetworkServiceV0Api.md#createpool) | **Post** /api/v0/network/{ip}/{mask}/pool/create | 
+*NetworkServiceV0Api* | [**DeleteNetwork**](docs/NetworkServiceV0Api.md#deletenetwork) | **Post** /api/v0/network/{ip}/{mask}/delete | 
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
 *NetworkServiceV0Api* | [**DrawIPEstimatingNetwork**](docs/NetworkServiceV0Api.md#drawipestimatingnetwork) | **Get** /api/v0/drawip | 
 *NetworkServiceV0Api* | [**DrawIP_0**](docs/NetworkServiceV0Api.md#drawip_0) | **Get** /api/v0/network/{name}/drawip | 
@@ -38,6 +39,7 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**GetNetwork_0**](docs/NetworkServiceV0Api.md#getnetwork_0) | **Get** /api/v0/network/{name} | 
 *NetworkServiceV0Api* | [**GetPoolsInNetwork**](docs/NetworkServiceV0Api.md#getpoolsinnetwork) | **Get** /api/v0/network/{ip}/{mask}/pools | 
 *NetworkServiceV0Api* | [**ListNetwork**](docs/NetworkServiceV0Api.md#listnetwork) | **Get** /api/v0/network/list | 
+*NetworkServiceV0Api* | [**UpdateNetwork**](docs/NetworkServiceV0Api.md#updatenetwork) | **Post** /api/v0/network/update | 
 *PoolServiceV0Api* | [**DeletePool**](docs/PoolServiceV0Api.md#deletepool) | **Post** /api/v0/pool/{range_start}/{range_end}/delete | 
 *PoolServiceV0Api* | [**GetIPInPool**](docs/PoolServiceV0Api.md#getipinpool) | **Get** /api/v0/pool/{range_start}/{range_end}/ip | 
 *PoolServiceV0Api* | [**ListPool**](docs/PoolServiceV0Api.md#listpool) | **Get** /api/v0/pool/list | 
@@ -60,6 +62,7 @@ Class | Method | HTTP request | Description
  - [ServerpbCreatePoolRequest](docs/ServerpbCreatePoolRequest.md)
  - [ServerpbCreatePoolResponse](docs/ServerpbCreatePoolResponse.md)
  - [ServerpbDeactivateIpResponse](docs/ServerpbDeactivateIpResponse.md)
+ - [ServerpbDeleteNetworkResponse](docs/ServerpbDeleteNetworkResponse.md)
  - [ServerpbDeletePoolResponse](docs/ServerpbDeletePoolResponse.md)
  - [ServerpbDrawIpResponse](docs/ServerpbDrawIpResponse.md)
  - [ServerpbGetIpInPoolResponse](docs/ServerpbGetIpInPoolResponse.md)
@@ -70,6 +73,7 @@ Class | Method | HTTP request | Description
  - [ServerpbListPoolResponse](docs/ServerpbListPoolResponse.md)
  - [ServerpbListTemporaryReservedIpResponse](docs/ServerpbListTemporaryReservedIpResponse.md)
  - [ServerpbUpdateIpResponse](docs/ServerpbUpdateIpResponse.md)
+ - [ServerpbUpdateNetworkResponse](docs/ServerpbUpdateNetworkResponse.md)
  - [ServerpbUpdatePoolResponse](docs/ServerpbUpdatePoolResponse.md)
 
 

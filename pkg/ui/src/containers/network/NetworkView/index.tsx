@@ -9,7 +9,10 @@ import { AdminUIState } from "../../../reducers/index";
 import { model } from "../../../proto/protos";
 import Network = model.Network;
 import { NetworkTable } from '../NetworkTable';
-import { refreshNetworks } from '../../../reducers/apiReducers';
+import {
+  refreshNetworks, createNetwork, updateNetwork,
+  deleteNetwork, refreshPoolsInNetwork,
+} from '../../../reducers/apiReducers';
 
 
 const styleSheet = theme => ({
@@ -24,12 +27,16 @@ const styleSheet = theme => ({
 namespace NetworkView {
   export interface Props extends RouteComponentProps<void> {
     networks: Network[];
+    poolsInNetwork: any;
     refreshNetworks: typeof refreshNetworks;
+    createNetwork: typeof createNetwork;
+    updateNetwork: typeof updateNetwork;
+    deleteNetwork: typeof deleteNetwork;
+    refreshPoolsInNetwork: typeof refreshPoolsInNetwork;
     classes: any;
   }
 
   export interface State {
-
   }
 }
 
@@ -39,13 +46,23 @@ class NetworkView extends React.Component<NetworkView.Props, NetworkView.State> 
   }
 
   render() {
-    const { classes, networks } = this.props;
+    const {
+      classes, networks, createNetwork, poolsInNetwork,
+      updateNetwork, deleteNetwork, refreshNetworks, refreshPoolsInNetwork,
+    } = this.props;
 
     return (
-      <Grid container spacing={24}>
-        <Grid item xs className={classes.grid}>
-          <NetworkTable networks={networks} classes={{}}/>
-        </Grid>
+      <Grid item xs className={classes.grid}>
+        <NetworkTable
+          networks={networks}
+          poolsInNetwork={poolsInNetwork}
+          refreshNetworks={refreshNetworks}
+          createNetwork={createNetwork}
+          updateNetwork={updateNetwork}
+          deleteNetwork={deleteNetwork}
+          refreshPoolsInNetwork={refreshPoolsInNetwork}
+          classes={{}}
+        />
       </Grid>
     );
   }
@@ -57,10 +74,15 @@ const networkViewConnected = connect(
   (state: AdminUIState) => {
     return {
       networks: (state.cachedData.networks.data && state.cachedData.networks.data.networks),
+      poolsInNetwork: state.cachedData.poolsInNetwork,
     }
   },
   {
-    refreshNetworks
+    refreshNetworks,
+    createNetwork,
+    updateNetwork,
+    deleteNetwork,
+    refreshPoolsInNetwork,
   }
 )(styledNetworkView);
 

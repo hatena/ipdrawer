@@ -28,6 +28,9 @@ It has these top-level messages:
 	GetPoolsInNetworkResponse
 	CreatePoolRequest
 	CreatePoolResponse
+	DeleteNetworkRequest
+	DeleteNetworkResponse
+	UpdateNetworkResponse
 	ListIPRequest
 	ListIPResponse
 	ListTemporaryReservedIPRequest
@@ -249,6 +252,27 @@ func (this *CreatePoolRequest) Validate() error {
 	return nil
 }
 func (this *CreatePoolResponse) Validate() error {
+	return nil
+}
+
+var _regex_DeleteNetworkRequest_Ip = regexp.MustCompile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+
+func (this *DeleteNetworkRequest) Validate() error {
+	if !_regex_DeleteNetworkRequest_Ip.MatchString(this.Ip) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Ip", fmt.Errorf(`value '%v' must be a string conforming to regex "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"`, this.Ip))
+	}
+	if !(this.Mask > -1) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Mask))
+	}
+	if !(this.Mask < 33) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Mask", fmt.Errorf(`value '%v' must be less than '33'`, this.Mask))
+	}
+	return nil
+}
+func (this *DeleteNetworkResponse) Validate() error {
+	return nil
+}
+func (this *UpdateNetworkResponse) Validate() error {
 	return nil
 }
 func (this *ListIPRequest) Validate() error {
