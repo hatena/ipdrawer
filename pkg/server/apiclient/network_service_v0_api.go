@@ -238,9 +238,11 @@ func (a NetworkServiceV0Api) DeleteNetwork(ip string, mask int32) (*ServerpbDele
  * @param poolTagValue
  * @param name
  * @param temporaryReserved
+ * @param rangeStart
+ * @param rangeEnd
  * @return *ServerpbDrawIpResponse
  */
-func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, poolTagValue string, name string, temporaryReserved bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, poolTagValue string, name string, temporaryReserved bool, rangeStart string, rangeEnd string) (*ServerpbDrawIpResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -262,6 +264,8 @@ func (a NetworkServiceV0Api) DrawIP(ip string, mask int32, poolTagKey string, po
 	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
 	localVarQueryParams.Add("name", a.Configuration.APIClient.ParameterToString(name, ""))
 	localVarQueryParams.Add("temporary_reserved", a.Configuration.APIClient.ParameterToString(temporaryReserved, ""))
+	localVarQueryParams.Add("range_start", a.Configuration.APIClient.ParameterToString(rangeStart, ""))
+	localVarQueryParams.Add("range_end", a.Configuration.APIClient.ParameterToString(rangeEnd, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
@@ -372,9 +376,11 @@ func (a NetworkServiceV0Api) DrawIPEstimatingNetwork(poolTagKey string, poolTagV
  * @param poolTagKey
  * @param poolTagValue
  * @param temporaryReserved
+ * @param rangeStart
+ * @param rangeEnd
  * @return *ServerpbDrawIpResponse
  */
-func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTagKey string, poolTagValue string, temporaryReserved bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTagKey string, poolTagValue string, temporaryReserved bool, rangeStart string, rangeEnd string) (*ServerpbDrawIpResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables
@@ -396,6 +402,8 @@ func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTa
 	localVarQueryParams.Add("pool_tag.key", a.Configuration.APIClient.ParameterToString(poolTagKey, ""))
 	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
 	localVarQueryParams.Add("temporary_reserved", a.Configuration.APIClient.ParameterToString(temporaryReserved, ""))
+	localVarQueryParams.Add("range_start", a.Configuration.APIClient.ParameterToString(rangeStart, ""))
+	localVarQueryParams.Add("range_end", a.Configuration.APIClient.ParameterToString(rangeEnd, ""))
 
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{"application/json"}
@@ -421,6 +429,80 @@ func (a NetworkServiceV0Api) DrawIP_1(name string, ip string, mask int32, poolTa
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
 	var localVarAPIResponse = &APIResponse{Operation: "DrawIP_0", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
+	if localVarHttpResponse != nil {
+		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
+		localVarAPIResponse.Payload = localVarHttpResponse.Body()
+	}
+
+	if err != nil {
+		return successPayload, localVarAPIResponse, err
+	}
+	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
+	return successPayload, localVarAPIResponse, err
+}
+
+/**
+ *
+ *
+ * @param rangeStart
+ * @param rangeEnd
+ * @param ip
+ * @param mask
+ * @param poolTagKey
+ * @param poolTagValue
+ * @param name
+ * @param temporaryReserved
+ * @return *ServerpbDrawIpResponse
+ */
+func (a NetworkServiceV0Api) DrawIP_2(rangeStart string, rangeEnd string, ip string, mask int32, poolTagKey string, poolTagValue string, name string, temporaryReserved bool) (*ServerpbDrawIpResponse, *APIResponse, error) {
+
+	var localVarHttpMethod = strings.ToUpper("Get")
+	// create path and map variables
+	localVarPath := a.Configuration.BasePath + "/api/v0/pool/{range_start}/{range_end}/drawip"
+	localVarPath = strings.Replace(localVarPath, "{"+"range_start"+"}", fmt.Sprintf("%v", rangeStart), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"range_end"+"}", fmt.Sprintf("%v", rangeEnd), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := make(map[string]string)
+	var localVarPostBody interface{}
+	var localVarFileName string
+	var localVarFileBytes []byte
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		localVarHeaderParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	localVarQueryParams.Add("ip", a.Configuration.APIClient.ParameterToString(ip, ""))
+	localVarQueryParams.Add("mask", a.Configuration.APIClient.ParameterToString(mask, ""))
+	localVarQueryParams.Add("pool_tag.key", a.Configuration.APIClient.ParameterToString(poolTagKey, ""))
+	localVarQueryParams.Add("pool_tag.value", a.Configuration.APIClient.ParameterToString(poolTagValue, ""))
+	localVarQueryParams.Add("name", a.Configuration.APIClient.ParameterToString(name, ""))
+	localVarQueryParams.Add("temporary_reserved", a.Configuration.APIClient.ParameterToString(temporaryReserved, ""))
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+	}
+
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(ServerpbDrawIpResponse)
+	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+
+	var localVarURL, _ = url.Parse(localVarPath)
+	localVarURL.RawQuery = localVarQueryParams.Encode()
+	var localVarAPIResponse = &APIResponse{Operation: "DrawIP_1", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
 	if localVarHttpResponse != nil {
 		localVarAPIResponse.Response = localVarHttpResponse.RawResponse
 		localVarAPIResponse.Payload = localVarHttpResponse.Body()
@@ -563,7 +645,7 @@ func (a NetworkServiceV0Api) GetNetwork(ip string, mask int32, name string) (*Se
  * @param mask
  * @return *ServerpbGetNetworkResponse
  */
-func (a NetworkServiceV0Api) GetNetwork_2(name string, ip string, mask int32) (*ServerpbGetNetworkResponse, *APIResponse, error) {
+func (a NetworkServiceV0Api) GetNetwork_3(name string, ip string, mask int32) (*ServerpbGetNetworkResponse, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Get")
 	// create path and map variables

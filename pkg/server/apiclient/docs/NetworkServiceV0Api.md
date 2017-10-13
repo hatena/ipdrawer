@@ -10,6 +10,7 @@ Method | HTTP request | Description
 [**DrawIP**](NetworkServiceV0Api.md#DrawIP) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
 [**DrawIPEstimatingNetwork**](NetworkServiceV0Api.md#DrawIPEstimatingNetwork) | **Get** /api/v0/drawip | 
 [**DrawIP_0**](NetworkServiceV0Api.md#DrawIP_0) | **Get** /api/v0/network/{name}/drawip | 
+[**DrawIP_1**](NetworkServiceV0Api.md#DrawIP_1) | **Get** /api/v0/pool/{range_start}/{range_end}/drawip | 
 [**GetEstimatedNetwork**](NetworkServiceV0Api.md#GetEstimatedNetwork) | **Get** /api/v0/network | 
 [**GetNetwork**](NetworkServiceV0Api.md#GetNetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 [**GetNetwork_0**](NetworkServiceV0Api.md#GetNetwork_0) | **Get** /api/v0/network/{name} | 
@@ -105,7 +106,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP**
-> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name, $temporaryReserved)
+> ServerpbDrawIpResponse DrawIP($ip, $mask, $poolTagKey, $poolTagValue, $name, $temporaryReserved, $rangeStart, $rangeEnd)
 
 
 
@@ -120,6 +121,8 @@ Name | Type | Description  | Notes
  **poolTagValue** | **string**|  | [optional] 
  **name** | **string**|  | [optional] 
  **temporaryReserved** | **bool**|  | [optional] 
+ **rangeStart** | **string**|  | [optional] 
+ **rangeEnd** | **string**|  | [optional] 
 
 ### Return type
 
@@ -166,7 +169,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **DrawIP_0**
-> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue, $temporaryReserved)
+> ServerpbDrawIpResponse DrawIP_0($name, $ip, $mask, $poolTagKey, $poolTagValue, $temporaryReserved, $rangeStart, $rangeEnd)
 
 
 
@@ -180,6 +183,42 @@ Name | Type | Description  | Notes
  **mask** | **int32**|  | [optional] 
  **poolTagKey** | **string**|  | [optional] 
  **poolTagValue** | **string**|  | [optional] 
+ **temporaryReserved** | **bool**|  | [optional] 
+ **rangeStart** | **string**|  | [optional] 
+ **rangeEnd** | **string**|  | [optional] 
+
+### Return type
+
+[**ServerpbDrawIpResponse**](serverpbDrawIPResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **DrawIP_1**
+> ServerpbDrawIpResponse DrawIP_1($rangeStart, $rangeEnd, $ip, $mask, $poolTagKey, $poolTagValue, $name, $temporaryReserved)
+
+
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **rangeStart** | **string**|  | 
+ **rangeEnd** | **string**|  | 
+ **ip** | **string**|  | [optional] 
+ **mask** | **int32**|  | [optional] 
+ **poolTagKey** | **string**|  | [optional] 
+ **poolTagValue** | **string**|  | [optional] 
+ **name** | **string**|  | [optional] 
  **temporaryReserved** | **bool**|  | [optional] 
 
 ### Return type

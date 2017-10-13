@@ -34,6 +34,7 @@ Class | Method | HTTP request | Description
 *NetworkServiceV0Api* | [**DrawIP**](docs/NetworkServiceV0Api.md#drawip) | **Get** /api/v0/network/{ip}/{mask}/drawip | 
 *NetworkServiceV0Api* | [**DrawIPEstimatingNetwork**](docs/NetworkServiceV0Api.md#drawipestimatingnetwork) | **Get** /api/v0/drawip | 
 *NetworkServiceV0Api* | [**DrawIP_0**](docs/NetworkServiceV0Api.md#drawip_0) | **Get** /api/v0/network/{name}/drawip | 
+*NetworkServiceV0Api* | [**DrawIP_1**](docs/NetworkServiceV0Api.md#drawip_1) | **Get** /api/v0/pool/{range_start}/{range_end}/drawip | 
 *NetworkServiceV0Api* | [**GetEstimatedNetwork**](docs/NetworkServiceV0Api.md#getestimatednetwork) | **Get** /api/v0/network | 
 *NetworkServiceV0Api* | [**GetNetwork**](docs/NetworkServiceV0Api.md#getnetwork) | **Get** /api/v0/network/{ip}/{mask} | 
 *NetworkServiceV0Api* | [**GetNetwork_0**](docs/NetworkServiceV0Api.md#getnetwork_0) | **Get** /api/v0/network/{name} | 

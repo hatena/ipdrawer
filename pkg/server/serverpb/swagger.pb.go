@@ -445,6 +445,18 @@ const (
             "required": false,
             "type": "boolean",
             "format": "boolean"
+          },
+          {
+            "name": "range_start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -608,6 +620,18 @@ const (
             "required": false,
             "type": "boolean",
             "format": "boolean"
+          },
+          {
+            "name": "range_start",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -658,6 +682,74 @@ const (
         ],
         "tags": [
           "PoolServiceV0"
+        ]
+      }
+    },
+    "/api/v0/pool/{range_start}/{range_end}/drawip": {
+      "get": {
+        "operationId": "DrawIP",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/serverpbDrawIPResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "range_start",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "range_end",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ip",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "mask",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pool_tag.key",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "pool_tag.value",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "temporary_reserved",
+            "in": "query",
+            "required": false,
+            "type": "boolean",
+            "format": "boolean"
+          }
+        ],
+        "tags": [
+          "NetworkServiceV0"
         ]
       }
     },

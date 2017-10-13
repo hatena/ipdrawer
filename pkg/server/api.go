@@ -46,6 +46,7 @@ func (api *APIServer) ListNetwork(
 	}, nil
 }
 
+// DrawIP returns new IP.
 func (api *APIServer) DrawIP(
 	ctx context.Context,
 	req *serverpb.DrawIPRequest,
@@ -56,24 +57,35 @@ func (api *APIServer) DrawIP(
 
 	var n *model.Network
 	var err error
-	if req.Name == "" {
-		ip := &net.IPNet{
-			IP:   net.ParseIP(req.Ip),
-			Mask: net.CIDRMask(int(req.Mask), 32),
+	var pools []*model.Pool
+	if req.RangeStart != "" && req.RangeEnd != "" {
+		s := net.ParseIP(req.RangeStart)
+		e := net.ParseIP(req.RangeEnd)
+		pool, err := api.manager.GetPool(ctx, s, e)
+		if err != nil {
+			return nil, err
 		}
-
-		n, err = api.manager.GetNetworkByIP(ctx, ip)
+		pools = []*model.Pool{pool}
 	} else {
-		n, err = api.manager.GetNetworkByName(ctx, req.Name)
-	}
-	if err != nil {
-		return nil, err
+		if req.Name == "" {
+			ip := &net.IPNet{
+				IP:   net.ParseIP(req.Ip),
+				Mask: net.CIDRMask(int(req.Mask), 32),
+			}
+
+			n, err = api.manager.GetNetworkByIP(ctx, ip)
+		} else {
+			n, err = api.manager.GetNetworkByName(ctx, req.Name)
+		}
+		if err != nil {
+			return nil, err
+		}
+		pools, err = api.manager.GetPoolsInNetwork(ctx, n)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	pools, err := api.manager.GetPoolsInNetwork(ctx, n)
-	if err != nil {
-		return nil, err
-	}
 	if len(pools) == 0 {
 		return nil, status.Error(
 			codes.NotFound, "Not found any pools")
@@ -81,7 +93,7 @@ func (api *APIServer) DrawIP(
 
 	target := make([]*model.Pool, 0)
 	for _, p := range pools {
-		if p.Status == model.Pool_AVAILABLE && p.MatchTags([]*model.Tag{req.PoolTag}) {
+		if p.Status == model.Pool_AVAILABLE && (req.PoolTag == nil || p.MatchTags([]*model.Tag{req.PoolTag})) {
 			target = append(target, p)
 		}
 	}
