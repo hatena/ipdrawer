@@ -11,6 +11,7 @@ import {
   SortingState, LocalSorting, EditingState, RowDetailState, PagingState,
   LocalPaging, FilteringState, LocalFiltering,
 } from '@devexpress/dx-react-grid'
+import { CircularProgress } from 'material-ui/Progress';
 
 import * as protos from '../../../proto/protos';
 import { model } from '../../../proto/protos';
@@ -42,6 +43,10 @@ const styleSheet: StyleRulesCallback = theme => ({
   details: {
     margin: 20,
   },
+  progress: {
+    textAlign: 'center',
+    marginTop: '10px',
+  }
 });
 
 namespace NetworkTable {
@@ -295,7 +300,14 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
               }))].data;
               const pools = data && data.pools;
               if (_.isNil(pools)) {
-                return <div></div>
+                return (
+                  <div className={classes.progress}>
+                    <CircularProgress
+                      color="accent"
+                      size={30}
+                    />
+                  </div>
+                );
               }
               return (
                 <div className={classes.details}>

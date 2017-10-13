@@ -16,6 +16,7 @@ import {
   Button,
   TableCell,
 } from 'material-ui';
+import { CircularProgress } from 'material-ui/Progress';
 
 import { model } from "../../../proto/protos";
 import * as protos from "../../../proto/protos";
@@ -51,6 +52,10 @@ const styleSheet: StyleRulesCallback = theme => ({
   },
   details: {
     margin: 20,
+  },
+  progress: {
+    textAlign: 'center',
+    marginTop: '10px',
   }
 });
 
@@ -286,7 +291,14 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
               }))].data;
               const ips = data && data.ips;
               if (_.isNil(ips)) {
-                return <div></div>
+                return (
+                  <div className={classes.progress}>
+                    <CircularProgress
+                      color="accent"
+                      size={30}
+                    />
+                  </div>
+                );
               }
               return (
                 <div className={classes.details}>
