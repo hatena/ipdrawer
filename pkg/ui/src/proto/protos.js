@@ -395,6 +395,8 @@ $root.serverpb = (function() {
          * @property {model.ITag} [poolTag] DrawIPRequest poolTag
          * @property {string} [name] DrawIPRequest name
          * @property {boolean} [temporaryReserved] DrawIPRequest temporaryReserved
+         * @property {string} [rangeStart] DrawIPRequest rangeStart
+         * @property {string} [rangeEnd] DrawIPRequest rangeEnd
          */
 
         /**
@@ -452,6 +454,22 @@ $root.serverpb = (function() {
         DrawIPRequest.prototype.temporaryReserved = false;
 
         /**
+         * DrawIPRequest rangeStart.
+         * @member {string}rangeStart
+         * @memberof serverpb.DrawIPRequest
+         * @instance
+         */
+        DrawIPRequest.prototype.rangeStart = "";
+
+        /**
+         * DrawIPRequest rangeEnd.
+         * @member {string}rangeEnd
+         * @memberof serverpb.DrawIPRequest
+         * @instance
+         */
+        DrawIPRequest.prototype.rangeEnd = "";
+
+        /**
          * Creates a new DrawIPRequest instance using the specified properties.
          * @function create
          * @memberof serverpb.DrawIPRequest
@@ -485,6 +503,10 @@ $root.serverpb = (function() {
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.name);
             if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
                 writer.uint32(/* id 5, wireType 0 =*/40).bool(message.temporaryReserved);
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.rangeStart);
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.rangeEnd);
             return writer;
         };
 
@@ -533,6 +555,12 @@ $root.serverpb = (function() {
                     break;
                 case 5:
                     message.temporaryReserved = reader.bool();
+                    break;
+                case 6:
+                    message.rangeStart = reader.string();
+                    break;
+                case 7:
+                    message.rangeEnd = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -586,6 +614,12 @@ $root.serverpb = (function() {
             if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
                 if (typeof message.temporaryReserved !== "boolean")
                     return "temporaryReserved: boolean expected";
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                if (!$util.isString(message.rangeStart))
+                    return "rangeStart: string expected";
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                if (!$util.isString(message.rangeEnd))
+                    return "rangeEnd: string expected";
             return null;
         };
 
@@ -614,6 +648,10 @@ $root.serverpb = (function() {
                 message.name = String(object.name);
             if (object.temporaryReserved != null)
                 message.temporaryReserved = Boolean(object.temporaryReserved);
+            if (object.rangeStart != null)
+                message.rangeStart = String(object.rangeStart);
+            if (object.rangeEnd != null)
+                message.rangeEnd = String(object.rangeEnd);
             return message;
         };
 
@@ -636,6 +674,8 @@ $root.serverpb = (function() {
                 object.poolTag = null;
                 object.name = "";
                 object.temporaryReserved = false;
+                object.rangeStart = "";
+                object.rangeEnd = "";
             }
             if (message.ip != null && message.hasOwnProperty("ip"))
                 object.ip = message.ip;
@@ -647,6 +687,10 @@ $root.serverpb = (function() {
                 object.name = message.name;
             if (message.temporaryReserved != null && message.hasOwnProperty("temporaryReserved"))
                 object.temporaryReserved = message.temporaryReserved;
+            if (message.rangeStart != null && message.hasOwnProperty("rangeStart"))
+                object.rangeStart = message.rangeStart;
+            if (message.rangeEnd != null && message.hasOwnProperty("rangeEnd"))
+                object.rangeEnd = message.rangeEnd;
             return object;
         };
 

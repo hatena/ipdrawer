@@ -27,7 +27,8 @@ import { CreateDialog, CreateDialogType } from '../../../components/table/Create
 import { DeleteDialog } from '../../../components/table/DeleteDialog';
 import {
   createPool, updatePool, deletePool, refreshPools,
-  refreshIPsInPool, ipInPoolRequestToID } from '../../../reducers/apiReducers';
+  refreshIPsInPool, ipInPoolRequestToID, drawIP,
+} from '../../../reducers/apiReducers';
 import { convertTagsStr, parseTags } from '../../../utils/model';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 import { IPAddrTable } from '../../ipaddr/IPAddrTable';
@@ -69,6 +70,7 @@ namespace PoolTable {
     deletePool: typeof deletePool;
     refreshPools: typeof refreshPools;
     refreshIPsInPool: typeof refreshIPsInPool;
+    drawIP: typeof drawIP;
     classes: any;
   }
 
@@ -226,6 +228,14 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
     }
   }
 
+  onClickDrawIP = (start: string, end: string) => (event) => {
+    this.props.drawIP(new protos.serverpb.DrawIPRequest({
+      rangeStart: start,
+      rangeEnd: end,
+      temporaryReserved: true,
+    }))
+  }
+
   render() {
     const { classes, pools, networks } = this.props;
     const {
@@ -303,6 +313,12 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
               return (
                 <div className={classes.details}>
                   <div>
+                    <Button
+                      raised color="accent"
+                      onClick={this.onClickDrawIP(row.start, row.end)}
+                    >
+                      Draw IP
+                    </Button>
                     <h3>IPAddr</h3>
                   </div>
                   <Grid

@@ -19,6 +19,8 @@ message DrawIPRequest {
   model.Tag pool_tag = 3;
   string name = 4;
   bool temporary_reserved = 5;
+  string range_start = 6;
+  string range_end = 7;
 }
 
 message DrawIPResponse {
@@ -161,6 +163,9 @@ service NetworkServiceV0 {
       get: "/api/v0/network/{ip}/{mask}/drawip"
       additional_bindings {
         get: "/api/v0/network/{name}/drawip"
+      }
+      additional_bindings {
+        get: "/api/v0/pool/{range_start}/{range_end}/drawip"
       }
     };
   };

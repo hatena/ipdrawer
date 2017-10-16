@@ -194,6 +194,12 @@ export namespace serverpb {
 
         /** DrawIPRequest temporaryReserved */
         temporaryReserved?: boolean;
+
+        /** DrawIPRequest rangeStart */
+        rangeStart?: string;
+
+        /** DrawIPRequest rangeEnd */
+        rangeEnd?: string;
     }
 
     /** Represents a DrawIPRequest. */
@@ -219,6 +225,12 @@ export namespace serverpb {
 
         /** DrawIPRequest temporaryReserved. */
         public temporaryReserved: boolean;
+
+        /** DrawIPRequest rangeStart. */
+        public rangeStart: string;
+
+        /** DrawIPRequest rangeEnd. */
+        public rangeEnd: string;
 
         /**
          * Creates a new DrawIPRequest instance using the specified properties.

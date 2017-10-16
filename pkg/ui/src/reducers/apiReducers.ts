@@ -58,6 +58,9 @@ export const poolsInNetworkReqToID = (req: protos.serverpb.GetPoolsInNetworkRequ
 const poolsInNetworkReducerObj = new KeyedCachedDataReducer(api.getPoolsInNetwork, 'poolsInNetwork', poolsInNetworkReqToID);
 export const refreshPoolsInNetwork = poolsInNetworkReducerObj.refresh;
 
+const drawIPReducerObj = new CachedDataReducer(api.drawIP, 'drawedIP');
+export const drawIP = drawIPReducerObj.refresh;
+
 export interface APIReducersState {
   networks: CachedDataReducerState<protos.serverpb.ListNetworkResponse>;
   pools: CachedDataReducerState<protos.serverpb.ListPoolResponse>;
@@ -65,6 +68,7 @@ export interface APIReducersState {
   temporaryReservedIPs: CachedDataReducerState<protos.serverpb.ListTemporaryReservedIPResponse>;
   ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
   poolsInNetwork: KeyedCachedDataReducerState<protos.serverpb.GetPoolsInNetworkResponse>;
+  drawedIP: CachedDataReducerState<protos.serverpb.DrawIPResponse>;
 }
 
 export default combineReducers<APIReducersState>({
@@ -83,6 +87,7 @@ export default combineReducers<APIReducersState>({
   [updateNetworkReducerObj.actionNamespace]: updateNetworkReducerObj.reducer,
   [deleteNetworkReducerObj.actionNamespace]: deleteNetworkReducerObj.reducer,
   [poolsInNetworkReducerObj.actionNamespace]: poolsInNetworkReducerObj.reducer,
+  [drawIPReducerObj.actionNamespace]: drawIPReducerObj.reducer,
 });
 
 export {
