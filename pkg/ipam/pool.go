@@ -3,6 +3,7 @@ package ipam
 import (
 	"net"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 
@@ -13,6 +14,13 @@ import (
 func setPool(r *storage.Redis, pool *model.Pool) error {
 	if err := pool.Validate(); err != nil {
 		return err
+	}
+
+	now := time.Now()
+	if pool.CreatedAt == nil {
+		pool.CreatedAt = &now
+	} else {
+		pool.LastModifiedAt = &now
 	}
 
 	pipe := r.Client.TxPipeline()

@@ -22,11 +22,15 @@ import proto "github.com/golang/protobuf/proto"
 import math "math"
 import _ "github.com/mwitkow/go-proto-validators"
 import _ "github.com/gogo/protobuf/gogoproto"
+import _ "github.com/golang/protobuf/ptypes/timestamp"
+
+import time "time"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 func (this *Tag) Validate() error {
 	return nil
@@ -49,6 +53,16 @@ func (this *Pool) Validate() error {
 			}
 		}
 	}
+	if this.CreatedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.CreatedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("CreatedAt", err)
+		}
+	}
+	if this.LastModifiedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.LastModifiedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("LastModifiedAt", err)
+		}
+	}
 	return nil
 }
 
@@ -63,6 +77,16 @@ func (this *IPAddr) Validate() error {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
 				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
 			}
+		}
+	}
+	if this.CreatedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.CreatedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("CreatedAt", err)
+		}
+	}
+	if this.LastModifiedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.LastModifiedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("LastModifiedAt", err)
 		}
 	}
 	return nil
@@ -93,6 +117,16 @@ func (this *Network) Validate() error {
 			if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(item); err != nil {
 				return github_com_mwitkow_go_proto_validators.FieldError("Tags", err)
 			}
+		}
+	}
+	if this.CreatedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.CreatedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("CreatedAt", err)
+		}
+	}
+	if this.LastModifiedAt != nil {
+		if err := github_com_mwitkow_go_proto_validators.CallValidatorIfExists(this.LastModifiedAt); err != nil {
+			return github_com_mwitkow_go_proto_validators.FieldError("LastModifiedAt", err)
 		}
 	}
 	return nil

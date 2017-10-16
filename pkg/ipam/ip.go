@@ -2,6 +2,7 @@ package ipam
 
 import (
 	"net"
+	"time"
 
 	"github.com/pkg/errors"
 
@@ -12,6 +13,13 @@ import (
 func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 	if err := addr.Validate(); err != nil {
 		return err
+	}
+
+	now := time.Now()
+	if addr.CreatedAt == nil {
+		addr.CreatedAt = &now
+	} else {
+		addr.LastModifiedAt = &now
 	}
 
 	ip := net.ParseIP(addr.Ip)

@@ -2,6 +2,7 @@ package ipam
 
 import (
 	"net"
+	"time"
 
 	"github.com/pkg/errors"
 
@@ -38,6 +39,13 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 func setNetwork(r *storage.Redis, n *model.Network) error {
 	if err := n.Validate(); err != nil {
 		return err
+	}
+
+	now := time.Now()
+	if n.CreatedAt == nil {
+		n.CreatedAt = &now
+	} else {
+		n.LastModifiedAt = &now
 	}
 
 	pipe := r.Client.TxPipeline()
