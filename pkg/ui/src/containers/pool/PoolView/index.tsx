@@ -9,8 +9,10 @@ import Grid from 'material-ui/Grid';
 import { AdminUIState } from "../../../reducers/index";
 import * as protos from '../../../proto/protos'
 import { PoolTable } from '../PoolTable';
-import { refreshPools, refreshIPsInPool, refreshNetworks,
-  createPool, updatePool, deletePool } from '../../../reducers/apiReducers';
+import {
+  refreshPools, refreshIPsInPool, refreshNetworks,
+  createPool, updatePool, deletePool, drawIP,
+} from '../../../reducers/apiReducers';
 import { KeyedCachedDataReducerState } from '../../../reducers/cachedDataReducers';
 
 type Pool = protos.model.Pool;
@@ -29,6 +31,7 @@ namespace PoolView {
   export interface Props extends RouteComponentProps<void> {
     pools: Pool[];
     networks: Network[];
+    drawedIP: typeof protos.serverpb.DrawIPResponse;
     ipsInPool: KeyedCachedDataReducerState<protos.serverpb.GetIPInPoolResponse>;
     refreshPools: typeof refreshPools;
     refreshIPsInPool: typeof refreshIPsInPool;
@@ -36,6 +39,7 @@ namespace PoolView {
     createPool: typeof createPool;
     updatePool: typeof updatePool;
     deletePool: typeof deletePool;
+    drawIP: typeof drawIP;
     classes: any;
   }
 
@@ -54,8 +58,8 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
     const {
       classes, pools, networks, ipsInPool,
       createPool, refreshPools, updatePool, deletePool,
-      refreshIPsInPool } = this.props;
-
+      refreshIPsInPool, drawIP
+    } = this.props;
 
 
     return (
@@ -69,6 +73,7 @@ class PoolView extends React.Component<PoolView.Props, PoolView.State> {
           deletePool={deletePool}
           refreshPools={refreshPools}
           refreshIPsInPool={refreshIPsInPool}
+          drawIP={drawIP}
           classes={{}}
         />
       </Grid>
@@ -83,7 +88,8 @@ const poolViewConnected = connect(
     return {
       pools: (state.cachedData.pools.data && state.cachedData.pools.data.pools),
       networks: (state.cachedData.networks.data && state.cachedData.networks.data.networks),
-      ipsInPool: state.cachedData.ipsInPool
+      ipsInPool: state.cachedData.ipsInPool,
+      drawedIP: state.cachedData.drawedIP.data,
     }
   },
   {
@@ -93,6 +99,7 @@ const poolViewConnected = connect(
     createPool,
     updatePool,
     deletePool,
+    drawIP,
   }
 )(styledPoolView);
 
