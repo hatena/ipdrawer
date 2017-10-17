@@ -3,12 +3,33 @@ package ipam
 import (
 	"net"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
+
+func setTSToPool(r *storage.Redis, pool *model.Pool) error {
+	if err := pool.Validate(); err != nil {
+		return err
+	}
+
+	if existsPool(r, pool) {
+		stored, _ := getPool(r, net.ParseIP(pool.Start), net.ParseIP(pool.End))
+		pool.CreatedAt = stored.CreatedAt
+	}
+
+	now := time.Now()
+	if pool.CreatedAt == nil {
+		pool.CreatedAt = &now
+	} else {
+		pool.LastModifiedAt = &now
+	}
+
+	return nil
+}
 
 func setPool(r *storage.Redis, pool *model.Pool) error {
 	if err := pool.Validate(); err != nil {

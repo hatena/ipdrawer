@@ -102,15 +102,17 @@ func (m *IPManager) CreateIP(ctx context.Context, ps []*model.Pool, addr *model.
 
 	ip := net.ParseIP(addr.Ip)
 
+	if err := setTSToIPAddr(m.redis, addr); err != nil {
+		return err
+	}
+
+	if err := setIPAddr(m.redis, addr); err != nil {
+		return err
+	}
+
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))
-	// Change IP status to ACTIVE
-	data, err := addr.Marshal()
-	if err != nil {
-		return err
-	}
-	pipe.Set(makeIPDetailsKey(ip), string(data), 0)
 	// Add IP to used IP zset
 	score := float64(netutil.IP2Uint(ip))
 	z := redis.Z{
@@ -173,6 +175,10 @@ func (m *IPManager) UpdateIP(ctx context.Context, addr *model.IPAddr) error {
 
 	if !existsIP(m.redis, addr) {
 		return errors.New("Not found IP")
+	}
+
+	if err := setTSToIPAddr(m.redis, addr); err != nil {
+		return err
 	}
 
 	return setIPAddr(m.redis, addr)
@@ -265,6 +271,10 @@ func (m *IPManager) CreateNetwork(ctx context.Context, n *model.Network) error {
 	}
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
+	if err := setTSToNetwork(m.redis, n); err != nil {
+		return err
+	}
+
 	return setNetwork(m.redis, n)
 }
 
@@ -297,6 +307,10 @@ func (m *IPManager) UpdateNetwork(ctx context.Context, n *model.Network) error {
 
 	if !existsNetwork(m.redis, n) {
 		return errors.New("Not found Network")
+	}
+
+	if err := setTSToNetwork(m.redis, n); err != nil {
+		return err
 	}
 
 	return setNetwork(m.redis, n)
@@ -341,6 +355,10 @@ func (m *IPManager) CreatePool(ctx context.Context, n *model.Network, pool *mode
 		if err != nil {
 			return err
 		}
+	}
+
+	if err := setTSToPool(m.redis, pool); err != nil {
+		return err
 	}
 
 	return setPool(m.redis, pool)
@@ -432,6 +450,10 @@ func (m *IPManager) UpdatePool(ctx context.Context, pool *model.Pool) error {
 
 	if !existsPool(m.redis, pool) {
 		return errors.New("Not found Pool")
+	}
+
+	if err := setTSToPool(m.redis, pool); err != nil {
+		return err
 	}
 
 	return setPool(m.redis, pool)

@@ -10,10 +10,18 @@
 
 package apiclient
 
+import (
+	"time"
+)
+
 type ModelIpAddr struct {
 	Ip string `json:"ip,omitempty"`
 
 	Status ModelIpAddrStatus `json:"status,omitempty"`
 
 	Tags []ModelTag `json:"tags,omitempty"`
+
+	CreatedAt time.Time `json:"created_at,omitempty"`
+
+	LastModifiedAt time.Time `json:"last_modified_at,omitempty"`
 }

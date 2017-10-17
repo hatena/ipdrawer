@@ -7613,6 +7613,1359 @@ $root.serverpb = (function() {
     return serverpb;
 })();
 
+$root.model = (function() {
+
+    /**
+     * Namespace model.
+     * @exports model
+     * @namespace
+     */
+    var model = {};
+
+    model.Tag = (function() {
+
+        /**
+         * Properties of a Tag.
+         * @memberof model
+         * @interface ITag
+         * @property {string} [key] Tag key
+         * @property {string} [value] Tag value
+         */
+
+        /**
+         * Constructs a new Tag.
+         * @memberof model
+         * @classdesc Represents a Tag.
+         * @constructor
+         * @param {model.ITag=} [properties] Properties to set
+         */
+        function Tag(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Tag key.
+         * @member {string}key
+         * @memberof model.Tag
+         * @instance
+         */
+        Tag.prototype.key = "";
+
+        /**
+         * Tag value.
+         * @member {string}value
+         * @memberof model.Tag
+         * @instance
+         */
+        Tag.prototype.value = "";
+
+        /**
+         * Creates a new Tag instance using the specified properties.
+         * @function create
+         * @memberof model.Tag
+         * @static
+         * @param {model.ITag=} [properties] Properties to set
+         * @returns {model.Tag} Tag instance
+         */
+        Tag.create = function create(properties) {
+            return new Tag(properties);
+        };
+
+        /**
+         * Encodes the specified Tag message. Does not implicitly {@link model.Tag.verify|verify} messages.
+         * @function encode
+         * @memberof model.Tag
+         * @static
+         * @param {model.ITag} message Tag message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Tag.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.key != null && message.hasOwnProperty("key"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.key);
+            if (message.value != null && message.hasOwnProperty("value"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.value);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Tag message, length delimited. Does not implicitly {@link model.Tag.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.Tag
+         * @static
+         * @param {model.ITag} message Tag message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Tag.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Tag message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.Tag
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.Tag} Tag
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Tag.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Tag();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.key = reader.string();
+                    break;
+                case 2:
+                    message.value = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Tag message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.Tag
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.Tag} Tag
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Tag.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Tag message.
+         * @function verify
+         * @memberof model.Tag
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Tag.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.key != null && message.hasOwnProperty("key"))
+                if (!$util.isString(message.key))
+                    return "key: string expected";
+            if (message.value != null && message.hasOwnProperty("value"))
+                if (!$util.isString(message.value))
+                    return "value: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a Tag message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.Tag
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.Tag} Tag
+         */
+        Tag.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.Tag)
+                return object;
+            var message = new $root.model.Tag();
+            if (object.key != null)
+                message.key = String(object.key);
+            if (object.value != null)
+                message.value = String(object.value);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Tag message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.Tag
+         * @static
+         * @param {model.Tag} message Tag
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Tag.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.key = "";
+                object.value = "";
+            }
+            if (message.key != null && message.hasOwnProperty("key"))
+                object.key = message.key;
+            if (message.value != null && message.hasOwnProperty("value"))
+                object.value = message.value;
+            return object;
+        };
+
+        /**
+         * Converts this Tag to JSON.
+         * @function toJSON
+         * @memberof model.Tag
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Tag.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Tag;
+    })();
+
+    model.Pool = (function() {
+
+        /**
+         * Properties of a Pool.
+         * @memberof model
+         * @interface IPool
+         * @property {string} [start] Pool start
+         * @property {string} [end] Pool end
+         * @property {model.Pool.Status} [status] Pool status
+         * @property {Array.<model.ITag>} [tags] Pool tags
+         * @property {google.protobuf.ITimestamp} [createdAt] Pool createdAt
+         * @property {google.protobuf.ITimestamp} [lastModifiedAt] Pool lastModifiedAt
+         */
+
+        /**
+         * Constructs a new Pool.
+         * @memberof model
+         * @classdesc Represents a Pool.
+         * @constructor
+         * @param {model.IPool=} [properties] Properties to set
+         */
+        function Pool(properties) {
+            this.tags = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Pool start.
+         * @member {string}start
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.start = "";
+
+        /**
+         * Pool end.
+         * @member {string}end
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.end = "";
+
+        /**
+         * Pool status.
+         * @member {model.Pool.Status}status
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.status = 0;
+
+        /**
+         * Pool tags.
+         * @member {Array.<model.ITag>}tags
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.tags = $util.emptyArray;
+
+        /**
+         * Pool createdAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.createdAt = null;
+
+        /**
+         * Pool lastModifiedAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @memberof model.Pool
+         * @instance
+         */
+        Pool.prototype.lastModifiedAt = null;
+
+        /**
+         * Creates a new Pool instance using the specified properties.
+         * @function create
+         * @memberof model.Pool
+         * @static
+         * @param {model.IPool=} [properties] Properties to set
+         * @returns {model.Pool} Pool instance
+         */
+        Pool.create = function create(properties) {
+            return new Pool(properties);
+        };
+
+        /**
+         * Encodes the specified Pool message. Does not implicitly {@link model.Pool.verify|verify} messages.
+         * @function encode
+         * @memberof model.Pool
+         * @static
+         * @param {model.IPool} message Pool message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Pool.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.start != null && message.hasOwnProperty("start"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.start);
+            if (message.end != null && message.hasOwnProperty("end"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.end);
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.status);
+            if (message.tags != null && message.tags.length)
+                for (var i = 0; i < message.tags.length; ++i)
+                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                $root.google.protobuf.Timestamp.encode(message.createdAt, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                $root.google.protobuf.Timestamp.encode(message.lastModifiedAt, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Pool message, length delimited. Does not implicitly {@link model.Pool.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.Pool
+         * @static
+         * @param {model.IPool} message Pool message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Pool.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Pool message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.Pool
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.Pool} Pool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Pool.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Pool();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.start = reader.string();
+                    break;
+                case 2:
+                    message.end = reader.string();
+                    break;
+                case 3:
+                    message.status = reader.int32();
+                    break;
+                case 4:
+                    if (!(message.tags && message.tags.length))
+                        message.tags = [];
+                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
+                    break;
+                case 5:
+                    message.createdAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 6:
+                    message.lastModifiedAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Pool message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.Pool
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.Pool} Pool
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Pool.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Pool message.
+         * @function verify
+         * @memberof model.Pool
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Pool.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.start != null && message.hasOwnProperty("start"))
+                if (!$util.isString(message.start))
+                    return "start: string expected";
+            if (message.end != null && message.hasOwnProperty("end"))
+                if (!$util.isString(message.end))
+                    return "end: string expected";
+            if (message.status != null && message.hasOwnProperty("status"))
+                switch (message.status) {
+                default:
+                    return "status: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                    break;
+                }
+            if (message.tags != null && message.hasOwnProperty("tags")) {
+                if (!Array.isArray(message.tags))
+                    return "tags: array expected";
+                for (var i = 0; i < message.tags.length; ++i) {
+                    var error = $root.model.Tag.verify(message.tags[i]);
+                    if (error)
+                        return "tags." + error;
+                }
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                if (error)
+                    return "createdAt." + error;
+            }
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                if (error)
+                    return "lastModifiedAt." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Pool message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.Pool
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.Pool} Pool
+         */
+        Pool.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.Pool)
+                return object;
+            var message = new $root.model.Pool();
+            if (object.start != null)
+                message.start = String(object.start);
+            if (object.end != null)
+                message.end = String(object.end);
+            switch (object.status) {
+            case "UNKNOWN":
+            case 0:
+                message.status = 0;
+                break;
+            case "AVAILABLE":
+            case 1:
+                message.status = 1;
+                break;
+            case "RESERVED":
+            case 2:
+                message.status = 2;
+                break;
+            }
+            if (object.tags) {
+                if (!Array.isArray(object.tags))
+                    throw TypeError(".model.Pool.tags: array expected");
+                message.tags = [];
+                for (var i = 0; i < object.tags.length; ++i) {
+                    if (typeof object.tags[i] !== "object")
+                        throw TypeError(".model.Pool.tags: object expected");
+                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
+                }
+            }
+            if (object.createdAt != null) {
+                if (typeof object.createdAt !== "object")
+                    throw TypeError(".model.Pool.createdAt: object expected");
+                message.createdAt = $root.google.protobuf.Timestamp.fromObject(object.createdAt);
+            }
+            if (object.lastModifiedAt != null) {
+                if (typeof object.lastModifiedAt !== "object")
+                    throw TypeError(".model.Pool.lastModifiedAt: object expected");
+                message.lastModifiedAt = $root.google.protobuf.Timestamp.fromObject(object.lastModifiedAt);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Pool message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.Pool
+         * @static
+         * @param {model.Pool} message Pool
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Pool.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.tags = [];
+            if (options.defaults) {
+                object.start = "";
+                object.end = "";
+                object.status = options.enums === String ? "UNKNOWN" : 0;
+                object.createdAt = null;
+                object.lastModifiedAt = null;
+            }
+            if (message.start != null && message.hasOwnProperty("start"))
+                object.start = message.start;
+            if (message.end != null && message.hasOwnProperty("end"))
+                object.end = message.end;
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = options.enums === String ? $root.model.Pool.Status[message.status] : message.status;
+            if (message.tags && message.tags.length) {
+                object.tags = [];
+                for (var j = 0; j < message.tags.length; ++j)
+                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                object.createdAt = $root.google.protobuf.Timestamp.toObject(message.createdAt, options);
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                object.lastModifiedAt = $root.google.protobuf.Timestamp.toObject(message.lastModifiedAt, options);
+            return object;
+        };
+
+        /**
+         * Converts this Pool to JSON.
+         * @function toJSON
+         * @memberof model.Pool
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Pool.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Status enum.
+         * @enum {string}
+         * @property {number} UNKNOWN=0 UNKNOWN value
+         * @property {number} AVAILABLE=1 AVAILABLE value
+         * @property {number} RESERVED=2 RESERVED value
+         */
+        Pool.Status = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "UNKNOWN"] = 0;
+            values[valuesById[1] = "AVAILABLE"] = 1;
+            values[valuesById[2] = "RESERVED"] = 2;
+            return values;
+        })();
+
+        return Pool;
+    })();
+
+    model.IPAddr = (function() {
+
+        /**
+         * Properties of a IPAddr.
+         * @memberof model
+         * @interface IIPAddr
+         * @property {string} [ip] IPAddr ip
+         * @property {model.IPAddr.Status} [status] IPAddr status
+         * @property {Array.<model.ITag>} [tags] IPAddr tags
+         * @property {google.protobuf.ITimestamp} [createdAt] IPAddr createdAt
+         * @property {google.protobuf.ITimestamp} [lastModifiedAt] IPAddr lastModifiedAt
+         */
+
+        /**
+         * Constructs a new IPAddr.
+         * @memberof model
+         * @classdesc Represents a IPAddr.
+         * @constructor
+         * @param {model.IIPAddr=} [properties] Properties to set
+         */
+        function IPAddr(properties) {
+            this.tags = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * IPAddr ip.
+         * @member {string}ip
+         * @memberof model.IPAddr
+         * @instance
+         */
+        IPAddr.prototype.ip = "";
+
+        /**
+         * IPAddr status.
+         * @member {model.IPAddr.Status}status
+         * @memberof model.IPAddr
+         * @instance
+         */
+        IPAddr.prototype.status = 0;
+
+        /**
+         * IPAddr tags.
+         * @member {Array.<model.ITag>}tags
+         * @memberof model.IPAddr
+         * @instance
+         */
+        IPAddr.prototype.tags = $util.emptyArray;
+
+        /**
+         * IPAddr createdAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @memberof model.IPAddr
+         * @instance
+         */
+        IPAddr.prototype.createdAt = null;
+
+        /**
+         * IPAddr lastModifiedAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @memberof model.IPAddr
+         * @instance
+         */
+        IPAddr.prototype.lastModifiedAt = null;
+
+        /**
+         * Creates a new IPAddr instance using the specified properties.
+         * @function create
+         * @memberof model.IPAddr
+         * @static
+         * @param {model.IIPAddr=} [properties] Properties to set
+         * @returns {model.IPAddr} IPAddr instance
+         */
+        IPAddr.create = function create(properties) {
+            return new IPAddr(properties);
+        };
+
+        /**
+         * Encodes the specified IPAddr message. Does not implicitly {@link model.IPAddr.verify|verify} messages.
+         * @function encode
+         * @memberof model.IPAddr
+         * @static
+         * @param {model.IIPAddr} message IPAddr message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IPAddr.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.ip);
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.status);
+            if (message.tags != null && message.tags.length)
+                for (var i = 0; i < message.tags.length; ++i)
+                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                $root.google.protobuf.Timestamp.encode(message.createdAt, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                $root.google.protobuf.Timestamp.encode(message.lastModifiedAt, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified IPAddr message, length delimited. Does not implicitly {@link model.IPAddr.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.IPAddr
+         * @static
+         * @param {model.IIPAddr} message IPAddr message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        IPAddr.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a IPAddr message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.IPAddr
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.IPAddr} IPAddr
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IPAddr.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.IPAddr();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.ip = reader.string();
+                    break;
+                case 2:
+                    message.status = reader.int32();
+                    break;
+                case 3:
+                    if (!(message.tags && message.tags.length))
+                        message.tags = [];
+                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
+                    break;
+                case 4:
+                    message.createdAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 5:
+                    message.lastModifiedAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a IPAddr message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.IPAddr
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.IPAddr} IPAddr
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        IPAddr.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a IPAddr message.
+         * @function verify
+         * @memberof model.IPAddr
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        IPAddr.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                if (!$util.isString(message.ip))
+                    return "ip: string expected";
+            if (message.status != null && message.hasOwnProperty("status"))
+                switch (message.status) {
+                default:
+                    return "status: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    break;
+                }
+            if (message.tags != null && message.hasOwnProperty("tags")) {
+                if (!Array.isArray(message.tags))
+                    return "tags: array expected";
+                for (var i = 0; i < message.tags.length; ++i) {
+                    var error = $root.model.Tag.verify(message.tags[i]);
+                    if (error)
+                        return "tags." + error;
+                }
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                if (error)
+                    return "createdAt." + error;
+            }
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                if (error)
+                    return "lastModifiedAt." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a IPAddr message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.IPAddr
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.IPAddr} IPAddr
+         */
+        IPAddr.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.IPAddr)
+                return object;
+            var message = new $root.model.IPAddr();
+            if (object.ip != null)
+                message.ip = String(object.ip);
+            switch (object.status) {
+            case "UNKNOWN":
+            case 0:
+                message.status = 0;
+                break;
+            case "ACTIVE":
+            case 1:
+                message.status = 1;
+                break;
+            case "TEMPORARY_RESERVED":
+            case 2:
+                message.status = 2;
+                break;
+            case "RESERVED":
+            case 3:
+                message.status = 3;
+                break;
+            }
+            if (object.tags) {
+                if (!Array.isArray(object.tags))
+                    throw TypeError(".model.IPAddr.tags: array expected");
+                message.tags = [];
+                for (var i = 0; i < object.tags.length; ++i) {
+                    if (typeof object.tags[i] !== "object")
+                        throw TypeError(".model.IPAddr.tags: object expected");
+                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
+                }
+            }
+            if (object.createdAt != null) {
+                if (typeof object.createdAt !== "object")
+                    throw TypeError(".model.IPAddr.createdAt: object expected");
+                message.createdAt = $root.google.protobuf.Timestamp.fromObject(object.createdAt);
+            }
+            if (object.lastModifiedAt != null) {
+                if (typeof object.lastModifiedAt !== "object")
+                    throw TypeError(".model.IPAddr.lastModifiedAt: object expected");
+                message.lastModifiedAt = $root.google.protobuf.Timestamp.fromObject(object.lastModifiedAt);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a IPAddr message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.IPAddr
+         * @static
+         * @param {model.IPAddr} message IPAddr
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        IPAddr.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults)
+                object.tags = [];
+            if (options.defaults) {
+                object.ip = "";
+                object.status = options.enums === String ? "UNKNOWN" : 0;
+                object.createdAt = null;
+                object.lastModifiedAt = null;
+            }
+            if (message.ip != null && message.hasOwnProperty("ip"))
+                object.ip = message.ip;
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = options.enums === String ? $root.model.IPAddr.Status[message.status] : message.status;
+            if (message.tags && message.tags.length) {
+                object.tags = [];
+                for (var j = 0; j < message.tags.length; ++j)
+                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                object.createdAt = $root.google.protobuf.Timestamp.toObject(message.createdAt, options);
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                object.lastModifiedAt = $root.google.protobuf.Timestamp.toObject(message.lastModifiedAt, options);
+            return object;
+        };
+
+        /**
+         * Converts this IPAddr to JSON.
+         * @function toJSON
+         * @memberof model.IPAddr
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        IPAddr.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Status enum.
+         * @enum {string}
+         * @property {number} UNKNOWN=0 UNKNOWN value
+         * @property {number} ACTIVE=1 ACTIVE value
+         * @property {number} TEMPORARY_RESERVED=2 TEMPORARY_RESERVED value
+         * @property {number} RESERVED=3 RESERVED value
+         */
+        IPAddr.Status = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "UNKNOWN"] = 0;
+            values[valuesById[1] = "ACTIVE"] = 1;
+            values[valuesById[2] = "TEMPORARY_RESERVED"] = 2;
+            values[valuesById[3] = "RESERVED"] = 3;
+            return values;
+        })();
+
+        return IPAddr;
+    })();
+
+    model.Network = (function() {
+
+        /**
+         * Properties of a Network.
+         * @memberof model
+         * @interface INetwork
+         * @property {string} [prefix] Network prefix
+         * @property {Array.<string>} [gateways] Network gateways
+         * @property {string} [broadcast] Network broadcast
+         * @property {string} [netmask] Network netmask
+         * @property {model.Network.Status} [status] Network status
+         * @property {Array.<model.ITag>} [tags] Network tags
+         * @property {google.protobuf.ITimestamp} [createdAt] Network createdAt
+         * @property {google.protobuf.ITimestamp} [lastModifiedAt] Network lastModifiedAt
+         */
+
+        /**
+         * Constructs a new Network.
+         * @memberof model
+         * @classdesc Represents a Network.
+         * @constructor
+         * @param {model.INetwork=} [properties] Properties to set
+         */
+        function Network(properties) {
+            this.gateways = [];
+            this.tags = [];
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Network prefix.
+         * @member {string}prefix
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.prefix = "";
+
+        /**
+         * Network gateways.
+         * @member {Array.<string>}gateways
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.gateways = $util.emptyArray;
+
+        /**
+         * Network broadcast.
+         * @member {string}broadcast
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.broadcast = "";
+
+        /**
+         * Network netmask.
+         * @member {string}netmask
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.netmask = "";
+
+        /**
+         * Network status.
+         * @member {model.Network.Status}status
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.status = 0;
+
+        /**
+         * Network tags.
+         * @member {Array.<model.ITag>}tags
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.tags = $util.emptyArray;
+
+        /**
+         * Network createdAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.createdAt = null;
+
+        /**
+         * Network lastModifiedAt.
+         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @memberof model.Network
+         * @instance
+         */
+        Network.prototype.lastModifiedAt = null;
+
+        /**
+         * Creates a new Network instance using the specified properties.
+         * @function create
+         * @memberof model.Network
+         * @static
+         * @param {model.INetwork=} [properties] Properties to set
+         * @returns {model.Network} Network instance
+         */
+        Network.create = function create(properties) {
+            return new Network(properties);
+        };
+
+        /**
+         * Encodes the specified Network message. Does not implicitly {@link model.Network.verify|verify} messages.
+         * @function encode
+         * @memberof model.Network
+         * @static
+         * @param {model.INetwork} message Network message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Network.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.prefix);
+            if (message.gateways != null && message.gateways.length)
+                for (var i = 0; i < message.gateways.length; ++i)
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.gateways[i]);
+            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.broadcast);
+            if (message.netmask != null && message.hasOwnProperty("netmask"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.netmask);
+            if (message.status != null && message.hasOwnProperty("status"))
+                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.status);
+            if (message.tags != null && message.tags.length)
+                for (var i = 0; i < message.tags.length; ++i)
+                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                $root.google.protobuf.Timestamp.encode(message.createdAt, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                $root.google.protobuf.Timestamp.encode(message.lastModifiedAt, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Network message, length delimited. Does not implicitly {@link model.Network.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof model.Network
+         * @static
+         * @param {model.INetwork} message Network message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Network.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Network message from the specified reader or buffer.
+         * @function decode
+         * @memberof model.Network
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {model.Network} Network
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Network.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Network();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.prefix = reader.string();
+                    break;
+                case 2:
+                    if (!(message.gateways && message.gateways.length))
+                        message.gateways = [];
+                    message.gateways.push(reader.string());
+                    break;
+                case 3:
+                    message.broadcast = reader.string();
+                    break;
+                case 4:
+                    message.netmask = reader.string();
+                    break;
+                case 5:
+                    message.status = reader.int32();
+                    break;
+                case 6:
+                    if (!(message.tags && message.tags.length))
+                        message.tags = [];
+                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
+                    break;
+                case 7:
+                    message.createdAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                case 8:
+                    message.lastModifiedAt = $root.google.protobuf.Timestamp.decode(reader, reader.uint32());
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Network message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof model.Network
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {model.Network} Network
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Network.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Network message.
+         * @function verify
+         * @memberof model.Network
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Network.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                if (!$util.isString(message.prefix))
+                    return "prefix: string expected";
+            if (message.gateways != null && message.hasOwnProperty("gateways")) {
+                if (!Array.isArray(message.gateways))
+                    return "gateways: array expected";
+                for (var i = 0; i < message.gateways.length; ++i)
+                    if (!$util.isString(message.gateways[i]))
+                        return "gateways: string[] expected";
+            }
+            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
+                if (!$util.isString(message.broadcast))
+                    return "broadcast: string expected";
+            if (message.netmask != null && message.hasOwnProperty("netmask"))
+                if (!$util.isString(message.netmask))
+                    return "netmask: string expected";
+            if (message.status != null && message.hasOwnProperty("status"))
+                switch (message.status) {
+                default:
+                    return "status: enum value expected";
+                case 0:
+                case 1:
+                case 2:
+                    break;
+                }
+            if (message.tags != null && message.hasOwnProperty("tags")) {
+                if (!Array.isArray(message.tags))
+                    return "tags: array expected";
+                for (var i = 0; i < message.tags.length; ++i) {
+                    var error = $root.model.Tag.verify(message.tags[i]);
+                    if (error)
+                        return "tags." + error;
+                }
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                if (error)
+                    return "createdAt." + error;
+            }
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
+                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                if (error)
+                    return "lastModifiedAt." + error;
+            }
+            return null;
+        };
+
+        /**
+         * Creates a Network message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof model.Network
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {model.Network} Network
+         */
+        Network.fromObject = function fromObject(object) {
+            if (object instanceof $root.model.Network)
+                return object;
+            var message = new $root.model.Network();
+            if (object.prefix != null)
+                message.prefix = String(object.prefix);
+            if (object.gateways) {
+                if (!Array.isArray(object.gateways))
+                    throw TypeError(".model.Network.gateways: array expected");
+                message.gateways = [];
+                for (var i = 0; i < object.gateways.length; ++i)
+                    message.gateways[i] = String(object.gateways[i]);
+            }
+            if (object.broadcast != null)
+                message.broadcast = String(object.broadcast);
+            if (object.netmask != null)
+                message.netmask = String(object.netmask);
+            switch (object.status) {
+            case "UNKNOWN":
+            case 0:
+                message.status = 0;
+                break;
+            case "AVAILABLE":
+            case 1:
+                message.status = 1;
+                break;
+            case "RESERVED":
+            case 2:
+                message.status = 2;
+                break;
+            }
+            if (object.tags) {
+                if (!Array.isArray(object.tags))
+                    throw TypeError(".model.Network.tags: array expected");
+                message.tags = [];
+                for (var i = 0; i < object.tags.length; ++i) {
+                    if (typeof object.tags[i] !== "object")
+                        throw TypeError(".model.Network.tags: object expected");
+                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
+                }
+            }
+            if (object.createdAt != null) {
+                if (typeof object.createdAt !== "object")
+                    throw TypeError(".model.Network.createdAt: object expected");
+                message.createdAt = $root.google.protobuf.Timestamp.fromObject(object.createdAt);
+            }
+            if (object.lastModifiedAt != null) {
+                if (typeof object.lastModifiedAt !== "object")
+                    throw TypeError(".model.Network.lastModifiedAt: object expected");
+                message.lastModifiedAt = $root.google.protobuf.Timestamp.fromObject(object.lastModifiedAt);
+            }
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Network message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof model.Network
+         * @static
+         * @param {model.Network} message Network
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Network.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.arrays || options.defaults) {
+                object.gateways = [];
+                object.tags = [];
+            }
+            if (options.defaults) {
+                object.prefix = "";
+                object.broadcast = "";
+                object.netmask = "";
+                object.status = options.enums === String ? "UNKNOWN" : 0;
+                object.createdAt = null;
+                object.lastModifiedAt = null;
+            }
+            if (message.prefix != null && message.hasOwnProperty("prefix"))
+                object.prefix = message.prefix;
+            if (message.gateways && message.gateways.length) {
+                object.gateways = [];
+                for (var j = 0; j < message.gateways.length; ++j)
+                    object.gateways[j] = message.gateways[j];
+            }
+            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
+                object.broadcast = message.broadcast;
+            if (message.netmask != null && message.hasOwnProperty("netmask"))
+                object.netmask = message.netmask;
+            if (message.status != null && message.hasOwnProperty("status"))
+                object.status = options.enums === String ? $root.model.Network.Status[message.status] : message.status;
+            if (message.tags && message.tags.length) {
+                object.tags = [];
+                for (var j = 0; j < message.tags.length; ++j)
+                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
+            }
+            if (message.createdAt != null && message.hasOwnProperty("createdAt"))
+                object.createdAt = $root.google.protobuf.Timestamp.toObject(message.createdAt, options);
+            if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt"))
+                object.lastModifiedAt = $root.google.protobuf.Timestamp.toObject(message.lastModifiedAt, options);
+            return object;
+        };
+
+        /**
+         * Converts this Network to JSON.
+         * @function toJSON
+         * @memberof model.Network
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Network.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        /**
+         * Status enum.
+         * @enum {string}
+         * @property {number} UNKNOWN=0 UNKNOWN value
+         * @property {number} AVAILABLE=1 AVAILABLE value
+         * @property {number} RESERVED=2 RESERVED value
+         */
+        Network.Status = (function() {
+            var valuesById = {}, values = Object.create(valuesById);
+            values[valuesById[0] = "UNKNOWN"] = 0;
+            values[valuesById[1] = "AVAILABLE"] = 1;
+            values[valuesById[2] = "RESERVED"] = 2;
+            return values;
+        })();
+
+        return Network;
+    })();
+
+    return model;
+})();
+
 $root.google = (function() {
 
     /**
@@ -16135,1201 +17488,233 @@ $root.google = (function() {
             return GeneratedCodeInfo;
         })();
 
+        protobuf.Timestamp = (function() {
+
+            /**
+             * Properties of a Timestamp.
+             * @memberof google.protobuf
+             * @interface ITimestamp
+             * @property {number|Long} [seconds] Timestamp seconds
+             * @property {number} [nanos] Timestamp nanos
+             */
+
+            /**
+             * Constructs a new Timestamp.
+             * @memberof google.protobuf
+             * @classdesc Represents a Timestamp.
+             * @constructor
+             * @param {google.protobuf.ITimestamp=} [properties] Properties to set
+             */
+            function Timestamp(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * Timestamp seconds.
+             * @member {number|Long}seconds
+             * @memberof google.protobuf.Timestamp
+             * @instance
+             */
+            Timestamp.prototype.seconds = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
+
+            /**
+             * Timestamp nanos.
+             * @member {number}nanos
+             * @memberof google.protobuf.Timestamp
+             * @instance
+             */
+            Timestamp.prototype.nanos = 0;
+
+            /**
+             * Creates a new Timestamp instance using the specified properties.
+             * @function create
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {google.protobuf.ITimestamp=} [properties] Properties to set
+             * @returns {google.protobuf.Timestamp} Timestamp instance
+             */
+            Timestamp.create = function create(properties) {
+                return new Timestamp(properties);
+            };
+
+            /**
+             * Encodes the specified Timestamp message. Does not implicitly {@link google.protobuf.Timestamp.verify|verify} messages.
+             * @function encode
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {google.protobuf.ITimestamp} message Timestamp message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Timestamp.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.seconds != null && message.hasOwnProperty("seconds"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).int64(message.seconds);
+                if (message.nanos != null && message.hasOwnProperty("nanos"))
+                    writer.uint32(/* id 2, wireType 0 =*/16).int32(message.nanos);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified Timestamp message, length delimited. Does not implicitly {@link google.protobuf.Timestamp.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {google.protobuf.ITimestamp} message Timestamp message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            Timestamp.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a Timestamp message from the specified reader or buffer.
+             * @function decode
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {google.protobuf.Timestamp} Timestamp
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Timestamp.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.google.protobuf.Timestamp();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.seconds = reader.int64();
+                        break;
+                    case 2:
+                        message.nanos = reader.int32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a Timestamp message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {google.protobuf.Timestamp} Timestamp
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            Timestamp.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a Timestamp message.
+             * @function verify
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            Timestamp.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.seconds != null && message.hasOwnProperty("seconds"))
+                    if (!$util.isInteger(message.seconds) && !(message.seconds && $util.isInteger(message.seconds.low) && $util.isInteger(message.seconds.high)))
+                        return "seconds: integer|Long expected";
+                if (message.nanos != null && message.hasOwnProperty("nanos"))
+                    if (!$util.isInteger(message.nanos))
+                        return "nanos: integer expected";
+                return null;
+            };
+
+            /**
+             * Creates a Timestamp message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {google.protobuf.Timestamp} Timestamp
+             */
+            Timestamp.fromObject = function fromObject(object) {
+                if (object instanceof $root.google.protobuf.Timestamp)
+                    return object;
+                var message = new $root.google.protobuf.Timestamp();
+                if (object.seconds != null)
+                    if ($util.Long)
+                        (message.seconds = $util.Long.fromValue(object.seconds)).unsigned = false;
+                    else if (typeof object.seconds === "string")
+                        message.seconds = parseInt(object.seconds, 10);
+                    else if (typeof object.seconds === "number")
+                        message.seconds = object.seconds;
+                    else if (typeof object.seconds === "object")
+                        message.seconds = new $util.LongBits(object.seconds.low >>> 0, object.seconds.high >>> 0).toNumber();
+                if (object.nanos != null)
+                    message.nanos = object.nanos | 0;
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a Timestamp message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof google.protobuf.Timestamp
+             * @static
+             * @param {google.protobuf.Timestamp} message Timestamp
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            Timestamp.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults) {
+                    if ($util.Long) {
+                        var long = new $util.Long(0, 0, false);
+                        object.seconds = options.longs === String ? long.toString() : options.longs === Number ? long.toNumber() : long;
+                    } else
+                        object.seconds = options.longs === String ? "0" : 0;
+                    object.nanos = 0;
+                }
+                if (message.seconds != null && message.hasOwnProperty("seconds"))
+                    if (typeof message.seconds === "number")
+                        object.seconds = options.longs === String ? String(message.seconds) : message.seconds;
+                    else
+                        object.seconds = options.longs === String ? $util.Long.prototype.toString.call(message.seconds) : options.longs === Number ? new $util.LongBits(message.seconds.low >>> 0, message.seconds.high >>> 0).toNumber() : message.seconds;
+                if (message.nanos != null && message.hasOwnProperty("nanos"))
+                    object.nanos = message.nanos;
+                return object;
+            };
+
+            /**
+             * Converts this Timestamp to JSON.
+             * @function toJSON
+             * @memberof google.protobuf.Timestamp
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            Timestamp.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return Timestamp;
+        })();
+
         return protobuf;
     })();
 
     return google;
-})();
-
-$root.model = (function() {
-
-    /**
-     * Namespace model.
-     * @exports model
-     * @namespace
-     */
-    var model = {};
-
-    model.Tag = (function() {
-
-        /**
-         * Properties of a Tag.
-         * @memberof model
-         * @interface ITag
-         * @property {string} [key] Tag key
-         * @property {string} [value] Tag value
-         */
-
-        /**
-         * Constructs a new Tag.
-         * @memberof model
-         * @classdesc Represents a Tag.
-         * @constructor
-         * @param {model.ITag=} [properties] Properties to set
-         */
-        function Tag(properties) {
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Tag key.
-         * @member {string}key
-         * @memberof model.Tag
-         * @instance
-         */
-        Tag.prototype.key = "";
-
-        /**
-         * Tag value.
-         * @member {string}value
-         * @memberof model.Tag
-         * @instance
-         */
-        Tag.prototype.value = "";
-
-        /**
-         * Creates a new Tag instance using the specified properties.
-         * @function create
-         * @memberof model.Tag
-         * @static
-         * @param {model.ITag=} [properties] Properties to set
-         * @returns {model.Tag} Tag instance
-         */
-        Tag.create = function create(properties) {
-            return new Tag(properties);
-        };
-
-        /**
-         * Encodes the specified Tag message. Does not implicitly {@link model.Tag.verify|verify} messages.
-         * @function encode
-         * @memberof model.Tag
-         * @static
-         * @param {model.ITag} message Tag message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Tag.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.key != null && message.hasOwnProperty("key"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.key);
-            if (message.value != null && message.hasOwnProperty("value"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.value);
-            return writer;
-        };
-
-        /**
-         * Encodes the specified Tag message, length delimited. Does not implicitly {@link model.Tag.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof model.Tag
-         * @static
-         * @param {model.ITag} message Tag message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Tag.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a Tag message from the specified reader or buffer.
-         * @function decode
-         * @memberof model.Tag
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {model.Tag} Tag
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Tag.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Tag();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.key = reader.string();
-                    break;
-                case 2:
-                    message.value = reader.string();
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a Tag message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof model.Tag
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {model.Tag} Tag
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Tag.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a Tag message.
-         * @function verify
-         * @memberof model.Tag
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        Tag.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.key != null && message.hasOwnProperty("key"))
-                if (!$util.isString(message.key))
-                    return "key: string expected";
-            if (message.value != null && message.hasOwnProperty("value"))
-                if (!$util.isString(message.value))
-                    return "value: string expected";
-            return null;
-        };
-
-        /**
-         * Creates a Tag message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof model.Tag
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {model.Tag} Tag
-         */
-        Tag.fromObject = function fromObject(object) {
-            if (object instanceof $root.model.Tag)
-                return object;
-            var message = new $root.model.Tag();
-            if (object.key != null)
-                message.key = String(object.key);
-            if (object.value != null)
-                message.value = String(object.value);
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a Tag message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof model.Tag
-         * @static
-         * @param {model.Tag} message Tag
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        Tag.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.defaults) {
-                object.key = "";
-                object.value = "";
-            }
-            if (message.key != null && message.hasOwnProperty("key"))
-                object.key = message.key;
-            if (message.value != null && message.hasOwnProperty("value"))
-                object.value = message.value;
-            return object;
-        };
-
-        /**
-         * Converts this Tag to JSON.
-         * @function toJSON
-         * @memberof model.Tag
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        Tag.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        return Tag;
-    })();
-
-    model.Pool = (function() {
-
-        /**
-         * Properties of a Pool.
-         * @memberof model
-         * @interface IPool
-         * @property {string} [start] Pool start
-         * @property {string} [end] Pool end
-         * @property {model.Pool.Status} [status] Pool status
-         * @property {Array.<model.ITag>} [tags] Pool tags
-         */
-
-        /**
-         * Constructs a new Pool.
-         * @memberof model
-         * @classdesc Represents a Pool.
-         * @constructor
-         * @param {model.IPool=} [properties] Properties to set
-         */
-        function Pool(properties) {
-            this.tags = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Pool start.
-         * @member {string}start
-         * @memberof model.Pool
-         * @instance
-         */
-        Pool.prototype.start = "";
-
-        /**
-         * Pool end.
-         * @member {string}end
-         * @memberof model.Pool
-         * @instance
-         */
-        Pool.prototype.end = "";
-
-        /**
-         * Pool status.
-         * @member {model.Pool.Status}status
-         * @memberof model.Pool
-         * @instance
-         */
-        Pool.prototype.status = 0;
-
-        /**
-         * Pool tags.
-         * @member {Array.<model.ITag>}tags
-         * @memberof model.Pool
-         * @instance
-         */
-        Pool.prototype.tags = $util.emptyArray;
-
-        /**
-         * Creates a new Pool instance using the specified properties.
-         * @function create
-         * @memberof model.Pool
-         * @static
-         * @param {model.IPool=} [properties] Properties to set
-         * @returns {model.Pool} Pool instance
-         */
-        Pool.create = function create(properties) {
-            return new Pool(properties);
-        };
-
-        /**
-         * Encodes the specified Pool message. Does not implicitly {@link model.Pool.verify|verify} messages.
-         * @function encode
-         * @memberof model.Pool
-         * @static
-         * @param {model.IPool} message Pool message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Pool.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.start != null && message.hasOwnProperty("start"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.start);
-            if (message.end != null && message.hasOwnProperty("end"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.end);
-            if (message.status != null && message.hasOwnProperty("status"))
-                writer.uint32(/* id 3, wireType 0 =*/24).int32(message.status);
-            if (message.tags != null && message.tags.length)
-                for (var i = 0; i < message.tags.length; ++i)
-                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified Pool message, length delimited. Does not implicitly {@link model.Pool.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof model.Pool
-         * @static
-         * @param {model.IPool} message Pool message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Pool.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a Pool message from the specified reader or buffer.
-         * @function decode
-         * @memberof model.Pool
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {model.Pool} Pool
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Pool.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Pool();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.start = reader.string();
-                    break;
-                case 2:
-                    message.end = reader.string();
-                    break;
-                case 3:
-                    message.status = reader.int32();
-                    break;
-                case 4:
-                    if (!(message.tags && message.tags.length))
-                        message.tags = [];
-                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a Pool message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof model.Pool
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {model.Pool} Pool
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Pool.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a Pool message.
-         * @function verify
-         * @memberof model.Pool
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        Pool.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.start != null && message.hasOwnProperty("start"))
-                if (!$util.isString(message.start))
-                    return "start: string expected";
-            if (message.end != null && message.hasOwnProperty("end"))
-                if (!$util.isString(message.end))
-                    return "end: string expected";
-            if (message.status != null && message.hasOwnProperty("status"))
-                switch (message.status) {
-                default:
-                    return "status: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                    break;
-                }
-            if (message.tags != null && message.hasOwnProperty("tags")) {
-                if (!Array.isArray(message.tags))
-                    return "tags: array expected";
-                for (var i = 0; i < message.tags.length; ++i) {
-                    var error = $root.model.Tag.verify(message.tags[i]);
-                    if (error)
-                        return "tags." + error;
-                }
-            }
-            return null;
-        };
-
-        /**
-         * Creates a Pool message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof model.Pool
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {model.Pool} Pool
-         */
-        Pool.fromObject = function fromObject(object) {
-            if (object instanceof $root.model.Pool)
-                return object;
-            var message = new $root.model.Pool();
-            if (object.start != null)
-                message.start = String(object.start);
-            if (object.end != null)
-                message.end = String(object.end);
-            switch (object.status) {
-            case "UNKNOWN":
-            case 0:
-                message.status = 0;
-                break;
-            case "AVAILABLE":
-            case 1:
-                message.status = 1;
-                break;
-            case "RESERVED":
-            case 2:
-                message.status = 2;
-                break;
-            }
-            if (object.tags) {
-                if (!Array.isArray(object.tags))
-                    throw TypeError(".model.Pool.tags: array expected");
-                message.tags = [];
-                for (var i = 0; i < object.tags.length; ++i) {
-                    if (typeof object.tags[i] !== "object")
-                        throw TypeError(".model.Pool.tags: object expected");
-                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a Pool message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof model.Pool
-         * @static
-         * @param {model.Pool} message Pool
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        Pool.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults)
-                object.tags = [];
-            if (options.defaults) {
-                object.start = "";
-                object.end = "";
-                object.status = options.enums === String ? "UNKNOWN" : 0;
-            }
-            if (message.start != null && message.hasOwnProperty("start"))
-                object.start = message.start;
-            if (message.end != null && message.hasOwnProperty("end"))
-                object.end = message.end;
-            if (message.status != null && message.hasOwnProperty("status"))
-                object.status = options.enums === String ? $root.model.Pool.Status[message.status] : message.status;
-            if (message.tags && message.tags.length) {
-                object.tags = [];
-                for (var j = 0; j < message.tags.length; ++j)
-                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
-            }
-            return object;
-        };
-
-        /**
-         * Converts this Pool to JSON.
-         * @function toJSON
-         * @memberof model.Pool
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        Pool.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Status enum.
-         * @enum {string}
-         * @property {number} UNKNOWN=0 UNKNOWN value
-         * @property {number} AVAILABLE=1 AVAILABLE value
-         * @property {number} RESERVED=2 RESERVED value
-         */
-        Pool.Status = (function() {
-            var valuesById = {}, values = Object.create(valuesById);
-            values[valuesById[0] = "UNKNOWN"] = 0;
-            values[valuesById[1] = "AVAILABLE"] = 1;
-            values[valuesById[2] = "RESERVED"] = 2;
-            return values;
-        })();
-
-        return Pool;
-    })();
-
-    model.IPAddr = (function() {
-
-        /**
-         * Properties of a IPAddr.
-         * @memberof model
-         * @interface IIPAddr
-         * @property {string} [ip] IPAddr ip
-         * @property {model.IPAddr.Status} [status] IPAddr status
-         * @property {Array.<model.ITag>} [tags] IPAddr tags
-         */
-
-        /**
-         * Constructs a new IPAddr.
-         * @memberof model
-         * @classdesc Represents a IPAddr.
-         * @constructor
-         * @param {model.IIPAddr=} [properties] Properties to set
-         */
-        function IPAddr(properties) {
-            this.tags = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * IPAddr ip.
-         * @member {string}ip
-         * @memberof model.IPAddr
-         * @instance
-         */
-        IPAddr.prototype.ip = "";
-
-        /**
-         * IPAddr status.
-         * @member {model.IPAddr.Status}status
-         * @memberof model.IPAddr
-         * @instance
-         */
-        IPAddr.prototype.status = 0;
-
-        /**
-         * IPAddr tags.
-         * @member {Array.<model.ITag>}tags
-         * @memberof model.IPAddr
-         * @instance
-         */
-        IPAddr.prototype.tags = $util.emptyArray;
-
-        /**
-         * Creates a new IPAddr instance using the specified properties.
-         * @function create
-         * @memberof model.IPAddr
-         * @static
-         * @param {model.IIPAddr=} [properties] Properties to set
-         * @returns {model.IPAddr} IPAddr instance
-         */
-        IPAddr.create = function create(properties) {
-            return new IPAddr(properties);
-        };
-
-        /**
-         * Encodes the specified IPAddr message. Does not implicitly {@link model.IPAddr.verify|verify} messages.
-         * @function encode
-         * @memberof model.IPAddr
-         * @static
-         * @param {model.IIPAddr} message IPAddr message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        IPAddr.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.ip != null && message.hasOwnProperty("ip"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.ip);
-            if (message.status != null && message.hasOwnProperty("status"))
-                writer.uint32(/* id 2, wireType 0 =*/16).int32(message.status);
-            if (message.tags != null && message.tags.length)
-                for (var i = 0; i < message.tags.length; ++i)
-                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified IPAddr message, length delimited. Does not implicitly {@link model.IPAddr.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof model.IPAddr
-         * @static
-         * @param {model.IIPAddr} message IPAddr message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        IPAddr.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a IPAddr message from the specified reader or buffer.
-         * @function decode
-         * @memberof model.IPAddr
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {model.IPAddr} IPAddr
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        IPAddr.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.IPAddr();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.ip = reader.string();
-                    break;
-                case 2:
-                    message.status = reader.int32();
-                    break;
-                case 3:
-                    if (!(message.tags && message.tags.length))
-                        message.tags = [];
-                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a IPAddr message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof model.IPAddr
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {model.IPAddr} IPAddr
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        IPAddr.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a IPAddr message.
-         * @function verify
-         * @memberof model.IPAddr
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        IPAddr.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.ip != null && message.hasOwnProperty("ip"))
-                if (!$util.isString(message.ip))
-                    return "ip: string expected";
-            if (message.status != null && message.hasOwnProperty("status"))
-                switch (message.status) {
-                default:
-                    return "status: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    break;
-                }
-            if (message.tags != null && message.hasOwnProperty("tags")) {
-                if (!Array.isArray(message.tags))
-                    return "tags: array expected";
-                for (var i = 0; i < message.tags.length; ++i) {
-                    var error = $root.model.Tag.verify(message.tags[i]);
-                    if (error)
-                        return "tags." + error;
-                }
-            }
-            return null;
-        };
-
-        /**
-         * Creates a IPAddr message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof model.IPAddr
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {model.IPAddr} IPAddr
-         */
-        IPAddr.fromObject = function fromObject(object) {
-            if (object instanceof $root.model.IPAddr)
-                return object;
-            var message = new $root.model.IPAddr();
-            if (object.ip != null)
-                message.ip = String(object.ip);
-            switch (object.status) {
-            case "UNKNOWN":
-            case 0:
-                message.status = 0;
-                break;
-            case "ACTIVE":
-            case 1:
-                message.status = 1;
-                break;
-            case "TEMPORARY_RESERVED":
-            case 2:
-                message.status = 2;
-                break;
-            case "RESERVED":
-            case 3:
-                message.status = 3;
-                break;
-            }
-            if (object.tags) {
-                if (!Array.isArray(object.tags))
-                    throw TypeError(".model.IPAddr.tags: array expected");
-                message.tags = [];
-                for (var i = 0; i < object.tags.length; ++i) {
-                    if (typeof object.tags[i] !== "object")
-                        throw TypeError(".model.IPAddr.tags: object expected");
-                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a IPAddr message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof model.IPAddr
-         * @static
-         * @param {model.IPAddr} message IPAddr
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        IPAddr.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults)
-                object.tags = [];
-            if (options.defaults) {
-                object.ip = "";
-                object.status = options.enums === String ? "UNKNOWN" : 0;
-            }
-            if (message.ip != null && message.hasOwnProperty("ip"))
-                object.ip = message.ip;
-            if (message.status != null && message.hasOwnProperty("status"))
-                object.status = options.enums === String ? $root.model.IPAddr.Status[message.status] : message.status;
-            if (message.tags && message.tags.length) {
-                object.tags = [];
-                for (var j = 0; j < message.tags.length; ++j)
-                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
-            }
-            return object;
-        };
-
-        /**
-         * Converts this IPAddr to JSON.
-         * @function toJSON
-         * @memberof model.IPAddr
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        IPAddr.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Status enum.
-         * @enum {string}
-         * @property {number} UNKNOWN=0 UNKNOWN value
-         * @property {number} ACTIVE=1 ACTIVE value
-         * @property {number} TEMPORARY_RESERVED=2 TEMPORARY_RESERVED value
-         * @property {number} RESERVED=3 RESERVED value
-         */
-        IPAddr.Status = (function() {
-            var valuesById = {}, values = Object.create(valuesById);
-            values[valuesById[0] = "UNKNOWN"] = 0;
-            values[valuesById[1] = "ACTIVE"] = 1;
-            values[valuesById[2] = "TEMPORARY_RESERVED"] = 2;
-            values[valuesById[3] = "RESERVED"] = 3;
-            return values;
-        })();
-
-        return IPAddr;
-    })();
-
-    model.Network = (function() {
-
-        /**
-         * Properties of a Network.
-         * @memberof model
-         * @interface INetwork
-         * @property {string} [prefix] Network prefix
-         * @property {Array.<string>} [gateways] Network gateways
-         * @property {string} [broadcast] Network broadcast
-         * @property {string} [netmask] Network netmask
-         * @property {model.Network.Status} [status] Network status
-         * @property {Array.<model.ITag>} [tags] Network tags
-         */
-
-        /**
-         * Constructs a new Network.
-         * @memberof model
-         * @classdesc Represents a Network.
-         * @constructor
-         * @param {model.INetwork=} [properties] Properties to set
-         */
-        function Network(properties) {
-            this.gateways = [];
-            this.tags = [];
-            if (properties)
-                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                    if (properties[keys[i]] != null)
-                        this[keys[i]] = properties[keys[i]];
-        }
-
-        /**
-         * Network prefix.
-         * @member {string}prefix
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.prefix = "";
-
-        /**
-         * Network gateways.
-         * @member {Array.<string>}gateways
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.gateways = $util.emptyArray;
-
-        /**
-         * Network broadcast.
-         * @member {string}broadcast
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.broadcast = "";
-
-        /**
-         * Network netmask.
-         * @member {string}netmask
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.netmask = "";
-
-        /**
-         * Network status.
-         * @member {model.Network.Status}status
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.status = 0;
-
-        /**
-         * Network tags.
-         * @member {Array.<model.ITag>}tags
-         * @memberof model.Network
-         * @instance
-         */
-        Network.prototype.tags = $util.emptyArray;
-
-        /**
-         * Creates a new Network instance using the specified properties.
-         * @function create
-         * @memberof model.Network
-         * @static
-         * @param {model.INetwork=} [properties] Properties to set
-         * @returns {model.Network} Network instance
-         */
-        Network.create = function create(properties) {
-            return new Network(properties);
-        };
-
-        /**
-         * Encodes the specified Network message. Does not implicitly {@link model.Network.verify|verify} messages.
-         * @function encode
-         * @memberof model.Network
-         * @static
-         * @param {model.INetwork} message Network message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Network.encode = function encode(message, writer) {
-            if (!writer)
-                writer = $Writer.create();
-            if (message.prefix != null && message.hasOwnProperty("prefix"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.prefix);
-            if (message.gateways != null && message.gateways.length)
-                for (var i = 0; i < message.gateways.length; ++i)
-                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.gateways[i]);
-            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.broadcast);
-            if (message.netmask != null && message.hasOwnProperty("netmask"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.netmask);
-            if (message.status != null && message.hasOwnProperty("status"))
-                writer.uint32(/* id 5, wireType 0 =*/40).int32(message.status);
-            if (message.tags != null && message.tags.length)
-                for (var i = 0; i < message.tags.length; ++i)
-                    $root.model.Tag.encode(message.tags[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
-            return writer;
-        };
-
-        /**
-         * Encodes the specified Network message, length delimited. Does not implicitly {@link model.Network.verify|verify} messages.
-         * @function encodeDelimited
-         * @memberof model.Network
-         * @static
-         * @param {model.INetwork} message Network message or plain object to encode
-         * @param {$protobuf.Writer} [writer] Writer to encode to
-         * @returns {$protobuf.Writer} Writer
-         */
-        Network.encodeDelimited = function encodeDelimited(message, writer) {
-            return this.encode(message, writer).ldelim();
-        };
-
-        /**
-         * Decodes a Network message from the specified reader or buffer.
-         * @function decode
-         * @memberof model.Network
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @param {number} [length] Message length if known beforehand
-         * @returns {model.Network} Network
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Network.decode = function decode(reader, length) {
-            if (!(reader instanceof $Reader))
-                reader = $Reader.create(reader);
-            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.model.Network();
-            while (reader.pos < end) {
-                var tag = reader.uint32();
-                switch (tag >>> 3) {
-                case 1:
-                    message.prefix = reader.string();
-                    break;
-                case 2:
-                    if (!(message.gateways && message.gateways.length))
-                        message.gateways = [];
-                    message.gateways.push(reader.string());
-                    break;
-                case 3:
-                    message.broadcast = reader.string();
-                    break;
-                case 4:
-                    message.netmask = reader.string();
-                    break;
-                case 5:
-                    message.status = reader.int32();
-                    break;
-                case 6:
-                    if (!(message.tags && message.tags.length))
-                        message.tags = [];
-                    message.tags.push($root.model.Tag.decode(reader, reader.uint32()));
-                    break;
-                default:
-                    reader.skipType(tag & 7);
-                    break;
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Decodes a Network message from the specified reader or buffer, length delimited.
-         * @function decodeDelimited
-         * @memberof model.Network
-         * @static
-         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-         * @returns {model.Network} Network
-         * @throws {Error} If the payload is not a reader or valid buffer
-         * @throws {$protobuf.util.ProtocolError} If required fields are missing
-         */
-        Network.decodeDelimited = function decodeDelimited(reader) {
-            if (!(reader instanceof $Reader))
-                reader = new $Reader(reader);
-            return this.decode(reader, reader.uint32());
-        };
-
-        /**
-         * Verifies a Network message.
-         * @function verify
-         * @memberof model.Network
-         * @static
-         * @param {Object.<string,*>} message Plain object to verify
-         * @returns {string|null} `null` if valid, otherwise the reason why it is not
-         */
-        Network.verify = function verify(message) {
-            if (typeof message !== "object" || message === null)
-                return "object expected";
-            if (message.prefix != null && message.hasOwnProperty("prefix"))
-                if (!$util.isString(message.prefix))
-                    return "prefix: string expected";
-            if (message.gateways != null && message.hasOwnProperty("gateways")) {
-                if (!Array.isArray(message.gateways))
-                    return "gateways: array expected";
-                for (var i = 0; i < message.gateways.length; ++i)
-                    if (!$util.isString(message.gateways[i]))
-                        return "gateways: string[] expected";
-            }
-            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
-                if (!$util.isString(message.broadcast))
-                    return "broadcast: string expected";
-            if (message.netmask != null && message.hasOwnProperty("netmask"))
-                if (!$util.isString(message.netmask))
-                    return "netmask: string expected";
-            if (message.status != null && message.hasOwnProperty("status"))
-                switch (message.status) {
-                default:
-                    return "status: enum value expected";
-                case 0:
-                case 1:
-                case 2:
-                    break;
-                }
-            if (message.tags != null && message.hasOwnProperty("tags")) {
-                if (!Array.isArray(message.tags))
-                    return "tags: array expected";
-                for (var i = 0; i < message.tags.length; ++i) {
-                    var error = $root.model.Tag.verify(message.tags[i]);
-                    if (error)
-                        return "tags." + error;
-                }
-            }
-            return null;
-        };
-
-        /**
-         * Creates a Network message from a plain object. Also converts values to their respective internal types.
-         * @function fromObject
-         * @memberof model.Network
-         * @static
-         * @param {Object.<string,*>} object Plain object
-         * @returns {model.Network} Network
-         */
-        Network.fromObject = function fromObject(object) {
-            if (object instanceof $root.model.Network)
-                return object;
-            var message = new $root.model.Network();
-            if (object.prefix != null)
-                message.prefix = String(object.prefix);
-            if (object.gateways) {
-                if (!Array.isArray(object.gateways))
-                    throw TypeError(".model.Network.gateways: array expected");
-                message.gateways = [];
-                for (var i = 0; i < object.gateways.length; ++i)
-                    message.gateways[i] = String(object.gateways[i]);
-            }
-            if (object.broadcast != null)
-                message.broadcast = String(object.broadcast);
-            if (object.netmask != null)
-                message.netmask = String(object.netmask);
-            switch (object.status) {
-            case "UNKNOWN":
-            case 0:
-                message.status = 0;
-                break;
-            case "AVAILABLE":
-            case 1:
-                message.status = 1;
-                break;
-            case "RESERVED":
-            case 2:
-                message.status = 2;
-                break;
-            }
-            if (object.tags) {
-                if (!Array.isArray(object.tags))
-                    throw TypeError(".model.Network.tags: array expected");
-                message.tags = [];
-                for (var i = 0; i < object.tags.length; ++i) {
-                    if (typeof object.tags[i] !== "object")
-                        throw TypeError(".model.Network.tags: object expected");
-                    message.tags[i] = $root.model.Tag.fromObject(object.tags[i]);
-                }
-            }
-            return message;
-        };
-
-        /**
-         * Creates a plain object from a Network message. Also converts values to other types if specified.
-         * @function toObject
-         * @memberof model.Network
-         * @static
-         * @param {model.Network} message Network
-         * @param {$protobuf.IConversionOptions} [options] Conversion options
-         * @returns {Object.<string,*>} Plain object
-         */
-        Network.toObject = function toObject(message, options) {
-            if (!options)
-                options = {};
-            var object = {};
-            if (options.arrays || options.defaults) {
-                object.gateways = [];
-                object.tags = [];
-            }
-            if (options.defaults) {
-                object.prefix = "";
-                object.broadcast = "";
-                object.netmask = "";
-                object.status = options.enums === String ? "UNKNOWN" : 0;
-            }
-            if (message.prefix != null && message.hasOwnProperty("prefix"))
-                object.prefix = message.prefix;
-            if (message.gateways && message.gateways.length) {
-                object.gateways = [];
-                for (var j = 0; j < message.gateways.length; ++j)
-                    object.gateways[j] = message.gateways[j];
-            }
-            if (message.broadcast != null && message.hasOwnProperty("broadcast"))
-                object.broadcast = message.broadcast;
-            if (message.netmask != null && message.hasOwnProperty("netmask"))
-                object.netmask = message.netmask;
-            if (message.status != null && message.hasOwnProperty("status"))
-                object.status = options.enums === String ? $root.model.Network.Status[message.status] : message.status;
-            if (message.tags && message.tags.length) {
-                object.tags = [];
-                for (var j = 0; j < message.tags.length; ++j)
-                    object.tags[j] = $root.model.Tag.toObject(message.tags[j], options);
-            }
-            return object;
-        };
-
-        /**
-         * Converts this Network to JSON.
-         * @function toJSON
-         * @memberof model.Network
-         * @instance
-         * @returns {Object.<string,*>} JSON object
-         */
-        Network.prototype.toJSON = function toJSON() {
-            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-        };
-
-        /**
-         * Status enum.
-         * @enum {string}
-         * @property {number} UNKNOWN=0 UNKNOWN value
-         * @property {number} AVAILABLE=1 AVAILABLE value
-         * @property {number} RESERVED=2 RESERVED value
-         */
-        Network.Status = (function() {
-            var valuesById = {}, values = Object.create(valuesById);
-            values[valuesById[0] = "UNKNOWN"] = 0;
-            values[valuesById[1] = "AVAILABLE"] = 1;
-            values[valuesById[2] = "RESERVED"] = 2;
-            return values;
-        })();
-
-        return Network;
-    })();
-
-    return model;
 })();
 
 module.exports = $root;

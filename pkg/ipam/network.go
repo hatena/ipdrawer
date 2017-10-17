@@ -2,6 +2,7 @@ package ipam
 
 import (
 	"net"
+	"time"
 
 	"github.com/pkg/errors"
 
@@ -33,6 +34,23 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 	}
 
 	return ret, nil
+}
+
+func setTSToNetwork(r *storage.Redis, n *model.Network) error {
+	if existsNetwork(r, n) {
+		_, pre, _ := net.ParseCIDR(n.Prefix)
+		stored, _ := getNetwork(r, pre)
+		n.CreatedAt = stored.CreatedAt
+	}
+
+	now := time.Now()
+	if n.CreatedAt == nil {
+		n.CreatedAt = &now
+	} else {
+		n.LastModifiedAt = &now
+	}
+
+	return nil
 }
 
 func setNetwork(r *storage.Redis, n *model.Network) error {

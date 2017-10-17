@@ -837,6 +837,14 @@ const (
           "items": {
             "$ref": "#/definitions/modelTag"
           }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_at": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -876,6 +884,14 @@ const (
           "items": {
             "$ref": "#/definitions/modelTag"
           }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_at": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -905,6 +921,14 @@ const (
           "items": {
             "$ref": "#/definitions/modelTag"
           }
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_modified_at": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },

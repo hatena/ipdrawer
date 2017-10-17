@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as React from "react";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -93,6 +94,16 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
       name: 'status',
       title: 'Status',
       getCellData: (row: Network) => Network.Status[row.status],
+    },
+    {
+      name: "createdAt",
+      title: "Created At",
+      getCellData: (row: Network) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toISOString(),
+    },
+    {
+      name: "lastModifiedAt",
+      title: "Last Modified At",
+      getCellData: (row: Network) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toISOString(),
     },
     {
       name: 'tags',

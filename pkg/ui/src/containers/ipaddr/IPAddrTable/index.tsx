@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as React from "react";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -111,6 +112,16 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
       getCellData: (row: IPAddr) => IPAddr.Status[row.status],
     },
     {
+      name: "createdAt",
+      title: "Created At",
+      getCellData: (row: IPAddr) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toISOString(),
+    },
+    {
+      name: "lastModifiedAt",
+      title: "Last Modified At",
+      getCellData: (row: IPAddr) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toISOString(),
+    },
+    {
       name: "tags",
       title: "Tags",
       getCellData: (row: IPAddr) => <ChipCell tags={row.tags} classes={{}} />
@@ -186,7 +197,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
   clickCreate = (editing) => (event) => {
     this.props.createIP(new protos.model.IPAddr({
       ip: editing['ip'],
-      status: editing['statue'],
+      status: editing['status'],
       tags: this.parseTags(editing['tags']),
     }));
     this.setState({ editOpen: false });

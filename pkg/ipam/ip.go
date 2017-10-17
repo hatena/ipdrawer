@@ -9,7 +9,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
-func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
+func setTSToIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 	if err := addr.Validate(); err != nil {
 		return err
 	}
@@ -18,12 +18,26 @@ func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 	if ip == nil {
 		return errors.New("Parse IP failed")
 	}
+
+	if existsIP(r, addr) {
+		stored, _ := getIPAddr(r, ip)
+		addr.CreatedAt = stored.CreatedAt
+	}
+
+	return nil
+}
+
+func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
+	if err := addr.Validate(); err != nil {
+		return err
+	}
+
 	data, err := addr.Marshal()
 	if err != nil {
 		return errors.Wrap(err, "Marshaling IPAddr is failed")
 	}
 
-	dkey := makeIPDetailsKey(ip)
+	dkey := makeIPDetailsKey(net.ParseIP(addr.Ip))
 	if _, err := r.Client.Set(dkey, string(data), 0).Result(); err != nil {
 		return errors.Wrap(err, "Save to Redis failed")
 	}

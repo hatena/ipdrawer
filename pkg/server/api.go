@@ -92,10 +92,17 @@ func (api *APIServer) DrawIP(
 	}
 
 	target := make([]*model.Pool, 0)
+	foundAvails := false
 	for _, p := range pools {
+		if p.Status == model.Pool_AVAILABLE {
+			foundAvails = true
+		}
 		if p.Status == model.Pool_AVAILABLE && (req.PoolTag == nil || p.MatchTags([]*model.Tag{req.PoolTag})) {
 			target = append(target, p)
 		}
+	}
+	if !foundAvails {
+		return nil, status.Error(codes.NotFound, "Not found available pools")
 	}
 	if len(target) == 0 {
 		return nil, status.Errorf(

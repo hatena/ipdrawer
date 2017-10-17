@@ -28,6 +28,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
 	"github.com/taku-k/ipdrawer/pkg/ui"
 	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
+	"github.com/taku-k/ipdrawer/pkg/utils/protoutil"
 )
 
 var logrusEntry = logrus.NewEntry(logrus.New())
@@ -53,8 +54,16 @@ func NewServer(cfg *base.Config) *APIServer {
 }
 
 func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
+	jsonpb := &protoutil.JSONPb{
+		EnumsAsInts:  true,
+		EmitDefaults: true,
+		Indent:       "  ",
+	}
+	protopb := new(protoutil.ProtoPb)
 	mux := runtime.NewServeMux(
 		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+		runtime.WithMarshalerOption("application/json", jsonpb),
+		runtime.WithMarshalerOption("application/x-protobuf", protopb),
 		runtime.WithProtoErrorHandler(runtime.DefaultHTTPProtoErrorHandler),
 	)
 	addr := api.lis.Addr().String()

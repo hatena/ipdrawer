@@ -55,10 +55,13 @@ import _ "github.com/mwitkow/go-proto-validators"
 import _ "github.com/taku-k/ipdrawer/pkg/model"
 import _ "github.com/gogo/protobuf/gogoproto"
 
+import time "time"
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
+var _ = time.Kitchen
 
 func (this *ListNetworkRequest) Validate() error {
 	return nil
