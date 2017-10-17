@@ -98,12 +98,12 @@ class NetworkTable extends React.Component<NetworkTable.Props, NetworkTable.Stat
     {
       name: "createdAt",
       title: "Created At",
-      getCellData: (row: Network) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toISOString(),
+      getCellData: (row: Network) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toLocaleString(),
     },
     {
       name: "lastModifiedAt",
       title: "Last Modified At",
-      getCellData: (row: Network) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toISOString(),
+      getCellData: (row: Network) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toLocaleString(),
     },
     {
       name: 'tags',

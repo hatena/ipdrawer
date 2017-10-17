@@ -114,12 +114,12 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
     {
       name: "createdAt",
       title: "Created At",
-      getCellData: (row: IPAddr) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toISOString(),
+      getCellData: (row: IPAddr) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toLocaleString()
     },
     {
       name: "lastModifiedAt",
       title: "Last Modified At",
-      getCellData: (row: IPAddr) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toISOString(),
+      getCellData: (row: IPAddr) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toLocaleString(),
     },
     {
       name: "tags",
