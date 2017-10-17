@@ -2,6 +2,7 @@ package ipam
 
 import (
 	"net"
+	"time"
 
 	"github.com/pkg/errors"
 
@@ -22,6 +23,13 @@ func setTSToIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 	if existsIP(r, addr) {
 		stored, _ := getIPAddr(r, ip)
 		addr.CreatedAt = stored.CreatedAt
+	}
+
+	now := time.Now()
+	if addr.CreatedAt == nil {
+		addr.CreatedAt = &now
+	} else {
+		addr.LastModifiedAt = &now
 	}
 
 	return nil
