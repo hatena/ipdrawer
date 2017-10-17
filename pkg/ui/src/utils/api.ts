@@ -37,30 +37,23 @@ function timeoutFetch<TResponse$Properties, TResponse, TResponseBuilder extends 
 }>(builder: TResponseBuilder, url: string, req: TRequest = null, timeout: moment.Duration = moment.duration(30, "s")): Promise<TResponse> {
   const params: RequestInit = {
     headers: {
-      // "Accept": "application/x-protobuf",
-      "Accept": "application/json",
-      // "Content-Type": "application/x-protobuf",
-      "Content-Type": "application/json",
+      "Accept": "application/x-protobuf",
+      "Content-Type": "application/x-protobuf",
       "Grpc-Timeout": timeout ? timeout.asMilliseconds() + "m" : undefined,
     }
   };
 
   if (req) {
-    // const encodedRequest = req.constructor.encode(req).finish()
+    const encodedRequest = req.constructor.encode(req).finish()
     params.method = "POST";
-    // params.body = toArrayBuffer(encodedRequest);
-    params.body = JSON.stringify(req.toJSON())
+    params.body = toArrayBuffer(encodedRequest);
   }
 
   return withTimeout(fetch(url, params), timeout).then((res) => {
     if (!res.ok) {
       throw Error(res.statusText);
     }
-    return res.json();
-  }).then((json) => {
-    return builder.fromObject(json);
-  }).catch((error: Error) => {
-    throw error;
+    return res.arrayBuffer().then((buffer) => builder.decode(new Uint8Array(buffer)));
   });
 }
 
