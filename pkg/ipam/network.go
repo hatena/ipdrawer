@@ -41,6 +41,12 @@ func setNetwork(r *storage.Redis, n *model.Network) error {
 		return err
 	}
 
+	if existsNetwork(r, n) {
+		_, pre, _ := net.ParseCIDR(n.Prefix)
+		stored, _ := getNetwork(r, pre)
+		n.CreatedAt = stored.CreatedAt
+	}
+
 	now := time.Now()
 	if n.CreatedAt == nil {
 		n.CreatedAt = &now

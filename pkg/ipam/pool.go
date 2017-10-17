@@ -16,6 +16,11 @@ func setPool(r *storage.Redis, pool *model.Pool) error {
 		return err
 	}
 
+	if existsPool(r, pool) {
+		stored, _ := getPool(r, net.ParseIP(pool.Start), net.ParseIP(pool.End))
+		pool.CreatedAt = stored.CreatedAt
+	}
+
 	now := time.Now()
 	if pool.CreatedAt == nil {
 		pool.CreatedAt = &now

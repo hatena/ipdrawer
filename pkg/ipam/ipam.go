@@ -102,15 +102,13 @@ func (m *IPManager) CreateIP(ctx context.Context, ps []*model.Pool, addr *model.
 
 	ip := net.ParseIP(addr.Ip)
 
+	if err := setIPAddr(m.redis, addr); err != nil {
+		return err
+	}
+
 	pipe := m.redis.Client.TxPipeline()
 	// Remove temporary reserved key in any way
 	pipe.Del(makeIPTempReserved(ip))
-	// Change IP status to ACTIVE
-	data, err := addr.Marshal()
-	if err != nil {
-		return err
-	}
-	pipe.Set(makeIPDetailsKey(ip), string(data), 0)
 	// Add IP to used IP zset
 	score := float64(netutil.IP2Uint(ip))
 	z := redis.Z{

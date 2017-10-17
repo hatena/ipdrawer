@@ -15,6 +15,16 @@ func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 		return err
 	}
 
+	ip := net.ParseIP(addr.Ip)
+	if ip == nil {
+		return errors.New("Parse IP failed")
+	}
+
+	if existsIP(r, addr) {
+		stored, _ := getIPAddr(r, ip)
+		addr.CreatedAt = stored.CreatedAt
+	}
+
 	now := time.Now()
 	if addr.CreatedAt == nil {
 		addr.CreatedAt = &now
@@ -22,10 +32,6 @@ func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 		addr.LastModifiedAt = &now
 	}
 
-	ip := net.ParseIP(addr.Ip)
-	if ip == nil {
-		return errors.New("Parse IP failed")
-	}
 	data, err := addr.Marshal()
 	if err != nil {
 		return errors.Wrap(err, "Marshaling IPAddr is failed")
