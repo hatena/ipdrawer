@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import * as React from "react";
 import { withStyles, StyleRulesCallback } from 'material-ui/styles';
 import {
@@ -93,6 +94,16 @@ class PoolTable extends React.Component<PoolTable.Props, PoolTable.State> {
     {
       name: 'status',
       getCellData: (row: Pool) => Pool.Status[row.status]
+    },
+    {
+      name: "createdAt",
+      title: "Created At",
+      getCellData: (row: Pool) => row.createdAt && moment(row.createdAt.seconds.toString(), 'X').toISOString(),
+    },
+    {
+      name: "lastModifiedAt",
+      title: "Last Modified At",
+      getCellData: (row: Pool) => row.lastModifiedAt && moment(row.lastModifiedAt.seconds.toString(), 'X').toISOString(),
     },
     {
       name: 'tags',
