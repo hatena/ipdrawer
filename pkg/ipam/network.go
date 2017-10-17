@@ -36,11 +36,7 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 	return ret, nil
 }
 
-func setNetwork(r *storage.Redis, n *model.Network) error {
-	if err := n.Validate(); err != nil {
-		return err
-	}
-
+func setTSToNetwork(r *storage.Redis, n *model.Network) error {
 	if existsNetwork(r, n) {
 		_, pre, _ := net.ParseCIDR(n.Prefix)
 		stored, _ := getNetwork(r, pre)
@@ -52,6 +48,14 @@ func setNetwork(r *storage.Redis, n *model.Network) error {
 		n.CreatedAt = &now
 	} else {
 		n.LastModifiedAt = &now
+	}
+
+	return nil
+}
+
+func setNetwork(r *storage.Redis, n *model.Network) error {
+	if err := n.Validate(); err != nil {
+		return err
 	}
 
 	pipe := r.Client.TxPipeline()

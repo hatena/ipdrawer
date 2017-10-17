@@ -2,7 +2,6 @@ package ipam
 
 import (
 	"net"
-	"time"
 
 	"github.com/pkg/errors"
 
@@ -10,7 +9,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
-func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
+func setTSToIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 	if err := addr.Validate(); err != nil {
 		return err
 	}
@@ -25,11 +24,12 @@ func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 		addr.CreatedAt = stored.CreatedAt
 	}
 
-	now := time.Now()
-	if addr.CreatedAt == nil {
-		addr.CreatedAt = &now
-	} else {
-		addr.LastModifiedAt = &now
+	return nil
+}
+
+func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
+	if err := addr.Validate(); err != nil {
+		return err
 	}
 
 	data, err := addr.Marshal()
@@ -37,7 +37,7 @@ func setIPAddr(r *storage.Redis, addr *model.IPAddr) error {
 		return errors.Wrap(err, "Marshaling IPAddr is failed")
 	}
 
-	dkey := makeIPDetailsKey(ip)
+	dkey := makeIPDetailsKey(net.ParseIP(addr.Ip))
 	if _, err := r.Client.Set(dkey, string(data), 0).Result(); err != nil {
 		return errors.Wrap(err, "Save to Redis failed")
 	}

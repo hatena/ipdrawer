@@ -11,7 +11,7 @@ import (
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
 
-func setPool(r *storage.Redis, pool *model.Pool) error {
+func setTSToPool(r *storage.Redis, pool *model.Pool) error {
 	if err := pool.Validate(); err != nil {
 		return err
 	}
@@ -26,6 +26,14 @@ func setPool(r *storage.Redis, pool *model.Pool) error {
 		pool.CreatedAt = &now
 	} else {
 		pool.LastModifiedAt = &now
+	}
+
+	return nil
+}
+
+func setPool(r *storage.Redis, pool *model.Pool) error {
+	if err := pool.Validate(); err != nil {
+		return err
 	}
 
 	pipe := r.Client.TxPipeline()
