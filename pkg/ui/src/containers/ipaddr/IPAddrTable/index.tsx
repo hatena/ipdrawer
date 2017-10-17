@@ -186,7 +186,7 @@ class IPAddrTable extends React.Component<IPAddrTable.Props, IPAddrTable.State> 
   clickCreate = (editing) => (event) => {
     this.props.createIP(new protos.model.IPAddr({
       ip: editing['ip'],
-      status: editing['statue'],
+      status: editing['status'],
       tags: this.parseTags(editing['tags']),
     }));
     this.setState({ editOpen: false });
