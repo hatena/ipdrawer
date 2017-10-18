@@ -61,7 +61,7 @@ func (api *APIServer) newGateway(ctx context.Context) (http.Handler, error) {
 	}
 	protopb := new(protoutil.ProtoPb)
 	mux := runtime.NewServeMux(
-		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{OrigName: true, EmitDefaults: true}),
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, jsonpb),
 		runtime.WithMarshalerOption("application/json", jsonpb),
 		runtime.WithMarshalerOption("application/x-protobuf", protopb),
 		runtime.WithProtoErrorHandler(runtime.DefaultHTTPProtoErrorHandler),
