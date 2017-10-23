@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"testing"
 
@@ -29,6 +30,12 @@ var (
 			"192.168.0.1",
 		},
 		Status: model.Network_AVAILABLE,
+		Tags: []*model.Tag{
+			{
+				Key:   "Name",
+				Value: "test",
+			},
+		},
 	}
 
 	testPool = &model.Pool{
@@ -299,4 +306,71 @@ func TestGetIPInPool(t *testing.T) {
 	if !resp.Ips[0].Equal(ips[0]) {
 		t.Errorf("Got wrong ips %v; want %v", resp.Ips[0], ips[0])
 	}
+}
+
+func TestGetNetwork(t *testing.T) {
+	te := newTest(t)
+	defer te.tearDown()
+
+	te.manager.CreateNetwork(te.ctx, testNetwork)
+	te.manager.CreatePool(te.ctx, testNetwork, testPool)
+
+	testCases := []struct {
+		req      *serverpb.GetNetworkRequest
+		expected string
+		errmsg   string
+		desc     string
+	}{
+		{
+			req: &serverpb.GetNetworkRequest{
+				Ip:   "192.168.0.0",
+				Mask: 24,
+			},
+			expected: "192.168.0.0/24",
+			errmsg:   "",
+			desc:     "GetNetworkByIP",
+		},
+		{
+			req: &serverpb.GetNetworkRequest{
+				Name: "test",
+			},
+			expected: "192.168.0.0/24",
+			errmsg:   "",
+			desc:     "GetNetworkByName",
+		},
+		{
+			req: &serverpb.GetNetworkRequest{
+				Ip:   "192.168.0.255",
+				Mask: 24,
+			},
+			errmsg: "not found Network",
+			desc:   "not exist ip",
+		},
+		{
+			req: &serverpb.GetNetworkRequest{
+				Name: "notfound",
+			},
+			errmsg: "Not found network",
+			desc:   "not exist name",
+		},
+	}
+
+	for _, tc := range testCases {
+		resp, err := te.api.GetNetwork(te.ctx, tc.req)
+
+		if err == nil && tc.errmsg != "" {
+			t.Fatalf("desc: %s, Got nil; want error %q", tc.desc, err, tc.errmsg)
+		} else if err != nil && fmt.Sprintf("%s", err) != tc.errmsg {
+			t.Fatalf("desc: %s, Got error %q; want error %q", tc.desc, err, tc.errmsg)
+		}
+
+		if err != nil {
+			continue
+		}
+
+		if resp.Network != tc.expected {
+			t.Errorf("desc: %s, Got wrong ip %v; want %v", tc.desc, resp.Network, tc.expected)
+		}
+	}
+
 }
