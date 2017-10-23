@@ -94,8 +94,11 @@ func getNetwork(r *storage.Redis, ipnet *net.IPNet) (*model.Network, error) {
 	dkey := makeNetworkDetailsKey(ipnet)
 
 	check, err := r.Client.Exists(dkey).Result()
-	if err != nil || check == 0 {
+	if err != nil {
 		return nil, errors.Wrap(err, "not found Network")
+	}
+	if check == 0 {
+		return nil, errors.New("not found Network")
 	}
 
 	data, err := r.Client.Get(dkey).Result()
