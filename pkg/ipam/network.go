@@ -1,11 +1,11 @@
 package ipam
 
 import (
+	"fmt"
 	"net"
 	"time"
 
 	"github.com/pkg/errors"
-
 	"github.com/taku-k/ipdrawer/pkg/model"
 	"github.com/taku-k/ipdrawer/pkg/storage"
 )
@@ -17,23 +17,31 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 		return nil, err
 	}
 
-	ret := make([]*model.Network, len(ps))
-
+	keys := make([]string, len(ps))
 	for i, p := range ps {
 		_, ipnet, err := net.ParseCIDR(p)
 		if err != nil {
 			return nil, err
 		}
-
-		pre, err := getNetwork(r, ipnet)
-		if err != nil {
-			return nil, err
-		}
-
-		ret[i] = pre
+		keys[i] = makeNetworkDetailsKey(ipnet)
 	}
 
-	return ret, nil
+	data, err := r.Client.MGet(keys...).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	networks := make([]*model.Network, len(keys))
+
+	for i, d := range data {
+		if s, ok := d.(string); ok {
+			networks[i] = &model.Network{}
+			if err := networks[i].Unmarshal([]byte(s)); err != nil {
+				return nil, err
+			}
+		}
+	}
+	return networks, nil
 }
 
 func setTSToNetwork(r *storage.Redis, n *model.Network) error {
@@ -149,4 +157,20 @@ func existsNetwork(r *storage.Redis, network *model.Network) bool {
 	_, pre, _ := net.ParseCIDR(network.Prefix)
 	check, _ := r.Client.Exists(makeNetworkDetailsKey(pre)).Result()
 	return check != 0
+}
+
+func getNetworkIncludingPool(r *storage.Redis, start net.IP, end net.IP) (*model.Network, error) {
+	networks, err := getNetworks(r)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, n := range networks {
+		_, ipnet, _ := net.ParseCIDR(n.Prefix)
+		if ipnet.Contains(start) && ipnet.Contains(end) {
+			return n, nil
+		}
+	}
+
+	return nil, errors.New(fmt.Sprintf("Not found network contains such a pool(start=%s, end=%s)", start, end))
 }
