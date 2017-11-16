@@ -469,9 +469,22 @@ func (m *IPManager) DeletePool(ctx context.Context, start, end net.IP) error {
 	}
 	defer m.locker.Unlock(ctx, makeGlobalLock(), token)
 
+	network, err := getNetworkIncludingPool(m.redis, start, end)
+	if err != nil {
+		return err
+	}
+	_, ipnet, err := net.ParseCIDR(network.Prefix)
+	if err != nil {
+		return err
+	}
+
 	pipe := m.redis.Client.TxPipeline()
 	pipe.Del(makePoolDetailsKey(start, end))
 	pipe.Del(makePoolUsedIPZset(start, end))
+	pipe.SRem(makeNetworkPoolKey(ipnet), (&model.Pool{
+		Start: start.String(),
+		End:   end.String(),
+	}).Key())
 	_, err = pipe.Exec()
 
 	return err

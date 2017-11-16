@@ -26,6 +26,10 @@ func getNetworks(r *storage.Redis) ([]*model.Network, error) {
 		keys[i] = makeNetworkDetailsKey(ipnet)
 	}
 
+	if len(keys) == 0 {
+		return nil, errors.New("Not found any networks")
+	}
+
 	data, err := r.Client.MGet(keys...).Result()
 	if err != nil {
 		return nil, err
