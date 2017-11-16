@@ -117,3 +117,21 @@ func TestSetNetworkWithInvalidModel(t *testing.T) {
 		}
 	}
 }
+
+func TestGetNetworkIncludingPool(t *testing.T) {
+	r, def := storage.NewTestRedis()
+	defer def()
+
+	err := setNetwork(r, testNetwork)
+	if err != nil {
+		t.Fatalf("Get error: %v", err)
+	}
+
+	n, err := getNetworkIncludingPool(r, net.ParseIP("192.168.0.10"), net.ParseIP("192.168.0.12"))
+	if err != nil {
+		t.Fatalf("Got error: %v; want success", err)
+	}
+	if !n.Equal(testNetwork) {
+		t.Fatalf("Got wrong network: %v", n)
+	}
+}

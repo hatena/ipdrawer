@@ -372,6 +372,11 @@ func TestDeletePool(t *testing.T) {
 		Start: "192.168.0.1",
 		End:   "192.168.0.10",
 	}
+
+	if err := m.CreateNetwork(ctx, network); err != nil {
+		t.Fatalf("CreateNetwork returns error `%v`; want success", err)
+	}
+
 	if err := m.CreatePool(ctx, network, pool); err != nil {
 		t.Fatalf("CreatePool returns error `%v`; want success", err)
 	}
@@ -385,4 +390,10 @@ func TestDeletePool(t *testing.T) {
 		t.Fatalf("GetPools returns error `%v`; want success", err)
 	}
 	assert.Equal(t, 0, len(pools), "there should be no pools")
+
+	nothing, err := m.GetPoolsInNetwork(ctx, network)
+	if err != nil {
+		t.Fatalf("GetPoolsInNetwork returns error `%v`; want success", err)
+	}
+	assert.Empty(t, nothing, "there should be no pool in the network")
 }
