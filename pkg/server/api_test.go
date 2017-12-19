@@ -372,5 +372,48 @@ func TestGetNetwork(t *testing.T) {
 			t.Errorf("desc: %s, Got wrong ip %v; want %v", tc.desc, resp.Network, tc.expected)
 		}
 	}
+}
 
+func TestCreateNetwork(t *testing.T) {
+	testCases := []struct {
+		req *serverpb.CreateNetworkRequest
+		exp string
+	}{
+		{
+			req: &serverpb.CreateNetworkRequest{
+				Ip:   "192.168.0.0",
+				Mask: 24,
+			},
+			exp: "192.168.0.0/24",
+		},
+		{
+			req: &serverpb.CreateNetworkRequest{
+				Ip:   "192.168.0.0",
+				Mask: 0,
+			},
+			exp: "0.0.0.0/0",
+		},
+	}
+
+	for i, tc := range testCases {
+		te := newTest(t)
+
+		_, err := te.api.CreateNetwork(te.ctx, tc.req)
+
+		if err != nil {
+			t.Errorf("#%d: got error %q; want success", i, err)
+		}
+
+		resp, err := te.api.ListNetwork(te.ctx, &serverpb.ListNetworkRequest{})
+		if err != nil {
+			t.Errorf("#%d: got error %q; want success", i, err)
+		}
+		pre := resp.Networks[0].Prefix
+		if pre != tc.exp {
+			t.Errorf("#%d: got wrong prefix %s; want prefix %s",
+				i, pre, tc.exp)
+		}
+
+		te.tearDown()
+	}
 }

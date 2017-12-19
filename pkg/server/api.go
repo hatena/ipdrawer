@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"net"
 	"sort"
 	"strings"
@@ -372,16 +373,16 @@ func (api *APIServer) CreateNetwork(
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	ip := &net.IPNet{
-		IP:   net.ParseIP(req.Ip),
-		Mask: net.CIDRMask(int(req.Mask), 32),
+	_, ipnet, err := net.ParseCIDR(fmt.Sprintf("%s/%d", req.Ip, req.Mask))
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	netmask := netutil.IPMaskToIP(net.CIDRMask(int(req.Mask), 32))
-	broadcast := netutil.BroadcastIP(ip)
+	broadcast := netutil.BroadcastIP(ipnet)
 
 	n := &model.Network{
-		Prefix:    ip.String(),
+		Prefix:    ipnet.String(),
 		Broadcast: broadcast.String(),
 		Netmask:   netmask.String(),
 		Gateways:  req.DefaultGateways,
