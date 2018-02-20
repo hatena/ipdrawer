@@ -2,7 +2,7 @@ NAME     := ipdrawer
 VERSION  := $(shell git describe --tags --exact-match 2> /dev/null || git rev-parse --short HEAD || echo "unknown")
 REVISION := $(shell git rev-parse HEAD)
 PROTO := protoc
-PKG := github.com/taku-k/ipdrawer
+PKG := github.com/hatena/ipdrawer
 SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
@@ -11,8 +11,8 @@ GO_PKGS := $(shell find . -maxdepth 2 -mindepth 2 -type d | grep -v -e "^\.\/\."
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
-	-X "github.com/taku-k/ipdrawer/pkg/build.tag=$(VERSION)" \
-	-X "github.com/taku-k/ipdrawer/pkg/build.rev=$(REVISION)"
+	-X "github.com/hatena/ipdrawer/pkg/build.tag=$(VERSION)" \
+	-X "github.com/hatena/ipdrawer/pkg/build.rev=$(REVISION)"
 override LINUX_LDFLAGS += $(LINKFLAGS)
 override DARWIN_LDFLAGS += $(LINKFLAGS)
 

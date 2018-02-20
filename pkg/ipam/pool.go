@@ -7,8 +7,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/storage"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/storage"
 )
 
 func setTSToPool(r *storage.Redis, pool *model.Pool) error {

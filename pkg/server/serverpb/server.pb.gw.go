@@ -15,7 +15,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/utilities"
-	"github.com/taku-k/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/model"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -765,7 +765,15 @@ func RegisterNetworkServiceV0HandlerFromEndpoint(ctx context.Context, mux *runti
 // RegisterNetworkServiceV0Handler registers the http handlers for service NetworkServiceV0 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterNetworkServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewNetworkServiceV0Client(conn)
+	return RegisterNetworkServiceV0HandlerClient(ctx, mux, NewNetworkServiceV0Client(conn))
+}
+
+// RegisterNetworkServiceV0Handler registers the http handlers for service NetworkServiceV0 to "mux".
+// The handlers forward requests to the grpc endpoint over the given implementation of "NetworkServiceV0Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "NetworkServiceV0Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "NetworkServiceV0Client" to call the correct interceptors.
+func RegisterNetworkServiceV0HandlerClient(ctx context.Context, mux *runtime.ServeMux, client NetworkServiceV0Client) error {
 
 	mux.Handle("GET", pattern_NetworkServiceV0_ListNetwork_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
@@ -1231,7 +1239,15 @@ func RegisterIPServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.Se
 // RegisterIPServiceV0Handler registers the http handlers for service IPServiceV0 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterIPServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewIPServiceV0Client(conn)
+	return RegisterIPServiceV0HandlerClient(ctx, mux, NewIPServiceV0Client(conn))
+}
+
+// RegisterIPServiceV0Handler registers the http handlers for service IPServiceV0 to "mux".
+// The handlers forward requests to the grpc endpoint over the given implementation of "IPServiceV0Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "IPServiceV0Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "IPServiceV0Client" to call the correct interceptors.
+func RegisterIPServiceV0HandlerClient(ctx context.Context, mux *runtime.ServeMux, client IPServiceV0Client) error {
 
 	mux.Handle("GET", pattern_IPServiceV0_GetNetworkIncludingIP_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)
@@ -1499,7 +1515,15 @@ func RegisterPoolServiceV0HandlerFromEndpoint(ctx context.Context, mux *runtime.
 // RegisterPoolServiceV0Handler registers the http handlers for service PoolServiceV0 to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
 func RegisterPoolServiceV0Handler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	client := NewPoolServiceV0Client(conn)
+	return RegisterPoolServiceV0HandlerClient(ctx, mux, NewPoolServiceV0Client(conn))
+}
+
+// RegisterPoolServiceV0Handler registers the http handlers for service PoolServiceV0 to "mux".
+// The handlers forward requests to the grpc endpoint over the given implementation of "PoolServiceV0Client".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "PoolServiceV0Client"
+// doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
+// "PoolServiceV0Client" to call the correct interceptors.
+func RegisterPoolServiceV0HandlerClient(ctx context.Context, mux *runtime.ServeMux, client PoolServiceV0Client) error {
 
 	mux.Handle("GET", pattern_PoolServiceV0_ListPool_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(ctx)

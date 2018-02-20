@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/taku-k/ipdrawer/pkg/build"
+	"github.com/hatena/ipdrawer/pkg/build"
 
 	"github.com/spf13/cobra"
 )

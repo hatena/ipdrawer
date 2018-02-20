@@ -13,9 +13,9 @@ import (
 	"google.golang.org/grpc/peer"
 	"google.golang.org/grpc/status"
 
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/server/serverpb"
+	"github.com/hatena/ipdrawer/pkg/utils/netutil"
 )
 
 var (

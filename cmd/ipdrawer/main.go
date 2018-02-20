@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/taku-k/ipdrawer/pkg/cli"
+	"github.com/hatena/ipdrawer/pkg/cli"
 )
 
 func main() {
