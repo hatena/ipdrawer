@@ -7,141 +7,308 @@ import "github.com/hatena/ipdrawer/pkg/model/model.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 
+// ListNetworkRequest represents an empty request.
 message ListNetworkRequest {}
 
+
+// ListNetworkResponse represents a response containing all networks.
 message ListNetworkResponse {
+  // Networks represents all networks.
   repeated model.Network networks = 1;
 }
 
+
+// DrawIPRequest represents a request.
 message DrawIPRequest {
+  // Ip represetns the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prefix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
+
+  // PoolTag represents the tag to determine a pool that an IP is drawn from.
   model.Tag pool_tag = 3;
+
+  // Name represents the name of a pool that an IP is drawed from.
   string name = 4;
+
+  // TemporaryReserved represents the flag whether its drawn IP is activated.
   bool temporary_reserved = 5;
-  string range_start = 6;
-  string range_end = 7;
+
+  // RangeStart represents the start IP of a pool that an IP is drawn from.
+  string range_start = 6 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // RangeEnd represetns the end IP of a pool that an IP is drawn from.
+  string range_end = 7 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
+
+// DrawIPResponse represents a response.
 message DrawIPResponse {
+  // Ip represents the IPv4 address.
   string ip = 1;
+
+  // Message represents the message.
   string message = 2;
 }
 
+
+// DrawIPEstimatingNetworkRequest represents a request.
 message DrawIPEstimatingNetworkRequest {
+  // PoolTag represents the tag to determine a pool that an IP is drawn from.
   model.Tag pool_tag = 1;
+
+  // TemporaryReserved represents the flag whether its drawn IP is activated.
   bool temporary_reserved = 2;
 }
 
+
+// GetNetworkIncludingIPRequest represents a request.
 message GetNetworkIncludingIPRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
-message CreateIPResponse {}
 
+// CreateIPResponse represents a response.
+message CreateIPResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+
+// ActivateIPRequest represents a request.
 message ActivateIPRequest {
+  // Ip represents the IPv4 address to be activated.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Tags represents the tag list to attache
   repeated model.Tag tags = 2;
 }
 
+
+// DeactivateIPRequest represents a request.
 message DeactivateIPRequest {
+  // Ip represents the IPv4 address to be deactivated.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
-message DeactivateIPResponse {}
 
-message UpdateIPResponse {}
+// DeactivateIPResponse represetns a response.
+message DeactivateIPResponse {
+  // Message represents the message.
+  string message = 1;
+}
 
+
+// UpdateIPResponse represents a response.
+message UpdateIPResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+
+// GetNetworkRequest represents a request.
 message GetNetworkRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "|^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prefix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
+
+  // Name represents the name of a network.
   string name = 3;
 }
 
+
+// GetEstimatedNetworkRequest represents an empty request.
 message GetEstimatedNetworkRequest {}
 
+
+// GetNetworkResponse represents a response.
 message GetNetworkResponse {
+  // Network represents the IPv4 CIDR.
   string network = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/([0-9]|1[0-9]|2[0-9]|3[0-2])$"}];
+
+  // DefaultGateways represents the list of default gateways.
   repeated string default_gateways = 2;
+
+  // BroadCast represents the broadcast IP.
   string broadcast = 3;
+
+  // Netmask represents the netmask IP.
   string netmask = 4;
+
+  // Tags represents the list of tags.
   repeated model.Tag tags = 5;
 }
 
+
+// CreateNetworkRequest represents a request.
 message CreateNetworkRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prerix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
+
+  // DefaultGateways represen the list of default gateways.
   repeated string default_gateways = 3;
+
+  // Tags represents the list of tags.
   repeated model.Tag tags = 4;
+
+  // Status represents the status of a network.
   model.Network.Status status = 5;
 }
 
-message CreateNetworkResponse {}
 
+// CreateNetworkResponse represents a response;
+message CreateNetworkResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+
+// GetPoolsInNetworkRequest represents a request.
 message GetPoolsInNetworkRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prefix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
 }
 
+
+// GetPoolsInNetworkResponse represents a response.
 message GetPoolsInNetworkResponse {
+  // Pools represents the list of pools.
   repeated model.Pool pools = 1;
 }
 
+
+// CreatePoolRequest represents a request.
 message CreatePoolRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prefix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
+
+  // Pool represents the pool.
   model.Pool pool = 3;
 }
 
-message CreatePoolResponse {}
 
+// CreatePoolResponse
+message CreatePoolResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+
+// DeleteNetworkRequest represents a request.
 message DeleteNetworkRequest {
+  // Ip represents the IPv4 address.
   string ip = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // Mask represents the associated routing prefix.
   int32 mask = 2 [(validator.field) = {int_gt: -1 int_lt: 33}];
 }
 
-message DeleteNetworkResponse {}
 
-message UpdateNetworkResponse {}
+// DeleteNetworkResponse represents a response
+message DeleteNetworkResponse {
+  // Message represents the message.
+  string message = 1;
+}
 
+
+// UpdateNetworkResponse represents a response
+message UpdateNetworkResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+//
 // IPService
 //
+
+// ListIPRequest represents an empty request.
 message ListIPRequest {}
 
+
+// ListIPResponse represents a response.
 message ListIPResponse {
+  // Ips represents the list of IP.
   repeated model.IPAddr ips = 1;
 }
 
+
+// ListTemporaryReservedIPRequest represents an empty request.
 message ListTemporaryReservedIPRequest {}
 
+
+// ListTemporaryReservedIPResponse represents a response.
 message ListTemporaryReservedIPResponse {
+  // Ips represents the list of IP.
   repeated model.IPAddr ips = 1;
 }
 
+
+// ListPoolRequest represents an empty request.
 message ListPoolRequest {}
 
+
+// ListPoolResponse represents a response.
 message ListPoolResponse {
+  // Pools represents the list of pool.
   repeated model.Pool pools = 1;
 }
 
+
+// GetIPInPoolRequest represents a request.
 message GetIPInPoolRequest {
+  // RangeStart represents the IPv4 address which is the start of a pool.
   string range_start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // RangeEnd represents the IPv4 address which is the end of a pool.
   string range_end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
+
+// GetIPInPoolResponse represents a response.
 message GetIPInPoolResponse {
+  // Pool represents the pool.
   model.Pool pool = 1;
+
+  // Ips represents the list of IP.
   repeated model.IPAddr ips = 2;
 }
 
-message UpdatePoolResponse {}
 
+// UpdatePoolReponse represents a reponse.
+message UpdatePoolResponse {
+  // Message represents the message.
+  string message = 1;
+}
+
+
+// DeletePoolRequest represents a request.
 message DeletePoolRequest {
+  // RangeStart represents the IPv4 address which is the start of a pool.
   string range_start = 1 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
+
+  // RangeEnd represents the IPv4 address which is the end of a pool.
   string range_end = 2 [(validator.field) = {regex: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"}];
 }
 
-message DeletePoolResponse {}
+
+// DeletePoolResponse represents a response.
+message DeletePoolResponse {
+  // Message represents the message.
+  string message = 1;
+}
 
 
 service NetworkServiceV0 {
