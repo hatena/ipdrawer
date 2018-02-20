@@ -9,11 +9,11 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 
-	"github.com/taku-k/ipdrawer/pkg/ipam"
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
-	"github.com/taku-k/ipdrawer/pkg/storage"
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"github.com/hatena/ipdrawer/pkg/ipam"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/server/serverpb"
+	"github.com/hatena/ipdrawer/pkg/storage"
+	"github.com/hatena/ipdrawer/pkg/utils/netutil"
 )
 
 var (

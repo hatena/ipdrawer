@@ -4,9 +4,9 @@ import (
 	"net"
 	"testing"
 
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/storage"
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/storage"
+	"github.com/hatena/ipdrawer/pkg/utils/netutil"
 )
 
 var (

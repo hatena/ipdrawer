@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"github.com/hatena/ipdrawer/pkg/utils/netutil"
 )
 
 func (p *Pool) Key() string {

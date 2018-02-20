@@ -8,9 +8,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/net/context"
 
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/storage"
-	"github.com/taku-k/ipdrawer/pkg/utils/testutil"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/storage"
+	"github.com/hatena/ipdrawer/pkg/utils/testutil"
 )
 
 func (m *IPManager) reserveTemporary(ip net.IP) {

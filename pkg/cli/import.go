@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 
-	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
+	"github.com/hatena/ipdrawer/pkg/server/serverpb"
 )
 
 var networkImportCmd = &cobra.Command{

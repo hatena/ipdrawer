@@ -14,10 +14,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/taku-k/ipdrawer/pkg/bot"
-	"github.com/taku-k/ipdrawer/pkg/build"
-	"github.com/taku-k/ipdrawer/pkg/server"
-	"github.com/taku-k/ipdrawer/pkg/utils/tracer"
+	"github.com/hatena/ipdrawer/pkg/bot"
+	"github.com/hatena/ipdrawer/pkg/build"
+	"github.com/hatena/ipdrawer/pkg/server"
+	"github.com/hatena/ipdrawer/pkg/utils/tracer"
 )
 
 var startCmd = &cobra.Command{

@@ -23,12 +23,12 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
-	"github.com/taku-k/ipdrawer/pkg/base"
-	"github.com/taku-k/ipdrawer/pkg/ipam"
-	"github.com/taku-k/ipdrawer/pkg/server/serverpb"
-	"github.com/taku-k/ipdrawer/pkg/ui"
-	"github.com/taku-k/ipdrawer/pkg/ui/data/swagger"
-	"github.com/taku-k/ipdrawer/pkg/utils/protoutil"
+	"github.com/hatena/ipdrawer/pkg/base"
+	"github.com/hatena/ipdrawer/pkg/ipam"
+	"github.com/hatena/ipdrawer/pkg/server/serverpb"
+	"github.com/hatena/ipdrawer/pkg/ui"
+	"github.com/hatena/ipdrawer/pkg/ui/data/swagger"
+	"github.com/hatena/ipdrawer/pkg/utils/protoutil"
 )
 
 var logrusEntry = logrus.NewEntry(logrus.New())

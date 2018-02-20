@@ -10,10 +10,10 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/net/context"
 
-	"github.com/taku-k/ipdrawer/pkg/base"
-	"github.com/taku-k/ipdrawer/pkg/model"
-	"github.com/taku-k/ipdrawer/pkg/storage"
-	"github.com/taku-k/ipdrawer/pkg/utils/netutil"
+	"github.com/hatena/ipdrawer/pkg/base"
+	"github.com/hatena/ipdrawer/pkg/model"
+	"github.com/hatena/ipdrawer/pkg/storage"
+	"github.com/hatena/ipdrawer/pkg/utils/netutil"
 )
 
 type IPManager struct {

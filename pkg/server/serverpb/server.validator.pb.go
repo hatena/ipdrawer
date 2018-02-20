@@ -52,7 +52,7 @@ import proto "github.com/golang/protobuf/proto"
 import math "math"
 import _ "google.golang.org/genproto/googleapis/api/annotations"
 import _ "github.com/mwitkow/go-proto-validators"
-import _ "github.com/taku-k/ipdrawer/pkg/model"
+import _ "github.com/hatena/ipdrawer/pkg/model"
 import _ "github.com/gogo/protobuf/gogoproto"
 
 import time "time"

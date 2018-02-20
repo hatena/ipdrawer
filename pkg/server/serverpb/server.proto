@@ -3,7 +3,7 @@ package serverpb;
 
 import "google/api/annotations.proto";
 import "github.com/mwitkow/go-proto-validators/validator.proto";
-import "github.com/taku-k/ipdrawer/pkg/model/model.proto";
+import "github.com/hatena/ipdrawer/pkg/model/model.proto";
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 

@@ -6,7 +6,7 @@ import (
 	"github.com/go-redis/redis"
 	"github.com/pkg/errors"
 
-	"github.com/taku-k/ipdrawer/pkg/base"
+	"github.com/hatena/ipdrawer/pkg/base"
 )
 
 type Redis struct {

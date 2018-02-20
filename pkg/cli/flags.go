@@ -3,9 +3,9 @@ package cli
 import (
 	"github.com/spf13/pflag"
 
-	"github.com/taku-k/ipdrawer/pkg/base"
-	"github.com/taku-k/ipdrawer/pkg/cli/cliflags"
-	"github.com/taku-k/ipdrawer/pkg/utils/envutil"
+	"github.com/hatena/ipdrawer/pkg/base"
+	"github.com/hatena/ipdrawer/pkg/cli/cliflags"
+	"github.com/hatena/ipdrawer/pkg/utils/envutil"
 )
 
 var cfg = base.MakeConfig()

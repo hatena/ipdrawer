@@ -7,7 +7,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/taku-k/ipdrawer/pkg/server/apiclient"
+	"github.com/hatena/ipdrawer/pkg/server/apiclient"
 )
 
 func (te *test) startServer() {
