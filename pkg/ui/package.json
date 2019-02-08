@@ -49,7 +49,7 @@
     "classnames": "^2.2.5",
     "google-protobuf": "^3.3.0",
     "grpc-web-client": "^0.3.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.11",
     "material-ui": "^1.0.0-beta.10",
     "material-ui-icons": "^1.0.0-beta.5",
     "moment": "^2.21.0",
