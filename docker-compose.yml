@@ -1,0 +1,13 @@
+version: "3"
+services:
+  ipdrawer:
+    build: .
+    command: start --redis-host redis
+    ports:
+      - 25577:25577
+    depends_on:
+      - redis
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
