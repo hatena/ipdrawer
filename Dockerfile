@@ -12,6 +12,7 @@ RUN dep ensure
 RUN make
 
 FROM alpine:latest
-WORKDIR /
+
 COPY --from=builder /go/src/github.com/hatena/ipdrawer/ipdrawer /bin/ipdrawer
+
 ENTRYPOINT ["ipdrawer"]
