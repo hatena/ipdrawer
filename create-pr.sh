@@ -14,7 +14,7 @@ git config --local --add hub.host "${GHE_HOST}"
 git config --local user.name "${GITHUB_USER}"
 git config --local user.email "${GITHUB_EMAIL}"
 
-git checkout -b "release-${GIT_COMMIT}"
+git checkout -b "develop"
 sed -i -r "s/\"imageTag\":\\s\"[a-z0-9\\-]*?\"/\"imageTag\": \"${GIT_COMMIT}\"/" cdk.context.json
 git add cdk.context.json
 git commit -m "Release ${GIT_COMMIT}"
