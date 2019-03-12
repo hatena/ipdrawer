@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - $(aws ecr get-login --no-include-email)
+      - GIT_COMMIT=$(git rev-parse --short HEAD); echo ${GIT_COMMIT}
+      - GIT_BRANCH=$(git symbolic-ref HEAD --short 2>/dev/null || (git branch -a --contains HEAD 2>/dev/null | sed -n 2p | awk '{ printf $1 }'))
+      - GIT_BRANCH=${GIT_BRANCH#remotes/origin/}; echo ${GIT_BRANCH}
+
+  build:
+    commands:
+      - docker pull ${APP_IMAGE_URI}:latest
+      - docker build --cache-from ${APP_IMAGE_URI}:latest -t ${APP_IMAGE_URI}:latest .
+  post_build:
+    commands:
+      - docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:${GIT_COMMIT}
+      - docker push ${APP_IMAGE_URI}:${GIT_COMMIT}
+      - |
+        if [ ${GIT_BRANCH} = "master" ]; then
+          docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:stable
+          docker push ${APP_IMAGE_URI}:stable
+          ./create-pr.sh
+        elif [ ${GIT_BRANCH} = "develop" ]; then
+          docker push ${APP_IMAGE_URI}:latest
+        fi
