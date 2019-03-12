@@ -14,11 +14,10 @@ git config --local --add hub.host "${GHE_HOST}"
 git config --local user.name "${GITHUB_USER}"
 git config --local user.email "${GITHUB_EMAIL}"
 
-git checkout develop
-git merge master
+git checkout -b staging
 sed -i -r "s/\"imageTag\":\\s\"[a-z0-9\\-]*?\"/\"imageTag\": \"${GIT_COMMIT}\"/" cdk.context.json
 git add cdk.context.json
 git commit -m "Release ${GIT_COMMIT}"
 
-git push --set-upstream origin develop
+git push --set-upstream origin staging
 echo -e "Release ${BUILD_REPO}:${GIT_COMMIT} \\n\\n" | hub pull-request -F -
