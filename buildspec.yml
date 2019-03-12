@@ -21,6 +21,6 @@ phases:
           docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:stable
           docker push ${APP_IMAGE_URI}:stable
           ./create-pr.sh
-        elif [ ${GIT_BRANCH} = "develop" ]; then
+        elif [ ${GIT_BRANCH} = "staging" ]; then
           docker push ${APP_IMAGE_URI}:latest
         fi
