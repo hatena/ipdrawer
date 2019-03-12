@@ -19,4 +19,4 @@ git add cdk.context.json
 git commit -m "Release ${GIT_COMMIT}"
 
 git push --set-upstream origin staging
-echo -e "Release ${BUILD_REPO}:${GIT_COMMIT} \\n\\n" | hub pull-request -F -
+echo -e "Release ${BUILD_REPO}:${GIT_COMMIT} \\n\\nSee https://github.com/hatena/ipdrawer/commit/${GIT_COMMIT}" | hub pull-request -F -
