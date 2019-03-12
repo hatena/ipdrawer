@@ -43,6 +43,12 @@ $ make proto
 $ make test
 ```
 
+### (Option) CI/CD Pipeline
+- buildspec.yml
+  - build docker image and push to ECR
+- create-pr.sh
+  - Create PR in another repository for deploy (GitOps)
+
 ## Author
 
 [taku-k](https://github.com/taku-k)
