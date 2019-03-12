@@ -7,14 +7,13 @@ tar zxf hub-linux-amd64-2.10.0.tgz
 
 BUILD_REPO=$(basename "$(git rev-parse --show-toplevel)")
 
-git clone --depth 1 https://${GITHUB_USER}:${GITHUB_TOKEN}@${GHE_HOST}/${OWNER}/${DEPLOY_REPO}.git
+git clone -b staging --depth 1 https://${GITHUB_USER}:${GITHUB_TOKEN}@${GHE_HOST}/${OWNER}/${DEPLOY_REPO}.git
 cd "${DEPLOY_REPO}" || return
 
 git config --local --add hub.host "${GHE_HOST}"
 git config --local user.name "${GITHUB_USER}"
 git config --local user.email "${GITHUB_EMAIL}"
 
-git checkout -b staging
 sed -i -r "s/\"imageTag\":\\s\"[a-z0-9\\-]*?\"/\"imageTag\": \"${GIT_COMMIT}\"/" cdk.context.json
 git add cdk.context.json
 git commit -m "Release ${GIT_COMMIT}"
