@@ -16,6 +16,9 @@ phases:
     commands:
       - docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:${GIT_COMMIT}
       - docker push ${APP_IMAGE_URI}:${GIT_COMMIT}
+      - docker pull ${APP_IMAGE_URI}:stable
+      - docker tag ${APP_IMAGE_URI}:stable ${APP_IMAGE_URI}:previous
+      - docker push ${APP_IMAGE_URI}:previous
       - |
         if [ ${GIT_BRANCH} = "master" ]; then
           docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:stable
