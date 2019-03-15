@@ -359,7 +359,7 @@ func TestGetNetwork(t *testing.T) {
 		resp, err := te.api.GetNetwork(te.ctx, tc.req)
 
 		if err == nil && tc.errmsg != "" {
-			t.Fatalf("desc: %s, Got nil; want error %q", tc.desc, err, tc.errmsg)
+			t.Fatalf("desc: %s, Got nil; want error %q", tc.desc, tc.errmsg)
 		} else if err != nil && fmt.Sprintf("%s", err) != tc.errmsg {
 			t.Fatalf("desc: %s, Got error %q; want error %q", tc.desc, err, tc.errmsg)
 		}
