@@ -20,7 +20,7 @@ phases:
       - docker tag ${APP_IMAGE_URI}:stable ${APP_IMAGE_URI}:previous
       - docker push ${APP_IMAGE_URI}:previous
       - |
-        if [ ${GIT_BRANCH} = "master" ]; then
+        if [ ${GIT_BRANCH} = "add-previous-tag" ]; then
           docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:stable
           docker push ${APP_IMAGE_URI}:stable
           ./create-pr.sh
