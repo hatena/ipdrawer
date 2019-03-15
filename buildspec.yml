@@ -18,6 +18,9 @@ phases:
       - docker push ${APP_IMAGE_URI}:${GIT_COMMIT}
       - |
         if [ ${GIT_BRANCH} = "master" ]; then
+          docker pull ${APP_IMAGE_URI}:stable
+          docker tag ${APP_IMAGE_URI}:stable ${APP_IMAGE_URI}:previous
+          docker push ${APP_IMAGE_URI}:previous
           docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:stable
           docker push ${APP_IMAGE_URI}:stable
           ./create-pr.sh
