@@ -10,6 +10,8 @@ phases:
 
   build:
     commands:
+      - docker pull golang:1.11
+      - docker pull alpine:latest
       - docker pull ${APP_IMAGE_URI}:latest
       - docker build --cache-from ${APP_IMAGE_URI}:latest -t ${APP_IMAGE_URI}:latest .
   post_build:
