@@ -18,6 +18,7 @@ phases:
     commands:
       - docker tag ${APP_IMAGE_URI}:latest ${APP_IMAGE_URI}:${GIT_COMMIT}
       - docker push ${APP_IMAGE_URI}:${GIT_COMMIT}
+      - docker push ${APP_IMAGE_URI}:latest
       - |
         if [ ${GIT_BRANCH} = "master" ]; then
           docker pull ${APP_IMAGE_URI}:stable
@@ -27,5 +28,5 @@ phases:
           docker push ${APP_IMAGE_URI}:stable
           ./create-pr.sh
         elif [ ${GIT_BRANCH} = "staging" ]; then
-          docker push ${APP_IMAGE_URI}:latest
+          docker push ${APP_IMAGE_URI}:staging
         fi
