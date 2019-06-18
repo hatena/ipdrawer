@@ -20,7 +20,7 @@
     "@types/react-router": "4.0.12",
     "@types/redux-actions": "1.2.6",
     "@types/webpack": "3.0.1",
-    "@types/webpack-env": "^1.13.0",
+    "@types/webpack-env": "^1.13.9",
     "awesome-typescript-loader": "^3.2.1",
     "css-loader": "^2.1.1",
     "extract-text-webpack-plugin": "^2.1.2",
