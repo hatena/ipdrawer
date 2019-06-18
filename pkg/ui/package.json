@@ -19,7 +19,7 @@
     "@types/react-redux": "4.4.45",
     "@types/react-router": "4.0.12",
     "@types/redux-actions": "1.2.6",
-    "@types/webpack": "3.0.1",
+    "@types/webpack": "4.4.32",
     "@types/webpack-env": "^1.13.0",
     "awesome-typescript-loader": "^3.2.1",
     "css-loader": "^2.1.1",
