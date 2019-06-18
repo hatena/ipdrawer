@@ -65,7 +65,7 @@
     "redux-actions": "^2.1.0",
     "redux-cycles": "^0.4.1",
     "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
+    "reselect": "^4.0.0",
     "ts-protoc-gen": "^0.3.2"
   }
 }
