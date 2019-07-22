@@ -46,7 +46,7 @@
     "@devexpress/dx-react-core": "^1.0.0-alpha.9",
     "@devexpress/dx-react-grid": "^1.0.0-alpha.9",
     "@devexpress/dx-react-grid-material-ui": "^1.0.0-alpha.9",
-    "@types/google-protobuf": "^3.2.7",
+    "@types/google-protobuf": "^3.7.1",
     "classnames": "^2.2.5",
     "google-protobuf": "^3.3.0",
     "grpc-web-client": "^0.3.0",
