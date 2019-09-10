@@ -25,6 +25,7 @@ ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
 PBJS := pkg/ui/node_modules/.bin/pbjs
 PBTS := pkg/ui/node_modules/.bin/pbts
 
+GOBIN ?= $(shell go env GOPATH)/bin
 export GO111MODULE=on
 
 .DEFAULT_GOAL := $(NAME)
@@ -57,12 +58,18 @@ test-race:
 test-all: vet test-race
 
 .PHONY: fmt
-fmt:
+fmt: $(GOBIN)/gofmt
 	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e node_modules)
 
+$(GOBIN)/gofmt:
+	GO111MODULE=off go get github.com/golang/go/src/cmd/gofmt
+
 .PHONY: imports
-imports:
+imports: $(GOBIN)/goimports
 	goimports -w $$(find . -type f -name '*.go' | grep -v -e node_modules)
+
+$(GOBIN)/goimports:
+	GO111MODULE=off go get golang.org/x/tools/cmd/goimports
 
 .PHONY: proto
 proto: $(PROTOSRCS) deps $(PBJS) $(PBTS)
