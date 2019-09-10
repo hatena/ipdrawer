@@ -1,4 +1,4 @@
-/*eslint-disable block-scoped-var, no-redeclare, no-control-regex, no-prototype-builtins*/
+/*eslint-disable block-scoped-var, id-length, no-control-regex, no-magic-numbers, no-prototype-builtins, no-redeclare, no-shadow, no-var, sort-vars*/
 "use strict";
 
 var $protobuf = require("protobufjs/minimal");
@@ -30,6 +30,7 @@ $root.serverpb = (function() {
          * Constructs a new ListNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a ListNetworkRequest.
+         * @implements IListNetworkRequest
          * @constructor
          * @param {serverpb.IListNetworkRequest=} [properties] Properties to set
          */
@@ -183,13 +184,14 @@ $root.serverpb = (function() {
          * Properties of a ListNetworkResponse.
          * @memberof serverpb
          * @interface IListNetworkResponse
-         * @property {Array.<model.INetwork>} [networks] ListNetworkResponse networks
+         * @property {Array.<model.INetwork>|null} [networks] ListNetworkResponse networks
          */
 
         /**
          * Constructs a new ListNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents a ListNetworkResponse.
+         * @implements IListNetworkResponse
          * @constructor
          * @param {serverpb.IListNetworkResponse=} [properties] Properties to set
          */
@@ -203,7 +205,7 @@ $root.serverpb = (function() {
 
         /**
          * ListNetworkResponse networks.
-         * @member {Array.<model.INetwork>}networks
+         * @member {Array.<model.INetwork>} networks
          * @memberof serverpb.ListNetworkResponse
          * @instance
          */
@@ -390,19 +392,20 @@ $root.serverpb = (function() {
          * Properties of a DrawIPRequest.
          * @memberof serverpb
          * @interface IDrawIPRequest
-         * @property {string} [ip] DrawIPRequest ip
-         * @property {number} [mask] DrawIPRequest mask
-         * @property {model.ITag} [poolTag] DrawIPRequest poolTag
-         * @property {string} [name] DrawIPRequest name
-         * @property {boolean} [temporaryReserved] DrawIPRequest temporaryReserved
-         * @property {string} [rangeStart] DrawIPRequest rangeStart
-         * @property {string} [rangeEnd] DrawIPRequest rangeEnd
+         * @property {string|null} [ip] DrawIPRequest ip
+         * @property {number|null} [mask] DrawIPRequest mask
+         * @property {model.ITag|null} [poolTag] DrawIPRequest poolTag
+         * @property {string|null} [name] DrawIPRequest name
+         * @property {boolean|null} [temporaryReserved] DrawIPRequest temporaryReserved
+         * @property {string|null} [rangeStart] DrawIPRequest rangeStart
+         * @property {string|null} [rangeEnd] DrawIPRequest rangeEnd
          */
 
         /**
          * Constructs a new DrawIPRequest.
          * @memberof serverpb
          * @classdesc Represents a DrawIPRequest.
+         * @implements IDrawIPRequest
          * @constructor
          * @param {serverpb.IDrawIPRequest=} [properties] Properties to set
          */
@@ -415,7 +418,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -423,7 +426,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -431,7 +434,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest poolTag.
-         * @member {(model.ITag|null|undefined)}poolTag
+         * @member {model.ITag|null|undefined} poolTag
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -439,7 +442,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest name.
-         * @member {string}name
+         * @member {string} name
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -447,7 +450,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest temporaryReserved.
-         * @member {boolean}temporaryReserved
+         * @member {boolean} temporaryReserved
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -455,7 +458,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest rangeStart.
-         * @member {string}rangeStart
+         * @member {string} rangeStart
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -463,7 +466,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPRequest rangeEnd.
-         * @member {string}rangeEnd
+         * @member {string} rangeEnd
          * @memberof serverpb.DrawIPRequest
          * @instance
          */
@@ -714,14 +717,15 @@ $root.serverpb = (function() {
          * Properties of a DrawIPResponse.
          * @memberof serverpb
          * @interface IDrawIPResponse
-         * @property {string} [ip] DrawIPResponse ip
-         * @property {string} [message] DrawIPResponse message
+         * @property {string|null} [ip] DrawIPResponse ip
+         * @property {string|null} [message] DrawIPResponse message
          */
 
         /**
          * Constructs a new DrawIPResponse.
          * @memberof serverpb
          * @classdesc Represents a DrawIPResponse.
+         * @implements IDrawIPResponse
          * @constructor
          * @param {serverpb.IDrawIPResponse=} [properties] Properties to set
          */
@@ -734,7 +738,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPResponse ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.DrawIPResponse
          * @instance
          */
@@ -742,7 +746,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPResponse message.
-         * @member {string}message
+         * @member {string} message
          * @memberof serverpb.DrawIPResponse
          * @instance
          */
@@ -923,14 +927,15 @@ $root.serverpb = (function() {
          * Properties of a DrawIPEstimatingNetworkRequest.
          * @memberof serverpb
          * @interface IDrawIPEstimatingNetworkRequest
-         * @property {model.ITag} [poolTag] DrawIPEstimatingNetworkRequest poolTag
-         * @property {boolean} [temporaryReserved] DrawIPEstimatingNetworkRequest temporaryReserved
+         * @property {model.ITag|null} [poolTag] DrawIPEstimatingNetworkRequest poolTag
+         * @property {boolean|null} [temporaryReserved] DrawIPEstimatingNetworkRequest temporaryReserved
          */
 
         /**
          * Constructs a new DrawIPEstimatingNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a DrawIPEstimatingNetworkRequest.
+         * @implements IDrawIPEstimatingNetworkRequest
          * @constructor
          * @param {serverpb.IDrawIPEstimatingNetworkRequest=} [properties] Properties to set
          */
@@ -943,7 +948,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPEstimatingNetworkRequest poolTag.
-         * @member {(model.ITag|null|undefined)}poolTag
+         * @member {model.ITag|null|undefined} poolTag
          * @memberof serverpb.DrawIPEstimatingNetworkRequest
          * @instance
          */
@@ -951,7 +956,7 @@ $root.serverpb = (function() {
 
         /**
          * DrawIPEstimatingNetworkRequest temporaryReserved.
-         * @member {boolean}temporaryReserved
+         * @member {boolean} temporaryReserved
          * @memberof serverpb.DrawIPEstimatingNetworkRequest
          * @instance
          */
@@ -1137,13 +1142,14 @@ $root.serverpb = (function() {
          * Properties of a GetNetworkIncludingIPRequest.
          * @memberof serverpb
          * @interface IGetNetworkIncludingIPRequest
-         * @property {string} [ip] GetNetworkIncludingIPRequest ip
+         * @property {string|null} [ip] GetNetworkIncludingIPRequest ip
          */
 
         /**
          * Constructs a new GetNetworkIncludingIPRequest.
          * @memberof serverpb
          * @classdesc Represents a GetNetworkIncludingIPRequest.
+         * @implements IGetNetworkIncludingIPRequest
          * @constructor
          * @param {serverpb.IGetNetworkIncludingIPRequest=} [properties] Properties to set
          */
@@ -1156,7 +1162,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkIncludingIPRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.GetNetworkIncludingIPRequest
          * @instance
          */
@@ -1329,6 +1335,7 @@ $root.serverpb = (function() {
          * Constructs a new CreateIPResponse.
          * @memberof serverpb
          * @classdesc Represents a CreateIPResponse.
+         * @implements ICreateIPResponse
          * @constructor
          * @param {serverpb.ICreateIPResponse=} [properties] Properties to set
          */
@@ -1482,14 +1489,15 @@ $root.serverpb = (function() {
          * Properties of an ActivateIPRequest.
          * @memberof serverpb
          * @interface IActivateIPRequest
-         * @property {string} [ip] ActivateIPRequest ip
-         * @property {Array.<model.ITag>} [tags] ActivateIPRequest tags
+         * @property {string|null} [ip] ActivateIPRequest ip
+         * @property {Array.<model.ITag>|null} [tags] ActivateIPRequest tags
          */
 
         /**
          * Constructs a new ActivateIPRequest.
          * @memberof serverpb
          * @classdesc Represents an ActivateIPRequest.
+         * @implements IActivateIPRequest
          * @constructor
          * @param {serverpb.IActivateIPRequest=} [properties] Properties to set
          */
@@ -1503,7 +1511,7 @@ $root.serverpb = (function() {
 
         /**
          * ActivateIPRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.ActivateIPRequest
          * @instance
          */
@@ -1511,7 +1519,7 @@ $root.serverpb = (function() {
 
         /**
          * ActivateIPRequest tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof serverpb.ActivateIPRequest
          * @instance
          */
@@ -1712,13 +1720,14 @@ $root.serverpb = (function() {
          * Properties of a DeactivateIPRequest.
          * @memberof serverpb
          * @interface IDeactivateIPRequest
-         * @property {string} [ip] DeactivateIPRequest ip
+         * @property {string|null} [ip] DeactivateIPRequest ip
          */
 
         /**
          * Constructs a new DeactivateIPRequest.
          * @memberof serverpb
          * @classdesc Represents a DeactivateIPRequest.
+         * @implements IDeactivateIPRequest
          * @constructor
          * @param {serverpb.IDeactivateIPRequest=} [properties] Properties to set
          */
@@ -1731,7 +1740,7 @@ $root.serverpb = (function() {
 
         /**
          * DeactivateIPRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.DeactivateIPRequest
          * @instance
          */
@@ -1904,6 +1913,7 @@ $root.serverpb = (function() {
          * Constructs a new DeactivateIPResponse.
          * @memberof serverpb
          * @classdesc Represents a DeactivateIPResponse.
+         * @implements IDeactivateIPResponse
          * @constructor
          * @param {serverpb.IDeactivateIPResponse=} [properties] Properties to set
          */
@@ -2063,6 +2073,7 @@ $root.serverpb = (function() {
          * Constructs a new UpdateIPResponse.
          * @memberof serverpb
          * @classdesc Represents an UpdateIPResponse.
+         * @implements IUpdateIPResponse
          * @constructor
          * @param {serverpb.IUpdateIPResponse=} [properties] Properties to set
          */
@@ -2216,15 +2227,16 @@ $root.serverpb = (function() {
          * Properties of a GetNetworkRequest.
          * @memberof serverpb
          * @interface IGetNetworkRequest
-         * @property {string} [ip] GetNetworkRequest ip
-         * @property {number} [mask] GetNetworkRequest mask
-         * @property {string} [name] GetNetworkRequest name
+         * @property {string|null} [ip] GetNetworkRequest ip
+         * @property {number|null} [mask] GetNetworkRequest mask
+         * @property {string|null} [name] GetNetworkRequest name
          */
 
         /**
          * Constructs a new GetNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a GetNetworkRequest.
+         * @implements IGetNetworkRequest
          * @constructor
          * @param {serverpb.IGetNetworkRequest=} [properties] Properties to set
          */
@@ -2237,7 +2249,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.GetNetworkRequest
          * @instance
          */
@@ -2245,7 +2257,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.GetNetworkRequest
          * @instance
          */
@@ -2253,7 +2265,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkRequest name.
-         * @member {string}name
+         * @member {string} name
          * @memberof serverpb.GetNetworkRequest
          * @instance
          */
@@ -2453,6 +2465,7 @@ $root.serverpb = (function() {
          * Constructs a new GetEstimatedNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a GetEstimatedNetworkRequest.
+         * @implements IGetEstimatedNetworkRequest
          * @constructor
          * @param {serverpb.IGetEstimatedNetworkRequest=} [properties] Properties to set
          */
@@ -2606,17 +2619,18 @@ $root.serverpb = (function() {
          * Properties of a GetNetworkResponse.
          * @memberof serverpb
          * @interface IGetNetworkResponse
-         * @property {string} [network] GetNetworkResponse network
-         * @property {Array.<string>} [defaultGateways] GetNetworkResponse defaultGateways
-         * @property {string} [broadcast] GetNetworkResponse broadcast
-         * @property {string} [netmask] GetNetworkResponse netmask
-         * @property {Array.<model.ITag>} [tags] GetNetworkResponse tags
+         * @property {string|null} [network] GetNetworkResponse network
+         * @property {Array.<string>|null} [defaultGateways] GetNetworkResponse defaultGateways
+         * @property {string|null} [broadcast] GetNetworkResponse broadcast
+         * @property {string|null} [netmask] GetNetworkResponse netmask
+         * @property {Array.<model.ITag>|null} [tags] GetNetworkResponse tags
          */
 
         /**
          * Constructs a new GetNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents a GetNetworkResponse.
+         * @implements IGetNetworkResponse
          * @constructor
          * @param {serverpb.IGetNetworkResponse=} [properties] Properties to set
          */
@@ -2631,7 +2645,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkResponse network.
-         * @member {string}network
+         * @member {string} network
          * @memberof serverpb.GetNetworkResponse
          * @instance
          */
@@ -2639,7 +2653,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkResponse defaultGateways.
-         * @member {Array.<string>}defaultGateways
+         * @member {Array.<string>} defaultGateways
          * @memberof serverpb.GetNetworkResponse
          * @instance
          */
@@ -2647,7 +2661,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkResponse broadcast.
-         * @member {string}broadcast
+         * @member {string} broadcast
          * @memberof serverpb.GetNetworkResponse
          * @instance
          */
@@ -2655,7 +2669,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkResponse netmask.
-         * @member {string}netmask
+         * @member {string} netmask
          * @memberof serverpb.GetNetworkResponse
          * @instance
          */
@@ -2663,7 +2677,7 @@ $root.serverpb = (function() {
 
         /**
          * GetNetworkResponse tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof serverpb.GetNetworkResponse
          * @instance
          */
@@ -2920,17 +2934,18 @@ $root.serverpb = (function() {
          * Properties of a CreateNetworkRequest.
          * @memberof serverpb
          * @interface ICreateNetworkRequest
-         * @property {string} [ip] CreateNetworkRequest ip
-         * @property {number} [mask] CreateNetworkRequest mask
-         * @property {Array.<string>} [defaultGateways] CreateNetworkRequest defaultGateways
-         * @property {Array.<model.ITag>} [tags] CreateNetworkRequest tags
-         * @property {model.Network.Status} [status] CreateNetworkRequest status
+         * @property {string|null} [ip] CreateNetworkRequest ip
+         * @property {number|null} [mask] CreateNetworkRequest mask
+         * @property {Array.<string>|null} [defaultGateways] CreateNetworkRequest defaultGateways
+         * @property {Array.<model.ITag>|null} [tags] CreateNetworkRequest tags
+         * @property {model.Network.Status|null} [status] CreateNetworkRequest status
          */
 
         /**
          * Constructs a new CreateNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a CreateNetworkRequest.
+         * @implements ICreateNetworkRequest
          * @constructor
          * @param {serverpb.ICreateNetworkRequest=} [properties] Properties to set
          */
@@ -2945,7 +2960,7 @@ $root.serverpb = (function() {
 
         /**
          * CreateNetworkRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.CreateNetworkRequest
          * @instance
          */
@@ -2953,7 +2968,7 @@ $root.serverpb = (function() {
 
         /**
          * CreateNetworkRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.CreateNetworkRequest
          * @instance
          */
@@ -2961,7 +2976,7 @@ $root.serverpb = (function() {
 
         /**
          * CreateNetworkRequest defaultGateways.
-         * @member {Array.<string>}defaultGateways
+         * @member {Array.<string>} defaultGateways
          * @memberof serverpb.CreateNetworkRequest
          * @instance
          */
@@ -2969,7 +2984,7 @@ $root.serverpb = (function() {
 
         /**
          * CreateNetworkRequest tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof serverpb.CreateNetworkRequest
          * @instance
          */
@@ -2977,7 +2992,7 @@ $root.serverpb = (function() {
 
         /**
          * CreateNetworkRequest status.
-         * @member {model.Network.Status}status
+         * @member {model.Network.Status} status
          * @memberof serverpb.CreateNetworkRequest
          * @instance
          */
@@ -3258,6 +3273,7 @@ $root.serverpb = (function() {
          * Constructs a new CreateNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents a CreateNetworkResponse.
+         * @implements ICreateNetworkResponse
          * @constructor
          * @param {serverpb.ICreateNetworkResponse=} [properties] Properties to set
          */
@@ -3411,14 +3427,15 @@ $root.serverpb = (function() {
          * Properties of a GetPoolsInNetworkRequest.
          * @memberof serverpb
          * @interface IGetPoolsInNetworkRequest
-         * @property {string} [ip] GetPoolsInNetworkRequest ip
-         * @property {number} [mask] GetPoolsInNetworkRequest mask
+         * @property {string|null} [ip] GetPoolsInNetworkRequest ip
+         * @property {number|null} [mask] GetPoolsInNetworkRequest mask
          */
 
         /**
          * Constructs a new GetPoolsInNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a GetPoolsInNetworkRequest.
+         * @implements IGetPoolsInNetworkRequest
          * @constructor
          * @param {serverpb.IGetPoolsInNetworkRequest=} [properties] Properties to set
          */
@@ -3431,7 +3448,7 @@ $root.serverpb = (function() {
 
         /**
          * GetPoolsInNetworkRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.GetPoolsInNetworkRequest
          * @instance
          */
@@ -3439,7 +3456,7 @@ $root.serverpb = (function() {
 
         /**
          * GetPoolsInNetworkRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.GetPoolsInNetworkRequest
          * @instance
          */
@@ -3620,13 +3637,14 @@ $root.serverpb = (function() {
          * Properties of a GetPoolsInNetworkResponse.
          * @memberof serverpb
          * @interface IGetPoolsInNetworkResponse
-         * @property {Array.<model.IPool>} [pools] GetPoolsInNetworkResponse pools
+         * @property {Array.<model.IPool>|null} [pools] GetPoolsInNetworkResponse pools
          */
 
         /**
          * Constructs a new GetPoolsInNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents a GetPoolsInNetworkResponse.
+         * @implements IGetPoolsInNetworkResponse
          * @constructor
          * @param {serverpb.IGetPoolsInNetworkResponse=} [properties] Properties to set
          */
@@ -3640,7 +3658,7 @@ $root.serverpb = (function() {
 
         /**
          * GetPoolsInNetworkResponse pools.
-         * @member {Array.<model.IPool>}pools
+         * @member {Array.<model.IPool>} pools
          * @memberof serverpb.GetPoolsInNetworkResponse
          * @instance
          */
@@ -3827,15 +3845,16 @@ $root.serverpb = (function() {
          * Properties of a CreatePoolRequest.
          * @memberof serverpb
          * @interface ICreatePoolRequest
-         * @property {string} [ip] CreatePoolRequest ip
-         * @property {number} [mask] CreatePoolRequest mask
-         * @property {model.IPool} [pool] CreatePoolRequest pool
+         * @property {string|null} [ip] CreatePoolRequest ip
+         * @property {number|null} [mask] CreatePoolRequest mask
+         * @property {model.IPool|null} [pool] CreatePoolRequest pool
          */
 
         /**
          * Constructs a new CreatePoolRequest.
          * @memberof serverpb
          * @classdesc Represents a CreatePoolRequest.
+         * @implements ICreatePoolRequest
          * @constructor
          * @param {serverpb.ICreatePoolRequest=} [properties] Properties to set
          */
@@ -3848,7 +3867,7 @@ $root.serverpb = (function() {
 
         /**
          * CreatePoolRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.CreatePoolRequest
          * @instance
          */
@@ -3856,7 +3875,7 @@ $root.serverpb = (function() {
 
         /**
          * CreatePoolRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.CreatePoolRequest
          * @instance
          */
@@ -3864,7 +3883,7 @@ $root.serverpb = (function() {
 
         /**
          * CreatePoolRequest pool.
-         * @member {(model.IPool|null|undefined)}pool
+         * @member {model.IPool|null|undefined} pool
          * @memberof serverpb.CreatePoolRequest
          * @instance
          */
@@ -4069,6 +4088,7 @@ $root.serverpb = (function() {
          * Constructs a new CreatePoolResponse.
          * @memberof serverpb
          * @classdesc Represents a CreatePoolResponse.
+         * @implements ICreatePoolResponse
          * @constructor
          * @param {serverpb.ICreatePoolResponse=} [properties] Properties to set
          */
@@ -4222,14 +4242,15 @@ $root.serverpb = (function() {
          * Properties of a DeleteNetworkRequest.
          * @memberof serverpb
          * @interface IDeleteNetworkRequest
-         * @property {string} [ip] DeleteNetworkRequest ip
-         * @property {number} [mask] DeleteNetworkRequest mask
+         * @property {string|null} [ip] DeleteNetworkRequest ip
+         * @property {number|null} [mask] DeleteNetworkRequest mask
          */
 
         /**
          * Constructs a new DeleteNetworkRequest.
          * @memberof serverpb
          * @classdesc Represents a DeleteNetworkRequest.
+         * @implements IDeleteNetworkRequest
          * @constructor
          * @param {serverpb.IDeleteNetworkRequest=} [properties] Properties to set
          */
@@ -4242,7 +4263,7 @@ $root.serverpb = (function() {
 
         /**
          * DeleteNetworkRequest ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof serverpb.DeleteNetworkRequest
          * @instance
          */
@@ -4250,7 +4271,7 @@ $root.serverpb = (function() {
 
         /**
          * DeleteNetworkRequest mask.
-         * @member {number}mask
+         * @member {number} mask
          * @memberof serverpb.DeleteNetworkRequest
          * @instance
          */
@@ -4437,6 +4458,7 @@ $root.serverpb = (function() {
          * Constructs a new DeleteNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents a DeleteNetworkResponse.
+         * @implements IDeleteNetworkResponse
          * @constructor
          * @param {serverpb.IDeleteNetworkResponse=} [properties] Properties to set
          */
@@ -4596,6 +4618,7 @@ $root.serverpb = (function() {
          * Constructs a new UpdateNetworkResponse.
          * @memberof serverpb
          * @classdesc Represents an UpdateNetworkResponse.
+         * @implements IUpdateNetworkResponse
          * @constructor
          * @param {serverpb.IUpdateNetworkResponse=} [properties] Properties to set
          */
@@ -4755,6 +4778,7 @@ $root.serverpb = (function() {
          * Constructs a new ListIPRequest.
          * @memberof serverpb
          * @classdesc Represents a ListIPRequest.
+         * @implements IListIPRequest
          * @constructor
          * @param {serverpb.IListIPRequest=} [properties] Properties to set
          */
@@ -4908,13 +4932,14 @@ $root.serverpb = (function() {
          * Properties of a ListIPResponse.
          * @memberof serverpb
          * @interface IListIPResponse
-         * @property {Array.<model.IIPAddr>} [ips] ListIPResponse ips
+         * @property {Array.<model.IIPAddr>|null} [ips] ListIPResponse ips
          */
 
         /**
          * Constructs a new ListIPResponse.
          * @memberof serverpb
          * @classdesc Represents a ListIPResponse.
+         * @implements IListIPResponse
          * @constructor
          * @param {serverpb.IListIPResponse=} [properties] Properties to set
          */
@@ -4928,7 +4953,7 @@ $root.serverpb = (function() {
 
         /**
          * ListIPResponse ips.
-         * @member {Array.<model.IIPAddr>}ips
+         * @member {Array.<model.IIPAddr>} ips
          * @memberof serverpb.ListIPResponse
          * @instance
          */
@@ -5121,6 +5146,7 @@ $root.serverpb = (function() {
          * Constructs a new ListTemporaryReservedIPRequest.
          * @memberof serverpb
          * @classdesc Represents a ListTemporaryReservedIPRequest.
+         * @implements IListTemporaryReservedIPRequest
          * @constructor
          * @param {serverpb.IListTemporaryReservedIPRequest=} [properties] Properties to set
          */
@@ -5274,13 +5300,14 @@ $root.serverpb = (function() {
          * Properties of a ListTemporaryReservedIPResponse.
          * @memberof serverpb
          * @interface IListTemporaryReservedIPResponse
-         * @property {Array.<model.IIPAddr>} [ips] ListTemporaryReservedIPResponse ips
+         * @property {Array.<model.IIPAddr>|null} [ips] ListTemporaryReservedIPResponse ips
          */
 
         /**
          * Constructs a new ListTemporaryReservedIPResponse.
          * @memberof serverpb
          * @classdesc Represents a ListTemporaryReservedIPResponse.
+         * @implements IListTemporaryReservedIPResponse
          * @constructor
          * @param {serverpb.IListTemporaryReservedIPResponse=} [properties] Properties to set
          */
@@ -5294,7 +5321,7 @@ $root.serverpb = (function() {
 
         /**
          * ListTemporaryReservedIPResponse ips.
-         * @member {Array.<model.IIPAddr>}ips
+         * @member {Array.<model.IIPAddr>} ips
          * @memberof serverpb.ListTemporaryReservedIPResponse
          * @instance
          */
@@ -5487,6 +5514,7 @@ $root.serverpb = (function() {
          * Constructs a new ListPoolRequest.
          * @memberof serverpb
          * @classdesc Represents a ListPoolRequest.
+         * @implements IListPoolRequest
          * @constructor
          * @param {serverpb.IListPoolRequest=} [properties] Properties to set
          */
@@ -5640,13 +5668,14 @@ $root.serverpb = (function() {
          * Properties of a ListPoolResponse.
          * @memberof serverpb
          * @interface IListPoolResponse
-         * @property {Array.<model.IPool>} [pools] ListPoolResponse pools
+         * @property {Array.<model.IPool>|null} [pools] ListPoolResponse pools
          */
 
         /**
          * Constructs a new ListPoolResponse.
          * @memberof serverpb
          * @classdesc Represents a ListPoolResponse.
+         * @implements IListPoolResponse
          * @constructor
          * @param {serverpb.IListPoolResponse=} [properties] Properties to set
          */
@@ -5660,7 +5689,7 @@ $root.serverpb = (function() {
 
         /**
          * ListPoolResponse pools.
-         * @member {Array.<model.IPool>}pools
+         * @member {Array.<model.IPool>} pools
          * @memberof serverpb.ListPoolResponse
          * @instance
          */
@@ -5847,14 +5876,15 @@ $root.serverpb = (function() {
          * Properties of a GetIPInPoolRequest.
          * @memberof serverpb
          * @interface IGetIPInPoolRequest
-         * @property {string} [rangeStart] GetIPInPoolRequest rangeStart
-         * @property {string} [rangeEnd] GetIPInPoolRequest rangeEnd
+         * @property {string|null} [rangeStart] GetIPInPoolRequest rangeStart
+         * @property {string|null} [rangeEnd] GetIPInPoolRequest rangeEnd
          */
 
         /**
          * Constructs a new GetIPInPoolRequest.
          * @memberof serverpb
          * @classdesc Represents a GetIPInPoolRequest.
+         * @implements IGetIPInPoolRequest
          * @constructor
          * @param {serverpb.IGetIPInPoolRequest=} [properties] Properties to set
          */
@@ -5867,7 +5897,7 @@ $root.serverpb = (function() {
 
         /**
          * GetIPInPoolRequest rangeStart.
-         * @member {string}rangeStart
+         * @member {string} rangeStart
          * @memberof serverpb.GetIPInPoolRequest
          * @instance
          */
@@ -5875,7 +5905,7 @@ $root.serverpb = (function() {
 
         /**
          * GetIPInPoolRequest rangeEnd.
-         * @member {string}rangeEnd
+         * @member {string} rangeEnd
          * @memberof serverpb.GetIPInPoolRequest
          * @instance
          */
@@ -6056,14 +6086,15 @@ $root.serverpb = (function() {
          * Properties of a GetIPInPoolResponse.
          * @memberof serverpb
          * @interface IGetIPInPoolResponse
-         * @property {model.IPool} [pool] GetIPInPoolResponse pool
-         * @property {Array.<model.IIPAddr>} [ips] GetIPInPoolResponse ips
+         * @property {model.IPool|null} [pool] GetIPInPoolResponse pool
+         * @property {Array.<model.IIPAddr>|null} [ips] GetIPInPoolResponse ips
          */
 
         /**
          * Constructs a new GetIPInPoolResponse.
          * @memberof serverpb
          * @classdesc Represents a GetIPInPoolResponse.
+         * @implements IGetIPInPoolResponse
          * @constructor
          * @param {serverpb.IGetIPInPoolResponse=} [properties] Properties to set
          */
@@ -6077,7 +6108,7 @@ $root.serverpb = (function() {
 
         /**
          * GetIPInPoolResponse pool.
-         * @member {(model.IPool|null|undefined)}pool
+         * @member {model.IPool|null|undefined} pool
          * @memberof serverpb.GetIPInPoolResponse
          * @instance
          */
@@ -6085,7 +6116,7 @@ $root.serverpb = (function() {
 
         /**
          * GetIPInPoolResponse ips.
-         * @member {Array.<model.IIPAddr>}ips
+         * @member {Array.<model.IIPAddr>} ips
          * @memberof serverpb.GetIPInPoolResponse
          * @instance
          */
@@ -6206,7 +6237,7 @@ $root.serverpb = (function() {
                 if (!Array.isArray(message.ips))
                     return "ips: array expected";
                 for (var i = 0; i < message.ips.length; ++i) {
-                    error = $root.model.IPAddr.verify(message.ips[i]);
+                    var error = $root.model.IPAddr.verify(message.ips[i]);
                     if (error)
                         return "ips." + error;
                 }
@@ -6297,6 +6328,7 @@ $root.serverpb = (function() {
          * Constructs a new UpdatePoolResponse.
          * @memberof serverpb
          * @classdesc Represents an UpdatePoolResponse.
+         * @implements IUpdatePoolResponse
          * @constructor
          * @param {serverpb.IUpdatePoolResponse=} [properties] Properties to set
          */
@@ -6450,14 +6482,15 @@ $root.serverpb = (function() {
          * Properties of a DeletePoolRequest.
          * @memberof serverpb
          * @interface IDeletePoolRequest
-         * @property {string} [rangeStart] DeletePoolRequest rangeStart
-         * @property {string} [rangeEnd] DeletePoolRequest rangeEnd
+         * @property {string|null} [rangeStart] DeletePoolRequest rangeStart
+         * @property {string|null} [rangeEnd] DeletePoolRequest rangeEnd
          */
 
         /**
          * Constructs a new DeletePoolRequest.
          * @memberof serverpb
          * @classdesc Represents a DeletePoolRequest.
+         * @implements IDeletePoolRequest
          * @constructor
          * @param {serverpb.IDeletePoolRequest=} [properties] Properties to set
          */
@@ -6470,7 +6503,7 @@ $root.serverpb = (function() {
 
         /**
          * DeletePoolRequest rangeStart.
-         * @member {string}rangeStart
+         * @member {string} rangeStart
          * @memberof serverpb.DeletePoolRequest
          * @instance
          */
@@ -6478,7 +6511,7 @@ $root.serverpb = (function() {
 
         /**
          * DeletePoolRequest rangeEnd.
-         * @member {string}rangeEnd
+         * @member {string} rangeEnd
          * @memberof serverpb.DeletePoolRequest
          * @instance
          */
@@ -6665,6 +6698,7 @@ $root.serverpb = (function() {
          * Constructs a new DeletePoolResponse.
          * @memberof serverpb
          * @classdesc Represents a DeletePoolResponse.
+         * @implements IDeletePoolResponse
          * @constructor
          * @param {serverpb.IDeletePoolResponse=} [properties] Properties to set
          */
@@ -6855,7 +6889,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls ListNetwork.
-         * @function .listNetwork
+         * @function listNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IListNetworkRequest} request ListNetworkRequest message or plain object
@@ -6863,9 +6897,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.listNetwork = function listNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.listNetwork = function listNetwork(request, callback) {
             return this.rpcCall(listNetwork, $root.serverpb.ListNetworkRequest, $root.serverpb.ListNetworkResponse, request, callback);
-        };
+        }, "name", { value: "ListNetwork" });
 
         /**
          * Calls ListNetwork.
@@ -6888,7 +6922,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls GetEstimatedNetwork.
-         * @function .getEstimatedNetwork
+         * @function getEstimatedNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IGetEstimatedNetworkRequest} request GetEstimatedNetworkRequest message or plain object
@@ -6896,9 +6930,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.getEstimatedNetwork = function getEstimatedNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.getEstimatedNetwork = function getEstimatedNetwork(request, callback) {
             return this.rpcCall(getEstimatedNetwork, $root.serverpb.GetEstimatedNetworkRequest, $root.serverpb.GetNetworkResponse, request, callback);
-        };
+        }, "name", { value: "GetEstimatedNetwork" });
 
         /**
          * Calls GetEstimatedNetwork.
@@ -6921,7 +6955,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls DrawIP.
-         * @function .drawIP
+         * @function drawIP
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IDrawIPRequest} request DrawIPRequest message or plain object
@@ -6929,9 +6963,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.drawIP = function drawIP(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.drawIP = function drawIP(request, callback) {
             return this.rpcCall(drawIP, $root.serverpb.DrawIPRequest, $root.serverpb.DrawIPResponse, request, callback);
-        };
+        }, "name", { value: "DrawIP" });
 
         /**
          * Calls DrawIP.
@@ -6954,7 +6988,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls DrawIPEstimatingNetwork.
-         * @function .drawIPEstimatingNetwork
+         * @function drawIPEstimatingNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IDrawIPEstimatingNetworkRequest} request DrawIPEstimatingNetworkRequest message or plain object
@@ -6962,9 +6996,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.drawIPEstimatingNetwork = function drawIPEstimatingNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.drawIPEstimatingNetwork = function drawIPEstimatingNetwork(request, callback) {
             return this.rpcCall(drawIPEstimatingNetwork, $root.serverpb.DrawIPEstimatingNetworkRequest, $root.serverpb.DrawIPResponse, request, callback);
-        };
+        }, "name", { value: "DrawIPEstimatingNetwork" });
 
         /**
          * Calls DrawIPEstimatingNetwork.
@@ -6987,7 +7021,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls GetNetwork.
-         * @function .getNetwork
+         * @function getNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IGetNetworkRequest} request GetNetworkRequest message or plain object
@@ -6995,9 +7029,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.getNetwork = function getNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.getNetwork = function getNetwork(request, callback) {
             return this.rpcCall(getNetwork, $root.serverpb.GetNetworkRequest, $root.serverpb.GetNetworkResponse, request, callback);
-        };
+        }, "name", { value: "GetNetwork" });
 
         /**
          * Calls GetNetwork.
@@ -7020,7 +7054,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls CreateNetwork.
-         * @function .createNetwork
+         * @function createNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.ICreateNetworkRequest} request CreateNetworkRequest message or plain object
@@ -7028,9 +7062,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.createNetwork = function createNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.createNetwork = function createNetwork(request, callback) {
             return this.rpcCall(createNetwork, $root.serverpb.CreateNetworkRequest, $root.serverpb.CreateNetworkResponse, request, callback);
-        };
+        }, "name", { value: "CreateNetwork" });
 
         /**
          * Calls CreateNetwork.
@@ -7053,7 +7087,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls CreatePool.
-         * @function .createPool
+         * @function createPool
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.ICreatePoolRequest} request CreatePoolRequest message or plain object
@@ -7061,9 +7095,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.createPool = function createPool(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.createPool = function createPool(request, callback) {
             return this.rpcCall(createPool, $root.serverpb.CreatePoolRequest, $root.serverpb.CreatePoolResponse, request, callback);
-        };
+        }, "name", { value: "CreatePool" });
 
         /**
          * Calls CreatePool.
@@ -7086,7 +7120,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls GetPoolsInNetwork.
-         * @function .getPoolsInNetwork
+         * @function getPoolsInNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IGetPoolsInNetworkRequest} request GetPoolsInNetworkRequest message or plain object
@@ -7094,9 +7128,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.getPoolsInNetwork = function getPoolsInNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.getPoolsInNetwork = function getPoolsInNetwork(request, callback) {
             return this.rpcCall(getPoolsInNetwork, $root.serverpb.GetPoolsInNetworkRequest, $root.serverpb.GetPoolsInNetworkResponse, request, callback);
-        };
+        }, "name", { value: "GetPoolsInNetwork" });
 
         /**
          * Calls GetPoolsInNetwork.
@@ -7119,7 +7153,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls DeleteNetwork.
-         * @function .deleteNetwork
+         * @function deleteNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {serverpb.IDeleteNetworkRequest} request DeleteNetworkRequest message or plain object
@@ -7127,9 +7161,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.deleteNetwork = function deleteNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.deleteNetwork = function deleteNetwork(request, callback) {
             return this.rpcCall(deleteNetwork, $root.serverpb.DeleteNetworkRequest, $root.serverpb.DeleteNetworkResponse, request, callback);
-        };
+        }, "name", { value: "DeleteNetwork" });
 
         /**
          * Calls DeleteNetwork.
@@ -7152,7 +7186,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls UpdateNetwork.
-         * @function .updateNetwork
+         * @function updateNetwork
          * @memberof serverpb.NetworkServiceV0
          * @instance
          * @param {model.INetwork} request Network message or plain object
@@ -7160,9 +7194,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        NetworkServiceV0.prototype.updateNetwork = function updateNetwork(request, callback) {
+        Object.defineProperty(NetworkServiceV0.prototype.updateNetwork = function updateNetwork(request, callback) {
             return this.rpcCall(updateNetwork, $root.model.Network, $root.serverpb.UpdateNetworkResponse, request, callback);
-        };
+        }, "name", { value: "UpdateNetwork" });
 
         /**
          * Calls UpdateNetwork.
@@ -7220,7 +7254,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls GetNetworkIncludingIP.
-         * @function .getNetworkIncludingIP
+         * @function getNetworkIncludingIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IGetNetworkIncludingIPRequest} request GetNetworkIncludingIPRequest message or plain object
@@ -7228,9 +7262,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.getNetworkIncludingIP = function getNetworkIncludingIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.getNetworkIncludingIP = function getNetworkIncludingIP(request, callback) {
             return this.rpcCall(getNetworkIncludingIP, $root.serverpb.GetNetworkIncludingIPRequest, $root.serverpb.GetNetworkResponse, request, callback);
-        };
+        }, "name", { value: "GetNetworkIncludingIP" });
 
         /**
          * Calls GetNetworkIncludingIP.
@@ -7253,7 +7287,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls CreateIP.
-         * @function .createIP
+         * @function createIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {model.IIPAddr} request IPAddr message or plain object
@@ -7261,9 +7295,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.createIP = function createIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.createIP = function createIP(request, callback) {
             return this.rpcCall(createIP, $root.model.IPAddr, $root.serverpb.CreateIPResponse, request, callback);
-        };
+        }, "name", { value: "CreateIP" });
 
         /**
          * Calls CreateIP.
@@ -7286,7 +7320,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls ActivateIP.
-         * @function .activateIP
+         * @function activateIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IActivateIPRequest} request ActivateIPRequest message or plain object
@@ -7294,9 +7328,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.activateIP = function activateIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.activateIP = function activateIP(request, callback) {
             return this.rpcCall(activateIP, $root.serverpb.ActivateIPRequest, $root.serverpb.CreateIPResponse, request, callback);
-        };
+        }, "name", { value: "ActivateIP" });
 
         /**
          * Calls ActivateIP.
@@ -7319,7 +7353,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls DeactivateIP.
-         * @function .deactivateIP
+         * @function deactivateIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IDeactivateIPRequest} request DeactivateIPRequest message or plain object
@@ -7327,9 +7361,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.deactivateIP = function deactivateIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.deactivateIP = function deactivateIP(request, callback) {
             return this.rpcCall(deactivateIP, $root.serverpb.DeactivateIPRequest, $root.serverpb.DeactivateIPResponse, request, callback);
-        };
+        }, "name", { value: "DeactivateIP" });
 
         /**
          * Calls DeactivateIP.
@@ -7352,7 +7386,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls UpdateIP.
-         * @function .updateIP
+         * @function updateIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {model.IIPAddr} request IPAddr message or plain object
@@ -7360,9 +7394,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.updateIP = function updateIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.updateIP = function updateIP(request, callback) {
             return this.rpcCall(updateIP, $root.model.IPAddr, $root.serverpb.UpdateIPResponse, request, callback);
-        };
+        }, "name", { value: "UpdateIP" });
 
         /**
          * Calls UpdateIP.
@@ -7385,7 +7419,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls ListIP.
-         * @function .listIP
+         * @function listIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IListIPRequest} request ListIPRequest message or plain object
@@ -7393,9 +7427,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.listIP = function listIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.listIP = function listIP(request, callback) {
             return this.rpcCall(listIP, $root.serverpb.ListIPRequest, $root.serverpb.ListIPResponse, request, callback);
-        };
+        }, "name", { value: "ListIP" });
 
         /**
          * Calls ListIP.
@@ -7418,7 +7452,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls ListTemporaryReservedIP.
-         * @function .listTemporaryReservedIP
+         * @function listTemporaryReservedIP
          * @memberof serverpb.IPServiceV0
          * @instance
          * @param {serverpb.IListTemporaryReservedIPRequest} request ListTemporaryReservedIPRequest message or plain object
@@ -7426,9 +7460,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        IPServiceV0.prototype.listTemporaryReservedIP = function listTemporaryReservedIP(request, callback) {
+        Object.defineProperty(IPServiceV0.prototype.listTemporaryReservedIP = function listTemporaryReservedIP(request, callback) {
             return this.rpcCall(listTemporaryReservedIP, $root.serverpb.ListTemporaryReservedIPRequest, $root.serverpb.ListTemporaryReservedIPResponse, request, callback);
-        };
+        }, "name", { value: "ListTemporaryReservedIP" });
 
         /**
          * Calls ListTemporaryReservedIP.
@@ -7486,7 +7520,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls ListPool.
-         * @function .listPool
+         * @function listPool
          * @memberof serverpb.PoolServiceV0
          * @instance
          * @param {serverpb.IListPoolRequest} request ListPoolRequest message or plain object
@@ -7494,9 +7528,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        PoolServiceV0.prototype.listPool = function listPool(request, callback) {
+        Object.defineProperty(PoolServiceV0.prototype.listPool = function listPool(request, callback) {
             return this.rpcCall(listPool, $root.serverpb.ListPoolRequest, $root.serverpb.ListPoolResponse, request, callback);
-        };
+        }, "name", { value: "ListPool" });
 
         /**
          * Calls ListPool.
@@ -7519,7 +7553,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls GetIPInPool.
-         * @function .getIPInPool
+         * @function getIPInPool
          * @memberof serverpb.PoolServiceV0
          * @instance
          * @param {serverpb.IGetIPInPoolRequest} request GetIPInPoolRequest message or plain object
@@ -7527,9 +7561,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        PoolServiceV0.prototype.getIPInPool = function getIPInPool(request, callback) {
+        Object.defineProperty(PoolServiceV0.prototype.getIPInPool = function getIPInPool(request, callback) {
             return this.rpcCall(getIPInPool, $root.serverpb.GetIPInPoolRequest, $root.serverpb.GetIPInPoolResponse, request, callback);
-        };
+        }, "name", { value: "GetIPInPool" });
 
         /**
          * Calls GetIPInPool.
@@ -7552,7 +7586,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls UpdatePool.
-         * @function .updatePool
+         * @function updatePool
          * @memberof serverpb.PoolServiceV0
          * @instance
          * @param {model.IPool} request Pool message or plain object
@@ -7560,9 +7594,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        PoolServiceV0.prototype.updatePool = function updatePool(request, callback) {
+        Object.defineProperty(PoolServiceV0.prototype.updatePool = function updatePool(request, callback) {
             return this.rpcCall(updatePool, $root.model.Pool, $root.serverpb.UpdatePoolResponse, request, callback);
-        };
+        }, "name", { value: "UpdatePool" });
 
         /**
          * Calls UpdatePool.
@@ -7585,7 +7619,7 @@ $root.serverpb = (function() {
 
         /**
          * Calls DeletePool.
-         * @function .deletePool
+         * @function deletePool
          * @memberof serverpb.PoolServiceV0
          * @instance
          * @param {serverpb.IDeletePoolRequest} request DeletePoolRequest message or plain object
@@ -7593,9 +7627,9 @@ $root.serverpb = (function() {
          * @returns {undefined}
          * @variation 1
          */
-        PoolServiceV0.prototype.deletePool = function deletePool(request, callback) {
+        Object.defineProperty(PoolServiceV0.prototype.deletePool = function deletePool(request, callback) {
             return this.rpcCall(deletePool, $root.serverpb.DeletePoolRequest, $root.serverpb.DeletePoolResponse, request, callback);
-        };
+        }, "name", { value: "DeletePool" });
 
         /**
          * Calls DeletePool.
@@ -7628,14 +7662,15 @@ $root.model = (function() {
          * Properties of a Tag.
          * @memberof model
          * @interface ITag
-         * @property {string} [key] Tag key
-         * @property {string} [value] Tag value
+         * @property {string|null} [key] Tag key
+         * @property {string|null} [value] Tag value
          */
 
         /**
          * Constructs a new Tag.
          * @memberof model
          * @classdesc Represents a Tag.
+         * @implements ITag
          * @constructor
          * @param {model.ITag=} [properties] Properties to set
          */
@@ -7648,7 +7683,7 @@ $root.model = (function() {
 
         /**
          * Tag key.
-         * @member {string}key
+         * @member {string} key
          * @memberof model.Tag
          * @instance
          */
@@ -7656,7 +7691,7 @@ $root.model = (function() {
 
         /**
          * Tag value.
-         * @member {string}value
+         * @member {string} value
          * @memberof model.Tag
          * @instance
          */
@@ -7837,18 +7872,19 @@ $root.model = (function() {
          * Properties of a Pool.
          * @memberof model
          * @interface IPool
-         * @property {string} [start] Pool start
-         * @property {string} [end] Pool end
-         * @property {model.Pool.Status} [status] Pool status
-         * @property {Array.<model.ITag>} [tags] Pool tags
-         * @property {google.protobuf.ITimestamp} [createdAt] Pool createdAt
-         * @property {google.protobuf.ITimestamp} [lastModifiedAt] Pool lastModifiedAt
+         * @property {string|null} [start] Pool start
+         * @property {string|null} [end] Pool end
+         * @property {model.Pool.Status|null} [status] Pool status
+         * @property {Array.<model.ITag>|null} [tags] Pool tags
+         * @property {google.protobuf.ITimestamp|null} [createdAt] Pool createdAt
+         * @property {google.protobuf.ITimestamp|null} [lastModifiedAt] Pool lastModifiedAt
          */
 
         /**
          * Constructs a new Pool.
          * @memberof model
          * @classdesc Represents a Pool.
+         * @implements IPool
          * @constructor
          * @param {model.IPool=} [properties] Properties to set
          */
@@ -7862,7 +7898,7 @@ $root.model = (function() {
 
         /**
          * Pool start.
-         * @member {string}start
+         * @member {string} start
          * @memberof model.Pool
          * @instance
          */
@@ -7870,7 +7906,7 @@ $root.model = (function() {
 
         /**
          * Pool end.
-         * @member {string}end
+         * @member {string} end
          * @memberof model.Pool
          * @instance
          */
@@ -7878,7 +7914,7 @@ $root.model = (function() {
 
         /**
          * Pool status.
-         * @member {model.Pool.Status}status
+         * @member {model.Pool.Status} status
          * @memberof model.Pool
          * @instance
          */
@@ -7886,7 +7922,7 @@ $root.model = (function() {
 
         /**
          * Pool tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof model.Pool
          * @instance
          */
@@ -7894,7 +7930,7 @@ $root.model = (function() {
 
         /**
          * Pool createdAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @member {google.protobuf.ITimestamp|null|undefined} createdAt
          * @memberof model.Pool
          * @instance
          */
@@ -7902,7 +7938,7 @@ $root.model = (function() {
 
         /**
          * Pool lastModifiedAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @member {google.protobuf.ITimestamp|null|undefined} lastModifiedAt
          * @memberof model.Pool
          * @instance
          */
@@ -8059,12 +8095,12 @@ $root.model = (function() {
                 }
             }
             if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.createdAt);
                 if (error)
                     return "createdAt." + error;
             }
             if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
                 if (error)
                     return "lastModifiedAt." + error;
             }
@@ -8177,6 +8213,7 @@ $root.model = (function() {
 
         /**
          * Status enum.
+         * @name model.Pool.Status
          * @enum {string}
          * @property {number} UNKNOWN=0 UNKNOWN value
          * @property {number} AVAILABLE=1 AVAILABLE value
@@ -8199,17 +8236,18 @@ $root.model = (function() {
          * Properties of a IPAddr.
          * @memberof model
          * @interface IIPAddr
-         * @property {string} [ip] IPAddr ip
-         * @property {model.IPAddr.Status} [status] IPAddr status
-         * @property {Array.<model.ITag>} [tags] IPAddr tags
-         * @property {google.protobuf.ITimestamp} [createdAt] IPAddr createdAt
-         * @property {google.protobuf.ITimestamp} [lastModifiedAt] IPAddr lastModifiedAt
+         * @property {string|null} [ip] IPAddr ip
+         * @property {model.IPAddr.Status|null} [status] IPAddr status
+         * @property {Array.<model.ITag>|null} [tags] IPAddr tags
+         * @property {google.protobuf.ITimestamp|null} [createdAt] IPAddr createdAt
+         * @property {google.protobuf.ITimestamp|null} [lastModifiedAt] IPAddr lastModifiedAt
          */
 
         /**
          * Constructs a new IPAddr.
          * @memberof model
          * @classdesc Represents a IPAddr.
+         * @implements IIPAddr
          * @constructor
          * @param {model.IIPAddr=} [properties] Properties to set
          */
@@ -8223,7 +8261,7 @@ $root.model = (function() {
 
         /**
          * IPAddr ip.
-         * @member {string}ip
+         * @member {string} ip
          * @memberof model.IPAddr
          * @instance
          */
@@ -8231,7 +8269,7 @@ $root.model = (function() {
 
         /**
          * IPAddr status.
-         * @member {model.IPAddr.Status}status
+         * @member {model.IPAddr.Status} status
          * @memberof model.IPAddr
          * @instance
          */
@@ -8239,7 +8277,7 @@ $root.model = (function() {
 
         /**
          * IPAddr tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof model.IPAddr
          * @instance
          */
@@ -8247,7 +8285,7 @@ $root.model = (function() {
 
         /**
          * IPAddr createdAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @member {google.protobuf.ITimestamp|null|undefined} createdAt
          * @memberof model.IPAddr
          * @instance
          */
@@ -8255,7 +8293,7 @@ $root.model = (function() {
 
         /**
          * IPAddr lastModifiedAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @member {google.protobuf.ITimestamp|null|undefined} lastModifiedAt
          * @memberof model.IPAddr
          * @instance
          */
@@ -8405,12 +8443,12 @@ $root.model = (function() {
                 }
             }
             if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.createdAt);
                 if (error)
                     return "createdAt." + error;
             }
             if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
                 if (error)
                     return "lastModifiedAt." + error;
             }
@@ -8522,6 +8560,7 @@ $root.model = (function() {
 
         /**
          * Status enum.
+         * @name model.IPAddr.Status
          * @enum {string}
          * @property {number} UNKNOWN=0 UNKNOWN value
          * @property {number} ACTIVE=1 ACTIVE value
@@ -8546,20 +8585,21 @@ $root.model = (function() {
          * Properties of a Network.
          * @memberof model
          * @interface INetwork
-         * @property {string} [prefix] Network prefix
-         * @property {Array.<string>} [gateways] Network gateways
-         * @property {string} [broadcast] Network broadcast
-         * @property {string} [netmask] Network netmask
-         * @property {model.Network.Status} [status] Network status
-         * @property {Array.<model.ITag>} [tags] Network tags
-         * @property {google.protobuf.ITimestamp} [createdAt] Network createdAt
-         * @property {google.protobuf.ITimestamp} [lastModifiedAt] Network lastModifiedAt
+         * @property {string|null} [prefix] Network prefix
+         * @property {Array.<string>|null} [gateways] Network gateways
+         * @property {string|null} [broadcast] Network broadcast
+         * @property {string|null} [netmask] Network netmask
+         * @property {model.Network.Status|null} [status] Network status
+         * @property {Array.<model.ITag>|null} [tags] Network tags
+         * @property {google.protobuf.ITimestamp|null} [createdAt] Network createdAt
+         * @property {google.protobuf.ITimestamp|null} [lastModifiedAt] Network lastModifiedAt
          */
 
         /**
          * Constructs a new Network.
          * @memberof model
          * @classdesc Represents a Network.
+         * @implements INetwork
          * @constructor
          * @param {model.INetwork=} [properties] Properties to set
          */
@@ -8574,7 +8614,7 @@ $root.model = (function() {
 
         /**
          * Network prefix.
-         * @member {string}prefix
+         * @member {string} prefix
          * @memberof model.Network
          * @instance
          */
@@ -8582,7 +8622,7 @@ $root.model = (function() {
 
         /**
          * Network gateways.
-         * @member {Array.<string>}gateways
+         * @member {Array.<string>} gateways
          * @memberof model.Network
          * @instance
          */
@@ -8590,7 +8630,7 @@ $root.model = (function() {
 
         /**
          * Network broadcast.
-         * @member {string}broadcast
+         * @member {string} broadcast
          * @memberof model.Network
          * @instance
          */
@@ -8598,7 +8638,7 @@ $root.model = (function() {
 
         /**
          * Network netmask.
-         * @member {string}netmask
+         * @member {string} netmask
          * @memberof model.Network
          * @instance
          */
@@ -8606,7 +8646,7 @@ $root.model = (function() {
 
         /**
          * Network status.
-         * @member {model.Network.Status}status
+         * @member {model.Network.Status} status
          * @memberof model.Network
          * @instance
          */
@@ -8614,7 +8654,7 @@ $root.model = (function() {
 
         /**
          * Network tags.
-         * @member {Array.<model.ITag>}tags
+         * @member {Array.<model.ITag>} tags
          * @memberof model.Network
          * @instance
          */
@@ -8622,7 +8662,7 @@ $root.model = (function() {
 
         /**
          * Network createdAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}createdAt
+         * @member {google.protobuf.ITimestamp|null|undefined} createdAt
          * @memberof model.Network
          * @instance
          */
@@ -8630,7 +8670,7 @@ $root.model = (function() {
 
         /**
          * Network lastModifiedAt.
-         * @member {(google.protobuf.ITimestamp|null|undefined)}lastModifiedAt
+         * @member {google.protobuf.ITimestamp|null|undefined} lastModifiedAt
          * @memberof model.Network
          * @instance
          */
@@ -8810,12 +8850,12 @@ $root.model = (function() {
                 }
             }
             if (message.createdAt != null && message.hasOwnProperty("createdAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.createdAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.createdAt);
                 if (error)
                     return "createdAt." + error;
             }
             if (message.lastModifiedAt != null && message.hasOwnProperty("lastModifiedAt")) {
-                error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
+                var error = $root.google.protobuf.Timestamp.verify(message.lastModifiedAt);
                 if (error)
                     return "lastModifiedAt." + error;
             }
@@ -8947,6 +8987,7 @@ $root.model = (function() {
 
         /**
          * Status enum.
+         * @name model.Network.Status
          * @enum {string}
          * @property {number} UNKNOWN=0 UNKNOWN value
          * @property {number} AVAILABLE=1 AVAILABLE value
@@ -8990,13 +9031,14 @@ $root.google = (function() {
              * Properties of a Http.
              * @memberof google.api
              * @interface IHttp
-             * @property {Array.<google.api.IHttpRule>} [rules] Http rules
+             * @property {Array.<google.api.IHttpRule>|null} [rules] Http rules
              */
 
             /**
              * Constructs a new Http.
              * @memberof google.api
              * @classdesc Represents a Http.
+             * @implements IHttp
              * @constructor
              * @param {google.api.IHttp=} [properties] Properties to set
              */
@@ -9010,7 +9052,7 @@ $root.google = (function() {
 
             /**
              * Http rules.
-             * @member {Array.<google.api.IHttpRule>}rules
+             * @member {Array.<google.api.IHttpRule>} rules
              * @memberof google.api.Http
              * @instance
              */
@@ -9197,21 +9239,22 @@ $root.google = (function() {
              * Properties of a HttpRule.
              * @memberof google.api
              * @interface IHttpRule
-             * @property {string} [get] HttpRule get
-             * @property {string} [put] HttpRule put
-             * @property {string} [post] HttpRule post
-             * @property {string} ["delete"] HttpRule delete
-             * @property {string} [patch] HttpRule patch
-             * @property {google.api.ICustomHttpPattern} [custom] HttpRule custom
-             * @property {string} [selector] HttpRule selector
-             * @property {string} [body] HttpRule body
-             * @property {Array.<google.api.IHttpRule>} [additionalBindings] HttpRule additionalBindings
+             * @property {string|null} [get] HttpRule get
+             * @property {string|null} [put] HttpRule put
+             * @property {string|null} [post] HttpRule post
+             * @property {string|null} ["delete"] HttpRule delete
+             * @property {string|null} [patch] HttpRule patch
+             * @property {google.api.ICustomHttpPattern|null} [custom] HttpRule custom
+             * @property {string|null} [selector] HttpRule selector
+             * @property {string|null} [body] HttpRule body
+             * @property {Array.<google.api.IHttpRule>|null} [additionalBindings] HttpRule additionalBindings
              */
 
             /**
              * Constructs a new HttpRule.
              * @memberof google.api
              * @classdesc Represents a HttpRule.
+             * @implements IHttpRule
              * @constructor
              * @param {google.api.IHttpRule=} [properties] Properties to set
              */
@@ -9225,7 +9268,7 @@ $root.google = (function() {
 
             /**
              * HttpRule get.
-             * @member {string}get
+             * @member {string} get
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9233,7 +9276,7 @@ $root.google = (function() {
 
             /**
              * HttpRule put.
-             * @member {string}put
+             * @member {string} put
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9241,7 +9284,7 @@ $root.google = (function() {
 
             /**
              * HttpRule post.
-             * @member {string}post
+             * @member {string} post
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9249,7 +9292,7 @@ $root.google = (function() {
 
             /**
              * HttpRule delete.
-             * @member {string}delete_
+             * @member {string} delete
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9257,7 +9300,7 @@ $root.google = (function() {
 
             /**
              * HttpRule patch.
-             * @member {string}patch
+             * @member {string} patch
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9265,7 +9308,7 @@ $root.google = (function() {
 
             /**
              * HttpRule custom.
-             * @member {(google.api.ICustomHttpPattern|null|undefined)}custom
+             * @member {google.api.ICustomHttpPattern|null|undefined} custom
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9273,7 +9316,7 @@ $root.google = (function() {
 
             /**
              * HttpRule selector.
-             * @member {string}selector
+             * @member {string} selector
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9281,7 +9324,7 @@ $root.google = (function() {
 
             /**
              * HttpRule body.
-             * @member {string}body
+             * @member {string} body
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9289,7 +9332,7 @@ $root.google = (function() {
 
             /**
              * HttpRule additionalBindings.
-             * @member {Array.<google.api.IHttpRule>}additionalBindings
+             * @member {Array.<google.api.IHttpRule>} additionalBindings
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9300,7 +9343,7 @@ $root.google = (function() {
 
             /**
              * HttpRule pattern.
-             * @member {string|undefined} pattern
+             * @member {"get"|"put"|"post"|"delete"|"patch"|"custom"|undefined} pattern
              * @memberof google.api.HttpRule
              * @instance
              */
@@ -9488,9 +9531,11 @@ $root.google = (function() {
                     if (properties.pattern === 1)
                         return "pattern: multiple values";
                     properties.pattern = 1;
-                    var error = $root.google.api.CustomHttpPattern.verify(message.custom);
-                    if (error)
-                        return "custom." + error;
+                    {
+                        var error = $root.google.api.CustomHttpPattern.verify(message.custom);
+                        if (error)
+                            return "custom." + error;
+                    }
                 }
                 if (message.selector != null && message.hasOwnProperty("selector"))
                     if (!$util.isString(message.selector))
@@ -9502,7 +9547,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.additionalBindings))
                         return "additionalBindings: array expected";
                     for (var i = 0; i < message.additionalBindings.length; ++i) {
-                        error = $root.google.api.HttpRule.verify(message.additionalBindings[i]);
+                        var error = $root.google.api.HttpRule.verify(message.additionalBindings[i]);
                         if (error)
                             return "additionalBindings." + error;
                     }
@@ -9635,14 +9680,15 @@ $root.google = (function() {
              * Properties of a CustomHttpPattern.
              * @memberof google.api
              * @interface ICustomHttpPattern
-             * @property {string} [kind] CustomHttpPattern kind
-             * @property {string} [path] CustomHttpPattern path
+             * @property {string|null} [kind] CustomHttpPattern kind
+             * @property {string|null} [path] CustomHttpPattern path
              */
 
             /**
              * Constructs a new CustomHttpPattern.
              * @memberof google.api
              * @classdesc Represents a CustomHttpPattern.
+             * @implements ICustomHttpPattern
              * @constructor
              * @param {google.api.ICustomHttpPattern=} [properties] Properties to set
              */
@@ -9655,7 +9701,7 @@ $root.google = (function() {
 
             /**
              * CustomHttpPattern kind.
-             * @member {string}kind
+             * @member {string} kind
              * @memberof google.api.CustomHttpPattern
              * @instance
              */
@@ -9663,7 +9709,7 @@ $root.google = (function() {
 
             /**
              * CustomHttpPattern path.
-             * @member {string}path
+             * @member {string} path
              * @memberof google.api.CustomHttpPattern
              * @instance
              */
@@ -9856,13 +9902,14 @@ $root.google = (function() {
              * Properties of a FileDescriptorSet.
              * @memberof google.protobuf
              * @interface IFileDescriptorSet
-             * @property {Array.<google.protobuf.IFileDescriptorProto>} [file] FileDescriptorSet file
+             * @property {Array.<google.protobuf.IFileDescriptorProto>|null} [file] FileDescriptorSet file
              */
 
             /**
              * Constructs a new FileDescriptorSet.
              * @memberof google.protobuf
              * @classdesc Represents a FileDescriptorSet.
+             * @implements IFileDescriptorSet
              * @constructor
              * @param {google.protobuf.IFileDescriptorSet=} [properties] Properties to set
              */
@@ -9876,7 +9923,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorSet file.
-             * @member {Array.<google.protobuf.IFileDescriptorProto>}file
+             * @member {Array.<google.protobuf.IFileDescriptorProto>} file
              * @memberof google.protobuf.FileDescriptorSet
              * @instance
              */
@@ -10063,24 +10110,25 @@ $root.google = (function() {
              * Properties of a FileDescriptorProto.
              * @memberof google.protobuf
              * @interface IFileDescriptorProto
-             * @property {string} [name] FileDescriptorProto name
-             * @property {string} ["package"] FileDescriptorProto package
-             * @property {Array.<string>} [dependency] FileDescriptorProto dependency
-             * @property {Array.<number>} [publicDependency] FileDescriptorProto publicDependency
-             * @property {Array.<number>} [weakDependency] FileDescriptorProto weakDependency
-             * @property {Array.<google.protobuf.IDescriptorProto>} [messageType] FileDescriptorProto messageType
-             * @property {Array.<google.protobuf.IEnumDescriptorProto>} [enumType] FileDescriptorProto enumType
-             * @property {Array.<google.protobuf.IServiceDescriptorProto>} [service] FileDescriptorProto service
-             * @property {Array.<google.protobuf.IFieldDescriptorProto>} [extension] FileDescriptorProto extension
-             * @property {google.protobuf.IFileOptions} [options] FileDescriptorProto options
-             * @property {google.protobuf.ISourceCodeInfo} [sourceCodeInfo] FileDescriptorProto sourceCodeInfo
-             * @property {string} [syntax] FileDescriptorProto syntax
+             * @property {string|null} [name] FileDescriptorProto name
+             * @property {string|null} ["package"] FileDescriptorProto package
+             * @property {Array.<string>|null} [dependency] FileDescriptorProto dependency
+             * @property {Array.<number>|null} [publicDependency] FileDescriptorProto publicDependency
+             * @property {Array.<number>|null} [weakDependency] FileDescriptorProto weakDependency
+             * @property {Array.<google.protobuf.IDescriptorProto>|null} [messageType] FileDescriptorProto messageType
+             * @property {Array.<google.protobuf.IEnumDescriptorProto>|null} [enumType] FileDescriptorProto enumType
+             * @property {Array.<google.protobuf.IServiceDescriptorProto>|null} [service] FileDescriptorProto service
+             * @property {Array.<google.protobuf.IFieldDescriptorProto>|null} [extension] FileDescriptorProto extension
+             * @property {google.protobuf.IFileOptions|null} [options] FileDescriptorProto options
+             * @property {google.protobuf.ISourceCodeInfo|null} [sourceCodeInfo] FileDescriptorProto sourceCodeInfo
+             * @property {string|null} [syntax] FileDescriptorProto syntax
              */
 
             /**
              * Constructs a new FileDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents a FileDescriptorProto.
+             * @implements IFileDescriptorProto
              * @constructor
              * @param {google.protobuf.IFileDescriptorProto=} [properties] Properties to set
              */
@@ -10100,7 +10148,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10108,7 +10156,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto package.
-             * @member {string}package_
+             * @member {string} package
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10116,7 +10164,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto dependency.
-             * @member {Array.<string>}dependency
+             * @member {Array.<string>} dependency
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10124,7 +10172,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto publicDependency.
-             * @member {Array.<number>}publicDependency
+             * @member {Array.<number>} publicDependency
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10132,7 +10180,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto weakDependency.
-             * @member {Array.<number>}weakDependency
+             * @member {Array.<number>} weakDependency
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10140,7 +10188,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto messageType.
-             * @member {Array.<google.protobuf.IDescriptorProto>}messageType
+             * @member {Array.<google.protobuf.IDescriptorProto>} messageType
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10148,7 +10196,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto enumType.
-             * @member {Array.<google.protobuf.IEnumDescriptorProto>}enumType
+             * @member {Array.<google.protobuf.IEnumDescriptorProto>} enumType
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10156,7 +10204,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto service.
-             * @member {Array.<google.protobuf.IServiceDescriptorProto>}service
+             * @member {Array.<google.protobuf.IServiceDescriptorProto>} service
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10164,7 +10212,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto extension.
-             * @member {Array.<google.protobuf.IFieldDescriptorProto>}extension
+             * @member {Array.<google.protobuf.IFieldDescriptorProto>} extension
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10172,7 +10220,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto options.
-             * @member {(google.protobuf.IFileOptions|null|undefined)}options
+             * @member {google.protobuf.IFileOptions|null|undefined} options
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10180,7 +10228,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto sourceCodeInfo.
-             * @member {(google.protobuf.ISourceCodeInfo|null|undefined)}sourceCodeInfo
+             * @member {google.protobuf.ISourceCodeInfo|null|undefined} sourceCodeInfo
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10188,7 +10236,7 @@ $root.google = (function() {
 
             /**
              * FileDescriptorProto syntax.
-             * @member {string}syntax
+             * @member {string} syntax
              * @memberof google.protobuf.FileDescriptorProto
              * @instance
              */
@@ -10418,7 +10466,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.enumType))
                         return "enumType: array expected";
                     for (var i = 0; i < message.enumType.length; ++i) {
-                        error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
+                        var error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
                         if (error)
                             return "enumType." + error;
                     }
@@ -10427,7 +10475,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.service))
                         return "service: array expected";
                     for (var i = 0; i < message.service.length; ++i) {
-                        error = $root.google.protobuf.ServiceDescriptorProto.verify(message.service[i]);
+                        var error = $root.google.protobuf.ServiceDescriptorProto.verify(message.service[i]);
                         if (error)
                             return "service." + error;
                     }
@@ -10436,18 +10484,18 @@ $root.google = (function() {
                     if (!Array.isArray(message.extension))
                         return "extension: array expected";
                     for (var i = 0; i < message.extension.length; ++i) {
-                        error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
+                        var error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
                         if (error)
                             return "extension." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    error = $root.google.protobuf.FileOptions.verify(message.options);
+                    var error = $root.google.protobuf.FileOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
                 if (message.sourceCodeInfo != null && message.hasOwnProperty("sourceCodeInfo")) {
-                    error = $root.google.protobuf.SourceCodeInfo.verify(message.sourceCodeInfo);
+                    var error = $root.google.protobuf.SourceCodeInfo.verify(message.sourceCodeInfo);
                     if (error)
                         return "sourceCodeInfo." + error;
                 }
@@ -10646,22 +10694,23 @@ $root.google = (function() {
              * Properties of a DescriptorProto.
              * @memberof google.protobuf
              * @interface IDescriptorProto
-             * @property {string} [name] DescriptorProto name
-             * @property {Array.<google.protobuf.IFieldDescriptorProto>} [field] DescriptorProto field
-             * @property {Array.<google.protobuf.IFieldDescriptorProto>} [extension] DescriptorProto extension
-             * @property {Array.<google.protobuf.IDescriptorProto>} [nestedType] DescriptorProto nestedType
-             * @property {Array.<google.protobuf.IEnumDescriptorProto>} [enumType] DescriptorProto enumType
-             * @property {Array.<google.protobuf.DescriptorProto.IExtensionRange>} [extensionRange] DescriptorProto extensionRange
-             * @property {Array.<google.protobuf.IOneofDescriptorProto>} [oneofDecl] DescriptorProto oneofDecl
-             * @property {google.protobuf.IMessageOptions} [options] DescriptorProto options
-             * @property {Array.<google.protobuf.DescriptorProto.IReservedRange>} [reservedRange] DescriptorProto reservedRange
-             * @property {Array.<string>} [reservedName] DescriptorProto reservedName
+             * @property {string|null} [name] DescriptorProto name
+             * @property {Array.<google.protobuf.IFieldDescriptorProto>|null} [field] DescriptorProto field
+             * @property {Array.<google.protobuf.IFieldDescriptorProto>|null} [extension] DescriptorProto extension
+             * @property {Array.<google.protobuf.IDescriptorProto>|null} [nestedType] DescriptorProto nestedType
+             * @property {Array.<google.protobuf.IEnumDescriptorProto>|null} [enumType] DescriptorProto enumType
+             * @property {Array.<google.protobuf.DescriptorProto.IExtensionRange>|null} [extensionRange] DescriptorProto extensionRange
+             * @property {Array.<google.protobuf.IOneofDescriptorProto>|null} [oneofDecl] DescriptorProto oneofDecl
+             * @property {google.protobuf.IMessageOptions|null} [options] DescriptorProto options
+             * @property {Array.<google.protobuf.DescriptorProto.IReservedRange>|null} [reservedRange] DescriptorProto reservedRange
+             * @property {Array.<string>|null} [reservedName] DescriptorProto reservedName
              */
 
             /**
              * Constructs a new DescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents a DescriptorProto.
+             * @implements IDescriptorProto
              * @constructor
              * @param {google.protobuf.IDescriptorProto=} [properties] Properties to set
              */
@@ -10682,7 +10731,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10690,7 +10739,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto field.
-             * @member {Array.<google.protobuf.IFieldDescriptorProto>}field
+             * @member {Array.<google.protobuf.IFieldDescriptorProto>} field
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10698,7 +10747,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto extension.
-             * @member {Array.<google.protobuf.IFieldDescriptorProto>}extension
+             * @member {Array.<google.protobuf.IFieldDescriptorProto>} extension
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10706,7 +10755,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto nestedType.
-             * @member {Array.<google.protobuf.IDescriptorProto>}nestedType
+             * @member {Array.<google.protobuf.IDescriptorProto>} nestedType
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10714,7 +10763,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto enumType.
-             * @member {Array.<google.protobuf.IEnumDescriptorProto>}enumType
+             * @member {Array.<google.protobuf.IEnumDescriptorProto>} enumType
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10722,7 +10771,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto extensionRange.
-             * @member {Array.<google.protobuf.DescriptorProto.IExtensionRange>}extensionRange
+             * @member {Array.<google.protobuf.DescriptorProto.IExtensionRange>} extensionRange
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10730,7 +10779,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto oneofDecl.
-             * @member {Array.<google.protobuf.IOneofDescriptorProto>}oneofDecl
+             * @member {Array.<google.protobuf.IOneofDescriptorProto>} oneofDecl
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10738,7 +10787,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto options.
-             * @member {(google.protobuf.IMessageOptions|null|undefined)}options
+             * @member {google.protobuf.IMessageOptions|null|undefined} options
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10746,7 +10795,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto reservedRange.
-             * @member {Array.<google.protobuf.DescriptorProto.IReservedRange>}reservedRange
+             * @member {Array.<google.protobuf.DescriptorProto.IReservedRange>} reservedRange
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10754,7 +10803,7 @@ $root.google = (function() {
 
             /**
              * DescriptorProto reservedName.
-             * @member {Array.<string>}reservedName
+             * @member {Array.<string>} reservedName
              * @memberof google.protobuf.DescriptorProto
              * @instance
              */
@@ -10943,7 +10992,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.extension))
                         return "extension: array expected";
                     for (var i = 0; i < message.extension.length; ++i) {
-                        error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
+                        var error = $root.google.protobuf.FieldDescriptorProto.verify(message.extension[i]);
                         if (error)
                             return "extension." + error;
                     }
@@ -10952,7 +11001,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.nestedType))
                         return "nestedType: array expected";
                     for (var i = 0; i < message.nestedType.length; ++i) {
-                        error = $root.google.protobuf.DescriptorProto.verify(message.nestedType[i]);
+                        var error = $root.google.protobuf.DescriptorProto.verify(message.nestedType[i]);
                         if (error)
                             return "nestedType." + error;
                     }
@@ -10961,7 +11010,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.enumType))
                         return "enumType: array expected";
                     for (var i = 0; i < message.enumType.length; ++i) {
-                        error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
+                        var error = $root.google.protobuf.EnumDescriptorProto.verify(message.enumType[i]);
                         if (error)
                             return "enumType." + error;
                     }
@@ -10970,7 +11019,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.extensionRange))
                         return "extensionRange: array expected";
                     for (var i = 0; i < message.extensionRange.length; ++i) {
-                        error = $root.google.protobuf.DescriptorProto.ExtensionRange.verify(message.extensionRange[i]);
+                        var error = $root.google.protobuf.DescriptorProto.ExtensionRange.verify(message.extensionRange[i]);
                         if (error)
                             return "extensionRange." + error;
                     }
@@ -10979,13 +11028,13 @@ $root.google = (function() {
                     if (!Array.isArray(message.oneofDecl))
                         return "oneofDecl: array expected";
                     for (var i = 0; i < message.oneofDecl.length; ++i) {
-                        error = $root.google.protobuf.OneofDescriptorProto.verify(message.oneofDecl[i]);
+                        var error = $root.google.protobuf.OneofDescriptorProto.verify(message.oneofDecl[i]);
                         if (error)
                             return "oneofDecl." + error;
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    error = $root.google.protobuf.MessageOptions.verify(message.options);
+                    var error = $root.google.protobuf.MessageOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -10993,7 +11042,7 @@ $root.google = (function() {
                     if (!Array.isArray(message.reservedRange))
                         return "reservedRange: array expected";
                     for (var i = 0; i < message.reservedRange.length; ++i) {
-                        error = $root.google.protobuf.DescriptorProto.ReservedRange.verify(message.reservedRange[i]);
+                        var error = $root.google.protobuf.DescriptorProto.ReservedRange.verify(message.reservedRange[i]);
                         if (error)
                             return "reservedRange." + error;
                     }
@@ -11198,14 +11247,15 @@ $root.google = (function() {
                  * Properties of an ExtensionRange.
                  * @memberof google.protobuf.DescriptorProto
                  * @interface IExtensionRange
-                 * @property {number} [start] ExtensionRange start
-                 * @property {number} [end] ExtensionRange end
+                 * @property {number|null} [start] ExtensionRange start
+                 * @property {number|null} [end] ExtensionRange end
                  */
 
                 /**
                  * Constructs a new ExtensionRange.
                  * @memberof google.protobuf.DescriptorProto
                  * @classdesc Represents an ExtensionRange.
+                 * @implements IExtensionRange
                  * @constructor
                  * @param {google.protobuf.DescriptorProto.IExtensionRange=} [properties] Properties to set
                  */
@@ -11218,7 +11268,7 @@ $root.google = (function() {
 
                 /**
                  * ExtensionRange start.
-                 * @member {number}start
+                 * @member {number} start
                  * @memberof google.protobuf.DescriptorProto.ExtensionRange
                  * @instance
                  */
@@ -11226,7 +11276,7 @@ $root.google = (function() {
 
                 /**
                  * ExtensionRange end.
-                 * @member {number}end
+                 * @member {number} end
                  * @memberof google.protobuf.DescriptorProto.ExtensionRange
                  * @instance
                  */
@@ -11407,14 +11457,15 @@ $root.google = (function() {
                  * Properties of a ReservedRange.
                  * @memberof google.protobuf.DescriptorProto
                  * @interface IReservedRange
-                 * @property {number} [start] ReservedRange start
-                 * @property {number} [end] ReservedRange end
+                 * @property {number|null} [start] ReservedRange start
+                 * @property {number|null} [end] ReservedRange end
                  */
 
                 /**
                  * Constructs a new ReservedRange.
                  * @memberof google.protobuf.DescriptorProto
                  * @classdesc Represents a ReservedRange.
+                 * @implements IReservedRange
                  * @constructor
                  * @param {google.protobuf.DescriptorProto.IReservedRange=} [properties] Properties to set
                  */
@@ -11427,7 +11478,7 @@ $root.google = (function() {
 
                 /**
                  * ReservedRange start.
-                 * @member {number}start
+                 * @member {number} start
                  * @memberof google.protobuf.DescriptorProto.ReservedRange
                  * @instance
                  */
@@ -11435,7 +11486,7 @@ $root.google = (function() {
 
                 /**
                  * ReservedRange end.
-                 * @member {number}end
+                 * @member {number} end
                  * @memberof google.protobuf.DescriptorProto.ReservedRange
                  * @instance
                  */
@@ -11619,22 +11670,23 @@ $root.google = (function() {
              * Properties of a FieldDescriptorProto.
              * @memberof google.protobuf
              * @interface IFieldDescriptorProto
-             * @property {string} [name] FieldDescriptorProto name
-             * @property {number} [number] FieldDescriptorProto number
-             * @property {google.protobuf.FieldDescriptorProto.Label} [label] FieldDescriptorProto label
-             * @property {google.protobuf.FieldDescriptorProto.Type} [type] FieldDescriptorProto type
-             * @property {string} [typeName] FieldDescriptorProto typeName
-             * @property {string} [extendee] FieldDescriptorProto extendee
-             * @property {string} [defaultValue] FieldDescriptorProto defaultValue
-             * @property {number} [oneofIndex] FieldDescriptorProto oneofIndex
-             * @property {string} [jsonName] FieldDescriptorProto jsonName
-             * @property {google.protobuf.IFieldOptions} [options] FieldDescriptorProto options
+             * @property {string|null} [name] FieldDescriptorProto name
+             * @property {number|null} [number] FieldDescriptorProto number
+             * @property {google.protobuf.FieldDescriptorProto.Label|null} [label] FieldDescriptorProto label
+             * @property {google.protobuf.FieldDescriptorProto.Type|null} [type] FieldDescriptorProto type
+             * @property {string|null} [typeName] FieldDescriptorProto typeName
+             * @property {string|null} [extendee] FieldDescriptorProto extendee
+             * @property {string|null} [defaultValue] FieldDescriptorProto defaultValue
+             * @property {number|null} [oneofIndex] FieldDescriptorProto oneofIndex
+             * @property {string|null} [jsonName] FieldDescriptorProto jsonName
+             * @property {google.protobuf.IFieldOptions|null} [options] FieldDescriptorProto options
              */
 
             /**
              * Constructs a new FieldDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents a FieldDescriptorProto.
+             * @implements IFieldDescriptorProto
              * @constructor
              * @param {google.protobuf.IFieldDescriptorProto=} [properties] Properties to set
              */
@@ -11647,7 +11699,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11655,7 +11707,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto number.
-             * @member {number}number
+             * @member {number} number
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11663,7 +11715,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto label.
-             * @member {google.protobuf.FieldDescriptorProto.Label}label
+             * @member {google.protobuf.FieldDescriptorProto.Label} label
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11671,7 +11723,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto type.
-             * @member {google.protobuf.FieldDescriptorProto.Type}type
+             * @member {google.protobuf.FieldDescriptorProto.Type} type
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11679,7 +11731,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto typeName.
-             * @member {string}typeName
+             * @member {string} typeName
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11687,7 +11739,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto extendee.
-             * @member {string}extendee
+             * @member {string} extendee
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11695,7 +11747,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto defaultValue.
-             * @member {string}defaultValue
+             * @member {string} defaultValue
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11703,7 +11755,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto oneofIndex.
-             * @member {number}oneofIndex
+             * @member {number} oneofIndex
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11711,7 +11763,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto jsonName.
-             * @member {string}jsonName
+             * @member {string} jsonName
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -11719,7 +11771,7 @@ $root.google = (function() {
 
             /**
              * FieldDescriptorProto options.
-             * @member {(google.protobuf.IFieldOptions|null|undefined)}options
+             * @member {google.protobuf.IFieldOptions|null|undefined} options
              * @memberof google.protobuf.FieldDescriptorProto
              * @instance
              */
@@ -12113,6 +12165,7 @@ $root.google = (function() {
 
             /**
              * Type enum.
+             * @name google.protobuf.FieldDescriptorProto.Type
              * @enum {string}
              * @property {number} TYPE_DOUBLE=1 TYPE_DOUBLE value
              * @property {number} TYPE_FLOAT=2 TYPE_FLOAT value
@@ -12158,6 +12211,7 @@ $root.google = (function() {
 
             /**
              * Label enum.
+             * @name google.protobuf.FieldDescriptorProto.Label
              * @enum {string}
              * @property {number} LABEL_OPTIONAL=1 LABEL_OPTIONAL value
              * @property {number} LABEL_REQUIRED=2 LABEL_REQUIRED value
@@ -12180,14 +12234,15 @@ $root.google = (function() {
              * Properties of an OneofDescriptorProto.
              * @memberof google.protobuf
              * @interface IOneofDescriptorProto
-             * @property {string} [name] OneofDescriptorProto name
-             * @property {google.protobuf.IOneofOptions} [options] OneofDescriptorProto options
+             * @property {string|null} [name] OneofDescriptorProto name
+             * @property {google.protobuf.IOneofOptions|null} [options] OneofDescriptorProto options
              */
 
             /**
              * Constructs a new OneofDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents an OneofDescriptorProto.
+             * @implements IOneofDescriptorProto
              * @constructor
              * @param {google.protobuf.IOneofDescriptorProto=} [properties] Properties to set
              */
@@ -12200,7 +12255,7 @@ $root.google = (function() {
 
             /**
              * OneofDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.OneofDescriptorProto
              * @instance
              */
@@ -12208,7 +12263,7 @@ $root.google = (function() {
 
             /**
              * OneofDescriptorProto options.
-             * @member {(google.protobuf.IOneofOptions|null|undefined)}options
+             * @member {google.protobuf.IOneofOptions|null|undefined} options
              * @memberof google.protobuf.OneofDescriptorProto
              * @instance
              */
@@ -12394,15 +12449,16 @@ $root.google = (function() {
              * Properties of an EnumDescriptorProto.
              * @memberof google.protobuf
              * @interface IEnumDescriptorProto
-             * @property {string} [name] EnumDescriptorProto name
-             * @property {Array.<google.protobuf.IEnumValueDescriptorProto>} [value] EnumDescriptorProto value
-             * @property {google.protobuf.IEnumOptions} [options] EnumDescriptorProto options
+             * @property {string|null} [name] EnumDescriptorProto name
+             * @property {Array.<google.protobuf.IEnumValueDescriptorProto>|null} [value] EnumDescriptorProto value
+             * @property {google.protobuf.IEnumOptions|null} [options] EnumDescriptorProto options
              */
 
             /**
              * Constructs a new EnumDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents an EnumDescriptorProto.
+             * @implements IEnumDescriptorProto
              * @constructor
              * @param {google.protobuf.IEnumDescriptorProto=} [properties] Properties to set
              */
@@ -12416,7 +12472,7 @@ $root.google = (function() {
 
             /**
              * EnumDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.EnumDescriptorProto
              * @instance
              */
@@ -12424,7 +12480,7 @@ $root.google = (function() {
 
             /**
              * EnumDescriptorProto value.
-             * @member {Array.<google.protobuf.IEnumValueDescriptorProto>}value
+             * @member {Array.<google.protobuf.IEnumValueDescriptorProto>} value
              * @memberof google.protobuf.EnumDescriptorProto
              * @instance
              */
@@ -12432,7 +12488,7 @@ $root.google = (function() {
 
             /**
              * EnumDescriptorProto options.
-             * @member {(google.protobuf.IEnumOptions|null|undefined)}options
+             * @member {google.protobuf.IEnumOptions|null|undefined} options
              * @memberof google.protobuf.EnumDescriptorProto
              * @instance
              */
@@ -12562,7 +12618,7 @@ $root.google = (function() {
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    error = $root.google.protobuf.EnumOptions.verify(message.options);
+                    var error = $root.google.protobuf.EnumOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -12652,15 +12708,16 @@ $root.google = (function() {
              * Properties of an EnumValueDescriptorProto.
              * @memberof google.protobuf
              * @interface IEnumValueDescriptorProto
-             * @property {string} [name] EnumValueDescriptorProto name
-             * @property {number} [number] EnumValueDescriptorProto number
-             * @property {google.protobuf.IEnumValueOptions} [options] EnumValueDescriptorProto options
+             * @property {string|null} [name] EnumValueDescriptorProto name
+             * @property {number|null} [number] EnumValueDescriptorProto number
+             * @property {google.protobuf.IEnumValueOptions|null} [options] EnumValueDescriptorProto options
              */
 
             /**
              * Constructs a new EnumValueDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents an EnumValueDescriptorProto.
+             * @implements IEnumValueDescriptorProto
              * @constructor
              * @param {google.protobuf.IEnumValueDescriptorProto=} [properties] Properties to set
              */
@@ -12673,7 +12730,7 @@ $root.google = (function() {
 
             /**
              * EnumValueDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.EnumValueDescriptorProto
              * @instance
              */
@@ -12681,7 +12738,7 @@ $root.google = (function() {
 
             /**
              * EnumValueDescriptorProto number.
-             * @member {number}number
+             * @member {number} number
              * @memberof google.protobuf.EnumValueDescriptorProto
              * @instance
              */
@@ -12689,7 +12746,7 @@ $root.google = (function() {
 
             /**
              * EnumValueDescriptorProto options.
-             * @member {(google.protobuf.IEnumValueOptions|null|undefined)}options
+             * @member {google.protobuf.IEnumValueOptions|null|undefined} options
              * @memberof google.protobuf.EnumValueDescriptorProto
              * @instance
              */
@@ -12888,15 +12945,16 @@ $root.google = (function() {
              * Properties of a ServiceDescriptorProto.
              * @memberof google.protobuf
              * @interface IServiceDescriptorProto
-             * @property {string} [name] ServiceDescriptorProto name
-             * @property {Array.<google.protobuf.IMethodDescriptorProto>} [method] ServiceDescriptorProto method
-             * @property {google.protobuf.IServiceOptions} [options] ServiceDescriptorProto options
+             * @property {string|null} [name] ServiceDescriptorProto name
+             * @property {Array.<google.protobuf.IMethodDescriptorProto>|null} [method] ServiceDescriptorProto method
+             * @property {google.protobuf.IServiceOptions|null} [options] ServiceDescriptorProto options
              */
 
             /**
              * Constructs a new ServiceDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents a ServiceDescriptorProto.
+             * @implements IServiceDescriptorProto
              * @constructor
              * @param {google.protobuf.IServiceDescriptorProto=} [properties] Properties to set
              */
@@ -12910,7 +12968,7 @@ $root.google = (function() {
 
             /**
              * ServiceDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.ServiceDescriptorProto
              * @instance
              */
@@ -12918,7 +12976,7 @@ $root.google = (function() {
 
             /**
              * ServiceDescriptorProto method.
-             * @member {Array.<google.protobuf.IMethodDescriptorProto>}method
+             * @member {Array.<google.protobuf.IMethodDescriptorProto>} method
              * @memberof google.protobuf.ServiceDescriptorProto
              * @instance
              */
@@ -12926,7 +12984,7 @@ $root.google = (function() {
 
             /**
              * ServiceDescriptorProto options.
-             * @member {(google.protobuf.IServiceOptions|null|undefined)}options
+             * @member {google.protobuf.IServiceOptions|null|undefined} options
              * @memberof google.protobuf.ServiceDescriptorProto
              * @instance
              */
@@ -13056,7 +13114,7 @@ $root.google = (function() {
                     }
                 }
                 if (message.options != null && message.hasOwnProperty("options")) {
-                    error = $root.google.protobuf.ServiceOptions.verify(message.options);
+                    var error = $root.google.protobuf.ServiceOptions.verify(message.options);
                     if (error)
                         return "options." + error;
                 }
@@ -13146,18 +13204,19 @@ $root.google = (function() {
              * Properties of a MethodDescriptorProto.
              * @memberof google.protobuf
              * @interface IMethodDescriptorProto
-             * @property {string} [name] MethodDescriptorProto name
-             * @property {string} [inputType] MethodDescriptorProto inputType
-             * @property {string} [outputType] MethodDescriptorProto outputType
-             * @property {google.protobuf.IMethodOptions} [options] MethodDescriptorProto options
-             * @property {boolean} [clientStreaming] MethodDescriptorProto clientStreaming
-             * @property {boolean} [serverStreaming] MethodDescriptorProto serverStreaming
+             * @property {string|null} [name] MethodDescriptorProto name
+             * @property {string|null} [inputType] MethodDescriptorProto inputType
+             * @property {string|null} [outputType] MethodDescriptorProto outputType
+             * @property {google.protobuf.IMethodOptions|null} [options] MethodDescriptorProto options
+             * @property {boolean|null} [clientStreaming] MethodDescriptorProto clientStreaming
+             * @property {boolean|null} [serverStreaming] MethodDescriptorProto serverStreaming
              */
 
             /**
              * Constructs a new MethodDescriptorProto.
              * @memberof google.protobuf
              * @classdesc Represents a MethodDescriptorProto.
+             * @implements IMethodDescriptorProto
              * @constructor
              * @param {google.protobuf.IMethodDescriptorProto=} [properties] Properties to set
              */
@@ -13170,7 +13229,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto name.
-             * @member {string}name
+             * @member {string} name
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13178,7 +13237,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto inputType.
-             * @member {string}inputType
+             * @member {string} inputType
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13186,7 +13245,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto outputType.
-             * @member {string}outputType
+             * @member {string} outputType
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13194,7 +13253,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto options.
-             * @member {(google.protobuf.IMethodOptions|null|undefined)}options
+             * @member {google.protobuf.IMethodOptions|null|undefined} options
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13202,7 +13261,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto clientStreaming.
-             * @member {boolean}clientStreaming
+             * @member {boolean} clientStreaming
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13210,7 +13269,7 @@ $root.google = (function() {
 
             /**
              * MethodDescriptorProto serverStreaming.
-             * @member {boolean}serverStreaming
+             * @member {boolean} serverStreaming
              * @memberof google.protobuf.MethodDescriptorProto
              * @instance
              */
@@ -13448,27 +13507,28 @@ $root.google = (function() {
              * Properties of a FileOptions.
              * @memberof google.protobuf
              * @interface IFileOptions
-             * @property {string} [javaPackage] FileOptions javaPackage
-             * @property {string} [javaOuterClassname] FileOptions javaOuterClassname
-             * @property {boolean} [javaMultipleFiles] FileOptions javaMultipleFiles
-             * @property {boolean} [javaGenerateEqualsAndHash] FileOptions javaGenerateEqualsAndHash
-             * @property {boolean} [javaStringCheckUtf8] FileOptions javaStringCheckUtf8
-             * @property {google.protobuf.FileOptions.OptimizeMode} [optimizeFor] FileOptions optimizeFor
-             * @property {string} [goPackage] FileOptions goPackage
-             * @property {boolean} [ccGenericServices] FileOptions ccGenericServices
-             * @property {boolean} [javaGenericServices] FileOptions javaGenericServices
-             * @property {boolean} [pyGenericServices] FileOptions pyGenericServices
-             * @property {boolean} [deprecated] FileOptions deprecated
-             * @property {boolean} [ccEnableArenas] FileOptions ccEnableArenas
-             * @property {string} [objcClassPrefix] FileOptions objcClassPrefix
-             * @property {string} [csharpNamespace] FileOptions csharpNamespace
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] FileOptions uninterpretedOption
+             * @property {string|null} [javaPackage] FileOptions javaPackage
+             * @property {string|null} [javaOuterClassname] FileOptions javaOuterClassname
+             * @property {boolean|null} [javaMultipleFiles] FileOptions javaMultipleFiles
+             * @property {boolean|null} [javaGenerateEqualsAndHash] FileOptions javaGenerateEqualsAndHash
+             * @property {boolean|null} [javaStringCheckUtf8] FileOptions javaStringCheckUtf8
+             * @property {google.protobuf.FileOptions.OptimizeMode|null} [optimizeFor] FileOptions optimizeFor
+             * @property {string|null} [goPackage] FileOptions goPackage
+             * @property {boolean|null} [ccGenericServices] FileOptions ccGenericServices
+             * @property {boolean|null} [javaGenericServices] FileOptions javaGenericServices
+             * @property {boolean|null} [pyGenericServices] FileOptions pyGenericServices
+             * @property {boolean|null} [deprecated] FileOptions deprecated
+             * @property {boolean|null} [ccEnableArenas] FileOptions ccEnableArenas
+             * @property {string|null} [objcClassPrefix] FileOptions objcClassPrefix
+             * @property {string|null} [csharpNamespace] FileOptions csharpNamespace
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] FileOptions uninterpretedOption
              */
 
             /**
              * Constructs a new FileOptions.
              * @memberof google.protobuf
              * @classdesc Represents a FileOptions.
+             * @implements IFileOptions
              * @constructor
              * @param {google.protobuf.IFileOptions=} [properties] Properties to set
              */
@@ -13482,7 +13542,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaPackage.
-             * @member {string}javaPackage
+             * @member {string} javaPackage
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13490,7 +13550,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaOuterClassname.
-             * @member {string}javaOuterClassname
+             * @member {string} javaOuterClassname
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13498,7 +13558,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaMultipleFiles.
-             * @member {boolean}javaMultipleFiles
+             * @member {boolean} javaMultipleFiles
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13506,7 +13566,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaGenerateEqualsAndHash.
-             * @member {boolean}javaGenerateEqualsAndHash
+             * @member {boolean} javaGenerateEqualsAndHash
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13514,7 +13574,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaStringCheckUtf8.
-             * @member {boolean}javaStringCheckUtf8
+             * @member {boolean} javaStringCheckUtf8
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13522,7 +13582,7 @@ $root.google = (function() {
 
             /**
              * FileOptions optimizeFor.
-             * @member {google.protobuf.FileOptions.OptimizeMode}optimizeFor
+             * @member {google.protobuf.FileOptions.OptimizeMode} optimizeFor
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13530,7 +13590,7 @@ $root.google = (function() {
 
             /**
              * FileOptions goPackage.
-             * @member {string}goPackage
+             * @member {string} goPackage
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13538,7 +13598,7 @@ $root.google = (function() {
 
             /**
              * FileOptions ccGenericServices.
-             * @member {boolean}ccGenericServices
+             * @member {boolean} ccGenericServices
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13546,7 +13606,7 @@ $root.google = (function() {
 
             /**
              * FileOptions javaGenericServices.
-             * @member {boolean}javaGenericServices
+             * @member {boolean} javaGenericServices
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13554,7 +13614,7 @@ $root.google = (function() {
 
             /**
              * FileOptions pyGenericServices.
-             * @member {boolean}pyGenericServices
+             * @member {boolean} pyGenericServices
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13562,7 +13622,7 @@ $root.google = (function() {
 
             /**
              * FileOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13570,7 +13630,7 @@ $root.google = (function() {
 
             /**
              * FileOptions ccEnableArenas.
-             * @member {boolean}ccEnableArenas
+             * @member {boolean} ccEnableArenas
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13578,7 +13638,7 @@ $root.google = (function() {
 
             /**
              * FileOptions objcClassPrefix.
-             * @member {string}objcClassPrefix
+             * @member {string} objcClassPrefix
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13586,7 +13646,7 @@ $root.google = (function() {
 
             /**
              * FileOptions csharpNamespace.
-             * @member {string}csharpNamespace
+             * @member {string} csharpNamespace
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13594,7 +13654,7 @@ $root.google = (function() {
 
             /**
              * FileOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.FileOptions
              * @instance
              */
@@ -13976,6 +14036,7 @@ $root.google = (function() {
 
             /**
              * OptimizeMode enum.
+             * @name google.protobuf.FileOptions.OptimizeMode
              * @enum {string}
              * @property {number} SPEED=1 SPEED value
              * @property {number} CODE_SIZE=2 CODE_SIZE value
@@ -13998,17 +14059,18 @@ $root.google = (function() {
              * Properties of a MessageOptions.
              * @memberof google.protobuf
              * @interface IMessageOptions
-             * @property {boolean} [messageSetWireFormat] MessageOptions messageSetWireFormat
-             * @property {boolean} [noStandardDescriptorAccessor] MessageOptions noStandardDescriptorAccessor
-             * @property {boolean} [deprecated] MessageOptions deprecated
-             * @property {boolean} [mapEntry] MessageOptions mapEntry
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] MessageOptions uninterpretedOption
+             * @property {boolean|null} [messageSetWireFormat] MessageOptions messageSetWireFormat
+             * @property {boolean|null} [noStandardDescriptorAccessor] MessageOptions noStandardDescriptorAccessor
+             * @property {boolean|null} [deprecated] MessageOptions deprecated
+             * @property {boolean|null} [mapEntry] MessageOptions mapEntry
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] MessageOptions uninterpretedOption
              */
 
             /**
              * Constructs a new MessageOptions.
              * @memberof google.protobuf
              * @classdesc Represents a MessageOptions.
+             * @implements IMessageOptions
              * @constructor
              * @param {google.protobuf.IMessageOptions=} [properties] Properties to set
              */
@@ -14022,7 +14084,7 @@ $root.google = (function() {
 
             /**
              * MessageOptions messageSetWireFormat.
-             * @member {boolean}messageSetWireFormat
+             * @member {boolean} messageSetWireFormat
              * @memberof google.protobuf.MessageOptions
              * @instance
              */
@@ -14030,7 +14092,7 @@ $root.google = (function() {
 
             /**
              * MessageOptions noStandardDescriptorAccessor.
-             * @member {boolean}noStandardDescriptorAccessor
+             * @member {boolean} noStandardDescriptorAccessor
              * @memberof google.protobuf.MessageOptions
              * @instance
              */
@@ -14038,7 +14100,7 @@ $root.google = (function() {
 
             /**
              * MessageOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.MessageOptions
              * @instance
              */
@@ -14046,7 +14108,7 @@ $root.google = (function() {
 
             /**
              * MessageOptions mapEntry.
-             * @member {boolean}mapEntry
+             * @member {boolean} mapEntry
              * @memberof google.protobuf.MessageOptions
              * @instance
              */
@@ -14054,7 +14116,7 @@ $root.google = (function() {
 
             /**
              * MessageOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.MessageOptions
              * @instance
              */
@@ -14295,19 +14357,20 @@ $root.google = (function() {
              * Properties of a FieldOptions.
              * @memberof google.protobuf
              * @interface IFieldOptions
-             * @property {google.protobuf.FieldOptions.CType} [ctype] FieldOptions ctype
-             * @property {boolean} [packed] FieldOptions packed
-             * @property {google.protobuf.FieldOptions.JSType} [jstype] FieldOptions jstype
-             * @property {boolean} [lazy] FieldOptions lazy
-             * @property {boolean} [deprecated] FieldOptions deprecated
-             * @property {boolean} [weak] FieldOptions weak
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] FieldOptions uninterpretedOption
+             * @property {google.protobuf.FieldOptions.CType|null} [ctype] FieldOptions ctype
+             * @property {boolean|null} [packed] FieldOptions packed
+             * @property {google.protobuf.FieldOptions.JSType|null} [jstype] FieldOptions jstype
+             * @property {boolean|null} [lazy] FieldOptions lazy
+             * @property {boolean|null} [deprecated] FieldOptions deprecated
+             * @property {boolean|null} [weak] FieldOptions weak
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] FieldOptions uninterpretedOption
              */
 
             /**
              * Constructs a new FieldOptions.
              * @memberof google.protobuf
              * @classdesc Represents a FieldOptions.
+             * @implements IFieldOptions
              * @constructor
              * @param {google.protobuf.IFieldOptions=} [properties] Properties to set
              */
@@ -14321,7 +14384,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions ctype.
-             * @member {google.protobuf.FieldOptions.CType}ctype
+             * @member {google.protobuf.FieldOptions.CType} ctype
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14329,7 +14392,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions packed.
-             * @member {boolean}packed
+             * @member {boolean} packed
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14337,7 +14400,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions jstype.
-             * @member {google.protobuf.FieldOptions.JSType}jstype
+             * @member {google.protobuf.FieldOptions.JSType} jstype
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14345,7 +14408,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions lazy.
-             * @member {boolean}lazy
+             * @member {boolean} lazy
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14353,7 +14416,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14361,7 +14424,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions weak.
-             * @member {boolean}weak
+             * @member {boolean} weak
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14369,7 +14432,7 @@ $root.google = (function() {
 
             /**
              * FieldOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.FieldOptions
              * @instance
              */
@@ -14665,6 +14728,7 @@ $root.google = (function() {
 
             /**
              * CType enum.
+             * @name google.protobuf.FieldOptions.CType
              * @enum {string}
              * @property {number} STRING=0 STRING value
              * @property {number} CORD=1 CORD value
@@ -14680,6 +14744,7 @@ $root.google = (function() {
 
             /**
              * JSType enum.
+             * @name google.protobuf.FieldOptions.JSType
              * @enum {string}
              * @property {number} JS_NORMAL=0 JS_NORMAL value
              * @property {number} JS_STRING=1 JS_STRING value
@@ -14702,13 +14767,14 @@ $root.google = (function() {
              * Properties of an OneofOptions.
              * @memberof google.protobuf
              * @interface IOneofOptions
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] OneofOptions uninterpretedOption
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] OneofOptions uninterpretedOption
              */
 
             /**
              * Constructs a new OneofOptions.
              * @memberof google.protobuf
              * @classdesc Represents an OneofOptions.
+             * @implements IOneofOptions
              * @constructor
              * @param {google.protobuf.IOneofOptions=} [properties] Properties to set
              */
@@ -14722,7 +14788,7 @@ $root.google = (function() {
 
             /**
              * OneofOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.OneofOptions
              * @instance
              */
@@ -14909,15 +14975,16 @@ $root.google = (function() {
              * Properties of an EnumOptions.
              * @memberof google.protobuf
              * @interface IEnumOptions
-             * @property {boolean} [allowAlias] EnumOptions allowAlias
-             * @property {boolean} [deprecated] EnumOptions deprecated
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] EnumOptions uninterpretedOption
+             * @property {boolean|null} [allowAlias] EnumOptions allowAlias
+             * @property {boolean|null} [deprecated] EnumOptions deprecated
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] EnumOptions uninterpretedOption
              */
 
             /**
              * Constructs a new EnumOptions.
              * @memberof google.protobuf
              * @classdesc Represents an EnumOptions.
+             * @implements IEnumOptions
              * @constructor
              * @param {google.protobuf.IEnumOptions=} [properties] Properties to set
              */
@@ -14931,7 +14998,7 @@ $root.google = (function() {
 
             /**
              * EnumOptions allowAlias.
-             * @member {boolean}allowAlias
+             * @member {boolean} allowAlias
              * @memberof google.protobuf.EnumOptions
              * @instance
              */
@@ -14939,7 +15006,7 @@ $root.google = (function() {
 
             /**
              * EnumOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.EnumOptions
              * @instance
              */
@@ -14947,7 +15014,7 @@ $root.google = (function() {
 
             /**
              * EnumOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.EnumOptions
              * @instance
              */
@@ -15162,14 +15229,15 @@ $root.google = (function() {
              * Properties of an EnumValueOptions.
              * @memberof google.protobuf
              * @interface IEnumValueOptions
-             * @property {boolean} [deprecated] EnumValueOptions deprecated
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] EnumValueOptions uninterpretedOption
+             * @property {boolean|null} [deprecated] EnumValueOptions deprecated
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] EnumValueOptions uninterpretedOption
              */
 
             /**
              * Constructs a new EnumValueOptions.
              * @memberof google.protobuf
              * @classdesc Represents an EnumValueOptions.
+             * @implements IEnumValueOptions
              * @constructor
              * @param {google.protobuf.IEnumValueOptions=} [properties] Properties to set
              */
@@ -15183,7 +15251,7 @@ $root.google = (function() {
 
             /**
              * EnumValueOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.EnumValueOptions
              * @instance
              */
@@ -15191,7 +15259,7 @@ $root.google = (function() {
 
             /**
              * EnumValueOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.EnumValueOptions
              * @instance
              */
@@ -15392,14 +15460,15 @@ $root.google = (function() {
              * Properties of a ServiceOptions.
              * @memberof google.protobuf
              * @interface IServiceOptions
-             * @property {boolean} [deprecated] ServiceOptions deprecated
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] ServiceOptions uninterpretedOption
+             * @property {boolean|null} [deprecated] ServiceOptions deprecated
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] ServiceOptions uninterpretedOption
              */
 
             /**
              * Constructs a new ServiceOptions.
              * @memberof google.protobuf
              * @classdesc Represents a ServiceOptions.
+             * @implements IServiceOptions
              * @constructor
              * @param {google.protobuf.IServiceOptions=} [properties] Properties to set
              */
@@ -15413,7 +15482,7 @@ $root.google = (function() {
 
             /**
              * ServiceOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.ServiceOptions
              * @instance
              */
@@ -15421,7 +15490,7 @@ $root.google = (function() {
 
             /**
              * ServiceOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.ServiceOptions
              * @instance
              */
@@ -15622,15 +15691,16 @@ $root.google = (function() {
              * Properties of a MethodOptions.
              * @memberof google.protobuf
              * @interface IMethodOptions
-             * @property {boolean} [deprecated] MethodOptions deprecated
-             * @property {Array.<google.protobuf.IUninterpretedOption>} [uninterpretedOption] MethodOptions uninterpretedOption
-             * @property {google.api.IHttpRule} [".google.api.http"] MethodOptions .google.api.http
+             * @property {boolean|null} [deprecated] MethodOptions deprecated
+             * @property {Array.<google.protobuf.IUninterpretedOption>|null} [uninterpretedOption] MethodOptions uninterpretedOption
+             * @property {google.api.IHttpRule|null} [".google.api.http"] MethodOptions .google.api.http
              */
 
             /**
              * Constructs a new MethodOptions.
              * @memberof google.protobuf
              * @classdesc Represents a MethodOptions.
+             * @implements IMethodOptions
              * @constructor
              * @param {google.protobuf.IMethodOptions=} [properties] Properties to set
              */
@@ -15644,7 +15714,7 @@ $root.google = (function() {
 
             /**
              * MethodOptions deprecated.
-             * @member {boolean}deprecated
+             * @member {boolean} deprecated
              * @memberof google.protobuf.MethodOptions
              * @instance
              */
@@ -15652,7 +15722,7 @@ $root.google = (function() {
 
             /**
              * MethodOptions uninterpretedOption.
-             * @member {Array.<google.protobuf.IUninterpretedOption>}uninterpretedOption
+             * @member {Array.<google.protobuf.IUninterpretedOption>} uninterpretedOption
              * @memberof google.protobuf.MethodOptions
              * @instance
              */
@@ -15660,7 +15730,7 @@ $root.google = (function() {
 
             /**
              * MethodOptions .google.api.http.
-             * @member {(google.api.IHttpRule|null|undefined)}.google.api.http
+             * @member {google.api.IHttpRule|null|undefined} .google.api.http
              * @memberof google.protobuf.MethodOptions
              * @instance
              */
@@ -15790,7 +15860,7 @@ $root.google = (function() {
                     }
                 }
                 if (message[".google.api.http"] != null && message.hasOwnProperty(".google.api.http")) {
-                    error = $root.google.api.HttpRule.verify(message[".google.api.http"]);
+                    var error = $root.google.api.HttpRule.verify(message[".google.api.http"]);
                     if (error)
                         return ".google.api.http." + error;
                 }
@@ -15880,19 +15950,20 @@ $root.google = (function() {
              * Properties of an UninterpretedOption.
              * @memberof google.protobuf
              * @interface IUninterpretedOption
-             * @property {Array.<google.protobuf.UninterpretedOption.INamePart>} [name] UninterpretedOption name
-             * @property {string} [identifierValue] UninterpretedOption identifierValue
-             * @property {number|Long} [positiveIntValue] UninterpretedOption positiveIntValue
-             * @property {number|Long} [negativeIntValue] UninterpretedOption negativeIntValue
-             * @property {number} [doubleValue] UninterpretedOption doubleValue
-             * @property {Uint8Array} [stringValue] UninterpretedOption stringValue
-             * @property {string} [aggregateValue] UninterpretedOption aggregateValue
+             * @property {Array.<google.protobuf.UninterpretedOption.INamePart>|null} [name] UninterpretedOption name
+             * @property {string|null} [identifierValue] UninterpretedOption identifierValue
+             * @property {number|Long|null} [positiveIntValue] UninterpretedOption positiveIntValue
+             * @property {number|Long|null} [negativeIntValue] UninterpretedOption negativeIntValue
+             * @property {number|null} [doubleValue] UninterpretedOption doubleValue
+             * @property {Uint8Array|null} [stringValue] UninterpretedOption stringValue
+             * @property {string|null} [aggregateValue] UninterpretedOption aggregateValue
              */
 
             /**
              * Constructs a new UninterpretedOption.
              * @memberof google.protobuf
              * @classdesc Represents an UninterpretedOption.
+             * @implements IUninterpretedOption
              * @constructor
              * @param {google.protobuf.IUninterpretedOption=} [properties] Properties to set
              */
@@ -15906,7 +15977,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption name.
-             * @member {Array.<google.protobuf.UninterpretedOption.INamePart>}name
+             * @member {Array.<google.protobuf.UninterpretedOption.INamePart>} name
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15914,7 +15985,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption identifierValue.
-             * @member {string}identifierValue
+             * @member {string} identifierValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15922,7 +15993,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption positiveIntValue.
-             * @member {number|Long}positiveIntValue
+             * @member {number|Long} positiveIntValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15930,7 +16001,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption negativeIntValue.
-             * @member {number|Long}negativeIntValue
+             * @member {number|Long} negativeIntValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15938,7 +16009,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption doubleValue.
-             * @member {number}doubleValue
+             * @member {number} doubleValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15946,7 +16017,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption stringValue.
-             * @member {Uint8Array}stringValue
+             * @member {Uint8Array} stringValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -15954,7 +16025,7 @@ $root.google = (function() {
 
             /**
              * UninterpretedOption aggregateValue.
-             * @member {string}aggregateValue
+             * @member {string} aggregateValue
              * @memberof google.protobuf.UninterpretedOption
              * @instance
              */
@@ -16203,7 +16274,13 @@ $root.google = (function() {
                     } else
                         object.negativeIntValue = options.longs === String ? "0" : 0;
                     object.doubleValue = 0;
-                    object.stringValue = options.bytes === String ? "" : [];
+                    if (options.bytes === String)
+                        object.stringValue = "";
+                    else {
+                        object.stringValue = [];
+                        if (options.bytes !== Array)
+                            object.stringValue = $util.newBuffer(object.stringValue);
+                    }
                     object.aggregateValue = "";
                 }
                 if (message.name && message.name.length) {
@@ -16257,6 +16334,7 @@ $root.google = (function() {
                  * Constructs a new NamePart.
                  * @memberof google.protobuf.UninterpretedOption
                  * @classdesc Represents a NamePart.
+                 * @implements INamePart
                  * @constructor
                  * @param {google.protobuf.UninterpretedOption.INamePart=} [properties] Properties to set
                  */
@@ -16269,7 +16347,7 @@ $root.google = (function() {
 
                 /**
                  * NamePart namePart.
-                 * @member {string}namePart
+                 * @member {string} namePart
                  * @memberof google.protobuf.UninterpretedOption.NamePart
                  * @instance
                  */
@@ -16277,7 +16355,7 @@ $root.google = (function() {
 
                 /**
                  * NamePart isExtension.
-                 * @member {boolean}isExtension
+                 * @member {boolean} isExtension
                  * @memberof google.protobuf.UninterpretedOption.NamePart
                  * @instance
                  */
@@ -16461,13 +16539,14 @@ $root.google = (function() {
              * Properties of a SourceCodeInfo.
              * @memberof google.protobuf
              * @interface ISourceCodeInfo
-             * @property {Array.<google.protobuf.SourceCodeInfo.ILocation>} [location] SourceCodeInfo location
+             * @property {Array.<google.protobuf.SourceCodeInfo.ILocation>|null} [location] SourceCodeInfo location
              */
 
             /**
              * Constructs a new SourceCodeInfo.
              * @memberof google.protobuf
              * @classdesc Represents a SourceCodeInfo.
+             * @implements ISourceCodeInfo
              * @constructor
              * @param {google.protobuf.ISourceCodeInfo=} [properties] Properties to set
              */
@@ -16481,7 +16560,7 @@ $root.google = (function() {
 
             /**
              * SourceCodeInfo location.
-             * @member {Array.<google.protobuf.SourceCodeInfo.ILocation>}location
+             * @member {Array.<google.protobuf.SourceCodeInfo.ILocation>} location
              * @memberof google.protobuf.SourceCodeInfo
              * @instance
              */
@@ -16665,17 +16744,18 @@ $root.google = (function() {
                  * Properties of a Location.
                  * @memberof google.protobuf.SourceCodeInfo
                  * @interface ILocation
-                 * @property {Array.<number>} [path] Location path
-                 * @property {Array.<number>} [span] Location span
-                 * @property {string} [leadingComments] Location leadingComments
-                 * @property {string} [trailingComments] Location trailingComments
-                 * @property {Array.<string>} [leadingDetachedComments] Location leadingDetachedComments
+                 * @property {Array.<number>|null} [path] Location path
+                 * @property {Array.<number>|null} [span] Location span
+                 * @property {string|null} [leadingComments] Location leadingComments
+                 * @property {string|null} [trailingComments] Location trailingComments
+                 * @property {Array.<string>|null} [leadingDetachedComments] Location leadingDetachedComments
                  */
 
                 /**
                  * Constructs a new Location.
                  * @memberof google.protobuf.SourceCodeInfo
                  * @classdesc Represents a Location.
+                 * @implements ILocation
                  * @constructor
                  * @param {google.protobuf.SourceCodeInfo.ILocation=} [properties] Properties to set
                  */
@@ -16691,7 +16771,7 @@ $root.google = (function() {
 
                 /**
                  * Location path.
-                 * @member {Array.<number>}path
+                 * @member {Array.<number>} path
                  * @memberof google.protobuf.SourceCodeInfo.Location
                  * @instance
                  */
@@ -16699,7 +16779,7 @@ $root.google = (function() {
 
                 /**
                  * Location span.
-                 * @member {Array.<number>}span
+                 * @member {Array.<number>} span
                  * @memberof google.protobuf.SourceCodeInfo.Location
                  * @instance
                  */
@@ -16707,7 +16787,7 @@ $root.google = (function() {
 
                 /**
                  * Location leadingComments.
-                 * @member {string}leadingComments
+                 * @member {string} leadingComments
                  * @memberof google.protobuf.SourceCodeInfo.Location
                  * @instance
                  */
@@ -16715,7 +16795,7 @@ $root.google = (function() {
 
                 /**
                  * Location trailingComments.
-                 * @member {string}trailingComments
+                 * @member {string} trailingComments
                  * @memberof google.protobuf.SourceCodeInfo.Location
                  * @instance
                  */
@@ -16723,7 +16803,7 @@ $root.google = (function() {
 
                 /**
                  * Location leadingDetachedComments.
-                 * @member {Array.<string>}leadingDetachedComments
+                 * @member {Array.<string>} leadingDetachedComments
                  * @memberof google.protobuf.SourceCodeInfo.Location
                  * @instance
                  */
@@ -17009,13 +17089,14 @@ $root.google = (function() {
              * Properties of a GeneratedCodeInfo.
              * @memberof google.protobuf
              * @interface IGeneratedCodeInfo
-             * @property {Array.<google.protobuf.GeneratedCodeInfo.IAnnotation>} [annotation] GeneratedCodeInfo annotation
+             * @property {Array.<google.protobuf.GeneratedCodeInfo.IAnnotation>|null} [annotation] GeneratedCodeInfo annotation
              */
 
             /**
              * Constructs a new GeneratedCodeInfo.
              * @memberof google.protobuf
              * @classdesc Represents a GeneratedCodeInfo.
+             * @implements IGeneratedCodeInfo
              * @constructor
              * @param {google.protobuf.IGeneratedCodeInfo=} [properties] Properties to set
              */
@@ -17029,7 +17110,7 @@ $root.google = (function() {
 
             /**
              * GeneratedCodeInfo annotation.
-             * @member {Array.<google.protobuf.GeneratedCodeInfo.IAnnotation>}annotation
+             * @member {Array.<google.protobuf.GeneratedCodeInfo.IAnnotation>} annotation
              * @memberof google.protobuf.GeneratedCodeInfo
              * @instance
              */
@@ -17213,16 +17294,17 @@ $root.google = (function() {
                  * Properties of an Annotation.
                  * @memberof google.protobuf.GeneratedCodeInfo
                  * @interface IAnnotation
-                 * @property {Array.<number>} [path] Annotation path
-                 * @property {string} [sourceFile] Annotation sourceFile
-                 * @property {number} [begin] Annotation begin
-                 * @property {number} [end] Annotation end
+                 * @property {Array.<number>|null} [path] Annotation path
+                 * @property {string|null} [sourceFile] Annotation sourceFile
+                 * @property {number|null} [begin] Annotation begin
+                 * @property {number|null} [end] Annotation end
                  */
 
                 /**
                  * Constructs a new Annotation.
                  * @memberof google.protobuf.GeneratedCodeInfo
                  * @classdesc Represents an Annotation.
+                 * @implements IAnnotation
                  * @constructor
                  * @param {google.protobuf.GeneratedCodeInfo.IAnnotation=} [properties] Properties to set
                  */
@@ -17236,7 +17318,7 @@ $root.google = (function() {
 
                 /**
                  * Annotation path.
-                 * @member {Array.<number>}path
+                 * @member {Array.<number>} path
                  * @memberof google.protobuf.GeneratedCodeInfo.Annotation
                  * @instance
                  */
@@ -17244,7 +17326,7 @@ $root.google = (function() {
 
                 /**
                  * Annotation sourceFile.
-                 * @member {string}sourceFile
+                 * @member {string} sourceFile
                  * @memberof google.protobuf.GeneratedCodeInfo.Annotation
                  * @instance
                  */
@@ -17252,7 +17334,7 @@ $root.google = (function() {
 
                 /**
                  * Annotation begin.
-                 * @member {number}begin
+                 * @member {number} begin
                  * @memberof google.protobuf.GeneratedCodeInfo.Annotation
                  * @instance
                  */
@@ -17260,7 +17342,7 @@ $root.google = (function() {
 
                 /**
                  * Annotation end.
-                 * @member {number}end
+                 * @member {number} end
                  * @memberof google.protobuf.GeneratedCodeInfo.Annotation
                  * @instance
                  */
@@ -17494,14 +17576,15 @@ $root.google = (function() {
              * Properties of a Timestamp.
              * @memberof google.protobuf
              * @interface ITimestamp
-             * @property {number|Long} [seconds] Timestamp seconds
-             * @property {number} [nanos] Timestamp nanos
+             * @property {number|Long|null} [seconds] Timestamp seconds
+             * @property {number|null} [nanos] Timestamp nanos
              */
 
             /**
              * Constructs a new Timestamp.
              * @memberof google.protobuf
              * @classdesc Represents a Timestamp.
+             * @implements ITimestamp
              * @constructor
              * @param {google.protobuf.ITimestamp=} [properties] Properties to set
              */
@@ -17514,7 +17597,7 @@ $root.google = (function() {
 
             /**
              * Timestamp seconds.
-             * @member {number|Long}seconds
+             * @member {number|Long} seconds
              * @memberof google.protobuf.Timestamp
              * @instance
              */
@@ -17522,7 +17605,7 @@ $root.google = (function() {
 
             /**
              * Timestamp nanos.
-             * @member {number}nanos
+             * @member {number} nanos
              * @memberof google.protobuf.Timestamp
              * @instance
              */

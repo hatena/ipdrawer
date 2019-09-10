@@ -23,7 +23,7 @@ const (
         "operationId": "DrawIPEstimatingNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDrawIPResponse"
             }
@@ -60,7 +60,7 @@ const (
         "operationId": "ListIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbListIPResponse"
             }
@@ -76,7 +76,7 @@ const (
         "operationId": "ListTemporaryReservedIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbListTemporaryReservedIPResponse"
             }
@@ -92,7 +92,7 @@ const (
         "operationId": "ActivateIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbCreateIPResponse"
             }
@@ -124,7 +124,7 @@ const (
         "operationId": "CreateIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbCreateIPResponse"
             }
@@ -156,7 +156,7 @@ const (
         "operationId": "DeactivateIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDeactivateIPResponse"
             }
@@ -180,7 +180,7 @@ const (
         "operationId": "GetNetworkIncludingIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
@@ -204,7 +204,7 @@ const (
         "operationId": "UpdateIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbUpdateIPResponse"
             }
@@ -236,7 +236,7 @@ const (
         "operationId": "GetEstimatedNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
@@ -252,7 +252,7 @@ const (
         "operationId": "ListNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbListNetworkResponse"
             }
@@ -268,7 +268,7 @@ const (
         "operationId": "UpdateNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbUpdateNetworkResponse"
             }
@@ -294,7 +294,7 @@ const (
         "operationId": "GetNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
@@ -331,7 +331,7 @@ const (
         "operationId": "CreateNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbCreateNetworkResponse"
             }
@@ -370,7 +370,7 @@ const (
         "operationId": "DeleteNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDeleteNetworkResponse"
             }
@@ -401,7 +401,7 @@ const (
         "operationId": "DrawIP",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDrawIPResponse"
             }
@@ -469,7 +469,7 @@ const (
         "operationId": "CreatePool",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbCreatePoolResponse"
             }
@@ -508,7 +508,7 @@ const (
         "operationId": "GetPoolsInNetwork",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetPoolsInNetworkResponse"
             }
@@ -536,10 +536,10 @@ const (
     },
     "/api/v0/network/{name}": {
       "get": {
-        "operationId": "GetNetwork",
+        "operationId": "GetNetwork2",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetNetworkResponse"
             }
@@ -573,10 +573,10 @@ const (
     },
     "/api/v0/network/{name}/drawip": {
       "get": {
-        "operationId": "DrawIP",
+        "operationId": "DrawIP2",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDrawIPResponse"
             }
@@ -644,7 +644,7 @@ const (
         "operationId": "ListPool",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbListPoolResponse"
             }
@@ -660,7 +660,7 @@ const (
         "operationId": "DeletePool",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDeletePoolResponse"
             }
@@ -687,10 +687,10 @@ const (
     },
     "/api/v0/pool/{range_start}/{range_end}/drawip": {
       "get": {
-        "operationId": "DrawIP",
+        "operationId": "DrawIP3",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbDrawIPResponse"
             }
@@ -758,7 +758,7 @@ const (
         "operationId": "GetIPInPool",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbGetIPInPoolResponse"
             }
@@ -788,7 +788,7 @@ const (
         "operationId": "UpdatePool",
         "responses": {
           "200": {
-            "description": "",
+            "description": "A successful response.",
             "schema": {
               "$ref": "#/definitions/serverpbUpdatePoolResponse"
             }

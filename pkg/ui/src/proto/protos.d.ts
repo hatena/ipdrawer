@@ -1,5 +1,4 @@
 import * as $protobuf from "protobufjs";
-
 /** Namespace serverpb. */
 export namespace serverpb {
 
@@ -8,7 +7,7 @@ export namespace serverpb {
     }
 
     /** Represents a ListNetworkRequest. */
-    class ListNetworkRequest {
+    class ListNetworkRequest implements IListNetworkRequest {
 
         /**
          * Constructs a new ListNetworkRequest.
@@ -91,11 +90,11 @@ export namespace serverpb {
     interface IListNetworkResponse {
 
         /** ListNetworkResponse networks */
-        networks?: model.INetwork[];
+        networks?: (model.INetwork[]|null);
     }
 
     /** Represents a ListNetworkResponse. */
-    class ListNetworkResponse {
+    class ListNetworkResponse implements IListNetworkResponse {
 
         /**
          * Constructs a new ListNetworkResponse.
@@ -181,29 +180,29 @@ export namespace serverpb {
     interface IDrawIPRequest {
 
         /** DrawIPRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** DrawIPRequest mask */
-        mask?: number;
+        mask?: (number|null);
 
         /** DrawIPRequest poolTag */
-        poolTag?: model.ITag;
+        poolTag?: (model.ITag|null);
 
         /** DrawIPRequest name */
-        name?: string;
+        name?: (string|null);
 
         /** DrawIPRequest temporaryReserved */
-        temporaryReserved?: boolean;
+        temporaryReserved?: (boolean|null);
 
         /** DrawIPRequest rangeStart */
-        rangeStart?: string;
+        rangeStart?: (string|null);
 
         /** DrawIPRequest rangeEnd */
-        rangeEnd?: string;
+        rangeEnd?: (string|null);
     }
 
     /** Represents a DrawIPRequest. */
-    class DrawIPRequest {
+    class DrawIPRequest implements IDrawIPRequest {
 
         /**
          * Constructs a new DrawIPRequest.
@@ -307,14 +306,14 @@ export namespace serverpb {
     interface IDrawIPResponse {
 
         /** DrawIPResponse ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** DrawIPResponse message */
-        message?: string;
+        message?: (string|null);
     }
 
     /** Represents a DrawIPResponse. */
-    class DrawIPResponse {
+    class DrawIPResponse implements IDrawIPResponse {
 
         /**
          * Constructs a new DrawIPResponse.
@@ -403,14 +402,14 @@ export namespace serverpb {
     interface IDrawIPEstimatingNetworkRequest {
 
         /** DrawIPEstimatingNetworkRequest poolTag */
-        poolTag?: model.ITag;
+        poolTag?: (model.ITag|null);
 
         /** DrawIPEstimatingNetworkRequest temporaryReserved */
-        temporaryReserved?: boolean;
+        temporaryReserved?: (boolean|null);
     }
 
     /** Represents a DrawIPEstimatingNetworkRequest. */
-    class DrawIPEstimatingNetworkRequest {
+    class DrawIPEstimatingNetworkRequest implements IDrawIPEstimatingNetworkRequest {
 
         /**
          * Constructs a new DrawIPEstimatingNetworkRequest.
@@ -499,11 +498,11 @@ export namespace serverpb {
     interface IGetNetworkIncludingIPRequest {
 
         /** GetNetworkIncludingIPRequest ip */
-        ip?: string;
+        ip?: (string|null);
     }
 
     /** Represents a GetNetworkIncludingIPRequest. */
-    class GetNetworkIncludingIPRequest {
+    class GetNetworkIncludingIPRequest implements IGetNetworkIncludingIPRequest {
 
         /**
          * Constructs a new GetNetworkIncludingIPRequest.
@@ -590,7 +589,7 @@ export namespace serverpb {
     }
 
     /** Represents a CreateIPResponse. */
-    class CreateIPResponse {
+    class CreateIPResponse implements ICreateIPResponse {
 
         /**
          * Constructs a new CreateIPResponse.
@@ -673,14 +672,14 @@ export namespace serverpb {
     interface IActivateIPRequest {
 
         /** ActivateIPRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** ActivateIPRequest tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
     }
 
     /** Represents an ActivateIPRequest. */
-    class ActivateIPRequest {
+    class ActivateIPRequest implements IActivateIPRequest {
 
         /**
          * Constructs a new ActivateIPRequest.
@@ -769,11 +768,11 @@ export namespace serverpb {
     interface IDeactivateIPRequest {
 
         /** DeactivateIPRequest ip */
-        ip?: string;
+        ip?: (string|null);
     }
 
     /** Represents a DeactivateIPRequest. */
-    class DeactivateIPRequest {
+    class DeactivateIPRequest implements IDeactivateIPRequest {
 
         /**
          * Constructs a new DeactivateIPRequest.
@@ -860,7 +859,7 @@ export namespace serverpb {
     }
 
     /** Represents a DeactivateIPResponse. */
-    class DeactivateIPResponse {
+    class DeactivateIPResponse implements IDeactivateIPResponse {
 
         /**
          * Constructs a new DeactivateIPResponse.
@@ -944,7 +943,7 @@ export namespace serverpb {
     }
 
     /** Represents an UpdateIPResponse. */
-    class UpdateIPResponse {
+    class UpdateIPResponse implements IUpdateIPResponse {
 
         /**
          * Constructs a new UpdateIPResponse.
@@ -1027,17 +1026,17 @@ export namespace serverpb {
     interface IGetNetworkRequest {
 
         /** GetNetworkRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** GetNetworkRequest mask */
-        mask?: number;
+        mask?: (number|null);
 
         /** GetNetworkRequest name */
-        name?: string;
+        name?: (string|null);
     }
 
     /** Represents a GetNetworkRequest. */
-    class GetNetworkRequest {
+    class GetNetworkRequest implements IGetNetworkRequest {
 
         /**
          * Constructs a new GetNetworkRequest.
@@ -1130,7 +1129,7 @@ export namespace serverpb {
     }
 
     /** Represents a GetEstimatedNetworkRequest. */
-    class GetEstimatedNetworkRequest {
+    class GetEstimatedNetworkRequest implements IGetEstimatedNetworkRequest {
 
         /**
          * Constructs a new GetEstimatedNetworkRequest.
@@ -1213,23 +1212,23 @@ export namespace serverpb {
     interface IGetNetworkResponse {
 
         /** GetNetworkResponse network */
-        network?: string;
+        network?: (string|null);
 
         /** GetNetworkResponse defaultGateways */
-        defaultGateways?: string[];
+        defaultGateways?: (string[]|null);
 
         /** GetNetworkResponse broadcast */
-        broadcast?: string;
+        broadcast?: (string|null);
 
         /** GetNetworkResponse netmask */
-        netmask?: string;
+        netmask?: (string|null);
 
         /** GetNetworkResponse tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
     }
 
     /** Represents a GetNetworkResponse. */
-    class GetNetworkResponse {
+    class GetNetworkResponse implements IGetNetworkResponse {
 
         /**
          * Constructs a new GetNetworkResponse.
@@ -1327,23 +1326,23 @@ export namespace serverpb {
     interface ICreateNetworkRequest {
 
         /** CreateNetworkRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** CreateNetworkRequest mask */
-        mask?: number;
+        mask?: (number|null);
 
         /** CreateNetworkRequest defaultGateways */
-        defaultGateways?: string[];
+        defaultGateways?: (string[]|null);
 
         /** CreateNetworkRequest tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
 
         /** CreateNetworkRequest status */
-        status?: model.Network.Status;
+        status?: (model.Network.Status|null);
     }
 
     /** Represents a CreateNetworkRequest. */
-    class CreateNetworkRequest {
+    class CreateNetworkRequest implements ICreateNetworkRequest {
 
         /**
          * Constructs a new CreateNetworkRequest.
@@ -1442,7 +1441,7 @@ export namespace serverpb {
     }
 
     /** Represents a CreateNetworkResponse. */
-    class CreateNetworkResponse {
+    class CreateNetworkResponse implements ICreateNetworkResponse {
 
         /**
          * Constructs a new CreateNetworkResponse.
@@ -1525,14 +1524,14 @@ export namespace serverpb {
     interface IGetPoolsInNetworkRequest {
 
         /** GetPoolsInNetworkRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** GetPoolsInNetworkRequest mask */
-        mask?: number;
+        mask?: (number|null);
     }
 
     /** Represents a GetPoolsInNetworkRequest. */
-    class GetPoolsInNetworkRequest {
+    class GetPoolsInNetworkRequest implements IGetPoolsInNetworkRequest {
 
         /**
          * Constructs a new GetPoolsInNetworkRequest.
@@ -1621,11 +1620,11 @@ export namespace serverpb {
     interface IGetPoolsInNetworkResponse {
 
         /** GetPoolsInNetworkResponse pools */
-        pools?: model.IPool[];
+        pools?: (model.IPool[]|null);
     }
 
     /** Represents a GetPoolsInNetworkResponse. */
-    class GetPoolsInNetworkResponse {
+    class GetPoolsInNetworkResponse implements IGetPoolsInNetworkResponse {
 
         /**
          * Constructs a new GetPoolsInNetworkResponse.
@@ -1711,17 +1710,17 @@ export namespace serverpb {
     interface ICreatePoolRequest {
 
         /** CreatePoolRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** CreatePoolRequest mask */
-        mask?: number;
+        mask?: (number|null);
 
         /** CreatePoolRequest pool */
-        pool?: model.IPool;
+        pool?: (model.IPool|null);
     }
 
     /** Represents a CreatePoolRequest. */
-    class CreatePoolRequest {
+    class CreatePoolRequest implements ICreatePoolRequest {
 
         /**
          * Constructs a new CreatePoolRequest.
@@ -1814,7 +1813,7 @@ export namespace serverpb {
     }
 
     /** Represents a CreatePoolResponse. */
-    class CreatePoolResponse {
+    class CreatePoolResponse implements ICreatePoolResponse {
 
         /**
          * Constructs a new CreatePoolResponse.
@@ -1897,14 +1896,14 @@ export namespace serverpb {
     interface IDeleteNetworkRequest {
 
         /** DeleteNetworkRequest ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** DeleteNetworkRequest mask */
-        mask?: number;
+        mask?: (number|null);
     }
 
     /** Represents a DeleteNetworkRequest. */
-    class DeleteNetworkRequest {
+    class DeleteNetworkRequest implements IDeleteNetworkRequest {
 
         /**
          * Constructs a new DeleteNetworkRequest.
@@ -1994,7 +1993,7 @@ export namespace serverpb {
     }
 
     /** Represents a DeleteNetworkResponse. */
-    class DeleteNetworkResponse {
+    class DeleteNetworkResponse implements IDeleteNetworkResponse {
 
         /**
          * Constructs a new DeleteNetworkResponse.
@@ -2078,7 +2077,7 @@ export namespace serverpb {
     }
 
     /** Represents an UpdateNetworkResponse. */
-    class UpdateNetworkResponse {
+    class UpdateNetworkResponse implements IUpdateNetworkResponse {
 
         /**
          * Constructs a new UpdateNetworkResponse.
@@ -2162,7 +2161,7 @@ export namespace serverpb {
     }
 
     /** Represents a ListIPRequest. */
-    class ListIPRequest {
+    class ListIPRequest implements IListIPRequest {
 
         /**
          * Constructs a new ListIPRequest.
@@ -2245,11 +2244,11 @@ export namespace serverpb {
     interface IListIPResponse {
 
         /** ListIPResponse ips */
-        ips?: model.IIPAddr[];
+        ips?: (model.IIPAddr[]|null);
     }
 
     /** Represents a ListIPResponse. */
-    class ListIPResponse {
+    class ListIPResponse implements IListIPResponse {
 
         /**
          * Constructs a new ListIPResponse.
@@ -2336,7 +2335,7 @@ export namespace serverpb {
     }
 
     /** Represents a ListTemporaryReservedIPRequest. */
-    class ListTemporaryReservedIPRequest {
+    class ListTemporaryReservedIPRequest implements IListTemporaryReservedIPRequest {
 
         /**
          * Constructs a new ListTemporaryReservedIPRequest.
@@ -2419,11 +2418,11 @@ export namespace serverpb {
     interface IListTemporaryReservedIPResponse {
 
         /** ListTemporaryReservedIPResponse ips */
-        ips?: model.IIPAddr[];
+        ips?: (model.IIPAddr[]|null);
     }
 
     /** Represents a ListTemporaryReservedIPResponse. */
-    class ListTemporaryReservedIPResponse {
+    class ListTemporaryReservedIPResponse implements IListTemporaryReservedIPResponse {
 
         /**
          * Constructs a new ListTemporaryReservedIPResponse.
@@ -2510,7 +2509,7 @@ export namespace serverpb {
     }
 
     /** Represents a ListPoolRequest. */
-    class ListPoolRequest {
+    class ListPoolRequest implements IListPoolRequest {
 
         /**
          * Constructs a new ListPoolRequest.
@@ -2593,11 +2592,11 @@ export namespace serverpb {
     interface IListPoolResponse {
 
         /** ListPoolResponse pools */
-        pools?: model.IPool[];
+        pools?: (model.IPool[]|null);
     }
 
     /** Represents a ListPoolResponse. */
-    class ListPoolResponse {
+    class ListPoolResponse implements IListPoolResponse {
 
         /**
          * Constructs a new ListPoolResponse.
@@ -2683,14 +2682,14 @@ export namespace serverpb {
     interface IGetIPInPoolRequest {
 
         /** GetIPInPoolRequest rangeStart */
-        rangeStart?: string;
+        rangeStart?: (string|null);
 
         /** GetIPInPoolRequest rangeEnd */
-        rangeEnd?: string;
+        rangeEnd?: (string|null);
     }
 
     /** Represents a GetIPInPoolRequest. */
-    class GetIPInPoolRequest {
+    class GetIPInPoolRequest implements IGetIPInPoolRequest {
 
         /**
          * Constructs a new GetIPInPoolRequest.
@@ -2779,14 +2778,14 @@ export namespace serverpb {
     interface IGetIPInPoolResponse {
 
         /** GetIPInPoolResponse pool */
-        pool?: model.IPool;
+        pool?: (model.IPool|null);
 
         /** GetIPInPoolResponse ips */
-        ips?: model.IIPAddr[];
+        ips?: (model.IIPAddr[]|null);
     }
 
     /** Represents a GetIPInPoolResponse. */
-    class GetIPInPoolResponse {
+    class GetIPInPoolResponse implements IGetIPInPoolResponse {
 
         /**
          * Constructs a new GetIPInPoolResponse.
@@ -2876,7 +2875,7 @@ export namespace serverpb {
     }
 
     /** Represents an UpdatePoolResponse. */
-    class UpdatePoolResponse {
+    class UpdatePoolResponse implements IUpdatePoolResponse {
 
         /**
          * Constructs a new UpdatePoolResponse.
@@ -2959,14 +2958,14 @@ export namespace serverpb {
     interface IDeletePoolRequest {
 
         /** DeletePoolRequest rangeStart */
-        rangeStart?: string;
+        rangeStart?: (string|null);
 
         /** DeletePoolRequest rangeEnd */
-        rangeEnd?: string;
+        rangeEnd?: (string|null);
     }
 
     /** Represents a DeletePoolRequest. */
-    class DeletePoolRequest {
+    class DeletePoolRequest implements IDeletePoolRequest {
 
         /**
          * Constructs a new DeletePoolRequest.
@@ -3056,7 +3055,7 @@ export namespace serverpb {
     }
 
     /** Represents a DeletePoolResponse. */
-    class DeletePoolResponse {
+    class DeletePoolResponse implements IDeletePoolResponse {
 
         /**
          * Constructs a new DeletePoolResponse.
@@ -3656,14 +3655,14 @@ export namespace model {
     interface ITag {
 
         /** Tag key */
-        key?: string;
+        key?: (string|null);
 
         /** Tag value */
-        value?: string;
+        value?: (string|null);
     }
 
     /** Represents a Tag. */
-    class Tag {
+    class Tag implements ITag {
 
         /**
          * Constructs a new Tag.
@@ -3752,26 +3751,26 @@ export namespace model {
     interface IPool {
 
         /** Pool start */
-        start?: string;
+        start?: (string|null);
 
         /** Pool end */
-        end?: string;
+        end?: (string|null);
 
         /** Pool status */
-        status?: model.Pool.Status;
+        status?: (model.Pool.Status|null);
 
         /** Pool tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
 
         /** Pool createdAt */
-        createdAt?: google.protobuf.ITimestamp;
+        createdAt?: (google.protobuf.ITimestamp|null);
 
         /** Pool lastModifiedAt */
-        lastModifiedAt?: google.protobuf.ITimestamp;
+        lastModifiedAt?: (google.protobuf.ITimestamp|null);
     }
 
     /** Represents a Pool. */
-    class Pool {
+    class Pool implements IPool {
 
         /**
          * Constructs a new Pool.
@@ -3882,23 +3881,23 @@ export namespace model {
     interface IIPAddr {
 
         /** IPAddr ip */
-        ip?: string;
+        ip?: (string|null);
 
         /** IPAddr status */
-        status?: model.IPAddr.Status;
+        status?: (model.IPAddr.Status|null);
 
         /** IPAddr tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
 
         /** IPAddr createdAt */
-        createdAt?: google.protobuf.ITimestamp;
+        createdAt?: (google.protobuf.ITimestamp|null);
 
         /** IPAddr lastModifiedAt */
-        lastModifiedAt?: google.protobuf.ITimestamp;
+        lastModifiedAt?: (google.protobuf.ITimestamp|null);
     }
 
     /** Represents a IPAddr. */
-    class IPAddr {
+    class IPAddr implements IIPAddr {
 
         /**
          * Constructs a new IPAddr.
@@ -4007,32 +4006,32 @@ export namespace model {
     interface INetwork {
 
         /** Network prefix */
-        prefix?: string;
+        prefix?: (string|null);
 
         /** Network gateways */
-        gateways?: string[];
+        gateways?: (string[]|null);
 
         /** Network broadcast */
-        broadcast?: string;
+        broadcast?: (string|null);
 
         /** Network netmask */
-        netmask?: string;
+        netmask?: (string|null);
 
         /** Network status */
-        status?: model.Network.Status;
+        status?: (model.Network.Status|null);
 
         /** Network tags */
-        tags?: model.ITag[];
+        tags?: (model.ITag[]|null);
 
         /** Network createdAt */
-        createdAt?: google.protobuf.ITimestamp;
+        createdAt?: (google.protobuf.ITimestamp|null);
 
         /** Network lastModifiedAt */
-        lastModifiedAt?: google.protobuf.ITimestamp;
+        lastModifiedAt?: (google.protobuf.ITimestamp|null);
     }
 
     /** Represents a Network. */
-    class Network {
+    class Network implements INetwork {
 
         /**
          * Constructs a new Network.
@@ -4156,11 +4155,11 @@ export namespace google {
         interface IHttp {
 
             /** Http rules */
-            rules?: google.api.IHttpRule[];
+            rules?: (google.api.IHttpRule[]|null);
         }
 
         /** Represents a Http. */
-        class Http {
+        class Http implements IHttp {
 
             /**
              * Constructs a new Http.
@@ -4246,35 +4245,35 @@ export namespace google {
         interface IHttpRule {
 
             /** HttpRule get */
-            get?: string;
+            get?: (string|null);
 
             /** HttpRule put */
-            put?: string;
+            put?: (string|null);
 
             /** HttpRule post */
-            post?: string;
+            post?: (string|null);
 
             /** HttpRule delete */
-            "delete"?: string;
+            "delete"?: (string|null);
 
             /** HttpRule patch */
-            patch?: string;
+            patch?: (string|null);
 
             /** HttpRule custom */
-            custom?: google.api.ICustomHttpPattern;
+            custom?: (google.api.ICustomHttpPattern|null);
 
             /** HttpRule selector */
-            selector?: string;
+            selector?: (string|null);
 
             /** HttpRule body */
-            body?: string;
+            body?: (string|null);
 
             /** HttpRule additionalBindings */
-            additionalBindings?: google.api.IHttpRule[];
+            additionalBindings?: (google.api.IHttpRule[]|null);
         }
 
         /** Represents a HttpRule. */
-        class HttpRule {
+        class HttpRule implements IHttpRule {
 
             /**
              * Constructs a new HttpRule.
@@ -4292,7 +4291,7 @@ export namespace google {
             public post: string;
 
             /** HttpRule delete. */
-            public delete_: string;
+            public delete: string;
 
             /** HttpRule patch. */
             public patch: string;
@@ -4310,7 +4309,7 @@ export namespace google {
             public additionalBindings: google.api.IHttpRule[];
 
             /** HttpRule pattern. */
-            public pattern?: string;
+            public pattern?: ("get"|"put"|"post"|"delete"|"patch"|"custom");
 
             /**
              * Creates a new HttpRule instance using the specified properties.
@@ -4387,14 +4386,14 @@ export namespace google {
         interface ICustomHttpPattern {
 
             /** CustomHttpPattern kind */
-            kind?: string;
+            kind?: (string|null);
 
             /** CustomHttpPattern path */
-            path?: string;
+            path?: (string|null);
         }
 
         /** Represents a CustomHttpPattern. */
-        class CustomHttpPattern {
+        class CustomHttpPattern implements ICustomHttpPattern {
 
             /**
              * Constructs a new CustomHttpPattern.
@@ -4487,11 +4486,11 @@ export namespace google {
         interface IFileDescriptorSet {
 
             /** FileDescriptorSet file */
-            file?: google.protobuf.IFileDescriptorProto[];
+            file?: (google.protobuf.IFileDescriptorProto[]|null);
         }
 
         /** Represents a FileDescriptorSet. */
-        class FileDescriptorSet {
+        class FileDescriptorSet implements IFileDescriptorSet {
 
             /**
              * Constructs a new FileDescriptorSet.
@@ -4577,44 +4576,44 @@ export namespace google {
         interface IFileDescriptorProto {
 
             /** FileDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** FileDescriptorProto package */
-            "package"?: string;
+            "package"?: (string|null);
 
             /** FileDescriptorProto dependency */
-            dependency?: string[];
+            dependency?: (string[]|null);
 
             /** FileDescriptorProto publicDependency */
-            publicDependency?: number[];
+            publicDependency?: (number[]|null);
 
             /** FileDescriptorProto weakDependency */
-            weakDependency?: number[];
+            weakDependency?: (number[]|null);
 
             /** FileDescriptorProto messageType */
-            messageType?: google.protobuf.IDescriptorProto[];
+            messageType?: (google.protobuf.IDescriptorProto[]|null);
 
             /** FileDescriptorProto enumType */
-            enumType?: google.protobuf.IEnumDescriptorProto[];
+            enumType?: (google.protobuf.IEnumDescriptorProto[]|null);
 
             /** FileDescriptorProto service */
-            service?: google.protobuf.IServiceDescriptorProto[];
+            service?: (google.protobuf.IServiceDescriptorProto[]|null);
 
             /** FileDescriptorProto extension */
-            extension?: google.protobuf.IFieldDescriptorProto[];
+            extension?: (google.protobuf.IFieldDescriptorProto[]|null);
 
             /** FileDescriptorProto options */
-            options?: google.protobuf.IFileOptions;
+            options?: (google.protobuf.IFileOptions|null);
 
             /** FileDescriptorProto sourceCodeInfo */
-            sourceCodeInfo?: google.protobuf.ISourceCodeInfo;
+            sourceCodeInfo?: (google.protobuf.ISourceCodeInfo|null);
 
             /** FileDescriptorProto syntax */
-            syntax?: string;
+            syntax?: (string|null);
         }
 
         /** Represents a FileDescriptorProto. */
-        class FileDescriptorProto {
+        class FileDescriptorProto implements IFileDescriptorProto {
 
             /**
              * Constructs a new FileDescriptorProto.
@@ -4626,7 +4625,7 @@ export namespace google {
             public name: string;
 
             /** FileDescriptorProto package. */
-            public package_: string;
+            public package: string;
 
             /** FileDescriptorProto dependency. */
             public dependency: string[];
@@ -4733,38 +4732,38 @@ export namespace google {
         interface IDescriptorProto {
 
             /** DescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** DescriptorProto field */
-            field?: google.protobuf.IFieldDescriptorProto[];
+            field?: (google.protobuf.IFieldDescriptorProto[]|null);
 
             /** DescriptorProto extension */
-            extension?: google.protobuf.IFieldDescriptorProto[];
+            extension?: (google.protobuf.IFieldDescriptorProto[]|null);
 
             /** DescriptorProto nestedType */
-            nestedType?: google.protobuf.IDescriptorProto[];
+            nestedType?: (google.protobuf.IDescriptorProto[]|null);
 
             /** DescriptorProto enumType */
-            enumType?: google.protobuf.IEnumDescriptorProto[];
+            enumType?: (google.protobuf.IEnumDescriptorProto[]|null);
 
             /** DescriptorProto extensionRange */
-            extensionRange?: google.protobuf.DescriptorProto.IExtensionRange[];
+            extensionRange?: (google.protobuf.DescriptorProto.IExtensionRange[]|null);
 
             /** DescriptorProto oneofDecl */
-            oneofDecl?: google.protobuf.IOneofDescriptorProto[];
+            oneofDecl?: (google.protobuf.IOneofDescriptorProto[]|null);
 
             /** DescriptorProto options */
-            options?: google.protobuf.IMessageOptions;
+            options?: (google.protobuf.IMessageOptions|null);
 
             /** DescriptorProto reservedRange */
-            reservedRange?: google.protobuf.DescriptorProto.IReservedRange[];
+            reservedRange?: (google.protobuf.DescriptorProto.IReservedRange[]|null);
 
             /** DescriptorProto reservedName */
-            reservedName?: string[];
+            reservedName?: (string[]|null);
         }
 
         /** Represents a DescriptorProto. */
-        class DescriptorProto {
+        class DescriptorProto implements IDescriptorProto {
 
             /**
              * Constructs a new DescriptorProto.
@@ -4879,14 +4878,14 @@ export namespace google {
             interface IExtensionRange {
 
                 /** ExtensionRange start */
-                start?: number;
+                start?: (number|null);
 
                 /** ExtensionRange end */
-                end?: number;
+                end?: (number|null);
             }
 
             /** Represents an ExtensionRange. */
-            class ExtensionRange {
+            class ExtensionRange implements IExtensionRange {
 
                 /**
                  * Constructs a new ExtensionRange.
@@ -4975,14 +4974,14 @@ export namespace google {
             interface IReservedRange {
 
                 /** ReservedRange start */
-                start?: number;
+                start?: (number|null);
 
                 /** ReservedRange end */
-                end?: number;
+                end?: (number|null);
             }
 
             /** Represents a ReservedRange. */
-            class ReservedRange {
+            class ReservedRange implements IReservedRange {
 
                 /**
                  * Constructs a new ReservedRange.
@@ -5072,38 +5071,38 @@ export namespace google {
         interface IFieldDescriptorProto {
 
             /** FieldDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** FieldDescriptorProto number */
-            number?: number;
+            number?: (number|null);
 
             /** FieldDescriptorProto label */
-            label?: google.protobuf.FieldDescriptorProto.Label;
+            label?: (google.protobuf.FieldDescriptorProto.Label|null);
 
             /** FieldDescriptorProto type */
-            type?: google.protobuf.FieldDescriptorProto.Type;
+            type?: (google.protobuf.FieldDescriptorProto.Type|null);
 
             /** FieldDescriptorProto typeName */
-            typeName?: string;
+            typeName?: (string|null);
 
             /** FieldDescriptorProto extendee */
-            extendee?: string;
+            extendee?: (string|null);
 
             /** FieldDescriptorProto defaultValue */
-            defaultValue?: string;
+            defaultValue?: (string|null);
 
             /** FieldDescriptorProto oneofIndex */
-            oneofIndex?: number;
+            oneofIndex?: (number|null);
 
             /** FieldDescriptorProto jsonName */
-            jsonName?: string;
+            jsonName?: (string|null);
 
             /** FieldDescriptorProto options */
-            options?: google.protobuf.IFieldOptions;
+            options?: (google.protobuf.IFieldOptions|null);
         }
 
         /** Represents a FieldDescriptorProto. */
-        class FieldDescriptorProto {
+        class FieldDescriptorProto implements IFieldDescriptorProto {
 
             /**
              * Constructs a new FieldDescriptorProto.
@@ -5248,14 +5247,14 @@ export namespace google {
         interface IOneofDescriptorProto {
 
             /** OneofDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** OneofDescriptorProto options */
-            options?: google.protobuf.IOneofOptions;
+            options?: (google.protobuf.IOneofOptions|null);
         }
 
         /** Represents an OneofDescriptorProto. */
-        class OneofDescriptorProto {
+        class OneofDescriptorProto implements IOneofDescriptorProto {
 
             /**
              * Constructs a new OneofDescriptorProto.
@@ -5344,17 +5343,17 @@ export namespace google {
         interface IEnumDescriptorProto {
 
             /** EnumDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** EnumDescriptorProto value */
-            value?: google.protobuf.IEnumValueDescriptorProto[];
+            value?: (google.protobuf.IEnumValueDescriptorProto[]|null);
 
             /** EnumDescriptorProto options */
-            options?: google.protobuf.IEnumOptions;
+            options?: (google.protobuf.IEnumOptions|null);
         }
 
         /** Represents an EnumDescriptorProto. */
-        class EnumDescriptorProto {
+        class EnumDescriptorProto implements IEnumDescriptorProto {
 
             /**
              * Constructs a new EnumDescriptorProto.
@@ -5446,17 +5445,17 @@ export namespace google {
         interface IEnumValueDescriptorProto {
 
             /** EnumValueDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** EnumValueDescriptorProto number */
-            number?: number;
+            number?: (number|null);
 
             /** EnumValueDescriptorProto options */
-            options?: google.protobuf.IEnumValueOptions;
+            options?: (google.protobuf.IEnumValueOptions|null);
         }
 
         /** Represents an EnumValueDescriptorProto. */
-        class EnumValueDescriptorProto {
+        class EnumValueDescriptorProto implements IEnumValueDescriptorProto {
 
             /**
              * Constructs a new EnumValueDescriptorProto.
@@ -5548,17 +5547,17 @@ export namespace google {
         interface IServiceDescriptorProto {
 
             /** ServiceDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** ServiceDescriptorProto method */
-            method?: google.protobuf.IMethodDescriptorProto[];
+            method?: (google.protobuf.IMethodDescriptorProto[]|null);
 
             /** ServiceDescriptorProto options */
-            options?: google.protobuf.IServiceOptions;
+            options?: (google.protobuf.IServiceOptions|null);
         }
 
         /** Represents a ServiceDescriptorProto. */
-        class ServiceDescriptorProto {
+        class ServiceDescriptorProto implements IServiceDescriptorProto {
 
             /**
              * Constructs a new ServiceDescriptorProto.
@@ -5650,26 +5649,26 @@ export namespace google {
         interface IMethodDescriptorProto {
 
             /** MethodDescriptorProto name */
-            name?: string;
+            name?: (string|null);
 
             /** MethodDescriptorProto inputType */
-            inputType?: string;
+            inputType?: (string|null);
 
             /** MethodDescriptorProto outputType */
-            outputType?: string;
+            outputType?: (string|null);
 
             /** MethodDescriptorProto options */
-            options?: google.protobuf.IMethodOptions;
+            options?: (google.protobuf.IMethodOptions|null);
 
             /** MethodDescriptorProto clientStreaming */
-            clientStreaming?: boolean;
+            clientStreaming?: (boolean|null);
 
             /** MethodDescriptorProto serverStreaming */
-            serverStreaming?: boolean;
+            serverStreaming?: (boolean|null);
         }
 
         /** Represents a MethodDescriptorProto. */
-        class MethodDescriptorProto {
+        class MethodDescriptorProto implements IMethodDescriptorProto {
 
             /**
              * Constructs a new MethodDescriptorProto.
@@ -5770,53 +5769,53 @@ export namespace google {
         interface IFileOptions {
 
             /** FileOptions javaPackage */
-            javaPackage?: string;
+            javaPackage?: (string|null);
 
             /** FileOptions javaOuterClassname */
-            javaOuterClassname?: string;
+            javaOuterClassname?: (string|null);
 
             /** FileOptions javaMultipleFiles */
-            javaMultipleFiles?: boolean;
+            javaMultipleFiles?: (boolean|null);
 
             /** FileOptions javaGenerateEqualsAndHash */
-            javaGenerateEqualsAndHash?: boolean;
+            javaGenerateEqualsAndHash?: (boolean|null);
 
             /** FileOptions javaStringCheckUtf8 */
-            javaStringCheckUtf8?: boolean;
+            javaStringCheckUtf8?: (boolean|null);
 
             /** FileOptions optimizeFor */
-            optimizeFor?: google.protobuf.FileOptions.OptimizeMode;
+            optimizeFor?: (google.protobuf.FileOptions.OptimizeMode|null);
 
             /** FileOptions goPackage */
-            goPackage?: string;
+            goPackage?: (string|null);
 
             /** FileOptions ccGenericServices */
-            ccGenericServices?: boolean;
+            ccGenericServices?: (boolean|null);
 
             /** FileOptions javaGenericServices */
-            javaGenericServices?: boolean;
+            javaGenericServices?: (boolean|null);
 
             /** FileOptions pyGenericServices */
-            pyGenericServices?: boolean;
+            pyGenericServices?: (boolean|null);
 
             /** FileOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** FileOptions ccEnableArenas */
-            ccEnableArenas?: boolean;
+            ccEnableArenas?: (boolean|null);
 
             /** FileOptions objcClassPrefix */
-            objcClassPrefix?: string;
+            objcClassPrefix?: (string|null);
 
             /** FileOptions csharpNamespace */
-            csharpNamespace?: string;
+            csharpNamespace?: (string|null);
 
             /** FileOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents a FileOptions. */
-        class FileOptions {
+        class FileOptions implements IFileOptions {
 
             /**
              * Constructs a new FileOptions.
@@ -5954,23 +5953,23 @@ export namespace google {
         interface IMessageOptions {
 
             /** MessageOptions messageSetWireFormat */
-            messageSetWireFormat?: boolean;
+            messageSetWireFormat?: (boolean|null);
 
             /** MessageOptions noStandardDescriptorAccessor */
-            noStandardDescriptorAccessor?: boolean;
+            noStandardDescriptorAccessor?: (boolean|null);
 
             /** MessageOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** MessageOptions mapEntry */
-            mapEntry?: boolean;
+            mapEntry?: (boolean|null);
 
             /** MessageOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents a MessageOptions. */
-        class MessageOptions {
+        class MessageOptions implements IMessageOptions {
 
             /**
              * Constructs a new MessageOptions.
@@ -6068,29 +6067,29 @@ export namespace google {
         interface IFieldOptions {
 
             /** FieldOptions ctype */
-            ctype?: google.protobuf.FieldOptions.CType;
+            ctype?: (google.protobuf.FieldOptions.CType|null);
 
             /** FieldOptions packed */
-            packed?: boolean;
+            packed?: (boolean|null);
 
             /** FieldOptions jstype */
-            jstype?: google.protobuf.FieldOptions.JSType;
+            jstype?: (google.protobuf.FieldOptions.JSType|null);
 
             /** FieldOptions lazy */
-            lazy?: boolean;
+            lazy?: (boolean|null);
 
             /** FieldOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** FieldOptions weak */
-            weak?: boolean;
+            weak?: (boolean|null);
 
             /** FieldOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents a FieldOptions. */
-        class FieldOptions {
+        class FieldOptions implements IFieldOptions {
 
             /**
              * Constructs a new FieldOptions.
@@ -6211,11 +6210,11 @@ export namespace google {
         interface IOneofOptions {
 
             /** OneofOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents an OneofOptions. */
-        class OneofOptions {
+        class OneofOptions implements IOneofOptions {
 
             /**
              * Constructs a new OneofOptions.
@@ -6301,17 +6300,17 @@ export namespace google {
         interface IEnumOptions {
 
             /** EnumOptions allowAlias */
-            allowAlias?: boolean;
+            allowAlias?: (boolean|null);
 
             /** EnumOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** EnumOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents an EnumOptions. */
-        class EnumOptions {
+        class EnumOptions implements IEnumOptions {
 
             /**
              * Constructs a new EnumOptions.
@@ -6403,14 +6402,14 @@ export namespace google {
         interface IEnumValueOptions {
 
             /** EnumValueOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** EnumValueOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents an EnumValueOptions. */
-        class EnumValueOptions {
+        class EnumValueOptions implements IEnumValueOptions {
 
             /**
              * Constructs a new EnumValueOptions.
@@ -6499,14 +6498,14 @@ export namespace google {
         interface IServiceOptions {
 
             /** ServiceOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** ServiceOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
         }
 
         /** Represents a ServiceOptions. */
-        class ServiceOptions {
+        class ServiceOptions implements IServiceOptions {
 
             /**
              * Constructs a new ServiceOptions.
@@ -6595,17 +6594,17 @@ export namespace google {
         interface IMethodOptions {
 
             /** MethodOptions deprecated */
-            deprecated?: boolean;
+            deprecated?: (boolean|null);
 
             /** MethodOptions uninterpretedOption */
-            uninterpretedOption?: google.protobuf.IUninterpretedOption[];
+            uninterpretedOption?: (google.protobuf.IUninterpretedOption[]|null);
 
             /** MethodOptions .google.api.http */
-            ".google.api.http"?: google.api.IHttpRule;
+            ".google.api.http"?: (google.api.IHttpRule|null);
         }
 
         /** Represents a MethodOptions. */
-        class MethodOptions {
+        class MethodOptions implements IMethodOptions {
 
             /**
              * Constructs a new MethodOptions.
@@ -6694,29 +6693,29 @@ export namespace google {
         interface IUninterpretedOption {
 
             /** UninterpretedOption name */
-            name?: google.protobuf.UninterpretedOption.INamePart[];
+            name?: (google.protobuf.UninterpretedOption.INamePart[]|null);
 
             /** UninterpretedOption identifierValue */
-            identifierValue?: string;
+            identifierValue?: (string|null);
 
             /** UninterpretedOption positiveIntValue */
-            positiveIntValue?: (number|Long);
+            positiveIntValue?: (number|Long|null);
 
             /** UninterpretedOption negativeIntValue */
-            negativeIntValue?: (number|Long);
+            negativeIntValue?: (number|Long|null);
 
             /** UninterpretedOption doubleValue */
-            doubleValue?: number;
+            doubleValue?: (number|null);
 
             /** UninterpretedOption stringValue */
-            stringValue?: Uint8Array;
+            stringValue?: (Uint8Array|null);
 
             /** UninterpretedOption aggregateValue */
-            aggregateValue?: string;
+            aggregateValue?: (string|null);
         }
 
         /** Represents an UninterpretedOption. */
-        class UninterpretedOption {
+        class UninterpretedOption implements IUninterpretedOption {
 
             /**
              * Constructs a new UninterpretedOption.
@@ -6829,7 +6828,7 @@ export namespace google {
             }
 
             /** Represents a NamePart. */
-            class NamePart {
+            class NamePart implements INamePart {
 
                 /**
                  * Constructs a new NamePart.
@@ -6919,11 +6918,11 @@ export namespace google {
         interface ISourceCodeInfo {
 
             /** SourceCodeInfo location */
-            location?: google.protobuf.SourceCodeInfo.ILocation[];
+            location?: (google.protobuf.SourceCodeInfo.ILocation[]|null);
         }
 
         /** Represents a SourceCodeInfo. */
-        class SourceCodeInfo {
+        class SourceCodeInfo implements ISourceCodeInfo {
 
             /**
              * Constructs a new SourceCodeInfo.
@@ -7011,23 +7010,23 @@ export namespace google {
             interface ILocation {
 
                 /** Location path */
-                path?: number[];
+                path?: (number[]|null);
 
                 /** Location span */
-                span?: number[];
+                span?: (number[]|null);
 
                 /** Location leadingComments */
-                leadingComments?: string;
+                leadingComments?: (string|null);
 
                 /** Location trailingComments */
-                trailingComments?: string;
+                trailingComments?: (string|null);
 
                 /** Location leadingDetachedComments */
-                leadingDetachedComments?: string[];
+                leadingDetachedComments?: (string[]|null);
             }
 
             /** Represents a Location. */
-            class Location {
+            class Location implements ILocation {
 
                 /**
                  * Constructs a new Location.
@@ -7126,11 +7125,11 @@ export namespace google {
         interface IGeneratedCodeInfo {
 
             /** GeneratedCodeInfo annotation */
-            annotation?: google.protobuf.GeneratedCodeInfo.IAnnotation[];
+            annotation?: (google.protobuf.GeneratedCodeInfo.IAnnotation[]|null);
         }
 
         /** Represents a GeneratedCodeInfo. */
-        class GeneratedCodeInfo {
+        class GeneratedCodeInfo implements IGeneratedCodeInfo {
 
             /**
              * Constructs a new GeneratedCodeInfo.
@@ -7218,20 +7217,20 @@ export namespace google {
             interface IAnnotation {
 
                 /** Annotation path */
-                path?: number[];
+                path?: (number[]|null);
 
                 /** Annotation sourceFile */
-                sourceFile?: string;
+                sourceFile?: (string|null);
 
                 /** Annotation begin */
-                begin?: number;
+                begin?: (number|null);
 
                 /** Annotation end */
-                end?: number;
+                end?: (number|null);
             }
 
             /** Represents an Annotation. */
-            class Annotation {
+            class Annotation implements IAnnotation {
 
                 /**
                  * Constructs a new Annotation.
@@ -7327,14 +7326,14 @@ export namespace google {
         interface ITimestamp {
 
             /** Timestamp seconds */
-            seconds?: (number|Long);
+            seconds?: (number|Long|null);
 
             /** Timestamp nanos */
-            nanos?: number;
+            nanos?: (number|null);
         }
 
         /** Represents a Timestamp. */
-        class Timestamp {
+        class Timestamp implements ITimestamp {
 
             /**
              * Constructs a new Timestamp.
