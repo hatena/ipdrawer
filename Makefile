@@ -5,7 +5,7 @@ PROTO := protoc
 PKG := github.com/hatena/ipdrawer
 
 SRCS    := $(shell find . -type f -name '*.go')
-PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
+PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e node_modules)
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
@@ -43,7 +43,7 @@ linux:
 
 .PHONY: vet
 vet:
-	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
+	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -type f -name '*.go' | grep -v -e node_modules)
 
 .PHONY: test
 test:
@@ -58,11 +58,11 @@ test-all: vet test-race
 
 .PHONY: fmt
 fmt:
-	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
+	gofmt -s -w $$(find . -type f -name '*.go' | grep -v -e node_modules)
 
 .PHONY: imports
 imports:
-	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
+	goimports -w $$(find . -type f -name '*.go' | grep -v -e node_modules)
 
 .PHONY: proto
 proto: $(PROTOSRCS) deps $(PBJS) $(PBTS)
