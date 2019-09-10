@@ -3,7 +3,6 @@ VERSION  := $(shell git describe --tags --exact-match 2> /dev/null || git rev-pa
 REVISION := $(shell git rev-parse HEAD)
 PROTO := protoc
 PKG := github.com/hatena/ipdrawer
-SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
 PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
@@ -107,8 +106,8 @@ ui:
 
 .PHONY: gen-client
 gen-client: $(API_SPEC)
-	$(SWAGGER_CODEGEN) generate -i $(API_SPEC) \
-	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
+	docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
+		-i file:///local/$(API_SPEC) -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
 	@rm -rf $(API_CLIENT_DIR)/git_push.sh \
 	       $(API_CLIENT_DIR)/.travis.yml
 
