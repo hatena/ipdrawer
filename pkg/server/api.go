@@ -143,7 +143,7 @@ func (api *APIServer) DrawIPEstimatingNetwork(
 
 	var ip net.IP
 	// In case that request is passed through grpc-gateway
-	if md, ok := metadata.FromContext(ctx); ok {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		if ips, ok := md["x-forwarded-for"]; ok {
 			ip = net.ParseIP(strings.Split(ips[0], ",")[0])
 		}
@@ -213,7 +213,7 @@ func (api *APIServer) GetEstimatedNetwork(
 	}
 
 	// In case that request is passed through grpc-gateway
-	if md, ok := metadata.FromContext(ctx); ok {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		if ips, ok := md["x-forwarded-for"]; ok {
 			return api.GetNetworkIncludingIP(ctx, &serverpb.GetNetworkIncludingIPRequest{
 				Ip: strings.Split(ips[0], ",")[0],
