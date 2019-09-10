@@ -1,14 +1,11 @@
-FROM golang:1.11 as builder
+FROM golang:1.13 as builder
 
 ENV GOPATH /go
 ENV GOOS linux
 ENV CGO_ENABLED 0
 
-COPY . /go/src/github.com/hatena/ipdrawer
 WORKDIR /go/src/github.com/hatena/ipdrawer
-RUN go get -u github.com/golang/dep/cmd/dep
-RUN make deps
-RUN dep ensure
+COPY . .
 RUN make
 
 FROM alpine:latest

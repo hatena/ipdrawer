@@ -7,7 +7,6 @@ SWAGGER_CODEGEN := swagger-codegen
 
 SRCS    := $(shell find . -type f -name '*.go')
 PROTOSRCS := $(shell find . -type f -name '*.proto' | grep -v -e vendor | grep -v -e node_modules)
-GO_PKGS := $(shell find . -maxdepth 2 -mindepth 2 -type d | grep -v -e "^\.\/\." -e vendor -e ui)
 LINUX_LDFLAGS := -s -w -extldflags "-static"
 DARWIN_LDFLAGS := -s -w
 LINKFLAGS := \
@@ -26,6 +25,8 @@ ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
 
 PBJS := pkg/ui/node_modules/.bin/pbjs
 PBTS := pkg/ui/node_modules/.bin/pbts
+
+export GO111MODULE=on
 
 .DEFAULT_GOAL := $(NAME)
 
@@ -111,3 +112,7 @@ admin-ui:
 	(cd pkg/ui && npm run build)
 	go-bindata -nometadata -pkg ui -o $(ADMIN_UI_DATA_PATH) pkg/ui/dist/...
 	make fmt imports
+
+.PHONY: clean
+clean:
+	rm -rf $(NAME) dist

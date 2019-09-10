@@ -1,14 +1,9 @@
 language: go
-sudo: false
 go:
-- 1.11.x
+- 1.13.x
 cache:
   directories:
   - $HOME/local
-before_install:
-- go get github.com/golang/dep/cmd/dep
-install:
-- dep ensure
 script:
 - make test-all
 env:

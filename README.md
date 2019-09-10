@@ -17,12 +17,6 @@ IPDrawer is IP Address Management (IPAM) application and the code is written in 
 
 * Go
 * make
-* dep
-
-```bash
-$ make deps
-$ dep ensure
-```
 
 ### Generate a binary
 
