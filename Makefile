@@ -66,13 +66,12 @@ imports:
 	goimports -w $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
 
 .PHONY: proto
-proto: $(PROTOSRCS)
+proto: $(PROTOSRCS) deps $(PBJS) $(PBTS)
 	for src in $(PROTOSRCS); do \
 	  $(PROTO) \
 	   -Ipkg \
 	   -I$$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
 	   -I$$GOPATH/src \
-	   -Ivendor \
 	   $$src \
 	   --grpc-gateway_out=logtostderr=true:pkg \
 	   --govalidators_out=pkg \
@@ -87,12 +86,19 @@ proto: $(PROTOSRCS)
 
 .PHONY: deps
 deps:
-	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway
-	go get -u github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger
-	go get -u github.com/golang/protobuf/protoc-gen-go
-	go get -u github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
-	go get -u github.com/gogo/protobuf/protoc-gen-gofast
-	go get -u github.com/jteeuwen/go-bindata/...
+	GO111MODULE=off go get -u \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway \
+		github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger \
+		github.com/golang/protobuf/protoc-gen-go \
+		github.com/mwitkow/go-proto-validators/protoc-gen-govalidators \
+		github.com/gogo/protobuf/protoc-gen-gofast \
+		github.com/jteeuwen/go-bindata/...
+
+$(PBJS):
+	cd pkg/ui && npm install
+
+$(PBTS):
+	cd pkg/ui && npm install
 
 .PHONY: ui
 ui:
