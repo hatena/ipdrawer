@@ -3,20 +3,21 @@ package server
 import (
 	ocontext "context"
 	"io"
+	"log"
 	"mime"
 	"net"
 	"net/http"
 	"strings"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
-	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
-	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	negronilogrus "github.com/meatballhat/negroni-logrus"
 	"github.com/opentracing/opentracing-go"
-	"github.com/philips/go-bindata-assetfs"
+	"github.com/rakyll/statik/fs"
 	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"github.com/urfave/negroni"
@@ -26,8 +27,7 @@ import (
 	"github.com/hatena/ipdrawer/pkg/base"
 	"github.com/hatena/ipdrawer/pkg/ipam"
 	"github.com/hatena/ipdrawer/pkg/server/serverpb"
-	"github.com/hatena/ipdrawer/pkg/ui"
-	"github.com/hatena/ipdrawer/pkg/ui/data/swagger"
+	_ "github.com/hatena/ipdrawer/pkg/ui/swagger" // import static files
 	"github.com/hatena/ipdrawer/pkg/utils/protoutil"
 )
 
@@ -94,35 +94,16 @@ func serveSwagger(mux *http.ServeMux) {
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
 	// Expose files in third_party/swagger-ui/ on <host>/swagger-ui
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    swagger.Asset,
-		AssetDir: swagger.AssetDir,
-		Prefix:   "third_party/swagger-ui",
-	})
+	statikFS, err := fs.New()
+	if err != nil {
+		log.Fatal(err)
+	}
 	prefix := "/swagger-ui/"
-	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
+	mux.Handle(prefix, http.StripPrefix(prefix, http.FileServer(statikFS)))
 
 	mux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
 		io.Copy(w, strings.NewReader(serverpb.Swagger))
 	})
-}
-
-func (api *APIServer) serverUI(mux *http.ServeMux) {
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    ui.Asset,
-		AssetDir: ui.AssetDir,
-		Prefix:   "pkg/ui/dist",
-	})
-
-	mux.Handle("/bundle.js", fileServer)
-	mux.Handle("/index.html", fileServer)
-	mux.Handle("/styles.css", fileServer)
-	mux.Handle("/vendor.bundle.js", fileServer)
-
-	mux.Handle("/ui/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r.URL.Path = "/"
-		fileServer.ServeHTTP(w, r)
-	}))
 }
 
 func (api *APIServer) Start() error {
@@ -166,7 +147,6 @@ func (api *APIServer) Start() error {
 	mux := http.NewServeMux()
 	mux.Handle("/", gw)
 	serveSwagger(mux)
-	api.serverUI(mux)
 	api.httpS = &http.Server{
 		Handler: mux,
 	}

@@ -18,13 +18,8 @@ override DARWIN_LDFLAGS += $(LINKFLAGS)
 API_CLIENT_DIR := pkg/server/apiclient
 API_SPEC := pkg/server/serverpb/server.swagger.json
 
-SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
-SWAGGER_UI_SRC := third_party/swagger-ui/...
-
-ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
-
-PBJS := pkg/ui/node_modules/.bin/pbjs
-PBTS := pkg/ui/node_modules/.bin/pbts
+SWAGGER_UI_DATA_PATH := pkg/ui/
+SWAGGER_UI_SRC := third_party/swagger-ui
 
 export GO111MODULE=on
 
@@ -79,8 +74,6 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
 	done;
-	$(PBJS) -t static-module -w commonjs --path ./ipdrawer/vendor/github.com/gogo/protobuf --path ./ipdrawer/vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --path ./ipdrawer/vendor/github.com/witkow/go-proto-validators $(PROTOSRCS) > pkg/ui/src/proto/protos.js
-	$(PBTS) pkg/ui/src/proto/protos.js > pkg/ui/src/proto/protos.d.ts
 	go generate ./pkg/server/serverpb
 	make gen-client
 	make fmt imports
@@ -92,11 +85,11 @@ deps:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 	go get -u github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
 	go get -u github.com/gogo/protobuf/protoc-gen-gofast
-	go get -u github.com/jteeuwen/go-bindata/...
+	go get -u github.com/rakyll/statik
 
 .PHONY: ui
 ui:
-	go-bindata -nocompress -o $(SWAGGER_UI_DATA_PATH) -pkg swagger $(SWAGGER_UI_SRC)
+	statik -dest $(SWAGGER_UI_DATA_PATH) -p swagger -src $(SWAGGER_UI_SRC)
 	make fmt imports
 
 .PHONY: gen-client
@@ -105,13 +98,6 @@ gen-client: $(API_SPEC)
 	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
 	@rm -rf $(API_CLIENT_DIR)/git_push.sh \
 	       $(API_CLIENT_DIR)/.travis.yml
-
-.PHONY: admin-ui
-admin-ui:
-	rm -rf pkg/ui/dist
-	(cd pkg/ui && npm run build)
-	go-bindata -nometadata -pkg ui -o $(ADMIN_UI_DATA_PATH) pkg/ui/dist/...
-	make fmt imports
 
 .PHONY: clean
 clean:

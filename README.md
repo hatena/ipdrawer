@@ -17,6 +17,8 @@ IPDrawer is IP Address Management (IPAM) application and the code is written in 
 
 * Go
 * make
+* protoc
+* swagger-codegen
 
 ### Generate a binary
 
