@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/grpc-ecosystem/go-grpc-middleware"
-	"github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
-	"github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/grpc-ecosystem/go-grpc-middleware/tags"
-	"github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
+	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	negronilogrus "github.com/meatballhat/negroni-logrus"
 	"github.com/opentracing/opentracing-go"
@@ -26,7 +26,6 @@ import (
 	"github.com/hatena/ipdrawer/pkg/base"
 	"github.com/hatena/ipdrawer/pkg/ipam"
 	"github.com/hatena/ipdrawer/pkg/server/serverpb"
-	"github.com/hatena/ipdrawer/pkg/ui"
 	"github.com/hatena/ipdrawer/pkg/ui/data/swagger"
 	"github.com/hatena/ipdrawer/pkg/utils/protoutil"
 )
@@ -107,24 +106,6 @@ func serveSwagger(mux *http.ServeMux) {
 	})
 }
 
-func (api *APIServer) serverUI(mux *http.ServeMux) {
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    ui.Asset,
-		AssetDir: ui.AssetDir,
-		Prefix:   "pkg/ui/dist",
-	})
-
-	mux.Handle("/bundle.js", fileServer)
-	mux.Handle("/index.html", fileServer)
-	mux.Handle("/styles.css", fileServer)
-	mux.Handle("/vendor.bundle.js", fileServer)
-
-	mux.Handle("/ui/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		r.URL.Path = "/"
-		fileServer.ServeHTTP(w, r)
-	}))
-}
-
 func (api *APIServer) Start() error {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
@@ -166,7 +147,6 @@ func (api *APIServer) Start() error {
 	mux := http.NewServeMux()
 	mux.Handle("/", gw)
 	serveSwagger(mux)
-	api.serverUI(mux)
 	api.httpS = &http.Server{
 		Handler: mux,
 	}
