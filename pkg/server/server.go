@@ -3,6 +3,7 @@ package server
 import (
 	ocontext "context"
 	"io"
+	"log"
 	"mime"
 	"net"
 	"net/http"
@@ -16,7 +17,7 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	negronilogrus "github.com/meatballhat/negroni-logrus"
 	"github.com/opentracing/opentracing-go"
-	"github.com/philips/go-bindata-assetfs"
+	"github.com/rakyll/statik/fs"
 	"github.com/sirupsen/logrus"
 	"github.com/soheilhy/cmux"
 	"github.com/urfave/negroni"
@@ -26,7 +27,7 @@ import (
 	"github.com/hatena/ipdrawer/pkg/base"
 	"github.com/hatena/ipdrawer/pkg/ipam"
 	"github.com/hatena/ipdrawer/pkg/server/serverpb"
-	"github.com/hatena/ipdrawer/pkg/ui/data/swagger"
+	_ "github.com/hatena/ipdrawer/pkg/ui/swagger" // import static files
 	"github.com/hatena/ipdrawer/pkg/utils/protoutil"
 )
 
@@ -93,13 +94,12 @@ func serveSwagger(mux *http.ServeMux) {
 	mime.AddExtensionType(".svg", "image/svg+xml")
 
 	// Expose files in third_party/swagger-ui/ on <host>/swagger-ui
-	fileServer := http.FileServer(&assetfs.AssetFS{
-		Asset:    swagger.Asset,
-		AssetDir: swagger.AssetDir,
-		Prefix:   "third_party/swagger-ui",
-	})
+	statikFS, err := fs.New()
+	if err != nil {
+		log.Fatal(err)
+	}
 	prefix := "/swagger-ui/"
-	mux.Handle(prefix, http.StripPrefix(prefix, fileServer))
+	mux.Handle(prefix, http.StripPrefix(prefix, http.FileServer(statikFS)))
 
 	mux.HandleFunc("/swagger.json", func(w http.ResponseWriter, req *http.Request) {
 		io.Copy(w, strings.NewReader(serverpb.Swagger))
