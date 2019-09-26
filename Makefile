@@ -21,8 +21,6 @@ API_SPEC := pkg/server/serverpb/server.swagger.json
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
 
-PBJS := pkg/ui/node_modules/.bin/pbjs
-PBTS := pkg/ui/node_modules/.bin/pbts
 
 export GO111MODULE=on
 
@@ -77,8 +75,6 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
 	done;
-	$(PBJS) -t static-module -w commonjs --path ./ipdrawer/vendor/github.com/gogo/protobuf --path ./ipdrawer/vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --path ./ipdrawer/vendor/github.com/witkow/go-proto-validators $(PROTOSRCS) > pkg/ui/src/proto/protos.js
-	$(PBTS) pkg/ui/src/proto/protos.js > pkg/ui/src/proto/protos.d.ts
 	go generate ./pkg/server/serverpb
 	make gen-client
 	make fmt imports
