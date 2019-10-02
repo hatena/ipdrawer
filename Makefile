@@ -44,7 +44,7 @@ linux:
 
 .PHONY: vet
 vet:
-	go tool vet -all -printfuncs=Wrap,Wrapf,Errorf $$(find . -type f -name '*.go' | grep -v -e vendor -e node_modules)
+	go vet -all -printfuncs=Wrap,Wrapf,Errorf ./...
 
 .PHONY: test
 test:
