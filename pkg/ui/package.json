@@ -48,7 +48,7 @@
     "@devexpress/dx-react-grid-material-ui": "^1.0.0-alpha.9",
     "@types/google-protobuf": "^3.2.7",
     "classnames": "^2.2.5",
-    "google-protobuf": "^3.3.0",
+    "google-protobuf": "^3.10.0",
     "grpc-web-client": "^0.3.0",
     "lodash": "^4.17.13",
     "material-ui": "^1.0.0-beta.10",
