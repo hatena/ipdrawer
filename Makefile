@@ -18,9 +18,8 @@ override DARWIN_LDFLAGS += $(LINKFLAGS)
 API_CLIENT_DIR := pkg/server/apiclient
 API_SPEC := pkg/server/serverpb/server.swagger.json
 
-SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
-SWAGGER_UI_SRC := third_party/swagger-ui/...
-
+SWAGGER_UI_DATA_PATH := pkg/ui/
+SWAGGER_UI_SRC := third_party/swagger-ui
 
 export GO111MODULE=on
 
@@ -86,11 +85,11 @@ deps:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 	go get -u github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
 	go get -u github.com/gogo/protobuf/protoc-gen-gofast
-	go get -u github.com/jteeuwen/go-bindata/...
+	go get -u github.com/rakyll/statik
 
 .PHONY: ui
 ui:
-	go-bindata -nocompress -o $(SWAGGER_UI_DATA_PATH) -pkg swagger $(SWAGGER_UI_SRC)
+	statik -dest $(SWAGGER_UI_DATA_PATH) -p swagger -src $(SWAGGER_UI_SRC)
 	make fmt imports
 
 .PHONY: gen-client
