@@ -21,10 +21,6 @@ API_SPEC := pkg/server/serverpb/server.swagger.json
 SWAGGER_UI_DATA_PATH := pkg/ui/data/swagger/datafile.go
 SWAGGER_UI_SRC := third_party/swagger-ui/...
 
-ADMIN_UI_DATA_PATH := pkg/ui/embedded.go
-
-PBJS := pkg/ui/node_modules/.bin/pbjs
-PBTS := pkg/ui/node_modules/.bin/pbts
 
 export GO111MODULE=on
 
@@ -79,8 +75,6 @@ proto: $(PROTOSRCS)
 	   --swagger_out=logtostderr=true:pkg \
 	   --gofast_out=plugins=grpc:pkg; \
 	done;
-	$(PBJS) -t static-module -w commonjs --path ./ipdrawer/vendor/github.com/gogo/protobuf --path ./ipdrawer/vendor/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis --path ./ipdrawer/vendor/github.com/witkow/go-proto-validators $(PROTOSRCS) > pkg/ui/src/proto/protos.js
-	$(PBTS) pkg/ui/src/proto/protos.js > pkg/ui/src/proto/protos.d.ts
 	go generate ./pkg/server/serverpb
 	make gen-client
 	make fmt imports
@@ -105,13 +99,6 @@ gen-client: $(API_SPEC)
 	  -l go -o pkg/server/apiclient --additional-properties packageName=apiclient
 	@rm -rf $(API_CLIENT_DIR)/git_push.sh \
 	       $(API_CLIENT_DIR)/.travis.yml
-
-.PHONY: admin-ui
-admin-ui:
-	rm -rf pkg/ui/dist
-	(cd pkg/ui && npm run build)
-	go-bindata -nometadata -pkg ui -o $(ADMIN_UI_DATA_PATH) pkg/ui/dist/...
-	make fmt imports
 
 .PHONY: clean
 clean:
