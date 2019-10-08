@@ -51,6 +51,8 @@ github.com/stretchr/testify v1.1.4 h1:ToftOQTytwshuOSj6bDSolVUa3GINfJP/fg3OkkOzQ
 github.com/stretchr/testify v1.1.4/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/uber/jaeger-client-go v2.8.0+incompatible h1:7DGH8Hqk6PirD+GE+bvCf0cLnspLuae7N1NcwMeQcyg=
 github.com/uber/jaeger-client-go v2.8.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
+github.com/uber/jaeger-client-go v2.19.0+incompatible h1:pbwbYfHUoaase0oPQOdZ1GcaUjImYGimUXSQ/+8+Z8Q=
+github.com/uber/jaeger-client-go v2.19.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
 github.com/uber/jaeger-lib v1.0.0 h1:8zwD1zSMaLrtAAlkdhqK/CEwdJGjEIn88R0oZnc+OuM=
 github.com/uber/jaeger-lib v1.0.0/go.mod h1:ComeNDZlWwrWnDv8aPp0Ba6+uUTzImX/AauajbLI56U=
 github.com/urfave/negroni v0.2.0 h1:cadBY8/+9L/dTagBqV7N0l/SJiB4Wg+os5QdmaFY5Wg=
