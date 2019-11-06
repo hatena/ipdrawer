@@ -29,7 +29,7 @@ require (
 	github.com/spf13/cobra v0.0.0-20170724071837-90fc11bbc0a7
 	github.com/spf13/pflag v1.0.0
 	github.com/stretchr/testify v1.1.4
-	github.com/uber/jaeger-client-go v2.8.0+incompatible
+	github.com/uber/jaeger-client-go v2.20.0+incompatible
 	github.com/uber/jaeger-lib v1.0.0
 	github.com/urfave/negroni v0.2.0
 	golang.org/x/net v0.0.0-20170726083632-f5079bd7f6f7
