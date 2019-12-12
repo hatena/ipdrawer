@@ -63,6 +63,10 @@ github.com/uber/jaeger-client-go v2.8.0+incompatible h1:7DGH8Hqk6PirD+GE+bvCf0cL
 github.com/uber/jaeger-client-go v2.8.0+incompatible/go.mod h1:WVhlPFC8FDjOFMMWRy2pZqQJSXxYSwNYOkTr/Z6d3Kk=
 github.com/uber/jaeger-lib v1.0.0 h1:8zwD1zSMaLrtAAlkdhqK/CEwdJGjEIn88R0oZnc+OuM=
 github.com/uber/jaeger-lib v1.0.0/go.mod h1:ComeNDZlWwrWnDv8aPp0Ba6+uUTzImX/AauajbLI56U=
+github.com/uber/jaeger-lib v1.5.0 h1:OHbgr8l656Ub3Fw5k9SWnBfIEwvoHQ+W2y+Aa9D1Uyo=
+github.com/uber/jaeger-lib v1.5.0/go.mod h1:ComeNDZlWwrWnDv8aPp0Ba6+uUTzImX/AauajbLI56U=
+github.com/uber/jaeger-lib v2.2.0+incompatible h1:MxZXOiR2JuoANZ3J6DE/U0kSFv/eJ/GfSYVCjK7dyaw=
+github.com/uber/jaeger-lib v2.2.0+incompatible/go.mod h1:ComeNDZlWwrWnDv8aPp0Ba6+uUTzImX/AauajbLI56U=
 github.com/urfave/negroni v0.2.0 h1:cadBY8/+9L/dTagBqV7N0l/SJiB4Wg+os5QdmaFY5Wg=
 github.com/urfave/negroni v0.2.0/go.mod h1:Meg73S6kFm/4PpbYdq35yYWoCZ9mS/YSx+lKnmiohz4=
 golang.org/x/net v0.0.0-20170726083632-f5079bd7f6f7 h1:1Pw+ZX4dmGORIwGkTwnUr7RFuMhfpCYHXRZNF04XPYs=

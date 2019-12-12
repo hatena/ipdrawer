@@ -30,7 +30,7 @@ require (
 	github.com/spf13/pflag v1.0.0
 	github.com/stretchr/testify v1.1.4
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
-	github.com/uber/jaeger-lib v1.0.0
+	github.com/uber/jaeger-lib v1.5.0
 	github.com/urfave/negroni v0.2.0
 	golang.org/x/net v0.0.0-20170726083632-f5079bd7f6f7
 	golang.org/x/sys v0.0.0-20170727135323-35ef4487ce0a
