@@ -18,7 +18,7 @@ require (
 	github.com/inconshreveable/mousetrap v1.0.0
 	github.com/meatballhat/negroni-logrus v0.0.0-20170614114520-259659cbe5df
 	github.com/mwitkow/go-proto-validators v0.0.0-20170220212302-a55ca57f374a
-	github.com/nlopes/slack v0.1.0
+	github.com/nlopes/slack v0.6.0
 	github.com/opentracing/opentracing-go v1.0.2
 	github.com/philips/go-bindata-assetfs v0.0.0-20150624150248-3dcc96556217
 	github.com/pkg/errors v0.8.1
