@@ -7,7 +7,7 @@ require (
 	github.com/apache/thrift v0.0.0-20161221203622-b2a4d4ae21c7
 	github.com/cenkalti/backoff v1.0.0
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd
-	github.com/davecgh/go-spew v1.1.0
+	github.com/davecgh/go-spew v1.1.1
 	github.com/go-redis/redis v6.5.4+incompatible
 	github.com/go-yaml/yaml v0.0.0-20170812160011-eb3733d160e7
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
