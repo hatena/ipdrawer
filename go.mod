@@ -27,7 +27,7 @@ require (
 	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
 	github.com/soheilhy/cmux v0.1.4
 	github.com/spf13/cobra v0.0.0-20170724071837-90fc11bbc0a7
-	github.com/spf13/pflag v1.0.0
+	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.1.4
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
 	github.com/uber/jaeger-lib v1.5.0
