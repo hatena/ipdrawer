@@ -5,7 +5,7 @@ go 1.13
 require (
 	github.com/alicebob/miniredis v0.0.0-20170430122723-995ba133bd8f
 	github.com/apache/thrift v0.0.0-20161221203622-b2a4d4ae21c7
-	github.com/cenkalti/backoff v1.0.0
+	github.com/cenkalti/backoff v1.1.0
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd
 	github.com/davecgh/go-spew v1.1.1
 	github.com/go-redis/redis v6.15.6+incompatible
