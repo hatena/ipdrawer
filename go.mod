@@ -21,7 +21,7 @@ require (
 	github.com/nlopes/slack v0.6.0
 	github.com/opentracing/opentracing-go v1.0.2
 	github.com/philips/go-bindata-assetfs v0.0.0-20150624150248-3dcc96556217
-	github.com/pkg/errors v0.8.1
+	github.com/pkg/errors v0.9.1
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/rakyll/statik v0.1.6
 	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
