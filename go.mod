@@ -36,6 +36,6 @@ require (
 	golang.org/x/sys v0.0.0-20170727135323-35ef4487ce0a
 	golang.org/x/text v0.0.0-20170714085652-836efe42bb4a
 	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
-	google.golang.org/grpc v1.5.1
+	google.golang.org/grpc v1.27.0
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
 )
