@@ -8,7 +8,7 @@ require (
 	github.com/cenkalti/backoff v1.1.0
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd
 	github.com/davecgh/go-spew v1.1.1
-	github.com/go-redis/redis v6.15.6+incompatible
+	github.com/go-redis/redis v6.15.7+incompatible
 	github.com/go-yaml/yaml v0.0.0-20170812160011-eb3733d160e7
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
 	github.com/golang/protobuf v0.0.0-20170726212829-748d386b5c1e
