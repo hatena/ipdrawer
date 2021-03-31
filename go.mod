@@ -25,16 +25,16 @@ require (
 	github.com/pmezard/go-difflib v1.0.0
 	github.com/rakyll/statik v0.1.7
 	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
-	github.com/soheilhy/cmux v0.1.4
+	github.com/soheilhy/cmux v0.1.5
 	github.com/spf13/cobra v0.0.0-20170724071837-90fc11bbc0a7
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.7.0
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
 	github.com/uber/jaeger-lib v1.5.0
 	github.com/urfave/negroni v0.3.0
-	golang.org/x/net v0.0.0-20170726083632-f5079bd7f6f7
-	golang.org/x/sys v0.0.0-20170727135323-35ef4487ce0a
-	golang.org/x/text v0.0.0-20170714085652-836efe42bb4a
+	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
+	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
+	golang.org/x/text v0.3.3
 	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
 	google.golang.org/grpc v1.5.1
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
