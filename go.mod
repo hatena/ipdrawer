@@ -34,7 +34,7 @@ require (
 	github.com/urfave/negroni v0.3.0
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
-	golang.org/x/text v0.3.3
+	golang.org/x/text v0.3.6
 	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
 	google.golang.org/grpc v1.5.1
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
