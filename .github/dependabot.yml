@@ -1,0 +1,20 @@
+version: 2
+updates:
+- package-ecosystem: gomod
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "08:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+  target-branch: master
+  labels:
+  - dependencies
+  - wait_for_review
+  ignore:
+  - dependency-name: github.com/uber/jaeger-client-go
+    versions:
+    - ">= 0"
+  - dependency-name: google.golang.org/grpc
+    versions:
+    - ">= 0"
