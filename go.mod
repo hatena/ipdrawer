@@ -39,3 +39,5 @@ require (
 	google.golang.org/grpc v1.5.1
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
 )
+
+replace github.com/codahale/hdrhistogram => github.com/HdrHistogram/hdrhistogram-go v0.9.0
