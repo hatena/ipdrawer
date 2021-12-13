@@ -2,11 +2,13 @@ package server
 
 import (
 	ocontext "context"
+	"fmt"
 	"io"
 	"log"
 	"mime"
 	"net"
 	"net/http"
+	"os"
 	"strings"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
@@ -153,12 +155,12 @@ func (api *APIServer) Start() error {
 
 	go func() {
 		if err := api.grpcS.Serve(grpcL); err != nil {
-			panic(err)
+			fmt.Fprintln(os.Stderr, err)
 		}
 	}()
 	go func() {
 		if err := api.httpS.Serve(httpL); err != nil {
-			panic(err)
+			fmt.Fprintln(os.Stderr, err)
 		}
 	}()
 
