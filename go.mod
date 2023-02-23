@@ -10,7 +10,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-yaml/yaml v0.0.0-20170812160011-eb3733d160e7
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
-	github.com/golang/protobuf v0.0.0-20170726212829-748d386b5c1e
+	github.com/golang/protobuf v1.5.2
 	github.com/google/uuid v0.0.0-20161128191214-064e2069ce9c
 	github.com/grpc-ecosystem/go-grpc-middleware v0.0.0-20170611114647-f63a7dfb64c1
 	github.com/grpc-ecosystem/grpc-gateway v1.2.3-0.20170724004829-f2862b476edc
