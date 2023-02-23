@@ -14,7 +14,6 @@ require (
 	github.com/google/uuid v0.0.0-20161128191214-064e2069ce9c
 	github.com/grpc-ecosystem/go-grpc-middleware v0.0.0-20170611114647-f63a7dfb64c1
 	github.com/grpc-ecosystem/grpc-gateway v1.2.3-0.20170724004829-f2862b476edc
-	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/meatballhat/negroni-logrus v0.0.0-20170614114520-259659cbe5df
 	github.com/mwitkow/go-proto-validators v0.0.0-20170220212302-a55ca57f374a
 	github.com/nlopes/slack v0.6.0
@@ -23,7 +22,7 @@ require (
 	github.com/rakyll/statik v0.1.7
 	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
 	github.com/soheilhy/cmux v0.1.5
-	github.com/spf13/cobra v0.0.0-20170724071837-90fc11bbc0a7
+	github.com/spf13/cobra v1.6.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.8.1
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
