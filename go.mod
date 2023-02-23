@@ -21,7 +21,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/rakyll/statik v0.1.7
-	github.com/sirupsen/logrus v1.0.2-0.20170713114250-a3f95b5c4235
+	github.com/sirupsen/logrus v1.9.0
 	github.com/soheilhy/cmux v0.1.5
 	github.com/spf13/cobra v0.0.0-20170724071837-90fc11bbc0a7
 	github.com/spf13/pflag v1.0.5
