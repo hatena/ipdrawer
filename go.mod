@@ -29,8 +29,8 @@ require (
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
 	github.com/uber/jaeger-lib v1.5.0 // indirect
 	github.com/urfave/negroni v0.3.0
-	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/net v0.0.0-20220722155237-a158d28d115b
+	golang.org/x/text v0.3.8 // indirect
 	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
 	google.golang.org/grpc v1.5.1
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
