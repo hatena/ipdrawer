@@ -10,10 +10,10 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/go-yaml/yaml v0.0.0-20170812160011-eb3733d160e7
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
-	github.com/golang/protobuf v0.0.0-20170726212829-748d386b5c1e
-	github.com/google/uuid v0.0.0-20161128191214-064e2069ce9c
+	github.com/golang/protobuf v1.3.3
+	github.com/google/uuid v1.1.2
 	github.com/grpc-ecosystem/go-grpc-middleware v0.0.0-20170611114647-f63a7dfb64c1
-	github.com/grpc-ecosystem/grpc-gateway v1.2.3-0.20170724004829-f2862b476edc
+	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/meatballhat/negroni-logrus v0.0.0-20170614114520-259659cbe5df
 	github.com/mwitkow/go-proto-validators v0.0.0-20170220212302-a55ca57f374a
@@ -31,8 +31,8 @@ require (
 	github.com/urfave/negroni v0.3.0
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
-	google.golang.org/grpc v1.5.1
+	google.golang.org/genproto v0.0.0-20200513103714-09dca8ec2884
+	google.golang.org/grpc v1.33.1
 	gopkg.in/go-resty/resty.v0 v0.4.2-0.20170522074907-7a8134d87181
 )
 
