@@ -3,7 +3,8 @@ module github.com/hatena/ipdrawer
 go 1.13
 
 require (
-	github.com/alicebob/miniredis v0.0.0-20170430122723-995ba133bd8f
+	github.com/alicebob/gopher-json v0.0.0-20230218143504-906a9b012302 // indirect
+	github.com/alicebob/miniredis v2.5.0+incompatible
 	github.com/apache/thrift v0.0.0-20161221203622-b2a4d4ae21c7 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible
 	github.com/codahale/hdrhistogram v0.0.0-20161010025455-3a0bb77429bd // indirect
@@ -11,6 +12,7 @@ require (
 	github.com/go-yaml/yaml v0.0.0-20170812160011-eb3733d160e7
 	github.com/gogo/protobuf v0.0.0-20170307180453-100ba4e88506
 	github.com/golang/protobuf v0.0.0-20170726212829-748d386b5c1e
+	github.com/gomodule/redigo v1.8.9 // indirect
 	github.com/google/uuid v0.0.0-20161128191214-064e2069ce9c
 	github.com/grpc-ecosystem/go-grpc-middleware v0.0.0-20170611114647-f63a7dfb64c1
 	github.com/grpc-ecosystem/grpc-gateway v1.2.3-0.20170724004829-f2862b476edc
@@ -29,6 +31,7 @@ require (
 	github.com/uber/jaeger-client-go v2.8.0+incompatible
 	github.com/uber/jaeger-lib v1.5.0 // indirect
 	github.com/urfave/negroni v0.3.0
+	github.com/yuin/gopher-lua v1.1.0 // indirect
 	golang.org/x/net v0.0.0-20201202161906-c7110b5ffcbb
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20170711235230-b0a3dcfcd1a9
